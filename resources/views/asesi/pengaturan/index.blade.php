@@ -36,10 +36,10 @@
             </button>
         </div>
     </div>
+
     {{-- MODAL UBAH PASSWORD --}}
-    <!-- Modal -->
     <div class="modal fade" id="ubahPassword" tabindex="-1" aria-labelledby="ubahPasswordLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="ubahPasswordLabel">Edit Password</h1>
