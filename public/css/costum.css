@@ -268,7 +268,32 @@
 .profil-section p {
     margin-bottom: 8px;
 }
-/* Assesment */
+.input-text {
+    padding: 11px 8px;
+    /* height: 45px; */
+    border: 0.5px solid var(--tiernary-color);
+    border-radius: 3px;
+}
+.edit-profil-right {
+    margin-bottom: 20px;
+    margin-left: 5%;
+}
+.edit-profil-left {
+    margin-bottom: 20px;
+    margin-right: 5%;
+}
+@media (max-width: 720px) {
+    .edit-profil-right {
+        margin-bottom: 20px;
+        margin-left: 0;
+    }
+    .edit-profil-left {
+        margin-bottom: 20px;
+        margin-right: 0;
+    }
+}
+
+/* ASSESMENT */
 .card-assesment {
     padding: 15px;
     border-radius: 12px;
