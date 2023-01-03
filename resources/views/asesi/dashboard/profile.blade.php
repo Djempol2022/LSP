@@ -234,8 +234,134 @@
                     <div class="pt-5">
                         <span>Berdasarkan ketentuan persyaratan dasar, maka pemohon:</span><br>
                         <p><span class="fw-bold">Diterima/Tidak Diterima</span> sebagai peserta sertifikasi</p>
-                        <button type="button" class="btn btn-primary tombol-primary-medium mt-5">Edit Profil</button>
+                        <button type="button" class="btn btn-primary tombol-primary-medium mt-5" data-bs-toggle="modal"
+                            data-bs-target="#editProfil">Edit Profil</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- MODAL PROFIL --}}
+    <div class="modal fade" id="editProfil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="editProfilLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editProfilLabel">Edit Profil-APL 01</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mx-3">
+                        {{-- JUDUL --}}
+                        <div class="col profil-section-title my-3" style="font-size: 20px">
+                            Bagian 1 : Rincian Data Pemohon Sertifikasi
+                        </div>
+                        <div class="col profil-section mt-5">
+                            <h5>A. Data Pribadi</h5>
+                            <form action="" class="row mt-4">
+                                @csrf
+                                <div class="col-lg-6">
+                                    <div class="col edit-profil-left">
+                                        <label for="namaLengkap" class="form-label fw-semibold">Nama Lengkap</label>
+                                        <input type="text" id="namaLengkap" class="form-control input-text"
+                                            placeholder="Masukkan Nama Lengkap">
+                                    </div>
+                                    <div class="col edit-profil-left">
+                                        <label for="instansi" class="form-label fw-semibold">Nama Sekolah / Instansi /
+                                            Perusahaan</label>
+                                        <select name="" class="form-select input-text" id="instansi">
+                                            <option value="" selected disabled>Pilih Nama Sekolah / Instansi /
+                                                Perusahaan</option>
+                                            <option value="">SMK NEGERI 1 SINTANG</option>
+                                            <option value="">SMK NEGERI 4 PONTIANAK</option>
+                                        </select>
+                                    </div>
+                                    <div class="col edit-profil-left">
+                                        <label for="jurusan" class="form-label fw-semibold">Jurusan</label>
+                                        <select name="" class="form-select input-text" id="jurusan">
+                                            <option value="" selected disabled>Pilih Jurusan</option>
+                                            <option value="">TEKNIK KOMPUTER DAN JARINGAN</option>
+                                            <option value="">MULTIMEDIA</option>
+                                        </select>
+                                    </div>
+                                    <div class="col edit-profil-left">
+                                        <label for="nomorKtp" class="form-label fw-semibold">Nomor
+                                            KTP/NIK/Paspor</label>
+                                        <input type="text" id="nomorKtp" class="form-control input-text"
+                                            placeholder="Masukkan Nomor KTP/NIK/Paspor">
+                                    </div>
+                                    <div class="col edit-profil-left">
+                                        <label for="tempatLahir" class="form-label fw-semibold">Tempat Lahir</label>
+                                        <input type="text" id="tempatLahir" class="form-control input-text"
+                                            placeholder="Masukkan Tempat Lahir">
+                                    </div>
+                                    <div class="col edit-profil-left">
+                                        <label for="tanggalLahir" class="form-label fw-semibold">Tanggal Lahir</label>
+                                        <input type="date" id="tanggalLahir" class="form-control input-text"
+                                            placeholder="Masukkan Nama Lengkap">
+                                    </div>
+                                    <div class="col edit-profil-left">
+                                        <label for="jenisKelamin" class="form-label fw-semibold">Jenis Kelamin</label>
+                                        <select name="" class="form-select input-text" id="jenisKelamin">
+                                            <option value="" selected disabled>Pilih Jenis Kelamin</option>
+                                            <option value="">LAKI-LAKI</option>
+                                            <option value="">PEREMPUAN</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="col edit-profil-right">
+                                        <label for="kebangsaan" class="form-label fw-semibold">Kebangsaan</label>
+                                        <select name="" class="form-select input-text" id="kebangsaan">
+                                            <option value="" selected disabled>Pilih Kebangsaan</option>
+                                            <option value="">Indonesia</option>
+                                            <option value="">Malaysia</option>
+                                        </select>
+                                    </div>
+                                    <div class="col edit-profil-right">
+                                        <label for="alamatRumah" class="form-label fw-semibold">Alamat Rumah</label>
+                                        <input type="text" id="alamatRumah" class="form-control input-text"
+                                            placeholder="Masukkan Alamat Rumah">
+                                    </div>
+                                    <div class="col edit-profil-right">
+                                        <label for="kodePos" class="form-label fw-semibold">Kode Pos</label>
+                                        <input type="text" id="kodePos" class="form-control input-text"
+                                            placeholder="Masukkan Kode Pos">
+                                    </div>
+                                    <div class="col edit-profil-right">
+                                        <label for="nomorTelepon" class="form-label fw-semibold">Nomor Telepon</label>
+                                        <input type="number" id="nomorTelepon" class="form-control input-text"
+                                            placeholder="Masukkan Nomor Telepon">
+                                    </div>
+                                    <div class="col edit-profil-right">
+                                        <label for="email" class="form-label fw-semibold">Email</label>
+                                        <input type="text" id="email" class="form-control input-text"
+                                            placeholder="Masukkan Email">
+                                    </div>
+                                    <div class="col edit-profil-right">
+                                        <label for="kualifikasiPendidikan" class="form-label fw-semibold">Kualifikasi
+                                            Pendidikan</label>
+                                        <select name="" class="form-select input-text" id="kualifikasiPendidikan">
+                                            <option value="" selected disabled>Pilih Kualifikasi Pendidikan</option>
+                                            <option value="">SD</option>
+                                            <option value="">SMP</option>
+                                            <option value="">SMK</option>
+                                        </select>
+                                    </div>
+                                    <div class="col edit-profil-right">
+                                        <label for="fotoProfil" class="form-label fw-semibold">Foto Profil</label>
+                                        <input type="file" id="fotoProfil"
+                                            class="form-control form-control-lg input-text"
+                                            placeholder="Masukkan Nama Lengkap" style="padding: 11px 0">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary tombol-primary-small">Simpan</button>
                 </div>
             </div>
         </div>
