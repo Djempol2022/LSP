@@ -9,6 +9,7 @@
     {{-- JIKA PENGGUNA SUDAH LOGIN --}}
 
     <body>
+        @include('sweetalert::alert')
         <div id="app">
             <div id="main">
                 @include('layout.sidebar-main')

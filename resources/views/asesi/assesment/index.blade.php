@@ -5,7 +5,7 @@
         <nav class="jalur-file mb-5" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-                        href="{{ route('Dashboard') }}">Dashboard</a></li>
+                        href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Assesment</li>
             </ol>
         </nav>

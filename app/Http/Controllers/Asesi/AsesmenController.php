@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Asesi;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AssesmentController extends Controller
+class AsesmenController extends Controller
 {
     private $path = 'asesi/assesment/';
     public function assesment(Request $request)
@@ -14,6 +15,4 @@ class AssesmentController extends Controller
             'where' => 'Assesment'
         ]);
     }
-
-    
 }

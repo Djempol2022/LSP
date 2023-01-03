@@ -1,6 +1,7 @@
 {{-- JAVASCRIPT BOOTSTRAP --}}
 <script src="/js/bootstrap.js"></script>
 <script src="/js/app.js"></script>
+<script src="/js/sweetalert.js"></script>
 {{-- AJAX JQUERY --}}
 <script src="/extensions/jquery/jquery.min.js"></script>
 <script>

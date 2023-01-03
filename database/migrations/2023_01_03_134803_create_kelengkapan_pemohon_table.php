@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('kelengkapan_pemohon', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('asesi_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->text('nilai_mata_pelajaran_kompetensi');
             $table->text('sertifikat_prakerin');
             $table->text('nilai_raport');

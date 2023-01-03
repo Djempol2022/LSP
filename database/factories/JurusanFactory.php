@@ -17,8 +17,7 @@ class JurusanFactory extends Factory
     public function definition()
     {
         return [
-            'sekolah_id' => mt_rand(1, 3),
-            'nama_jurusan' => $this->faker->word()
+            'jurusan' => $this->faker->word()
         ];
     }
 }

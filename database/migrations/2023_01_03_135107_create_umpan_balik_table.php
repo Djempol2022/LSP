@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('umpan_balik', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('asesi_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->text('tanda_tangan');
             $table->timestamps();
         });
     }

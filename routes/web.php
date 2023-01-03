@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Asesi\AssesmentController;
-use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrasiController;
 
+use App\Http\Controllers\Asesi\AsesmenController;
+use App\Http\Controllers\Asesi\DashboardController;
+use App\Http\Controllers\Asesi\PengaturanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,9 +26,7 @@ Route::get('/', function () {
 
 // LOGIN CONTROLLER
 Route::controller(LoginController::class)->group(function () {
-    // contoh penggunaan :
-    // Route::~nama method~('~nama URI~', '~nama fungsi~')
-    Route::get('login', 'login')->name('Login')->middleware('guest');
+    Route::get('login', 'login')->name('Login');
     Route::get('logout', 'logout')->name('Logout');
     Route::post('login', 'authenticate')->name('Auth');
 });
@@ -38,25 +36,47 @@ Route::controller(LoginController::class)->group(function () {
 Route::controller(RegistrasiController::class)->group(function () {
     Route::get('registrasi', 'registrasi')->name('Registrasi');
     Route::post('registrasi', 'store')->name('Register');
-    Route::get('getJurusan/{sekolah_id}', 'getJurusan'); // DAPATKAN NAMA JURUSAN DARI FOREIGN KEY SEKOLAH
 });
 
 
-// DASHBOARD CONTROLLER
-Route::controller(DashboardController::class)->group(function () {
-    Route::get('dashboard', 'dashboard')->name('Dashboard')->middleware('auth');
-    Route::get('dashboard/profile', 'profile')->name('Profile')->middleware('auth');
-});
+Route::middleware(['auth'])->group(function () {
 
+    //ADMIN
+    // Contoh Pemanggilan Route di Blade -> admin.Dashboard
+    Route::prefix('admin')->name('admin.')->middleware(['isAdmin'])->group(function () {
 
-// ASSESMENT CONTROLLER
-Route::controller(AssesmentController::class)->group(function () {
-    Route::get('assesment', 'assesment')->name('Assesment')->middleware('auth');
-});
+    });
 
+    //ASESOR
+    // Contoh Pemanggilan Route di Blade -> asesor.Dashboard
+    Route::prefix('asesor')->name('asesor.')->middleware(['isAsesor'])->group(function () {
 
-// PENGATURAN CONTROLLER
-Route::controller(PengaturanController::class)->group(function () {
-    Route::get('pengaturan', 'pengaturan')->name('Pengaturan')->middleware('auth');
-    Route::post('cg-password', 'cgPassword')->name('cgPassword')->middleware('auth');
+    });
+
+    //ASESI
+    // Contoh Pemanggilan Route di Blade -> asesi.Dashboard
+    Route::prefix('asesi')->name('asesi.')->middleware(['isAsesi'])->group(function () {
+        
+        Route::controller(DashboardController::class)->group(function () {
+            Route::get('dashboard', 'dashboard')->name('Dashboard');
+            Route::get('dashboard/profile', 'profile')->name('Profile');
+        });
+        
+        Route::controller(PengaturanController::class)->group(function () {
+            Route::get('pengaturan', 'pengaturan')->name('Pengaturan');
+            Route::post('cg-password', 'cgPassword')->name('cgPassword');
+        });
+
+        Route::controller(AsesmenController::class)->group(function () {
+            Route::get('assesment', 'assesment')->name('Assesment');
+        });
+
+    });
+
+    //PENINJAU
+    // Contoh Pemanggilan Route di Blade -> peninjau.Dashboard
+    Route::prefix('peninjau')->name('peninjau.')->middleware(['isPeninjau'])->group(function () {
+
+    });
+    
 });

@@ -19,7 +19,7 @@
     <nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-                    href="{{ route('Dashboard') }}">Dashboard</a></li>
+                    href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Pengaturan</li>
         </ol>
     </nav>
@@ -46,7 +46,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('cgPassword') }}" method="POST">
+                    <form action="{{ route('asesi.cgPassword') }}" method="POST">
                         @csrf
                         <div class="col">
                             <label for="password-lama" class="col-form-label fw-bold text-black">Password Lama</label>

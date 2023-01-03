@@ -4,7 +4,7 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex align-items-center" style="width: 95px">
                 <div class="logo">
-                    <a href="{{ route('Dashboard') }}"><img src="/images/logo/logo.png" style="width: 100%; height:auto"
+                    <a href="{{ route('asesi.Dashboard') }}"><img src="/images/logo/logo.png" style="width: 100%; height:auto"
                             alt="Logo" srcset=""></a>
                 </div>
                 <div class="sidebar-toggler  x">
@@ -18,28 +18,29 @@
             <ul class="menu">
                 {{-- MENU DASHBOARD --}}
                 {{-- JIKA MENU DASHBOARD DIPILIH MAKA TOMBOL AKAN AKTIF --}}
-                <li class="sidebar-item {{ Request::is('dashboard*') ? 'active' : '' }} ">
-                    <a href="{{ route('Dashboard') }}" class='sidebar-link'>
+                <li class="sidebar-item {{ request()->routeIs('asesi.Dashboard*') ? 'active' : '' }} ">
+                    <a href="{{ route('asesi.Dashboard') }}" class='sidebar-link'>
                         <i
-                            class="bi bi-grid{{ Request::is('dashboard*') ? '-fill warna-white' : '' }} warna-secondary"></i>
+                            class="bi bi-grid{{ request()->routeIs('asesi.Dashboard*') ? '-fill warna-white' : '' }} 
+                            warna-secondary"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 {{-- MENU ASSESMENT --}}
                 {{-- JIKA MENU ASSESMENT DIPILIH MAKA TOMBOL AKAN AKTIF --}}
-                <li class="sidebar-item {{ Request::is('assesment*') ? 'active' : '' }}">
-                    <a href="{{ route('Assesment') }}" class='sidebar-link'>
-                        <i class="bi bi-journal-text {{ Request::is('assesment*') ? 'warna-white' : '' }} warna-secondary"
-                            style="{{ Request::is('assesment*') ? 'font-weight: 1000' : '' }}"></i>
+                <li class="sidebar-item {{ request()->routeIs('asesi.Assesment*') ? 'active' : '' }}">
+                    <a href="{{ route('asesi.Assesment') }}" class='sidebar-link'>
+                        <i class="bi bi-journal-text {{ request()->routeIs('asesi.Assesment*') ? 'warna-white' : '' }} warna-secondary"
+                            style="{{ request()->routeIs('asesi.Assesment*') ? 'font-weight: 1000' : '' }}"></i>
                         <span>Assesment</span>
                     </a>
                 </li>
                 {{-- MENU PENGATURAN --}}
                 {{-- JIKA MENU PENGATURAN DIPILIH MAKA TOMBOL AKAN AKTIF --}}
-                <li class="sidebar-item {{ Request::is('pengaturan*') ? 'active' : '' }}">
-                    <a href="{{ route('Pengaturan') }}" class='sidebar-link'>
+                <li class="sidebar-item {{ request()->routeIs('asesi.Pengaturan*') ? 'active' : '' }}">
+                    <a href="{{ route('asesi.Pengaturan') }}" class='sidebar-link'>
                         <i
-                            class="bi bi-gear{{ Request::is('pengaturan*') ? '-fill warna-white' : '' }} warna-secondary"></i>
+                            class="bi bi-gear{{ request()->routeIs('asesi.Pengaturan*') ? '-fill warna-white' : '' }} warna-secondary"></i>
                         <span>Pengaturan</span>
                     </a>
                 </li>

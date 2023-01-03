@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Jurusan;
 use App\Models\Sekolah;
+use App\Models\Institusi;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,25 +21,37 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Role::create([
-            'nama_role' => 'admin'
+            'role' => 'admin'
         ]);
         Role::create([
-            'nama_role' => 'peninjau'
+            'role' => 'peninjau'
         ]);
         Role::create([
-            'nama_role' => 'asesor'
+            'role' => 'asesor'
         ]);
         Role::create([
-            'nama_role' => 'asesi'
+            'role' => 'asesi'
         ]);
-        Sekolah::create([
-            'nama_sekolah' => 'SMK NEGERI 1 SINTANG'
+        Institusi::create([
+            'nama_institusi' => 'SMK NEGERI 1 SINTANG',
+            'alamat_institusi'=> 'Jl.',
+            'kode_pos'=>'3433',
+            'nomor_hp_institusi'=>'2123453453',
+            'email_institusi'=>'institusi@gmail.com'
         ]);
-        Sekolah::create([
-            'nama_sekolah' => 'SMK NEGERI 2 SINTANG'
+        Institusi::create([
+            'nama_institusi' => 'SMK NEGERI 2 SINTANG',
+            'alamat_institusi'=> 'Jl.',
+            'kode_pos'=>'3433',
+            'nomor_hp_institusi'=>'2123453453',
+            'email_institusi'=>'institusi@gmail.com'
         ]);
-        Sekolah::create([
-            'nama_sekolah' => 'SMK NEGERI 3 PONTIANAK'
+        Institusi::create([
+            'nama_institusi' => 'SMK NEGERI 3 PONTIANAK',
+            'alamat_institusi'=> 'Jl.',
+            'kode_pos'=>'3433',
+            'nomor_hp_institusi'=>'2123453453',
+            'email_institusi'=>'institusi@gmail.com'
         ]);
         Jurusan::factory(20)->create();
 

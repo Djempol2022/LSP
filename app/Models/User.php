@@ -47,15 +47,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role()
+    public function relasi_roles()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
-    public function sekolah()
+    public function relasi_institusi()
     {
-        return $this->belongsTo(Sekolah::class);
+        return $this->belongsTo(Institusi::class);
     }
-    public function jurusan()
+    public function relasi_jurusan()
     {
         return $this->belongsTo(Jurusan::class);
     }
