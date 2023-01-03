@@ -48,7 +48,34 @@ class DatabaseSeeder extends Seeder
             'sekolah_id' => '1',
             'jurusan_id' => '1',
             'role_id' => '1',
-            'password' => Hash::make('admin123')
+            'password' => Hash::make('12345678')
+        ]);
+
+        User::create([
+            'nama_lengkap' => 'peninjau',
+            'email' => 'peninjau@peninjau.com',
+            'sekolah_id' => '1',
+            'jurusan_id' => '1',
+            'role_id' => '2',
+            'password' => Hash::make('12345678')
+        ]);
+
+        User::create([
+            'nama_lengkap' => 'asessor',
+            'email' => 'asessor@asessor.com',
+            'sekolah_id' => '1',
+            'jurusan_id' => '1',
+            'role_id' => '3',
+            'password' => Hash::make('12345678')
+        ]);
+
+        User::create([
+            'nama_lengkap' => 'assesi',
+            'email' => 'assesi@assesi.com',
+            'sekolah_id' => '1',
+            'jurusan_id' => '1',
+            'role_id' => '4',
+            'password' => Hash::make('12345678')
         ]);
     }
 }
