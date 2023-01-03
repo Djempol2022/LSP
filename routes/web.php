@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AssesmentController;
+use App\Http\Controllers\Asesi\AssesmentController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrasiController;

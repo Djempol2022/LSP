@@ -26,10 +26,10 @@ class DatabaseSeeder extends Seeder
             'nama_role' => 'peninjau'
         ]);
         Role::create([
-            'nama_role' => 'assesor'
+            'nama_role' => 'asesor'
         ]);
         Role::create([
-            'nama_role' => 'assesi'
+            'nama_role' => 'asesi'
         ]);
         Sekolah::create([
             'nama_sekolah' => 'SMK NEGERI 1 SINTANG'
@@ -44,38 +44,38 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'nama_lengkap' => 'admin',
-            'email' => 'admin@admin.com',
-            'sekolah_id' => '1',
+            'institusi_id' => '1',
             'jurusan_id' => '1',
-            'role_id' => '1',
-            'password' => Hash::make('12345678')
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('12345678'),
+            'role_id' => '1'
         ]);
 
         User::create([
             'nama_lengkap' => 'peninjau',
-            'email' => 'peninjau@peninjau.com',
-            'sekolah_id' => '1',
+            'institusi_id' => '1',
             'jurusan_id' => '1',
-            'role_id' => '2',
-            'password' => Hash::make('12345678')
+            'email' => 'peninjau@gmail.com',
+            'password' => Hash::make('12345678'),
+            'role_id' => '2'
         ]);
 
         User::create([
-            'nama_lengkap' => 'asessor',
-            'email' => 'asessor@asessor.com',
-            'sekolah_id' => '1',
+            'nama_lengkap' => 'asesor',
+            'institusi_id' => '1',
             'jurusan_id' => '1',
-            'role_id' => '3',
-            'password' => Hash::make('12345678')
+            'email' => 'asesor@gmail.com',
+            'password' => Hash::make('12345678'),
+            'role_id' => '3'
         ]);
 
         User::create([
-            'nama_lengkap' => 'assesi',
-            'email' => 'assesi@assesi.com',
-            'sekolah_id' => '1',
+            'nama_lengkap' => 'asesi',
+            'institusi_id' => '1',
             'jurusan_id' => '1',
-            'role_id' => '4',
-            'password' => Hash::make('12345678')
+            'email' => 'asesi@gmail.com',
+            'password' => Hash::make('12345678'),
+            'role_id' => '4'
         ]);
     }
 }

@@ -14,4 +14,6 @@ class AssesmentController extends Controller
             'where' => 'Assesment'
         ]);
     }
+
+    
 }

@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jurusans', function (Blueprint $table) {
+        Schema::create('sertifikasi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sekolah_id');
-            $table->string('nama_jurusan');
+            $table->foreignId('asesi_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->text('judul_skema_sertifikasi');
+            $table->string('nomor_skema_sertifikasi');
+            $table->string('tujuan_asesmen');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jurusans');
+        Schema::dropIfExists('sertifikasi');
     }
 };

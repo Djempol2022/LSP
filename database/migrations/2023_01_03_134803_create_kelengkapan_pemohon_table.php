@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sekolahs', function (Blueprint $table) {
+        Schema::create('kelengkapan_pemohon', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_sekolah');
+            $table->foreignId('asesi_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->text('nilai_mata_pelajaran_kompetensi');
+            $table->text('sertifikat_prakerin');
+            $table->text('nilai_raport');
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sekolahs');
+        Schema::dropIfExists('kelengkapan_pemohon');
     }
 };

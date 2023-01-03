@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('unit_kompetensi_sub', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_role');
+            $table->foreignId('unit_kompetensi_id')->constrained('unit_kompetensi')->onUpdate('cascade')->onDelete('cascade');
+            $table->text('judul_unit_kompetensi_sub');
+            $table->text('bukti_relevan');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('unit_kompetensi_sub');
     }
 };
