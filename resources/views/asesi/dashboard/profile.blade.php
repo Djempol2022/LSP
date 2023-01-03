@@ -12,7 +12,7 @@
         {{-- EDIT PROFIL --}}
         <div class="mt-5">
             <div class="alert fs-6" role="alert" style="background-color: #F8D7DA">
-                Lengkapi Profil untuk Melengkapi Formulir Permohonan Sertifikasi Kompetensi, sebagai Syarat untuk
+                Lengkapi Profil untuk Melengkapi Formulir Permohonan Sertifikasi Kompetensi, sebagai Syarat untukk
                 Melakukan
                 Ujian Sertifikasi!
             </div>
