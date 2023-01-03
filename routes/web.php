@@ -36,7 +36,7 @@ Route::controller(LoginController::class)->group(function () {
 
 // REGISTRASI CONTROLLER
 Route::controller(RegistrasiController::class)->group(function () {
-    Route::get('registrasi', 'registrasi')->name('Registrasi')->middleware('guest');
+    Route::get('registrasi', 'registrasi')->name('Registrasi');
     Route::post('registrasi', 'store')->name('Register');
     Route::get('getJurusan/{sekolah_id}', 'getJurusan'); // DAPATKAN NAMA JURUSAN DARI FOREIGN KEY SEKOLAH
 });
