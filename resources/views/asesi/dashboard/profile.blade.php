@@ -388,7 +388,7 @@
                                     </div>
 
                                     {{-- DATA PEKERJAAN SEKARANG --}}
-                                    <div class="row mt-5">
+                                    <div class="row" style="margin-top: 65px">
                                         <h5>B. Data Pekerjaan Sekarang</h5>
                                         <div class="col-lg-6">
                                             <div class="col edit-profil-left">
@@ -435,11 +435,12 @@
                             </div>
                             <div class="col my-3">
                                 {{-- JUDUL --}}
-                                <div class="profil-section-title" style="font-size: 20px">
+                                <div class="profil-section-title mb-5" style="font-size: 20px">
                                     Bagian 2 : Data Sertifikasi
                                 </div>
                                 {{-- FORM --}}
-                                <div class="mt-5">
+                                <div class="col profil-section">
+                                    <p>Tujuan Assesment</p>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="data_sertifikasi"
                                             id="sertifikasi">
@@ -479,10 +480,10 @@
                             </div>
                             <div class="col my-3">
                                 {{-- JUDUL --}}
-                                <div class="profil-section-title" style="font-size: 20px">
+                                <div class="profil-section-title mb-5" style="font-size: 20px">
                                     Bagian 3 : Bukti Kelengkapan Pemohon
                                 </div>
-                                <div class="text-black mt-5">
+                                <div class="col profil-section text-black">
                                     <div class="col mb-5">
                                         <label for="nilaiMapel" class="form-label fw-semibold">Nilai Mata Pelajaran
                                             Kompetensi Keahlian Multimedia</label>
@@ -500,6 +501,37 @@
                                         <label for="nilaiRaport" class="form-label fw-semibold">Nilai Raport</label>
                                         <input type="file" id="nilaiRaport"
                                             class="form-control form-control-lg input-file-col">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col my-3">
+                                {{-- JUDUL --}}
+                                <div class="profil-section-title mb-5" style="font-size: 20px">
+                                    Hasil Persyaratan
+                                </div>
+                                <div class="row" style="margin: 3px 0">
+                                    <div class="col-lg-6 profil-section text-black">
+                                        <h4>Pemohon / Kandidat</h4>
+                                        <div class="col edit-profil-left mb-4">
+                                            <label for="namaLengkapPemohon" class="form-label fw-semibold">Nama
+                                                Lengkap</label>
+                                            <input type="text" id="namaLengkapPemohon" class="form-control input-text"
+                                                placeholder="Masukkan Nama Lengkap">
+                                        </div>
+                                        {{-- TANDA TANGAN / TTD --}}
+                                        <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
+                                        <div class="col edit-profil mb-4 signature-pad" id="signature-pad">
+                                            <canvas></canvas>
+                                        </div>
+                                        {{-- <div id="signature-clear">
+                                            <button type="button" class="button button-primary tombol-primary-small mb-4"
+                                                data-action="clear">Clear</button>
+                                        </div> --}}
+                                        <div class="col edit-profil-left">
+                                            <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
+                                            <input type="date" id="tanggal" class="form-control input-text"
+                                                placeholder="Masukkan Nama Lengkap">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

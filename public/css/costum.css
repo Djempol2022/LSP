@@ -253,16 +253,20 @@
     background-color: var(--primary-color);
     border-radius: 5px;
     font-weight: 550;
-    padding: 7px;
+    padding: 7px 8px;
+    margin-bottom: 13px;
     gap: 7px;
     font-size: 21px;
     color: var(--white-color);
 }
 .profil-section {
+    padding: 0 8px;
     font-size: 18px;
+    margin-bottom: 125px;
     color: black;
 }
-.profil-section h5 {
+.profil-section h5,
+h4 {
     color: black;
 }
 .profil-section p {
@@ -281,7 +285,7 @@
 }
 .input-file-col {
     border-radius: 8px;
-    width: 65%;
+    width: 60%;
 }
 .edit-profil-right {
     margin-bottom: 20px;
@@ -291,7 +295,27 @@
     margin-bottom: 20px;
     margin-right: 5%;
 }
-@media (max-width: 720px) {
+/* TTD */
+.signature-pad {
+    position: relative;
+    flex: 1;
+    /* border: 1px solid #f4f4f4; */
+}
+.signature-pad canvas {
+    /* position: absolute; */
+    left: 0;
+    top: 0;
+    width: 95%;
+    /* height: 100%; */
+    height: 200px;
+    border: 0.2px solid var(--tiernary-color);
+    border-radius: 3px;
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.02) inset; */
+}
+
+@media (max-width: 1190px) {
+}
+@media (max-width: 950px) {
     .edit-profil-right {
         margin-bottom: 20px;
         margin-left: 0;
@@ -299,6 +323,10 @@
     .edit-profil-left {
         margin-bottom: 20px;
         margin-right: 0;
+    }
+    .input-file-col {
+        border-radius: 8px;
+        width: 100%;
     }
 }
 

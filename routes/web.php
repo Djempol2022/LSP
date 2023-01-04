@@ -19,7 +19,7 @@ use App\Http\Controllers\Asesi\PengaturanController;
 */
 
 Route::get('/', function () {
-    return redirect('dashboard');
+    return redirect('asesi/dashboard');
 });
 
 
@@ -44,24 +44,22 @@ Route::middleware(['auth'])->group(function () {
     //ADMIN
     // Contoh Pemanggilan Route di Blade -> admin.Dashboard
     Route::prefix('admin')->name('admin.')->middleware(['isAdmin'])->group(function () {
-
     });
 
     //ASESOR
     // Contoh Pemanggilan Route di Blade -> asesor.Dashboard
     Route::prefix('asesor')->name('asesor.')->middleware(['isAsesor'])->group(function () {
-
     });
 
     //ASESI
     // Contoh Pemanggilan Route di Blade -> asesi.Dashboard
     Route::prefix('asesi')->name('asesi.')->middleware(['isAsesi'])->group(function () {
-        
+
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'dashboard')->name('Dashboard');
             Route::get('dashboard/profile', 'profile')->name('Profile');
         });
-        
+
         Route::controller(PengaturanController::class)->group(function () {
             Route::get('pengaturan', 'pengaturan')->name('Pengaturan');
             Route::post('cg-password', 'cgPassword')->name('cgPassword');
@@ -70,13 +68,10 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(AsesmenController::class)->group(function () {
             Route::get('assesment', 'assesment')->name('Assesment');
         });
-
     });
 
     //PENINJAU
     // Contoh Pemanggilan Route di Blade -> peninjau.Dashboard
     Route::prefix('peninjau')->name('peninjau.')->middleware(['isPeninjau'])->group(function () {
-
     });
-    
 });
