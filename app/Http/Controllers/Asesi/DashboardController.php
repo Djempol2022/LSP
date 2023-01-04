@@ -20,7 +20,6 @@ class DashboardController extends Controller
     {
         return view($this->path . 'profile', [
             'where' => 'Profile',
-            'user' => User::with('role', 'sekolah', 'jurusan')->first()
         ]);
     }
 }
