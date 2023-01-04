@@ -380,8 +380,8 @@
                                                     <label for="fotoProfil" class="form-label fw-semibold">Foto
                                                         Profil</label>
                                                     <input type="file" id="fotoProfil"
-                                                        class="form-control form-control-lg input-text"
-                                                        placeholder="Masukkan Nama Lengkap" style="padding: 11px 0">
+                                                        class="form-control form-control-lg input-file"
+                                                        placeholder="Masukkan Nama Lengkap">
                                                 </div>
                                             </div>
                                         </div>
@@ -430,6 +430,76 @@
                                                     placeholder="Masukkan Email Institusi / Perusahaan">
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col my-3">
+                                {{-- JUDUL --}}
+                                <div class="profil-section-title" style="font-size: 20px">
+                                    Bagian 2 : Data Sertifikasi
+                                </div>
+                                {{-- FORM --}}
+                                <div class="mt-5">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="data_sertifikasi"
+                                            id="sertifikasi">
+                                        <label class="form-check-label" for="sertifikasi">
+                                            Sertifikasi
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="data_sertifikasi"
+                                            id="sertifikasiUlang">
+                                        <label class="form-check-label" for="sertifikasiUlang">
+                                            Sertifikasi Ulang
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="data_sertifikasi"
+                                            id="pengakuanKompetensiTerkini">
+                                        <label class="form-check-label" for="pengakuanKompetensiTerkini">
+                                            Pengakuan Kompetensi Terkini (PKT)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="data_sertifikasi"
+                                            id="rekognisiPembelajaranLampau">
+                                        <label class="form-check-label" for="rekognisiPembelajaranLampau">
+                                            Rekognisi Pembelajaran Lampau
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="data_sertifikasi"
+                                            id="lainnya">
+                                        <label class="form-check-label" for="lainnya">
+                                            Lainnya
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col my-3">
+                                {{-- JUDUL --}}
+                                <div class="profil-section-title" style="font-size: 20px">
+                                    Bagian 3 : Bukti Kelengkapan Pemohon
+                                </div>
+                                <div class="text-black mt-5">
+                                    <div class="col mb-5">
+                                        <label for="nilaiMapel" class="form-label fw-semibold">Nilai Mata Pelajaran
+                                            Kompetensi Keahlian Multimedia</label>
+                                        <input type="file" id="nilaiMapel"
+                                            class="form-control form-control-lg input-file-col">
+                                    </div>
+                                    <div class="col mb-5">
+                                        <label for="sertifikatPrakerin" class="form-label fw-semibold">Sertifikat Prakerin
+                                            atau
+                                            Surat Keterangan Telah Melaksanakan Praktek Kerja Industr</label>
+                                        <input type="file" id="sertifikatPrakerin"
+                                            class="form-control form-control-lg input-file-col">
+                                    </div>
+                                    <div class="col mb-5">
+                                        <label for="nilaiRaport" class="form-label fw-semibold">Nilai Raport</label>
+                                        <input type="file" id="nilaiRaport"
+                                            class="form-control form-control-lg input-file-col">
                                     </div>
                                 </div>
                             </div>

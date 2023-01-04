@@ -4,7 +4,7 @@
         <div class="row">
             {{-- FOTO PEMBUKA --}}
             <div class="col-auto foto-dashboard">
-                <img src="images/dashboard.png" style="width: 100%" alt="">
+                <img src="/images/dashboard.png" style="width: 100%" alt="">
                 <div class="col-auto bg-profile" style="margin: 0 2%">
                     <div class="col p-3">
                         <h5 class="text-black">Jadwal Assesment</h5>
@@ -31,7 +31,7 @@
                 <a href="{{ route('asesi.Profile') }}">
                     <div class="row bg-profile px-4 py-4 align-items-center">
                         <div class="col-auto col-foto-profile">
-                            <img src="images/logo/favicon.png" style="width: 85%" class="rounded-circle" alt="">
+                            <img src="/images/logo/favicon.png" style="width: 85%" class="rounded-circle" alt="">
                         </div>
                         <div class="col-9 row p-0">
                             <div class="col-auto col-tulisan-profile">

@@ -274,6 +274,15 @@
     border: 0.5px solid var(--tiernary-color);
     border-radius: 3px;
 }
+.input-file {
+    padding: 11px 5px;
+    border: 0.5px solid var(--tiernary-color);
+    border-radius: 3px;
+}
+.input-file-col {
+    border-radius: 8px;
+    width: 65%;
+}
 .edit-profil-right {
     margin-bottom: 20px;
     margin-left: 5%;
