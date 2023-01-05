@@ -12,8 +12,8 @@
     var wrapper = document.getElementById("signature-pad");
     // var clear = document.getElementById("signature-clear");
     // var clearButton = clear.querySelector("[data-action=clear]");
-    var undoButton = wrapper.querySelector("[data-action=undo]");
-    var savePNGButton = wrapper.querySelector("[data-action=save-png]");
+    // var undoButton = wrapper.querySelector("[data-action=undo]");
+    // var savePNGButton = wrapper.querySelector("[data-action=save-png]");
     var canvas = wrapper.querySelector("canvas");
     var signaturePad = new SignaturePad(canvas, {
         backgroundColor: 'rgb(255, 255, 255)'
