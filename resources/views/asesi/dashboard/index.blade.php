@@ -28,7 +28,7 @@
             </div>
             {{-- TOMBOL MENU PROFIL --}}
             <div class="col-auto foto-profile">
-                <a href="{{ route('asesi.Profile') }}">
+                <a href="{{ route('asesi.Dashboard.Profile') }}">
                     <div class="row bg-profile px-4 py-4 align-items-center">
                         <div class="col-auto col-foto-profile">
                             <img src="/images/logo/favicon.png" style="width: 85%" class="rounded-circle" alt="">

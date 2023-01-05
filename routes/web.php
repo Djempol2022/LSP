@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'dashboard')->name('Dashboard');
-            Route::get('dashboard/profile', 'profile')->name('Profile');
+            Route::get('dashboard/profile', 'profile')->name('Dashboard.Profile');
         });
 
         Route::controller(PengaturanController::class)->group(function () {
