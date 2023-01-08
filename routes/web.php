@@ -67,6 +67,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(AsesmenController::class)->group(function () {
             Route::get('assesment', 'assesment')->name('Assesment');
+            Route::get('soal', 'soal')->name('Assesment.Soal');
         });
     });
 

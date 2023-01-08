@@ -8,10 +8,15 @@ use Illuminate\Http\Request;
 class AsesmenController extends Controller
 {
     private $path = 'asesi/assesment/';
-    public function assesment(Request $request)
+    public function assesment()
     {
-        $request;
         return view($this->path . 'index', [
+            'where' => 'Assesment'
+        ]);
+    }
+    public function soal()
+    {
+        return view($this->path . 'soal', [
             'where' => 'Assesment'
         ]);
     }

@@ -33,6 +33,6 @@ class PengaturanController extends Controller
             'password_baru' => ['required', 'min:5', 'max:255', 'different:password_lama'],
         ], $messages);
         User::find($id)->update(['password' => $password_baru]);
-        return redirect('pengaturan')->with('berhasil', 'Ganti password berhasil');
+        return redirect(route('asesi.Pengaturan'))->with('berhasil', 'Ganti password berhasil');
     }
 }

@@ -245,16 +245,17 @@
     {{-- MODAL PROFIL --}}
     <div class="modal fade" id="editProfil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="editProfilLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="editProfilLabel">Edit Profil-APL 01</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mx-3">
-                        <form action="" method="POST">
-                            @csrf
+        <form action="" method="POST">
+            @csrf
+            <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="editProfilLabel">Edit Profil-APL 01</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mx-3">
+
                             <div class="col my-3">
                                 {{-- JUDUL --}}
                                 <div class="profil-section-title" style="font-size: 20px">
@@ -272,7 +273,7 @@
                                                         Lengkap</label>
                                                     <input type="text" id="namaLengkap"
                                                         class="form-control input-text"
-                                                        placeholder="Masukkan Nama Lengkap">
+                                                        placeholder="Masukkan Nama Lengkap. . .">
                                                 </div>
                                                 <div class="col edit-profil-left">
                                                     <label for="instansi" class="form-label fw-semibold">Nama Sekolah /
@@ -299,21 +300,20 @@
                                                     <label for="nomorKtp" class="form-label fw-semibold">Nomor
                                                         KTP/NIK/Paspor</label>
                                                     <input type="text" id="nomorKtp" class="form-control input-text"
-                                                        placeholder="Masukkan Nomor KTP/NIK/Paspor">
+                                                        placeholder="Masukkan Nomor KTP/NIK/Paspor. . .">
                                                 </div>
                                                 <div class="col edit-profil-left">
                                                     <label for="tempatLahir" class="form-label fw-semibold">Tempat
                                                         Lahir</label>
                                                     <input type="text" id="tempatLahir"
                                                         class="form-control input-text"
-                                                        placeholder="Masukkan Tempat Lahir">
+                                                        placeholder="Masukkan Tempat Lahir. . .">
                                                 </div>
                                                 <div class="col edit-profil-left">
                                                     <label for="tanggalLahir" class="form-label fw-semibold">Tanggal
                                                         Lahir</label>
                                                     <input type="date" id="tanggalLahir"
-                                                        class="form-control input-text"
-                                                        placeholder="Masukkan Nama Lengkap">
+                                                        class="form-control input-text">
                                                 </div>
                                                 <div class="col edit-profil-left">
                                                     <label for="jenisKelamin" class="form-label fw-semibold">Jenis
@@ -333,7 +333,8 @@
                                                         class="form-label fw-semibold">Kebangsaan</label>
                                                     <select name="" class="form-select input-text"
                                                         id="kebangsaan">
-                                                        <option value="" selected disabled>Pilih Kebangsaan</option>
+                                                        <option value="" selected disabled>Pilih Kebangsaan
+                                                        </option>
                                                         <option value="">Indonesia</option>
                                                         <option value="">Malaysia</option>
                                                     </select>
@@ -343,24 +344,24 @@
                                                         Rumah</label>
                                                     <input type="text" id="alamatRumah"
                                                         class="form-control input-text"
-                                                        placeholder="Masukkan Alamat Rumah">
+                                                        placeholder="Masukkan Alamat Rumah. . .">
                                                 </div>
                                                 <div class="col edit-profil-right">
                                                     <label for="kodePos" class="form-label fw-semibold">Kode Pos</label>
                                                     <input type="text" id="kodePos" class="form-control input-text"
-                                                        placeholder="Masukkan Kode Pos">
+                                                        placeholder="Masukkan Kode Pos. . .">
                                                 </div>
                                                 <div class="col edit-profil-right">
                                                     <label for="nomorTelepon" class="form-label fw-semibold">Nomor
                                                         Telepon</label>
                                                     <input type="number" id="nomorTelepon"
                                                         class="form-control input-text"
-                                                        placeholder="Masukkan Nomor Telepon">
+                                                        placeholder="Masukkan Nomor Telepon. . .">
                                                 </div>
                                                 <div class="col edit-profil-right">
                                                     <label for="email" class="form-label fw-semibold">Email</label>
                                                     <input type="email" id="email" class="form-control input-text"
-                                                        placeholder="Masukkan Email">
+                                                        placeholder="Masukkan Email. . .">
                                                 </div>
                                                 <div class="col edit-profil-right">
                                                     <label for="kualifikasiPendidikan"
@@ -380,8 +381,7 @@
                                                     <label for="fotoProfil" class="form-label fw-semibold">Foto
                                                         Profil</label>
                                                     <input type="file" id="fotoProfil"
-                                                        class="form-control form-control-lg input-file"
-                                                        placeholder="Masukkan Nama Lengkap">
+                                                        class="form-control form-control-lg input-file">
                                                 </div>
                                             </div>
                                         </div>
@@ -400,34 +400,34 @@
                                             <div class="col edit-profil-left">
                                                 <label for="jabatan" class="form-label fw-semibold">Jabatan</label>
                                                 <input type="text" id="jabatan" class="form-control input-text"
-                                                    placeholder="Masukkan Jabatan">
+                                                    placeholder="Masukkan Jabatan. . .">
                                             </div>
                                             <div class="col edit-profil-left">
                                                 <label for="alamatKantor" class="form-label fw-semibold">Alamat
                                                     Kantor</label>
                                                 <input type="text" id="alamatKantor" class="form-control input-text"
-                                                    placeholder="Masukkan Alamat Kantor">
+                                                    placeholder="Masukkan Alamat Kantor. . .">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="col edit-profil-right">
                                                 <label for="kodePos" class="form-label fw-semibold">Kode Pos</label>
                                                 <input type="text" id="kodePos" class="form-control input-text"
-                                                    placeholder="Masukkan Kode Pos">
+                                                    placeholder="Masukkan Kode Pos. . .">
                                             </div>
                                             <div class="col edit-profil-right">
                                                 <label for="nomorTeleponInstitusi" class="form-label fw-semibold">Nomor
                                                     Telepon Institusi / Perusahaan</label>
                                                 <input type="number" id="nomorTeleponInstitusi"
                                                     class="form-control input-text"
-                                                    placeholder="Masukkan Nomor Telepon Institusi / Perusahaan">
+                                                    placeholder="Masukkan Nomor Telepon Institusi / Perusahaan. . .">
                                             </div>
                                             <div class="col edit-profil-right">
                                                 <label for="emailInstitusi" class="form-label fw-semibold">Email Institusi
                                                     /
                                                     Perusahaan</label>
                                                 <input type="email" id="emailInstitusi" class="form-control input-text"
-                                                    placeholder="Masukkan Email Institusi / Perusahaan">
+                                                    placeholder="Masukkan Email Institusi / Perusahaan..">
                                             </div>
                                         </div>
                                     </div>
@@ -441,35 +441,35 @@
                                 {{-- FORM --}}
                                 <div class="col profil-section">
                                     <p>Tujuan Assesment</p>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="data_sertifikasi"
                                             id="sertifikasi">
                                         <label class="form-check-label" for="sertifikasi">
                                             Sertifikasi
                                         </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="data_sertifikasi"
                                             id="sertifikasiUlang">
                                         <label class="form-check-label" for="sertifikasiUlang">
                                             Sertifikasi Ulang
                                         </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="data_sertifikasi"
                                             id="pengakuanKompetensiTerkini">
                                         <label class="form-check-label" for="pengakuanKompetensiTerkini">
                                             Pengakuan Kompetensi Terkini (PKT)
                                         </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="data_sertifikasi"
                                             id="rekognisiPembelajaranLampau">
                                         <label class="form-check-label" for="rekognisiPembelajaranLampau">
                                             Rekognisi Pembelajaran Lampau
                                         </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mb-2">
                                         <input class="form-check-input" type="radio" name="data_sertifikasi"
                                             id="lainnya">
                                         <label class="form-check-label" for="lainnya">
@@ -485,23 +485,34 @@
                                 </div>
                                 <div class="col profil-section text-black">
                                     <div class="col mb-5">
-                                        <label for="nilaiMapel" class="form-label fw-semibold">Nilai Mata Pelajaran
-                                            Kompetensi Keahlian Multimedia</label>
-                                        <input type="file" id="nilaiMapel"
+                                        <label for="kartuKeluarga" class="form-label fw-semibold">Kartu Keluarga</label>
+                                        <input type="file" id="kartuKeluarga"
                                             class="form-control form-control-lg input-file-col">
                                     </div>
                                     <div class="col mb-5">
+                                        <label for="kartuPelajar" class="form-label fw-semibold">Kartu Pelajar</label>
+                                        <input type="file" id="kartuPelajar"
+                                            class="form-control form-control-lg input-file-col">
+                                    </div>
+                                    <div class="col mb-5">
+                                        <label for="pasFoto" class="form-label fw-semibold">Pas Foto</label>
+                                        <input type="file" id="pasFoto"
+                                            class="form-control form-control-lg input-file-col">
+                                        <p class="text-danger mt-2">*Masukkan foto berlatar belakang merah</p>
+                                    </div>
+                                    <div class="col mb-5">
                                         <label for="sertifikatPrakerin" class="form-label fw-semibold">Sertifikat Prakerin
-                                            atau
-                                            Surat Keterangan Telah Melaksanakan Praktek Kerja Industr</label>
+                                            atau Surat Keterangan Telah Melaksanakan Praktek Kerja Industri</label>
                                         <input type="file" id="sertifikatPrakerin"
                                             class="form-control form-control-lg input-file-col">
                                     </div>
                                     <div class="col mb-5">
-                                        <label for="nilaiRaport" class="form-label fw-semibold">Nilai Raport</label>
+                                        <label for="nilaiRaport" class="form-label fw-semibold">Nilai Raport (Semester 1
+                                            sd Semester 5)</label>
                                         <input type="file" id="nilaiRaport"
                                             class="form-control form-control-lg input-file-col">
                                     </div>
+
                                 </div>
                             </div>
                             <div class="col my-3">
@@ -516,7 +527,7 @@
                                             <label for="namaLengkapPemohon" class="form-label fw-semibold">Nama
                                                 Lengkap</label>
                                             <input type="text" id="namaLengkapPemohon" class="form-control input-text"
-                                                placeholder="Masukkan Nama Lengkap">
+                                                placeholder="Masukkan Nama Lengkap. . .">
                                         </div>
                                         {{-- TANDA TANGAN / TTD --}}
                                         <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
@@ -535,13 +546,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary tombol-primary-small">Simpan</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary tombol-primary-small">Simpan</button>
-                </div>
             </div>
-        </div>
+        </form>
     </div>
 @endsection
