@@ -8,13 +8,13 @@
         <h3 class="col-auto m-0">{{ $title }}</h3>
         {{-- NOTIFIKASI --}}
         <div class="col d-flex justify-content-end">
-            <button type="button" class="col-auto notifikasi" data-bs-toggle="dropdown"><img src="/images/notif.png">
+            <button type="button" class="notifikasi col-auto " data-bs-toggle="dropdown"><img src="/images/notif.png">
                 <span class="position-absolute translate-middle badge rounded-pill bg-success">
                     <small>9</small>
                 </span>
             </button>
             {{-- NOTIFIKASI ALERT --}}
-            <ul class="dropdown-menu shadow">
+            <ul class="dropdown-menu shadow-sm">
                 <div class="row notifikasi-alert">
                     <div class="col-auto" style="width: 16.5%"><img src="/images/notif.png" style="width: 100%"></div>
                     <div class="d-flex row col-9 p-0">

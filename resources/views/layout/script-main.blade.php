@@ -13,20 +13,20 @@
 
 @yield('script')
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#table1').DataTable({
             drawCallback: function() {
                 $('.js-example-basic-single').select2({
                     theme: 'bootstrap-5'
                 })
-            }}
-        );
+            }
+        });
     });
 </script>
 
 <script>
     $(document).ready(function() {
-        $( '.js-example-basic-single' ).select2( {
+        $('.js-example-basic-single').select2({
             theme: 'bootstrap-5',
         });
     });
@@ -77,40 +77,6 @@
     // });
 </script>
 
-{{-- COUNTDOWN --}}
-<script>
-    var hours = 2, // obtain these values somewhere else 
-        minutes = 00,
-        seconds = 00,
-        target = new Date(),
-        timerDiv = document.getElementById("timer"),
-        handler;
-
-    function init() {
-        // set the target date time with the counter values
-        // counters more then 24h should have a date setup or it wont work
-        target.setHours(hours);
-        target.setMinutes(minutes);
-        target.setSeconds(seconds);
-        target.setMilliseconds(0); // make sure that miliseconds is 0
-        timerDiv.innerHTML = target.toTimeString().split(" ")[0]; // print the value
-    }
-
-    function updateTimer() {
-        var time = target.getTime();
-        target.setTime(time - 1000); // subtract 1 second with every thick
-        timerDiv.innerHTML = target.toTimeString().split(" ")[0];
-        if (
-            target.getHours() === 0 &&
-            target.getMinutes() === 0 &&
-            target.getSeconds() === 0
-        ) { // counter should stop
-            clearInterval(handler);
-        }
-    }
-    handler = setInterval(updateTimer, 1000);
-    init();
-</script>
 
 {{-- FUNGSI MEMANGGIL JURUSAN SESUAI YANG DIPILIH --}}
 <script>
@@ -139,37 +105,4 @@
             }
         });
     });
-    
-</script>
-{{-- COUNTDOWN --}}
-<script>
-    var hours = 2, // obtain these values somewhere else 
-        minutes = 00,
-        seconds = 00,
-        target = new Date(),
-        timerDiv = document.getElementById("timer"),
-        handler;
-    function init() {
-        // set the target date time with the counter values
-        // counters more then 24h should have a date setup or it wont work
-        target.setHours(hours);
-        target.setMinutes(minutes);
-        target.setSeconds(seconds);
-        target.setMilliseconds(0); // make sure that miliseconds is 0
-        timerDiv.innerHTML = target.toTimeString().split(" ")[0]; // print the value
-    }
-    function updateTimer() {
-        var time = target.getTime();
-        target.setTime(time - 1000); // subtract 1 second with every thick
-        timerDiv.innerHTML = target.toTimeString().split(" ")[0];
-        if (
-            target.getHours() === 0 &&
-            target.getMinutes() === 0 &&
-            target.getSeconds() === 0
-        ) { // counter should stop
-            clearInterval(handler);
-        }
-    }
-    handler = setInterval(updateTimer, 1000);
-    init();
 </script>

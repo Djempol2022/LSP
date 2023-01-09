@@ -1,4 +1,4 @@
-@extends('layout.main-layout')
+@extends('layout.main-layout', ['title' => 'Dashboard'])
 @section('main-section')
     <div class="container-fluid">
         <div class="row">

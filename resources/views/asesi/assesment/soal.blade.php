@@ -1,8 +1,8 @@
-@extends('layout.main-layout')
-@section('main-section')
+@extends('layout.main-layout', ['title' => 'Soal'])
+@section('soal-section')
     <div class="container-fluid">
         {{-- JALUR FILE --}}
-        <nav class="jalur-file mb-5" aria-label="breadcrumb">
+        {{-- <nav class="jalur-file mb-5" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a class="text-black text-decoration-none"
                         href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
@@ -11,9 +11,9 @@
                 <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Desain Grafis (Fotografi dan
                     Videografi) </li>
             </ol>
-        </nav>
+        </nav> --}}
         <h5>Materi Uji Kompetensi Desain Grafis (Fotografi dan Videografi)</h5>
-        <h3 class="mt-5" id="timer"></h3>
+        {{-- <h3 class="mt-5" id="timer"></h3> --}}
         <div class="row col gap-3 ms-1 mt-4">
             <div class="col-md-8 ">
                 <div class="col-12 pernyataan">
