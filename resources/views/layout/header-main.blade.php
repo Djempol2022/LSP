@@ -5,7 +5,7 @@
             <i class="bi bi-justify fs-3"></i>
         </a>
         {{-- JUDUL HALAMAN --}}
-        <h3 class="col-auto m-0">{{ $where }}</h3>
+        <h3 class="col-auto m-0">{{ $title }}</h3>
         {{-- NOTIFIKASI --}}
         <div class="col d-flex justify-content-end">
             <button type="button" class="col-auto notifikasi"><img src="/images/notif.png">

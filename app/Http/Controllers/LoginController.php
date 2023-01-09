@@ -22,8 +22,7 @@ class LoginController extends Controller
         if(Auth::attempt($request->only('email','password'))){
             if (auth()->user()->relasi_roles->role == 'admin') {
     
-                return "Admin";
-                // return redirect()->route('biro.Dashboard');
+                return redirect()->route('admin.Dashboard');
             } 
             elseif (auth()->user()->relasi_roles->role == 'asesi') {
                 // return "Asesi";
@@ -47,6 +46,6 @@ class LoginController extends Controller
         Auth::logout();
         request()->session()->invalidate();
         request()->session()->regenerateToken();
-        return redirect('/');
+        return redirect()->route('Login');
     }
 }
