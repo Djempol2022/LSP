@@ -9,10 +9,20 @@
     --black-color: #2b2b2b;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--black-color);
+}
 .pb-45 {
     padding-bottom: 2rem !important;
 }
-
+.border-tiernary {
+    border: 1px solid var(--tiernary-color);
+}
 
 /* CLASS COLOR */
 
@@ -130,6 +140,20 @@
     background: var(--white-color);
     border-radius: 8px !important;
     border: 2px solid var(--primary-color);
+}
+.tombol-tiernary-small {
+    color: var(--white-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 14px;
+    width: 150px;
+    height: 40px;
+    font-size: 14px;
+
+    background: var(--tiernary-color);
+    border-radius: 8px !important;
+    border: none;
 }
 
 .tombol-tiernary-small {
@@ -257,7 +281,6 @@
 .col-tulisan-profile {
     width: 75%;
 }
-
 @media (max-width: 1199px) {
     .foto-dashboard {
         width: 100%;
@@ -273,7 +296,6 @@
         width: 90%;
     }
 }
-
 
 /* TABEl JADWAL */
 
@@ -296,22 +318,26 @@
     }
 }
 
+
 .profil-section-title {
     background-color: var(--primary-color);
     border-radius: 5px;
     font-weight: 550;
-    padding: 7px;
+    padding: 7px 8px;
+    margin-bottom: 13px;
     gap: 7px;
     font-size: 21px;
     color: var(--white-color);
 }
 
 .profil-section {
+    padding: 0 8px;
     font-size: 18px;
+    margin-bottom: 125px;
     color: black;
 }
-
-.profil-section h5 {
+.profil-section h5,
+h4 {
     color: black;
 }
 
@@ -325,7 +351,6 @@
     border: 0.5px solid var(--tiernary-color);
     border-radius: 3px;
 }
-
 .edit-profil-right {
     margin-bottom: 20px;
     margin-left: 5%;
@@ -345,6 +370,22 @@
         margin-bottom: 20px;
         margin-right: 0;
     }
+/* TTD */
+.signature-pad {
+    position: relative;
+    flex: 1;
+    /* border: 1px solid #f4f4f4; */
+}
+.signature-pad canvas {
+    /* position: absolute; */
+    left: 0;
+    top: 0;
+    width: 95%;
+    /* height: 100%; */
+    height: 200px;
+    border: 0.2px solid var(--tiernary-color);
+    border-radius: 3px;
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.02) inset; */
 }
 
 
@@ -384,6 +425,42 @@ tr {
     border: 0 solid;
     border-color: var(--black-color);
 }
+.assesment-mandiri-title {
+    font-size: 18px;
+    color: var(--black-color);
+    font-weight: 625;
+    margin-bottom: 5px;
+}
+.unit-kompetensi {
+    color: var(--white-color);
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    padding: 6px;
+}
+.unit-kompetensi span {
+    font-size: 18px;
+    font-weight: 600;
+}
+hr {
+    border-top: 2px solid black;
+}
+.kriteria-nomor {
+    width: 5%;
+}
+.kriteria-isi {
+    width: 54.93222%;
+}
+.kriteria-kompeten {
+    align-items: center;
+    display: flex;
+    width: 20%;
+}
+.unit-kode {
+    width: 16.66666667%;
+}
+.unti-isi {
+    width: 75%;
+}
 
 
 /* SETTING */
@@ -420,6 +497,17 @@ tr {
 
 /* SOAL */
 
+.notifikasi-alert {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color: var(--black-color);
+    width: 430px;
+    height: 100px;
+    border-radius: 8px;
+}
+
+/* SOAL */
 .pernyataan,
 .nomor {
     background-color: var(--white-color);
@@ -431,7 +519,6 @@ tr {
     width: 31.333333%;
     font-size: small;
 }
-
 .nomor .col-md-auto {
     width: 12.333333%;
 }
@@ -444,17 +531,27 @@ tr {
     margin-top: 13px;
 }
 
+.nomor .col-md-auto {
+}
+.pernyataan .isi {
+    padding: 30px;
+}
+.pernyataan p {
+    margin-top: 13px;
+}
 .pernyataan span {
     margin-left: 5px;
-    font-weight: 650;
     font-size: 18px;
     color: var(--black-color);
 }
-
 .nomor .btn-number {
     border-radius: 8px;
 }
-
+@media (max-width: 360px) {
+    .teks-tabel {
+        font-size: 67%;
+    }
+}
 @media (max-width: 560px) {
     .notifikasi {
         width: 35px;
@@ -468,5 +565,53 @@ tr {
         font-size: 10px;
         align-items: center;
         display: flex;
+    }
+}
+}
+@media (max-width: 950px) {
+    .edit-profil-right {
+        margin-bottom: 20px;
+        margin-left: 0;
+    }
+    .edit-profil-left {
+        margin-bottom: 20px;
+        margin-right: 0;
+    }
+    .input-file-col {
+        border-radius: 8px;
+        width: 100%;
+    }
+    .kriteria-nomor {
+        width: 10%;
+    }
+    .kriteria-isi {
+        width: 89.93222%;
+    }
+    .kriteria-kompeten {
+        align-items: center;
+        display: flex;
+        width: 50%;
+    }
+}
+
+@media (max-width: 1199px) {
+    .foto-dashboard {
+        width: 100%;
+    }
+    .foto-profile {
+        padding: 0 5%;
+        width: 100%;
+    }
+    .col-foto-profile {
+        width: 10%;
+    }
+    .col-tulisan-profile {
+        width: 90%;
+    }
+    .unit-kode {
+        width: 20.66666667%;
+    }
+    .unti-isi {
+        width: 75%;
     }
 }

@@ -12,6 +12,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "jquery": "^3.6.3"
+        "jquery": "^3.6.3",
+        "signature_pad": "^4.1.4"
     }
 }

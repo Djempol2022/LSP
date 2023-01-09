@@ -31,8 +31,89 @@
         });
     });
 </script>
+{{-- TTD --}}
+<script src="/extensions/signature-pad/dist/signature_pad.umd.js"></script>
+
+{{-- TTD --}}
+<script type="text/javascript">
+    var wrapper = document.getElementById("signature-pad");
+    // var clear = document.getElementById("signature-clear");
+    // var clearButton = clear.querySelector("[data-action=clear]");
+    // var undoButton = wrapper.querySelector("[data-action=undo]");
+    // var savePNGButton = wrapper.querySelector("[data-action=save-png]");
+    var canvas = wrapper.querySelector("canvas");
+    var signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'rgb(255, 255, 255)'
+    });
+
+    function resizeCanvas() {
+        var ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        var w = window.innerWidth;
+        if (canvas.width == 0 && canvas.height == 0) {
+            if (w > 1200) {
+                canvas.width = 496 * ratio;
+                canvas.height = 200 * ratio;
+            } else if (w < 1200 && w > 992) {
+                canvas.width = 334 * ratio;
+                canvas.height = 200 * ratio;
+            } else if (w < 992) {
+                canvas.width = 399 * ratio;
+                canvas.height = 200 * ratio;
+            }
+        } else {
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+        }
+        canvas.getContext("2d").scale(ratio, ratio);
+        signaturePad.clear();
+    }
+    window.addEventListener("resize", resizeCanvas)
+    resizeCanvas()
+
+    // clearButton.addEventListener("click", function(event) {
+    //     signaturePad.clear();
+    // });
+</script>
+
+{{-- COUNTDOWN --}}
 <script>
-    // FUNGSI MEMANGGIL JURUSAN SESUAI YANG DIPILIH
+    var hours = 2, // obtain these values somewhere else 
+        minutes = 00,
+        seconds = 00,
+        target = new Date(),
+        timerDiv = document.getElementById("timer"),
+        handler;
+
+    function init() {
+        // set the target date time with the counter values
+        // counters more then 24h should have a date setup or it wont work
+        target.setHours(hours);
+        target.setMinutes(minutes);
+        target.setSeconds(seconds);
+        target.setMilliseconds(0); // make sure that miliseconds is 0
+        timerDiv.innerHTML = target.toTimeString().split(" ")[0]; // print the value
+    }
+
+    function updateTimer() {
+        var time = target.getTime();
+        target.setTime(time - 1000); // subtract 1 second with every thick
+        timerDiv.innerHTML = target.toTimeString().split(" ")[0];
+        if (
+            target.getHours() === 0 &&
+            target.getMinutes() === 0 &&
+            target.getSeconds() === 0
+        ) { // counter should stop
+            clearInterval(handler);
+        }
+    }
+    handler = setInterval(updateTimer, 1000);
+    init();
+</script>
+
+{{-- FUNGSI MEMANGGIL JURUSAN SESUAI YANG DIPILIH --}}
+<script>
     $(document).ready(function() {
         $('select[name="sekolah_id"]').on('change', function() {
             let sekolahId = $(this).val();

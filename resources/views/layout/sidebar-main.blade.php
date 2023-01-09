@@ -4,8 +4,8 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex align-items-center" style="width: 95px">
                 <div class="logo">
-                    <a href="{{ route('asesi.Dashboard') }}"><img src="/images/logo/logo.png" style="width: 100%; height:auto"
-                            alt="Logo" srcset=""></a>
+                    <a href="{{ route('asesi.Dashboard') }}"><img src="/images/logo/logo.png"
+                            style="width: 100%; height:auto" alt="Logo" srcset=""></a>
                 </div>
                 <div class="sidebar-toggler  x">
                     <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>

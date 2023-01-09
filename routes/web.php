@@ -24,16 +24,21 @@ use App\Http\Controllers\Asesi\PengaturanController;
 |
 */
 
-// LOGIN & REGISTER
-Route::middleware('guest')->group(function () {
-    Route::controller(LoginController::class)->group(function () {
-        Route::get('login', 'login')->name('Login');
-        Route::post('login', 'authenticate')->name('Auth');
-    });
-    Route::controller(RegistrasiController::class)->group(function () {
-        Route::get('registrasi', 'registrasi')->name('Registrasi');
-        Route::post('registrasi', 'store')->name('Register');
-    });
+Route::get('/', function () {
+    return redirect('asesi/dashboard');
+});
+// LOGIN CONTROLLER
+Route::controller(LoginController::class)->group(function () {
+    Route::get('login', 'login')->name('Login');
+    Route::get('logout', 'logout')->name('Logout');
+    Route::post('login', 'authenticate')->name('Auth');
+});
+
+
+// REGISTRASI CONTROLLER
+Route::controller(RegistrasiController::class)->group(function () {
+    Route::get('registrasi', 'registrasi')->name('Registrasi');
+    Route::post('registrasi', 'store')->name('Register');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -44,7 +49,6 @@ Route::middleware(['auth'])->group(function () {
     //ADMIN
     // Contoh Pemanggilan Route di Blade -> admin.Dashboard
     Route::prefix('admin')->name('admin.')->middleware(['isAdmin'])->group(function () {
-        
         Route::get('dashboard', [Admin_DashboardController::class, 'dashboard'])->name('Dashboard');
 
         
@@ -85,22 +89,19 @@ Route::middleware(['auth'])->group(function () {
             Route::post('ubah-mukpengguna', 'ubah_pengguna')->name('UbahPengguna');
         }); 
     });
-
-    //ASESOR
     // Contoh Pemanggilan Route di Blade -> asesor.Dashboard
     Route::prefix('asesor')->name('asesor.')->middleware(['isAsesor'])->group(function () {
-
     });
 
     //ASESI
     // Contoh Pemanggilan Route di Blade -> asesi.Dashboard
     Route::prefix('asesi')->name('asesi.')->middleware(['isAsesi'])->group(function () {
-        
+
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'dashboard')->name('Dashboard');
-            Route::get('dashboard/profile', 'profile')->name('Profile');
+            Route::get('dashboard/profile', 'profile')->name('Dashboard.Profile');
         });
-        
+
         Route::controller(PengaturanController::class)->group(function () {
             Route::get('pengaturan', 'pengaturan')->name('Pengaturan');
             Route::post('cg-password', 'cgPassword')->name('cgPassword');
@@ -108,14 +109,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(AsesmenController::class)->group(function () {
             Route::get('assesment', 'assesment')->name('Assesment');
+            Route::get('soal', 'soal')->name('Assesment.Soal');
         });
-
     });
 
     //PENINJAU
     // Contoh Pemanggilan Route di Blade -> peninjau.Dashboard
     Route::prefix('peninjau')->name('peninjau.')->middleware(['isPeninjau'])->group(function () {
-
     });
-    
 });
