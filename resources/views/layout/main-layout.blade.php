@@ -10,14 +10,22 @@
 
     <body>
         @include('sweetalert::alert')
-        <div id="app">
-            <div id="main">
-                @include('layout.sidebar-main')
+        @if (!request()->routeIs('asesi.Assesment.Soal'))
+            <div id="app">
+                <div id="main">
+                    @include('layout.sidebar-main')
+                    @include('layout.header-main')
+                    @yield('main-section')
+                    @include('layout.footer-main')
+                </div>
+            </div>
+        @else
+            <div class="container">
                 @include('layout.header-main')
-                @yield('main-section')
+                @yield('soal-section')
                 @include('layout.footer-main')
             </div>
-        </div>
+        @endif
     </body>
 @endif
 

@@ -14,20 +14,20 @@
 
 @yield('script')
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#table1').DataTable({
             drawCallback: function() {
                 $('.js-example-basic-single').select2({
                     theme: 'bootstrap-5'
                 })
-            }}
-        );
+            }
+        });
     });
 </script>
 
 <script>
     $(document).ready(function() {
-        $( '.js-example-basic-single' ).select2( {
+        $('.js-example-basic-single').select2({
             theme: 'bootstrap-5',
         });
     });
@@ -78,7 +78,6 @@
     // });
 </script>
 
-{{-- COUNTDOWN --}}
 {{-- <script>
     var hours = 2, // obtain these values somewhere else 
         minutes = 00,
@@ -113,8 +112,6 @@
     init();
 </script> --}}
 
-{{-- FUNGSI MEMANGGIL JURUSAN SESUAI YANG DIPILIH --}}
-<script>
     $(document).ready(function() {
         $('select[name="sekolah_id"]').on('change', function() {
             let sekolahId = $(this).val();

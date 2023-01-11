@@ -1,4 +1,4 @@
-@extends('layout.main-layout')
+@extends('layout.main-layout', ['title' => 'Pengaturan'])
 @section('main-section')
     @if (session()->has('berhasil'))
         <div class="alert alert-success" role="alert">

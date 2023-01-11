@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(Admin_AssessmentController::class)->group(function () {
             Route::get('Assessment', 'assessment')->name('Assessment');
         });
-        
+
         Route::controller(Admin_PengaturanController::class)->group(function () {
             Route::get('pengaturan', 'pengaturan')->name('Pengaturan');
             Route::get('jurusan', 'daftar_data_jurusan')->name('DaftarJurusan');
