@@ -17,14 +17,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('nama_lengkap');
-            $table->text('ktp_nik_paspor');
-            $table->string('tempat_lahir');
-            $table->text('tanggal_lahir');
-            $table->string('jenis_kelamin');
-            $table->string('kebangsaan');
-            $table->text('alamat_rumah');
-            $table->string('nomor_hp');
+            $table->text('ktp_nik_paspor')->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->text('tanggal_lahir')->nullable();
+            $table->string('jenis_kelamin')->nullable();
+            $table->string('kebangsaan')->nullable();
+            $table->text('alamat_rumah')->nullable();
+            $table->string('nomor_hp')->nullable();
             $table->string('kualifikasi_pendidikan');
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

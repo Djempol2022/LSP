@@ -13,6 +13,8 @@ use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\Asesi\AsesmenController;
 use App\Http\Controllers\Asesi\DashboardController;
 use App\Http\Controllers\Asesi\PengaturanController;
+use App\Http\Controllers\Asesi\ProfilController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,7 +101,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'dashboard')->name('Dashboard');
-            Route::get('dashboard/profile', 'profile')->name('Dashboard.Profile');
+            // Route::get('dashboard/profile', 'profile')->name('Dashboard.Profile');
         });
 
         Route::controller(PengaturanController::class)->group(function () {
@@ -110,6 +112,11 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(AsesmenController::class)->group(function () {
             Route::get('assesment', 'assesment')->name('Assesment');
             Route::get('soal', 'soal')->name('Assesment.Soal');
+        });
+
+        Route::controller(ProfilController::class)->group(function () {
+            Route::get('dashboard/profile', 'index')->name('Dashboard.Profile');
+            Route::put('dashboard/profile', 'update')->name('Dashboard.Update');
         });
     });
 

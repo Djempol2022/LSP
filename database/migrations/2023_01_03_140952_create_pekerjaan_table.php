@@ -16,11 +16,12 @@ return new class extends Migration
         Schema::create('pekerjaan', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('alamat_institusi');
-            $table->string('jabatan');
-            $table->string('kode_pos');
-            $table->string('nomor_hp_institusi');
-            $table->string('email_institusi');
+            $table->string('nama_institusi')->nullable();
+            $table->text('alamat_institusi')->nullable();
+            $table->string('jabatan')->nullable();
+            $table->string('kode_pos')->nullable();
+            $table->string('nomor_hp_institusi')->nullable();
+            $table->string('email_institusi')->nullable();
             $table->timestamps();
         });
     }

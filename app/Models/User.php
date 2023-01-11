@@ -22,7 +22,7 @@ class User extends Authenticatable
     protected $fillable = [
         'nama_lengkap',
         'email',
-        'sekolah_id',
+        'institusi_id',
         'jurusan_id',
         'role_id',
         'password',
@@ -53,10 +53,25 @@ class User extends Authenticatable
     }
     public function relasi_institusi()
     {
-        return $this->belongsTo(Institusi::class);
+        return $this->belongsTo(Institusi::class, 'institusi_id');
     }
     public function relasi_jurusan()
     {
-        return $this->belongsTo(Jurusan::class);
+        return $this->belongsTo(Jurusan::class, 'jurusan_id');
+    }
+
+    public function relasi_user_detail()
+    {
+        return $this->belongsTo(UserDetail::class, 'id', 'user_id');
+    }
+
+    public function relasi_pekerjaan()
+    {
+        return $this->belongsTo(Pekerjaan::class, 'id', 'user_id');
+    }
+
+    public function relasi_sertifikasi()
+    {
+        return $this->belongsTo(Sertifikasi::class, 'id', 'user_id');
     }
 }
