@@ -9,7 +9,8 @@
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/dataTables.bootstrap4.min.js"></script>
 <script src="/js/select2.full.min.js"></script>
-{{-- <script src="/js/simple-datatables.js"></script> --}}
+<script src="/js/moment.js"></script>
+{{-- <script src="/js/dataTables.responsive.min.js"></script> --}}
 
 @yield('script')
 <script>
@@ -78,7 +79,7 @@
 </script>
 
 {{-- COUNTDOWN --}}
-<script>
+{{-- <script>
     var hours = 2, // obtain these values somewhere else 
         minutes = 00,
         seconds = 00,
@@ -110,7 +111,7 @@
     }
     handler = setInterval(updateTimer, 1000);
     init();
-</script>
+</script> --}}
 
 {{-- FUNGSI MEMANGGIL JURUSAN SESUAI YANG DIPILIH --}}
 <script>
@@ -142,7 +143,7 @@
     
 </script>
 {{-- COUNTDOWN --}}
-<script>
+{{-- <script>
     var hours = 2, // obtain these values somewhere else 
         minutes = 00,
         seconds = 00,
@@ -172,4 +173,4 @@
     }
     handler = setInterval(updateTimer, 1000);
     init();
-</script>
+</script> --}}

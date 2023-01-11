@@ -1,168 +1,87 @@
-@extends('layout.main-layout', ['title'=>"Jadwal Uji Kompetensi"])
+@extends('layout.main-layout', ['title'=>"Detail Jadwal Uji Kompetensi"])
 @section('main-section')
 <div class="page-content">
     <section class="section">
-        <div class="card">
-            <div class="card-header">
+        <div class="container mt-5 jalur-file">
+            {{-- JALUR FOLDER --}}
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+                            href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Profil</li>
+                </ol>
+            </nav>
+            {{-- EDIT PROFIL --}}
+            <div class="mt-5">
 
-            <!--Extra Large Modal -->
-            <div class="modal fade text-left w-100" id="modalDetailJadwalUjiKompetensi" tabindex="-1" role="dialog"
-                aria-labelledby="myModalLabel16" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
-                    role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title nama_jurusan" id="myModalLabel16"></h4>
-                            <button type="button" class="close" data-bs-dismiss="modal"
-                                aria-label="Close">
-                                <i data-feather="x"></i>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="card-body">
-                                <table class="table table-striped" id="table-jadwal-uji-kompetensi">
-                                    <thead>
-                                        <tr>
-                                            <th>Materi Uji Kompetensi</th>
-                                            <th>Sesi</th>
-                                            <th>Tanggal</th>
-                                            <th>Waktu Mulai</th>
-                                            <th>Waktu Selesai</th>
-                                            <th>Kelas</th>
-                                            <th>Tempat</th>
-                                            <th>Jenis Tes</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                {{-- JADWAL --}}
+                <div class="mb-5 pb-5">
+                    <div class="col profil-section-title">
+                        Bagian 1 : Jadwal Uji Kompetensi
+                    </div>
+                    <p class="py-3" style="font-size: 18px">Pada bagian ini, cantumkan data pribadi, data pendidikan formal
+                        serta
+                        data pekerjaan
+                        anda saat
+                        ini.
+                    </p>
+    
+                    <div class="col profil-section">
+                        <div class="row my-4">
+                            <div class="col-md-6">
+                                <div class="col pb-4">
+                                    <p class="fw-bold">Jurusan</p>
+                                    <span>{{ $jadwal_uji_kompetensi['relasi_muk']['relasi_jurusan']['jurusan'] }}</span>
+                                </div>
+                                <div class="col pb-4">
+                                    <p class="fw-bold">Materi Uji Kompetensi</p>
+                                    <span>{{ $jadwal_uji_kompetensi['relasi_muk']['muk'] }}</span>
+                                </div>
+                                <div class="col pb-4">
+                                    <p class="fw-bold">Tanggal</p>
+                                    <span>{{ Carbon\Carbon::parse($jadwal_uji_kompetensi['tanggal'])->format('d F Y') }}</span>
+                                </div>
+                                <div class="col pb-4">
+                                    <p class="fw-bold">Waktu Mulai</p>
+                                    <span>{{ Carbon\Carbon::parse($jadwal_uji_kompetensi['waktu_mulai'])->format('H:i') }}</span>
+                                </div>
+                                <div class="col pb-4">
+                                    <p class="fw-bold">Waktu Selesai</p>
+                                    <span>{{ Carbon\Carbon::parse($jadwal_uji_kompetensi['waktu_selesai'])->format('H:i') }}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn rounded-pill btn-sm btn-warning" data-bs-dismiss="modal">
-                                <i class="bx bx-x d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Keluar</span>
-                            </button>
+                            <div class="col-md-6">
+                                <div class="col pb-4">
+                                    <p class="fw-bold">Kelas</p>
+                                    <span>{{ $jadwal_uji_kompetensi['kelas'] }}</span>
+                                </div>
+                                <div class="col pb-4">
+                                    <p class="fw-bold">Tempat</p>
+                                    <span>{{ $jadwal_uji_kompetensi['tempat'] }}</span>
+                                </div>
+                                <div class="col pb-4">
+                                    <p class="fw-bold">Jenis Tes</p>
+                                    @if($jadwal_uji_kompetensi['jenis_tes'] == 1)
+                                        <span>Pilihan Ganda</span>
+                                    @elseif($jadwal_uji_kompetensi['jenis_tes'] == 2)
+                                        <span>Essay</span>
+                                    @elseif($jadwal_uji_kompetensi['jenis_tes'] == 3)
+                                        <span>Wawancara</span>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-                {{-- MODAL TAMBAH --}}
-                <div class="modal fade text-left" id="modalJadwalUjiKompetensi" tabindex="-1" role="dialog"
-                    aria-labelledby="myModalLabel33" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel33">Tambah Jadwal Uji Kompetensi</h4>
-                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                    <i data-feather="x"></i>
-                                </button>
-                            </div>
-                            <form action="{{ route('admin.TambahJadwalUjiKompetensi') }}" id="isi-uji-kompetensi"
-                                method="POST">
-                                @csrf
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label>Materi Uji Kompetensi</label>
-                                            <select class="form-control jurusan" name="muk_id" aria-hidden="true">
-                                                <option value="" selected disabled>-- Pilih Materi Uji Kompetensi --</option>
-                                            </select>
-                                            <div class="input-group has-validation">
-                                                <label class="text-danger error-text muk_id_error"></label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Sesi</label>
-                                            <input type="text" name="sesi" placeholder="Sesi"
-                                                class="form-control rounded-5">
-                                            <div class="input-group has-validation">
-                                                <label class="text-danger error-text sesi_error"></label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tanggal</label>
-                                            <input type="date" name="tanggal" placeholder="Tanggal"
-                                                class="form-control rounded-5">
-                                            <div class="input-group has-validation">
-                                                <label class="text-danger error-text tanggal_error"></label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb-1">
-                                            <div class="form-group">
-                                                <label>Waktu Mulai</label>
-                                                <input type="time" name="waktu_mulai" placeholder="Waktu Mulai"
-                                                    class="form-control rounded-5">
-                                                <div class="input-group has-validation">
-                                                    <label class="text-danger error-text waktu_mulai_error"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb-1">
-                                            <div class="form-group">
-                                                <label>Waktu Selesai</label>
-                                                <input type="time" name="waktu_selesai" placeholder="Waktu Selesai"
-                                                    class="form-control rounded-5">
-                                                <div class="input-group has-validation">
-                                                    <label class="text-danger error-text waktu_selesai_error"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Kelas</label>
-                                            <input type="text" name="kelas" placeholder="Kelas"
-                                                class="form-control rounded-5">
-                                            <div class="input-group has-validation">
-                                                <label class="text-danger error-text kelas_error"></label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tempat Uji Kompetensi</label>
-                                            <input type="text" name="tempat" placeholder="Tempat Uji Kompetensi"
-                                                class="form-control rounded-5">
-                                            <div class="input-group has-validation">
-                                                <label class="text-danger error-text tempat_error"></label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Jenis Tes</label>
-                                            <select class="form-control" name="jenis_tes" aria-hidden="true">
-                                                <option value="" selected disabled>-- Pilih Jenis Tes --</option>
-                                                <option value="1">Pilihan Ganda</option>
-                                                <option value="2">Essay</option>
-                                                <option value="3">Wawancara</option>
-                                            </select>
-                                            <div class="input-group has-validation">
-                                                <label class="text-danger error-text jenis_tes_error"></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn rounded-pill btn-sm btn-warning" data-bs-dismiss="modal">
-                                        <i class="bx bx-x d-block d-sm-none"></i>
-                                        <span class="d-none d-sm-block">Batal</span>
-                                    </button>
-                                    <button type="submit" class="btn btn-sm rounded-pill btn-primary ml-1">
-                                        <i class="bx bx-check d-block d-sm-none"></i>
-                                        <span class="d-none d-sm-block">Simpan</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="card-body">
-                <table class="table table-striped" id="table-jurusan">
-                    <thead>
-                        <tr>
-                            <th>Jurusan</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                </table>
+    
+                {{-- ASESI --}}
+                @include('admin.jadwal_uji_kompetensi.detail_bagian.asesi')
+    
+                {{-- ASESOR --}}
+                @include('admin.jadwal_uji_kompetensi.detail_bagian.asesor')    
+                
+                {{-- PENINJAU --}}
+                @include('admin.jadwal_uji_kompetensi.detail_bagian.peninjau')
             </div>
         </div>
     </section>
@@ -374,7 +293,7 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_muk[row.id] = row;
-                    return row.relasi_muk.muk;
+                    return row.muk_relasi.muk;
                 }
             },
             {

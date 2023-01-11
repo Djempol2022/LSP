@@ -16,7 +16,7 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->relasi_roles->role == 'admin') return $next($request);
+        if ($request->user()->relasiRole->role == 'admin') return $next($request);
         return redirect()->back();
         // abort(403);
     }

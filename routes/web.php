@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\Admin_JadwalUjiKompetensi;
 use App\Http\Controllers\Admin\Admin_MUKController;
 use App\Http\Controllers\Admin\Admin_PengaturanController;
 use App\Http\Controllers\Admin\Admin_PenggunaController;
-use App\Http\Controllers\Admin\Admin_PenilaianController;
+use App\Http\Controllers\Admin\Admin_AssessmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrasiController;
@@ -28,12 +28,13 @@ Route::get('/', function () {
     return redirect('asesi/dashboard');
 });
 // LOGIN CONTROLLER
-Route::controller(LoginController::class)->group(function () {
-    Route::get('login', 'login')->name('Login');
-    Route::get('logout', 'logout')->name('Logout');
-    Route::post('login', 'authenticate')->name('Auth');
+Route::middleware('guest')->group(function () {
+    Route::controller(LoginController::class)->group(function () {
+        Route::get('login', 'login')->name('Login');
+        Route::get('logout', 'logout')->name('Logout');
+        Route::post('login', 'authenticate')->name('Auth');
+    });
 });
-
 
 // REGISTRASI CONTROLLER
 Route::controller(RegistrasiController::class)->group(function () {
@@ -52,8 +53,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('dashboard', [Admin_DashboardController::class, 'dashboard'])->name('Dashboard');
 
         
-        Route::controller(Admin_PenilaianController::class)->group(function () {
-            Route::get('penilaian', 'penilaian')->name('Penilaian');
+        Route::controller(Admin_AssessmentController::class)->group(function () {
+            Route::get('Assessment', 'assessment')->name('Assessment');
         });
         
         Route::controller(Admin_PengaturanController::class)->group(function () {
@@ -64,6 +65,18 @@ Route::middleware(['auth'])->group(function () {
             Route::post('ubah-jurusan', 'ubah_jurusan')->name('UbahJurusan');
             Route::any('data-jurusan', 'data_jurusan')->name('DataJurusan');
             Route::get('jurusan-id/{id}', 'jurusan_id');
+
+            Route::get('institusi', 'daftar_data_institusi')->name('DaftarInstitusi');
+            Route::post('tambah-institusi', 'tambah_institusi')->name('TambahInstitusi');
+            Route::get('hapus-institusi/{id}', 'hapus_institusi');
+            Route::post('ubah-institusi', 'ubah_institusi')->name('UbahInstitusi');
+            Route::any('data-institusi', 'data_institusi')->name('DataInstitusi');
+
+            Route::get('kualifikasi-pendidikan', 'daftar_data_kualifikasi_pendidikan')->name('DaftarKualifikasiPendidikan');
+            Route::post('tambah-kualifikasi-pendidikan', 'tambah_kualifikasi_pendidikan')->name('TambahKualifikasiPendidikan');
+            Route::get('hapus-kualifikasi-pendidikan/{id}', 'hapus_kualifikasi_pendidikan');
+            Route::post('ubah-kualifikasi-pendidikan', 'ubah_kualifikasi_pendidikan')->name('UbahKualifikasiPendidikan');
+            Route::any('data-kualifikasi-pendidikan', 'data_kualifikasi_pendidikan')->name('DataKualifikasiPendidikan');
         });  
         Route::controller(Admin_MUKController::class)->group(function () {
             Route::any('data-muk', 'data_muk')->name('DataMUK');
@@ -71,22 +84,21 @@ Route::middleware(['auth'])->group(function () {
             Route::post('tambah-muk', 'tambah_muk')->name('TambahMUK');
             Route::get('hapus-muk/{id}', 'hapus_muk');
             Route::post('ubah-muk', 'ubah_muk')->name('UbahMUK');
-        }); 
+        });
         Route::controller(Admin_JadwalUjiKompetensi::class)->group(function () {
             Route::any('tampilan_jadwal-uji-kompetensi', 'tampilan_jadwal_uji_kompetensi')->name('TampilanJadwalUjiKompetensi');
             Route::post('tambah-jadwal-uji-kompetensi', 'tambah_jadwal_uji_kompetensi')->name('TambahJadwalUjiKompetensi');
             Route::get('hapus-jadwal-uji-kompetensi/{id}', 'hapus_jadwal_uji_kompetensi');
-            Route::any('data_jadwal_uji_kompetensi/{id}', 'data_jadwal_uji_kompetensi');
+            Route::any('data-jadwal-uji-kompetensi/{id}', 'data_jadwal_uji_kompetensi');
             Route::post('ubah-jadwal-uji-kompetensi', 'ubah_jadwal_uji_kompetensi')->name('UbahJadwalUjiKompetensi');
-            // Route::get('detail-jadwal-uji-kompetensi/{id}', 'detail_jadwal_uji_kompetensi');
-
+            Route::get('detail-jadwal-uji-kompetensi/{id}', 'detail_jadwal_uji_kompetensi')->name('DetailJadwalUjiKompetensi');
         }); 
         Route::controller(Admin_PenggunaController::class)->group(function () {
-            // Route::get('pengguna', 'daftar_data_pengguna')->name('DaftarPengguna');
+            Route::get('pengguna', 'daftar_data_pengguna')->name('DaftarPengguna');
             Route::any('data-pengguna', 'data_pengguna')->name('DataPengguna');
             Route::get('hapus-pengguna/{id}', 'hapus_pengguna');
             Route::post('tambah-pengguna', 'tambah_pengguna')->name('TambahPengguna');
-            Route::post('ubah-mukpengguna', 'ubah_pengguna')->name('UbahPengguna');
+            Route::post('ubah-pengguna', 'ubah_pengguna')->name('UbahPengguna');
         }); 
     });
     // Contoh Pemanggilan Route di Blade -> asesor.Dashboard

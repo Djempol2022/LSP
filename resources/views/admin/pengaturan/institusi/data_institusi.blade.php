@@ -1,4 +1,4 @@
-@extends('layout.main-layout', ['title'=>"Materi Uji Kompetensi"])
+@extends('layout.main-layout', ['title'=>"Insitusi"])
 @section('main-section')
 <div class="page-content">
     <section class="section">
@@ -6,53 +6,68 @@
             <div class="card-header">
                 <span class="badge bg-info rounded-pill">
                     <a class="text-white" href="#" data-bs-toggle="modal"
-                        data-bs-target="#tambahMuk">Tambah Materi Uji Kompetensi
+                        data-bs-target="#modalTambahInstitusi">Tambah Institusi
                     </a>
                 </span>
             
                 {{-- MODAL TAMBAH --}}
-            <div class="modal fade text-left" id="tambahMuk" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+            <div class="modal fade text-left" id="modalTambahInstitusi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
                     role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel33">Tambah Materi Uji Kompetensi</h4>
+                            <h4 class="modal-title" id="myModalLabel33">Tambah Institusi</h4>
                             <button type="button" class="close" data-bs-dismiss="modal"
                                 aria-label="Close">
                                 <i data-feather="x"></i>
                             </button>
                         </div>
-                        <form action="{{ route('admin.TambahMUK') }}" id="isi-muk" method="POST">
+                        <form action="{{ route('admin.TambahInstitusi') }}" id="formInstitusi" method="POST">
                             @csrf
                             <div class="modal-body">
-                                <label>Materi Uji Kompetensi</label>
+                                <label>Nama Institusi</label>
                                 <div class="form-group">
-                                    <input type="text" name="muk" placeholder="Materi Uji Kompetensi" class="form-control rounded-5">
+                                    <input type="text" name="nama_institusi" placeholder="Nama Institusi" class="form-control rounded-5">
                                     <div class="input-group has-validation">
-                                        <label class="text-danger error-text muk_error"></label>
+                                        <label class="text-danger error-text nama_institusi_error"></label>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
-                                    <select class="js-example-basic-single" name="jurusan_id">
-                                        <option value="" selected disabled>Pilih Jurusan</option>
-                                        @foreach ($jurusan as $data_jurusan)
-                                            <option value="{{ $data_jurusan->id }}">{{ $data_jurusan->jurusan }}</option>                                            
-                                        @endforeach
-                                    </select>
+                                    <label>Alamat Institusi</label>
+                                    <input type="text" name="alamat_institusi" placeholder="Alamat" class="form-control rounded-5">
                                     <div class="input-group has-validation">
-                                        <label class="text-danger error-text jurusan_id_error"></label>
+                                        <label class="text-danger error-text alamat_institusi_error"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Kode Pos</label>
+                                    <input type="text" name="kode_pos" placeholder="Kode Pos" class="form-control rounded-5">
+                                    <div class="input-group has-validation">
+                                        <label class="text-danger error-text kode_pos_error"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nomor Hp Institusi</label>
+                                    <input type="text" name="nomor_hp_institusi" placeholder="Nomor Hp Institusi" class="form-control rounded-5">
+                                    <div class="input-group has-validation">
+                                        <label class="text-danger error-text nomor_hp_institusi_error"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email Institusi</label>
+                                    <input type="text" name="email_institusi" placeholder="Email Institusi" class="form-control rounded-5">
+                                    <div class="input-group has-validation">
+                                        <label class="text-danger error-text email_institusi_error"></label>
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light-secondary"
                                     data-bs-dismiss="modal">
                                     <i class="bx bx-x d-block d-sm-none"></i>
                                     <span class="d-none d-sm-block">Batal</span>
                                 </button>
-                                <button type="submit" class="btn btn-primary ml-1 submit-tambah-muk">
+                                <button type="submit" class="btn btn-primary ml-1">
                                     <i class="bx bx-check d-block d-sm-none"></i>
                                     <span class="d-none d-sm-block">Simpan</span>
                                 </button>
@@ -65,11 +80,14 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-striped" id="table-muk">
+                <table class="table table-striped" id="table-institusi">
                     <thead>
                         <tr>
-                            <th>Materi Uji Kompetensi</th>
-                            <th>Jurusan</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                            <th>Kode Pos</th>
+                            <th>Nomor Hp</th>
+                            <th>Email</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -78,41 +96,56 @@
         </div>
 
         {{-- MODAL EDIT --}}
-        <div class="modal fade text-left" id="editMUK" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal fade text-left" id="modalEditInstitusi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
                 role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel33">Ubah Materi Uji Kompetensi</h4>
+                        <h4 class="modal-title" id="myModalLabel33">Ubah Institusi</h4>
                         <button type="button" class="close" data-bs-dismiss="modal"
                             aria-label="Close">
                             <i data-feather="x"></i>
                         </button>
                     </div>
-                    <form id="formEditMUK" action="{{ route('admin.UbahMUK') }}" method="POST">
+                    <form id="formEditInstitusi" action="{{ route('admin.UbahInstitusi') }}" method="POST">
                         <input type="hidden" name="id" hidden>
                         @csrf
                         <div class="modal-body">
-                            <label>Nama Materi Uji Kompetensi</label>
-                            <div class="form-group field_wrapper">
-                                <input type="text" name="muk" placeholder="Materi Uji Kompetensi" 
-                                class="form-control rounded-5 muk">
-                                <div class="input-group has-validation">
-                                    <label class="text-danger error-text muk_error"></label>
-                                </div>
-                            </div>
-
+                            <label>Nama Institusi</label>
                             <div class="form-group">
-                                <select class="js-example-basic-single" name="jurusan_id">
-                                    @foreach ($jurusan as $data_jurusan)
-                                        <option value="{{ $data_jurusan->id }}">{{ $data_jurusan->jurusan }}</option>                                            
-                                    @endforeach
-                                </select>
+                                <input type="text" name="nama_institusi" placeholder="Nama Institusi" class="form-control rounded-5">
                                 <div class="input-group has-validation">
-                                    <label class="text-danger error-text jurusan_id_error"></label>
+                                    <label class="text-danger error-text nama_institusi_error"></label>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label>Alamat Institusi</label>
+                                <input type="text" name="alamat_institusi" placeholder="Alamat" class="form-control rounded-5">
+                                <div class="input-group has-validation">
+                                    <label class="text-danger error-text alamat_institusi_error"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Kode Pos</label>
+                                <input type="text" name="kode_pos" placeholder="Kode Pos" class="form-control rounded-5">
+                                <div class="input-group has-validation">
+                                    <label class="text-danger error-text kode_pos_error"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Nomor Hp Institusi</label>
+                                <input type="text" name="nomor_hp_institusi" placeholder="Nomor Hp Institusi" class="form-control rounded-5">
+                                <div class="input-group has-validation">
+                                    <label class="text-danger error-text nomor_hp_institusi_error"></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Institusi</label>
+                                <input type="text" name="email_institusi" placeholder="Email Institusi" class="form-control rounded-5">
+                                <div class="input-group has-validation">
+                                    <label class="text-danger error-text email_institusi_error"></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light-secondary"
@@ -120,7 +153,7 @@
                                 <i class="bx bx-x d-block d-sm-none"></i>
                                 <span class="d-none d-sm-block">Batal</span>
                             </button>
-                            <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk">
+                            <button type="submit" class="btn btn-primary ml-1">
                                 <i class="bx bx-check d-block d-sm-none"></i>
                                 <span class="d-none d-sm-block">Simpan</span>
                             </button>
@@ -135,8 +168,11 @@
 @endsection
 @section('script')
 <script>
-    let list_muk = [];    
-    const table_muk = $('#table-muk').DataTable({
+    $(document).ready( function () {
+        $('#table-institusi').DataTable();
+    } );
+    let list_institusi = [];    
+    const table_institusi = $('#table-institusi').DataTable({
         "pageLength": 10,
         "lengthMenu": [
             [10, 25, 50, 100, -1],
@@ -148,7 +184,7 @@
         "processing": true,
         "bServerSide": true,
         ajax: {
-            url: "{{ route('admin.DataMUK') }}",
+            url: "{{ route('admin.DataInstitusi') }}",
             type: "POST",
             // data:function(d){
             //     d.data_kabupaten = data_kabupaten;
@@ -165,8 +201,8 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) 
                 {
-					list_muk[row.id] = row;
-                    return row.muk;
+					list_institusi[row.id] = row;
+                    return row.nama_institusi;
                 }
             },
             {
@@ -174,8 +210,8 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) 
                 {
-					list_muk[row.id] = row;
-                    return row.relasi_jurusan.jurusan;
+					list_institusi[row.id] = row;
+                    return row.alamat_institusi;
                 }
             },
             {
@@ -183,11 +219,38 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) 
                 {
+					list_institusi[row.id] = row;
+                    return row.kode_pos;
+                }
+            },
+            {
+                "targets": 3,
+                "class": "text-nowrap",
+                "render": function (data, type, row, meta) 
+                {
+					list_institusi[row.id] = row;
+                    return row.nomor_hp_institusi;
+                }
+            },
+            {
+                "targets": 4,
+                "class": "text-nowrap",
+                "render": function (data, type, row, meta) 
+                {
+					list_institusi[row.id] = row;
+                    return row.email_institusi;
+                }
+            },
+            {
+                "targets": 5,
+                "class": "text-nowrap",
+                "render": function (data, type, row, meta) 
+                {
 					let tampilan;
-                    tampilan =  `<span onclick="editMUK(${row.id})" class="badge bg-warning rounded-pill">
+                    tampilan =  `<span id-jurusan = "${row.id}" onclick="clickEditInstitusi(${row.id})" class="badge bg-warning rounded-pill">
                                     <a class="text-white" href="#">Edit</a>
                                 </span>
-                                <span onclick="hapusMUK(${row.id})" class="badge bg-danger rounded-pill">
+                                <span id-jurusan = "${row.id}" onclick="clickHapusInstitusi(${row.id})" class="badge bg-danger rounded-pill">
                                     <a class="text-white" href="#">Hapus</a>
                                 </span>`
                     return tampilan;
@@ -196,13 +259,17 @@
         ]
     });
 
-    function editMUK(id){
-        const data_muk = list_muk[id]
-            $("#editMUK").modal('show');
-            $("#formEditMUK [name='id']").val(id)
-            $("#formEditMUK .muk").val(data_muk.muk);
-        
-            $('#formEditMUK').on('submit', function (e) {
+    function clickEditInstitusi(id){
+            const data_institusi = list_institusi[id]
+            $("#modalEditInstitusi").modal('show');
+            $("#formEditInstitusi [name='id']").val(id);
+            $("#formEditInstitusi [name='nama_institusi']").val(data_institusi.nama_institusi);
+            $("#formEditInstitusi [name='email_institusi']").val(data_institusi.email_institusi);
+            $("#formEditInstitusi [name='nomor_hp_institusi']").val(data_institusi.nomor_hp_institusi);
+            $("#formEditInstitusi [name='kode_pos']").val(data_institusi.kode_pos);
+            $("#formEditInstitusi [name='alamat_institusi']").val(data_institusi.alamat_institusi);
+
+            $('#formEditInstitusi').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
                 url: $(this).attr('action'),
@@ -222,7 +289,6 @@
                         });
                     } 
                     else if(data.status == 1){
-                        $("#editMUK").modal('hide');
                         swal({
                             title: "Berhasil",
                             text: `${data.msg}`,
@@ -230,14 +296,15 @@
                             buttons: true,
                             successMode: true,
                         }),
-                        table_muk.ajax.reload(null,false);
+                        table_institusi.ajax.reload(null,false)
+                        $("#modalEditInstitusi").modal('hide')
                     }
                 }
             });
         });
     }
 
-    function hapusMUK(id){
+    function clickHapusInstitusi(id){
         swal({
             title: "Yakin ?",
             text: "Menghapus Data ?",
@@ -246,7 +313,7 @@
             dangerMode: true,
         })
         $.ajax({
-            url: "/admin/hapus-muk/" + id,
+            url: "/admin/hapus-institusi/" + id,
             dataType: 'json',
             success: function (response) {
                 if (response.status == 0) {
@@ -259,13 +326,14 @@
                             buttons: true,
                             successMode: true,
                         }),
-                    table_muk.ajax.reload(null, false)
+                    table_institusi.ajax.reload(null, false)
                 }
             }
         });
     }
 
-    $('#isi-muk').on('submit', function (e) {
+
+    $('#formInstitusi').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
             url: $(this).attr('action'),
@@ -283,7 +351,7 @@
                         $('label.' + prefix + '_error').text(val[0]);
                         // $('span.'+prefix+'_error').text(val[0]);
                     });
-                }
+                } 
                 else if(data.status == 1){
                     swal({
                         title: "Berhasil",
@@ -292,9 +360,8 @@
                         buttons: true,
                         successMode: true,
                     }),
-                    table_muk.ajax.reload(null,false)
-                    $("#tambahMuk").modal('hide')
-                    $('.submit-tambah-muk').removeClass('disabled')
+                    table_institusi.ajax.reload(null,false)
+                    $("#modalTambahInstitusi").modal('hide')
                 }
             }
         });

@@ -147,6 +147,44 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-6 col-lg-3 col-md-8">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <a href="{{ route('admin.DaftarInstitusi') }}">
+                                <div class="row">
+                                    <div class="col-md-2 col-xl-4 col-xxl-4">
+                                        <div class="stats-icon blue mb-2">
+                                            <i class="iconly-boldProfile"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="font-extrabold mb-0">Institusi</h6>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-3 col-md-8">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <a href="{{ route('admin.DaftarKualifikasiPendidikan') }}">
+                                <div class="row">
+                                    <div class="col-md-2 col-xl-4 col-xxl-4">
+                                        <div class="stats-icon blue mb-2">
+                                            <i class="iconly-boldProfile"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="font-extrabold mb-0">Kualifikasi Pendidikan</h6>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

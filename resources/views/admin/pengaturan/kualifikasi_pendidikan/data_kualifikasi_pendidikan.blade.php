@@ -1,4 +1,4 @@
-@extends('layout.main-layout', ['title'=>"Materi Uji Kompetensi"])
+@extends('layout.main-layout', ['title'=>"Kualifikasi Pendidikan"])
 @section('main-section')
 <div class="page-content">
     <section class="section">
@@ -6,7 +6,7 @@
             <div class="card-header">
                 <span class="badge bg-info rounded-pill">
                     <a class="text-white" href="#" data-bs-toggle="modal"
-                        data-bs-target="#tambahMuk">Tambah Materi Uji Kompetensi
+                        data-bs-target="#tambahMuk">Tambah Kualifikasi Pendidikan
                     </a>
                 </span>
             
@@ -16,32 +16,20 @@
                     role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel33">Tambah Materi Uji Kompetensi</h4>
+                            <h4 class="modal-title" id="myModalLabel33">Tambah Kualifikasi Pendidikan</h4>
                             <button type="button" class="close" data-bs-dismiss="modal"
                                 aria-label="Close">
                                 <i data-feather="x"></i>
                             </button>
                         </div>
-                        <form action="{{ route('admin.TambahMUK') }}" id="isi-muk" method="POST">
+                        <form action="{{ route('admin.TambahKualifikasiPendidikan') }}" id="isi-muk" method="POST">
                             @csrf
                             <div class="modal-body">
-                                <label>Materi Uji Kompetensi</label>
+                                <label>Kualifikasi Pendidikan</label>
                                 <div class="form-group">
-                                    <input type="text" name="muk" placeholder="Materi Uji Kompetensi" class="form-control rounded-5">
+                                    <input type="text" name="pendidikan" placeholder="Kualifikasi Pendidikan" class="form-control rounded-5">
                                     <div class="input-group has-validation">
-                                        <label class="text-danger error-text muk_error"></label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <select class="js-example-basic-single" name="jurusan_id">
-                                        <option value="" selected disabled>Pilih Jurusan</option>
-                                        @foreach ($jurusan as $data_jurusan)
-                                            <option value="{{ $data_jurusan->id }}">{{ $data_jurusan->jurusan }}</option>                                            
-                                        @endforeach
-                                    </select>
-                                    <div class="input-group has-validation">
-                                        <label class="text-danger error-text jurusan_id_error"></label>
+                                        <label class="text-danger error-text pendidikan_error"></label>
                                     </div>
                                 </div>
                             </div>
@@ -65,11 +53,10 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-striped" id="table-muk">
+                <table class="table table-striped" id="table-kualifikasi-pendidikan">
                     <thead>
                         <tr>
-                            <th>Materi Uji Kompetensi</th>
-                            <th>Jurusan</th>
+                            <th>Pendidikan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -78,41 +65,29 @@
         </div>
 
         {{-- MODAL EDIT --}}
-        <div class="modal fade text-left" id="editMUK" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal fade text-left" id="editKualifikasiPendidikan" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
                 role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel33">Ubah Materi Uji Kompetensi</h4>
+                        <h4 class="modal-title" id="myModalLabel33">Ubah Kualifikasi Pendidikan</h4>
                         <button type="button" class="close" data-bs-dismiss="modal"
                             aria-label="Close">
                             <i data-feather="x"></i>
                         </button>
                     </div>
-                    <form id="formEditMUK" action="{{ route('admin.UbahMUK') }}" method="POST">
+                    <form id="formeditKualifikasiPendidikan" action="{{ route('admin.UbahKualifikasiPendidikan') }}" method="POST">
                         <input type="hidden" name="id" hidden>
                         @csrf
                         <div class="modal-body">
-                            <label>Nama Materi Uji Kompetensi</label>
+                            <label>Kualifikasi Pendidikan</label>
                             <div class="form-group field_wrapper">
-                                <input type="text" name="muk" placeholder="Materi Uji Kompetensi" 
+                                <input type="text" name="pendidikan" placeholder="Kualifikasi Pendidikan" 
                                 class="form-control rounded-5 muk">
                                 <div class="input-group has-validation">
-                                    <label class="text-danger error-text muk_error"></label>
+                                    <label class="text-danger error-text pendidikan_error"></label>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <select class="js-example-basic-single" name="jurusan_id">
-                                    @foreach ($jurusan as $data_jurusan)
-                                        <option value="{{ $data_jurusan->id }}">{{ $data_jurusan->jurusan }}</option>                                            
-                                    @endforeach
-                                </select>
-                                <div class="input-group has-validation">
-                                    <label class="text-danger error-text jurusan_id_error"></label>
-                                </div>
-                            </div>
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light-secondary"
@@ -135,8 +110,8 @@
 @endsection
 @section('script')
 <script>
-    let list_muk = [];    
-    const table_muk = $('#table-muk').DataTable({
+    let list_kualifikasi_pendidikan = [];    
+    const table_kualifikasi_pendidikan = $('#table-kualifikasi-pendidikan').DataTable({
         "pageLength": 10,
         "lengthMenu": [
             [10, 25, 50, 100, -1],
@@ -148,7 +123,7 @@
         "processing": true,
         "bServerSide": true,
         ajax: {
-            url: "{{ route('admin.DataMUK') }}",
+            url: "{{ route('admin.DataKualifikasiPendidikan') }}",
             type: "POST",
             // data:function(d){
             //     d.data_kabupaten = data_kabupaten;
@@ -165,8 +140,8 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) 
                 {
-					list_muk[row.id] = row;
-                    return row.muk;
+					list_kualifikasi_pendidikan[row.id] = row;
+                    return row.pendidikan;
                 }
             },
             {
@@ -174,20 +149,11 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) 
                 {
-					list_muk[row.id] = row;
-                    return row.relasi_jurusan.jurusan;
-                }
-            },
-            {
-                "targets": 2,
-                "class": "text-nowrap",
-                "render": function (data, type, row, meta) 
-                {
 					let tampilan;
-                    tampilan =  `<span onclick="editMUK(${row.id})" class="badge bg-warning rounded-pill">
+                    tampilan =  `<span onclick="editKualifikasiPendidikan(${row.id})" class="badge bg-warning rounded-pill">
                                     <a class="text-white" href="#">Edit</a>
                                 </span>
-                                <span onclick="hapusMUK(${row.id})" class="badge bg-danger rounded-pill">
+                                <span onclick="hapusKualifikasiPendidikan(${row.id})" class="badge bg-danger rounded-pill">
                                     <a class="text-white" href="#">Hapus</a>
                                 </span>`
                     return tampilan;
@@ -196,13 +162,13 @@
         ]
     });
 
-    function editMUK(id){
-        const data_muk = list_muk[id]
-            $("#editMUK").modal('show');
-            $("#formEditMUK [name='id']").val(id)
-            $("#formEditMUK .muk").val(data_muk.muk);
+    function editKualifikasiPendidikan(id){
+        const data_muk = list_kualifikasi_pendidikan[id]
+            $("#editKualifikasiPendidikan").modal('show');
+            $("#formeditKualifikasiPendidikan [name='id']").val(id)
+            $("#formeditKualifikasiPendidikan .muk").val(data_muk.muk);
         
-            $('#formEditMUK').on('submit', function (e) {
+            $('#formeditKualifikasiPendidikan').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
                 url: $(this).attr('action'),
@@ -222,7 +188,7 @@
                         });
                     } 
                     else if(data.status == 1){
-                        $("#editMUK").modal('hide');
+                        $("#editKualifikasiPendidikan").modal('hide');
                         swal({
                             title: "Berhasil",
                             text: `${data.msg}`,
@@ -230,14 +196,14 @@
                             buttons: true,
                             successMode: true,
                         }),
-                        table_muk.ajax.reload(null,false);
+                        table_kualifikasi_pendidikan.ajax.reload(null,false);
                     }
                 }
             });
         });
     }
 
-    function hapusMUK(id){
+    function hapusKualifikasiPendidikan(id){
         swal({
             title: "Yakin ?",
             text: "Menghapus Data ?",
@@ -246,7 +212,7 @@
             dangerMode: true,
         })
         $.ajax({
-            url: "/admin/hapus-muk/" + id,
+            url: "/admin/hapus-kualifikasi-pendidikan/" + id,
             dataType: 'json',
             success: function (response) {
                 if (response.status == 0) {
@@ -259,7 +225,7 @@
                             buttons: true,
                             successMode: true,
                         }),
-                    table_muk.ajax.reload(null, false)
+                    table_kualifikasi_pendidikan.ajax.reload(null, false)
                 }
             }
         });
@@ -283,7 +249,7 @@
                         $('label.' + prefix + '_error').text(val[0]);
                         // $('span.'+prefix+'_error').text(val[0]);
                     });
-                }
+                } 
                 else if(data.status == 1){
                     swal({
                         title: "Berhasil",
@@ -292,9 +258,8 @@
                         buttons: true,
                         successMode: true,
                     }),
-                    table_muk.ajax.reload(null,false)
+                    table_kualifikasi_pendidikan.ajax.reload(null,false)
                     $("#tambahMuk").modal('hide')
-                    $('.submit-tambah-muk').removeClass('disabled')
                 }
             }
         });

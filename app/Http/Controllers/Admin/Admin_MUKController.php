@@ -23,7 +23,7 @@ class Admin_MUKController extends Controller
         if($request->input('length')!=-1) 
             $data = $data->skip($request->input('start'))->take($request->input('length'));
             $rekamTotal = $data->count();
-            $data = $data->with('relasi_jurusan')->get();
+            $data = $data->with('relasiJurusan')->get();
         return response()->json([
             'data'=>$data,
             'recordsTotal'=>$rekamTotal

@@ -19,14 +19,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'nama_lengkap',
-        'email',
-        'sekolah_id',
-        'jurusan_id',
-        'role_id',
-        'password',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,17 +39,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function relasi_roles()
+    
+    public function relasiRole()
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
-    public function relasi_institusi()
+    public function relasiInstitusi()
     {
-        return $this->belongsTo(Institusi::class);
+        return $this->belongsTo(Institusi::class, 'institusi_id', 'id');
     }
-    public function relasi_jurusan()
+    public function relasiJurusan()
     {
-        return $this->belongsTo(Jurusan::class);
+        return $this->belongsTo(Jurusan::class, 'jurusan_id', 'id');
     }
 }

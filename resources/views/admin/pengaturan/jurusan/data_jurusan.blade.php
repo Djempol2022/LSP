@@ -213,10 +213,22 @@
             buttons: true,
             dangerMode: true,
         })
-        .then((willDelete) => {
-            if (willDelete) {
-                window.location = "/admin/hapus-jurusan/" + id;
-                table_jurusan.ajax.reload(null,false)
+        $.ajax({
+            url: "/admin/hapus-jurusan/" + id,
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == 0) {
+                    alert("Gagal Hapus")
+                } else if (response.status == 1) {
+                    swal({
+                            title: "Berhasil",
+                            text: `${response.msg}`,
+                            icon: "success",
+                            buttons: true,
+                            successMode: true,
+                        }),
+                    table_jurusan.ajax.reload(null, false)
+                }
             }
         });
     }

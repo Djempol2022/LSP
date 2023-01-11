@@ -20,47 +20,47 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Role::create([
-            'role' => 'admin'
-        ]);
-        Role::create([
-            'role' => 'peninjau'
-        ]);
-        Role::create([
-            'role' => 'asesor'
-        ]);
-        Role::create([
-            'role' => 'asesi'
-        ]);
-        Institusi::create([
-            'nama_institusi' => 'SMK NEGERI 1 SINTANG',
-            'alamat_institusi'=> 'Jl.',
-            'kode_pos'=>'3433',
-            'nomor_hp_institusi'=>'2123453453',
-            'email_institusi'=>'institusi@gmail.com'
-        ]);
-        Institusi::create([
-            'nama_institusi' => 'SMK NEGERI 2 SINTANG',
-            'alamat_institusi'=> 'Jl.',
-            'kode_pos'=>'3433',
-            'nomor_hp_institusi'=>'2123453453',
-            'email_institusi'=>'institusi@gmail.com'
-        ]);
-        Institusi::create([
-            'nama_institusi' => 'SMK NEGERI 3 PONTIANAK',
-            'alamat_institusi'=> 'Jl.',
-            'kode_pos'=>'3433',
-            'nomor_hp_institusi'=>'2123453453',
-            'email_institusi'=>'institusi@gmail.com'
-        ]);
-        Jurusan::factory(20)->create();
+        // Role::create([
+        //     'role' => 'admin'
+        // ]);
+        // Role::create([
+        //     'role' => 'peninjau'
+        // ]);
+        // Role::create([
+        //     'role' => 'asesor'
+        // ]);
+        // Role::create([
+        //     'role' => 'asesi'
+        // ]);
+        // Institusi::create([
+        //     'nama_institusi' => 'SMK NEGERI 1 SINTANG',
+        //     'alamat_institusi'=> 'Jl.',
+        //     'kode_pos'=>'3433',
+        //     'nomor_hp_institusi'=>'2123453453',
+        //     'email_institusi'=>'institusi@gmail.com'
+        // ]);
+        // Institusi::create([
+        //     'nama_institusi' => 'SMK NEGERI 2 SINTANG',
+        //     'alamat_institusi'=> 'Jl.',
+        //     'kode_pos'=>'3433',
+        //     'nomor_hp_institusi'=>'2123453453',
+        //     'email_institusi'=>'institusi@gmail.com'
+        // ]);
+        // Institusi::create([
+        //     'nama_institusi' => 'SMK NEGERI 3 PONTIANAK',
+        //     'alamat_institusi'=> 'Jl.',
+        //     'kode_pos'=>'3433',
+        //     'nomor_hp_institusi'=>'2123453453',
+        //     'email_institusi'=>'institusi@gmail.com'
+        // ]);
+        // Jurusan::factory(20)->create();
 
         User::create([
             'nama_lengkap' => 'admin',
             'institusi_id' => '1',
             'jurusan_id' => '1',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('22222222'),
             'role_id' => '1'
         ]);
 
@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
             'institusi_id' => '1',
             'jurusan_id' => '1',
             'email' => 'peninjau@gmail.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('22222222'),
             'role_id' => '2'
         ]);
 
@@ -78,7 +78,7 @@ class DatabaseSeeder extends Seeder
             'institusi_id' => '1',
             'jurusan_id' => '1',
             'email' => 'asesor@gmail.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('22222222'),
             'role_id' => '3'
         ]);
 
@@ -87,7 +87,7 @@ class DatabaseSeeder extends Seeder
             'institusi_id' => '1',
             'jurusan_id' => '1',
             'email' => 'asesi@gmail.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('22222222'),
             'role_id' => '4'
         ]);
     }
