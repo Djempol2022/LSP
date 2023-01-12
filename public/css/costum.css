@@ -429,11 +429,31 @@ hr {
     box-shadow: 5px 5px 25px rgba(43, 43, 43, 0.03);
 }
 .nomor {
-    width: 31.333333%;
+    padding: 0;
+    width: 20.333333%;
     font-size: small;
 }
+.soal {
+    width: 75%;
+}
+.soal-next-btn {
+    justify-content: flex-end !important;
+}
 .nomor .col-md-auto {
-    width: 12.333333%;
+    width: 32px;
+}
+.nomor-expl-terjawab {
+    width: 40.666667%;
+}
+.nomor-expl-blm-terjawab {
+    width: 55.333333%;
+}
+.nomor-text-expl {
+    padding: 2.5px 8px;
+    font-size: smaller;
+}
+.jarak-nomor-soal {
+    margin-left: 9%;
 }
 .pernyataan .isi {
     padding: 30px;
@@ -449,6 +469,9 @@ hr {
 }
 .nomor .btn-number {
     border-radius: 8px;
+}
+.keterangan-warna-nomor-soal {
+    text-align: center;
 }
 @media (max-width: 360px) {
     .teks-tabel {
@@ -468,6 +491,15 @@ hr {
         font-size: 10px;
         align-items: center;
         display: flex;
+    }
+    .nomor-expl-terjawab {
+        width: 100% !important;
+    }
+    .nomor-expl-blm-terjawab {
+        width: 100% !important;
+    }
+    .keterangan-warna-nomor-soal {
+        text-align: start;
     }
 }
 @media (max-width: 950px) {
@@ -515,5 +547,26 @@ hr {
     }
     .unti-isi {
         width: 75%;
+    }
+    .nomor {
+        width: 100%;
+    }
+    .soal {
+        width: 100%;
+    }
+    .soal-next-btn {
+        justify-content: center !important;
+    }
+    .nomor-expl-terjawab {
+        width: 48%;
+    }
+    .nomor-expl-blm-terjawab {
+        width: 48%;
+    }
+    .jarak-nomor-soal {
+        margin-left: 4%;
+    }
+    .keterangan-warna-nomor-soal {
+        text-align: start;
     }
 }

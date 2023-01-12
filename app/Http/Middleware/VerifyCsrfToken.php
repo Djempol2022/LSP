@@ -14,6 +14,9 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         '/admin/data-jurusan',
         '/admin/data-muk',
-        '/admin/data_jadwal_uji_kompetensi/*'
+        '/admin/data-jadwal-uji-kompetensi/*',
+        '/admin/data-pengguna',
+        '/admin/data-institusi',
+        '/admin/data-kualifikasi-pendidikan'
     ];
 }

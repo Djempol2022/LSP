@@ -1,6 +1,6 @@
-@extends('layout.main-layout', ['title' => 'Soal'])
+@extends('layout.main-layout', ['title' => 'Assesment'])
 @section('soal-section')
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-top: 60px;">
         {{-- JALUR FILE --}}
         {{-- <nav class="jalur-file mb-5" aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -14,8 +14,8 @@
         </nav> --}}
         <h5>Materi Uji Kompetensi Desain Grafis (Fotografi dan Videografi)</h5>
         {{-- <h3 class="mt-5" id="timer"></h3> --}}
-        <div class="row col gap-3 ms-1 mt-4">
-            <div class="col-md-8 ">
+        <div class="row col gap-5 ms-0 mt-4">
+            <div class="col-lg-auto soal px-0">
                 <div class="col-12 pernyataan">
                     <div class="col isi">
                         <h5>Pertanyaan Nomor 1</h5>
@@ -56,55 +56,58 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12 row gap-4 d-flex soal-next-btn mt-5 mx-0">
+                    <button type="button" class="btn btn-secondary tombol-tiernary-small col-6">
+                        < Kembali</button>
+                            <button type="button" class="btn btn-primary tombol-primary-small col-6">Selanjutnya ></button>
+                </div>
             </div>
-            <div class="col-md-auto nomor d-flex">
-                <div class="col-md-12 row justify-content-center mt-4">
-                    <div class="col-12 gap-3 row justify-content-center mt-4 ms-2">
+            <div class="col-lg-auto nomor d-flex">
+                <div class="col-12 row justify-content-center mt-4 text-center">
+                    <div class="col-12 gap-3 row mt-4 jarak-nomor-soal">
                         <div class="col-md-auto bg-success text-white p-2 btn-number">01</div>
                         <div class="col-md-auto bg-success text-white p-2 btn-number">01</div>
                         <div class="col-md-auto bg-success text-white p-2 btn-number">01</div>
                         <div class="col-md-auto bg-success text-white p-2 btn-number">01</div>
                         <div class="col-md-auto bg-success text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-success text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
+                        {{-- <div class="col-lg-auto bg-secondary text-white p-2 btn-number">01</div>
+                        <div class="col-lg-auto bg-secondary text-white p-2 btn-number">01</div> --}}
                     </div>
-                    <div class="col-12 gap-3 row justify-content-center mt-4 ms-2">
-                        <div class="col-md-auto bg-success text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                    </div>
-                    <div class="col-12 gap-3 row justify-content-center mt-4 ms-2">
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                    </div>
-                    <div class="col-12 gap-3 row justify-content-center mt-4 ms-2">
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                        <div class="col-md-auto bg-secondary text-white p-2 btn-number">01</div>
-                    </div>
-                    <div class="col-12 row my-4 text-black gap-2" style="margin-left: 38px">
-                        <div class="col-4 p-0 text-center mb-4"><span
-                                class="bg-success text-success px-2 py-1 rounded-2 me-1">-</span>Terjawab</div>
-                        <div class="col-6 p-0 text-center mb-4"><span
-                                class="bg-secondary text-success px-2 py-1 rounded-2 me-1">-</span>Belum
-                            Terjawab
+
+                    <div class="col-12 row my-4 text-black gap-2" style="margin-left: 4%">
+                        <div class="col-lg-auto p-0 mb-4 nomor-expl-terjawab">
+                            <div class="col-lg-auto keterangan-warna-nomor-soal">
+                                <span
+                                    class="bg-success text-success nomor-text-expl rounded-2 me-1 col-lg-auto">-</span>Terjawab
+                            </div>
+                        </div>
+                        <div class="col-lg-auto p-0 mb-4 nomor-expl-blm-terjawab">
+                            <div class="col-lg-auto keterangan-warna-nomor-soal">
+                                <span
+                                    class="bg-secondary text-success nomor-text-expl rounded-2 me-1 col-lg-auto">-</span>Belum
+                                Terjawab
+                            </div>
                         </div>
                     </div>
-                    <div class="col-12 d-flex justify-content-center" style="margin-left: 38px">
-                        <button type="button" class="btn btn-primary tombol-primary-max mb-5">Selesai</button>
+                    <div class="col-12 d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary tombol-primary-max ms-4 mb-5">Selesai</button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 row gap-4 d-flex justify-content-end">
-                <button type="button" class="btn btn-secondary tombol-tiernary-small col-6">
-                    < Kembali</button>
-                        <button type="button" class="btn btn-primary tombol-primary-small col-6">Selanjutnya ></button>
-            </div>
+
         </div>
     </div>
 @endsection

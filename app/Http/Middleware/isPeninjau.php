@@ -16,7 +16,7 @@ class isPeninjau
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->relasi_roles->role == 'penjinjau') return $next($request);
+        if ($request->user()->relasiRole->role == 'penjinjau') return $next($request);
         return redirect()->back();
         // abort(403);
     }

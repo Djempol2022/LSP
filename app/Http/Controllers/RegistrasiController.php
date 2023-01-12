@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Institusi;
 use App\Models\User;
 use App\Models\Jurusan;
 use App\Models\Sekolah;
@@ -13,8 +14,8 @@ class RegistrasiController extends Controller
     public function registrasi()
     {
         return view('registrasi', [
-            'sekolah' => Sekolah::with('jurusan')->get(),
-            'jurusan' => Jurusan::with('sekolah')->get()
+            'sekolah' => Institusi::with('relasiJurusan')->get(),
+            'jurusan' => Jurusan::get()
         ]);
     }
     public function store(Request $request)

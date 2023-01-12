@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
             'institusi_id' => '1',
             'jurusan_id' => '1',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('22222222'),
             'role_id' => '1'
         ]);
 
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
             'institusi_id' => '1',
             'jurusan_id' => '1',
             'email' => 'peninjau@gmail.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('22222222'),
             'role_id' => '2'
         ]);
 
@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
             'institusi_id' => '1',
             'jurusan_id' => '1',
             'email' => 'asesor@gmail.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('22222222'),
             'role_id' => '3'
         ]);
 

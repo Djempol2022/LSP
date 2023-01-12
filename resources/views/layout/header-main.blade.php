@@ -1,9 +1,11 @@
 <header class="container-fluid my-4">
     <div class="row align-items-center d-flex mb-3">
         {{-- BURGER BUTTON UNTUK TAMPILAN MOBILE --}}
-        <a href="#" class="burger-btn d-block d-xl-none col-auto">
-            <i class="bi bi-justify fs-3"></i>
-        </a>
+        @if (!request()->routeIs('asesi.Assesment.Soal'))
+            <a href="#" class="burger-btn d-block d-xl-none col-auto">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        @endif
         {{-- JUDUL HALAMAN --}}
         <h3 class="col-auto m-0">{{ $title }}</h3>
         {{-- NOTIFIKASI --}}

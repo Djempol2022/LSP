@@ -16,7 +16,7 @@ class isAsesi
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->relasi_roles->role == 'asesi') return $next($request);
+        if ($request->user()->relasiRole->role == 'asesi') return $next($request);
         return redirect()->back();
         // abort(403);
     }

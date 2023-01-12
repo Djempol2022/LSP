@@ -12,7 +12,7 @@ class MateriUjiKompetensi extends Model
     protected $table = "muk";
     protected $guarded = ['id'];
 
-    public function jurusanRelasi()
+    public function relasiJurusan()
     {
         return $this->belongsTo(Jurusan::class, 'jurusan_id', 'id');
     }
