@@ -25,7 +25,7 @@
 
                 {{-- MENU DASHBOARD --}}
                 {{-- JIKA MENU DASHBOARD DIPILIH MAKA TOMBOL AKAN AKTIF --}}
-                @if(Auth::user()->relasiRole->role == "admin")
+                @if(Auth::user()->relasi_role->role == "admin")
                 <li class="sidebar-item {{ request()->routeIs('admin.Dashboard*') ? 'active' : '' }} ">
                     <a href="{{ route('admin.Dashboard') }}" class='sidebar-link'>
                         <i
@@ -81,7 +81,7 @@
 
 
 
-                @elseif(Auth::user()->relasiRole->role == "peninjau")
+                @elseif(Auth::user()->relasi_role->role == "peninjau")
                 <li class="sidebar-item {{ request()->routeIs('peninjau.Dashboard*') ? 'active' : '' }} ">
                     <a href="{{ route('peninjau.Dashboard') }}" class='sidebar-link'>
                         <i
@@ -117,7 +117,7 @@
 
 
 
-                @elseif(Auth::user()->relasiRole->role == "asesor")
+                @elseif(Auth::user()->relasi_role->role == "asesor")
                 <li class="sidebar-item {{ request()->routeIs('asesor.Dashboard*') ? 'active' : '' }} ">
                     <a href="{{ route('asesor.Dashboard') }}" class='sidebar-link'>
                         <i
@@ -155,7 +155,7 @@
 
 
 
-                @elseif(Auth::user()->relasiRole->role == "asesi")
+                @elseif(Auth::user()->relasi_role->role == "asesi")
                 <li class="sidebar-item {{ request()->routeIs('asesi.Dashboard*') ? 'active' : '' }} ">
                     <a href="{{ route('asesi.Dashboard') }}" class='sidebar-link'>
                         <i

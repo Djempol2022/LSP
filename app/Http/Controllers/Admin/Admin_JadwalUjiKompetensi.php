@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Jurusan;
 use Illuminate\Http\Request;
 use App\Models\JadwalUjiKompetensi;
-use App\Models\MateriUjiKompetensi;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,18 +12,6 @@ class Admin_JadwalUjiKompetensi extends Controller
 {
     public function tampilan_jadwal_uji_kompetensi(){
         return view('admin.jadwal_uji_kompetensi.jadwal_uji_kompetensi');
-    }
-
-    public function detail_jadwal_uji_kompetensi($id){
-        $jadwal_uji_kompetensi = JadwalUjiKompetensi::where('id', $id)->with('relasiMuk.relasiJurusan')->first()->toArray();
-        // ->with([
-        //     'relasiMuk' => function($query) {
-        //         return $query->with('relasiJurusan');
-        //     }])->get()->toArray();
-        $muk = MateriUjiKompetensi::where('id', $jadwal_uji_kompetensi['muk_id'])->with('relasiJurusan')->first()->toArray();
-        // dd($jadwal_uji_kompetensi);
-        $user = User::with('relasiRole')->get()->toArray();
-        return view('admin.jadwal_uji_kompetensi.detail_jadwal_uji_kompetensi', compact('jadwal_uji_kompetensi', 'user'));
     }
 
     public function data_jadwal_uji_kompetensi(Request $request, $id){
@@ -38,7 +23,7 @@ class Admin_JadwalUjiKompetensi extends Controller
             $data = $data->skip($request->input('start'))->take($request->input('length'));
             $rekamTotal = $data->count();
             // $data = $data->with('relasi_muk')->where('jurusan_id', $id)->get();
-            $data = $data->with('relasiMuk')->whereRelation('relasiMuk', 'jurusan_id', $id)->get();
+            $data = $data->with('relasi_muk')->whereRelation('relasi_muk', 'jurusan_id', $id)->get();
             // return $data;
             return response()->json([
             'data'=>$data,

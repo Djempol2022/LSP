@@ -40,16 +40,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
-    public function relasiRole()
+    public function relasi_role()
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
-    public function relasiInstitusi()
+    public function relasi_institusi()
     {
         return $this->belongsTo(Institusi::class, 'institusi_id', 'id');
     }
-    public function relasiJurusan()
+    public function relasi_jurusan()
     {
         return $this->belongsTo(Jurusan::class, 'jurusan_id', 'id');
+    }
+
+    public function relasi_user_detail(){
+        return $this->hasOne(UserDetail::class, 'user_id', 'id');
     }
 }

@@ -20,19 +20,19 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
         if(Auth::attempt($request->only('email','password'))){
-            if (auth()->user()->relasiRole->role == 'admin') {
+            if (auth()->user()->relasi_role->role == 'admin') {
     
                 return redirect()->route('admin.Dashboard');
             } 
-            elseif (auth()->user()->relasiRole->role == 'asesi') {
+            elseif (auth()->user()->relasi_role->role == 'asesi') {
                 // return "Asesi";
                 return redirect()->route('asesi.Dashboard');
             }
-            elseif (auth()->user()->relasiRole->role == 'asesor') {
+            elseif (auth()->user()->relasi_role->role == 'asesor') {
                 return "Asesor";
                 // return redirect()->route('dealer.Dashboard');
             }
-            elseif (auth()->user()->relasiRole->role == 'peninjau') {
+            elseif (auth()->user()->relasi_role->role == 'peninjau') {
                 return "Peninjau";
                 // return redirect()->route('dealer.Dashboard');
             }

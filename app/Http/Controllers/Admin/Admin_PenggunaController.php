@@ -25,7 +25,7 @@ class Admin_PenggunaController extends Controller
             $data = $data->skip($request->input('start'))->take($request->input('length'));
             $rekamTotal = $data->count();
             // $data = $data->with('relasi_muk')->where('jurusan_id', $id)->get();
-            $data = $data->with('relasiInstitusi')->with('relasiJurusan')->with('relasiRole')->get();
+            $data = $data->with('relasi_institusi')->with('relasi_jurusan')->with('relasi_role')->get();
             // return $data;
             return response()->json([
             'data'=>$data,
