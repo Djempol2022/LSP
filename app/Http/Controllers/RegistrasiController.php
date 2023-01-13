@@ -14,7 +14,7 @@ class RegistrasiController extends Controller
     public function registrasi()
     {
         return view('registrasi', [
-            'sekolah' => Institusi::with('relasiJurusan')->get(),
+            'sekolah' => Institusi::with('relasi_jurusan')->get(),
             'jurusan' => Jurusan::get()
         ]);
     }

@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('detail_uji_kompetensi', function (Blueprint $table) {
+        Schema::create('asesi_uji_kompetensi', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('jadwal_uji_kompetensi_id')->constrained('jadwal_uji_kompetensi')->onUpddate('cascade')->onDelete('cascade');
+            $table->foreignId('user_asesi_id')->constrained('users')->onUpddate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_uji_kompetensi');
+        Schema::dropIfExists('asesi_uji_kompetensi');
     }
 };

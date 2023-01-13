@@ -12,7 +12,7 @@ class JadwalUjiKompetensi extends Model
     protected $table = "jadwal_uji_kompetensi";
     protected $guarded = ['id'];
 
-    public function relasiMuk()
+    public function relasi_muk()
     {
         return $this->belongsTo(MateriUjiKompetensi::class, 'muk_id', 'id');
     }

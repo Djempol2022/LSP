@@ -1,5 +1,6 @@
 @extends('layout.main-layout', ['title'=>"Jadwal Uji Kompetensi"])
 @section('main-section')
+
 <div class="page-content">
     <section class="section">
         <div class="card">

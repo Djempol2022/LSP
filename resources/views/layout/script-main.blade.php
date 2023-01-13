@@ -13,6 +13,7 @@
 {{-- <script src="/js/dataTables.responsive.min.js"></script> --}}
 
 @yield('script')
+@stack('script')
 <script>
   $(document).ready(function() {
     $('#table1').DataTable({
@@ -112,8 +113,8 @@
     handler = setInterval(updateTimer, 1000);
     init();
 </script> --}}
-
-{{-- $(document).ready(function() {
+{{--
+    $(document).ready(function() {
         $('select[name="sekolah_id"]').on('change', function() {
             let sekolahId = $(this).val();
             if (sekolahId) {

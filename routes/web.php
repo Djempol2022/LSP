@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Admin_MUKController;
 use App\Http\Controllers\Admin\Admin_PengaturanController;
 use App\Http\Controllers\Admin\Admin_PenggunaController;
 use App\Http\Controllers\Admin\Admin_AssessmentController;
+use App\Http\Controllers\Admin\Admin_DetailJadwalUjiKompetensi;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrasiController;
@@ -56,7 +57,11 @@ Route::middleware(['auth'])->group(function () {
 
 
         Route::controller(Admin_AssessmentController::class)->group(function () {
-            Route::get('Assessment', 'assessment')->name('Assessment');
+            Route::get('assessment', 'assessment')->name('Assessment');
+            Route::get('permohonan-sertifikasi', 'permohonan_sertifikasi_kompetensi')->name('PermohonanSertifikasi');
+            Route::any('data-permohonan-sertifikasi-kompetensi', 'data_permohonan_sertifikasi_kompetensi')->name('DataPermohonanSertifikasiKompetensi');
+            Route::get('detail-permohonan-sertifikasi-kompetensi/{id}', 'detail_permohonan_sertifikasi_kompetensi')->name('DetailPermohonanSertifikasiKompetensi');
+            Route::get('detail-data-permohonan-sertifikasi-kompetensi/{id}', 'detail_data_permohonan_sertifikasi_kompetensi');
         });
 
         Route::controller(Admin_PengaturanController::class)->group(function () {
@@ -93,8 +98,26 @@ Route::middleware(['auth'])->group(function () {
             Route::get('hapus-jadwal-uji-kompetensi/{id}', 'hapus_jadwal_uji_kompetensi');
             Route::any('data-jadwal-uji-kompetensi/{id}', 'data_jadwal_uji_kompetensi');
             Route::post('ubah-jadwal-uji-kompetensi', 'ubah_jadwal_uji_kompetensi')->name('UbahJadwalUjiKompetensi');
-            Route::get('detail-jadwal-uji-kompetensi/{id}', 'detail_jadwal_uji_kompetensi')->name('DetailJadwalUjiKompetensi');
         });
+
+        Route::controller(Admin_DetailJadwalUjiKompetensi::class)->group(function () {
+            Route::get('detail-jadwal-uji-kompetensi/{id}', 'detail_jadwal_uji_kompetensi')->name('DetailJadwalUjiKompetensi');
+            Route::post('tambah-asesi', 'tambah_asesi')->name('TambahAsesi');
+            Route::get('hapus-asesi/{id}', 'hapus_asesi');
+            Route::any('data-asesi/{id}', 'data_asesi')->name('DataAsesi');
+            Route::post('ubah-asesi', 'ubah_asesi')->name('UbahAsesi');
+
+            Route::post('tambah-asesor', 'tambah_asesor')->name('TambahAsesor');
+            Route::get('hapus-asesor/{id}', 'hapus_asesor');
+            Route::any('data-asesor/{id}', 'data_asesor');
+            Route::post('ubah-asesor', 'ubah_asesor')->name('UbahAsesor');
+
+            Route::post('tambah-peninjau', 'tambah_peninjau')->name('TambahPeninjau');
+            Route::get('hapus-peninjau/{id}', 'hapus_peninjau');
+            Route::any('data-peninjau/{id}', 'data_peninjau')->name('DataPeninjau');
+            Route::post('ubah-peninjau', 'ubah_peninjau')->name('UbahPeninjau');
+        });
+
         Route::controller(Admin_PenggunaController::class)->group(function () {
             Route::get('pengguna', 'daftar_data_pengguna')->name('DaftarPengguna');
             Route::any('data-pengguna', 'data_pengguna')->name('DataPengguna');

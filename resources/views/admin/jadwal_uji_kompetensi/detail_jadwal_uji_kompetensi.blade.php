@@ -1,5 +1,6 @@
 @extends('layout.main-layout', ['title' => 'Detail Jadwal Uji Kompetensi'])
 @section('main-section')
+  <p class="data_id_jadwal">{{ $jadwal_uji_kompetensi['id'] }}</p>
   <div class="page-content">
     <section class="section">
       <div class="container mt-5 jalur-file">
@@ -411,5 +412,26 @@
         }
       });
     }
+
+
+    $.ajax({
+      url: "/admin/detail-data-permohonan-sertifikasi-kompetensi/" + id,
+      type: "POST",
+      dataType: 'json',
+      success: function(response) {
+        if (response.status == 0) {
+          alert("Gagal Hapus")
+        } else if (response.status == 1) {
+          swal({
+              title: "Berhasil",
+              text: `${response.msg}`,
+              icon: "success",
+              buttons: true,
+              successMode: true,
+            }),
+            table_jadwal_uji_kompetensi.ajax.reload(null, false)
+        }
+      }
+    });
   </script>
 @endsection
