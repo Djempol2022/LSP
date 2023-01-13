@@ -44,11 +44,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
-    public function relasiInstitusi()
+
+    public function relasi_institusi()
     {
         return $this->belongsTo(Institusi::class, 'institusi_id', 'id');
     }
-    public function relasiJurusan()
+
+    public function relasi_jurusan()
     {
         return $this->belongsTo(Jurusan::class, 'jurusan_id', 'id');
     }
@@ -66,5 +68,10 @@ class User extends Authenticatable
     public function relasi_sertifikasi()
     {
         return $this->belongsTo(Sertifikasi::class, 'id', 'user_id');
+    }
+
+    public function relasi_kelengkapan_pemohon()
+    {
+        return $this->belongsTo(KelengkapanPemohon::class, 'id', 'user_id');
     }
 }

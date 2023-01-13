@@ -14,72 +14,73 @@
 
 @yield('script')
 <script>
-    $(document).ready(function() {
-        $('#table1').DataTable({
-            drawCallback: function() {
-                $('.js-example-basic-single').select2({
-                    theme: 'bootstrap-5'
-                })
-            }
-        });
+  $(document).ready(function() {
+    $('#table1').DataTable({
+      drawCallback: function() {
+        $('.js-example-basic-single').select2({
+          theme: 'bootstrap-5'
+        })
+      }
     });
+  });
 </script>
 
 <script>
-    $(document).ready(function() {
-        $('.js-example-basic-single').select2({
-            theme: 'bootstrap-5',
-        });
+  $(document).ready(function() {
+    $('.js-example-basic-single').select2({
+      theme: 'bootstrap-5',
     });
+  });
 </script>
 {{-- TTD --}}
 <script src="/extensions/signature-pad/dist/signature_pad.umd.js"></script>
-
 {{-- TTD --}}
-<script type="text/javascript">
-    var wrapper = document.getElementById("signature-pad");
-    // var clear = document.getElementById("signature-clear");
-    // var clearButton = clear.querySelector("[data-action=clear]");
-    // var undoButton = wrapper.querySelector("[data-action=undo]");
-    // var savePNGButton = wrapper.querySelector("[data-action=save-png]");
-    var canvas = wrapper.querySelector("canvas");
-    var signaturePad = new SignaturePad(canvas, {
-        backgroundColor: 'rgb(255, 255, 255)'
-    });
+{{-- <script src="/js/ttd_app.js"></script> --}}
+{{-- TTD --}}
+{{-- <script type="text/javascript">
+  var wrapper = document.getElementById("signature-pad");
+  // var clear = document.getElementById("signature-clear");
+  // var clearButton = clear.querySelector("[data-action=clear]");
+  // var undoButton = wrapper.querySelector("[data-action=undo]");
+  // var savePNGButton = wrapper.querySelector("[data-action=save-png]");
+  var canvas = wrapper.querySelector("canvas");
+  var signaturePad = new SignaturePad(canvas, {
+    backgroundColor: 'rgb(255, 255, 255)'
+  });
 
-    function resizeCanvas() {
-        var ratio = Math.max(window.devicePixelRatio || 1, 1);
-        canvas.width = canvas.offsetWidth * ratio;
-        canvas.height = canvas.offsetHeight * ratio;
-        var w = window.innerWidth;
-        if (canvas.width == 0 && canvas.height == 0) {
-            if (w > 1200) {
-                canvas.width = 496 * ratio;
-                canvas.height = 200 * ratio;
-            } else if (w < 1200 && w > 992) {
-                canvas.width = 334 * ratio;
-                canvas.height = 200 * ratio;
-            } else if (w < 992) {
-                canvas.width = 399 * ratio;
-                canvas.height = 200 * ratio;
-            }
-        } else {
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-        }
-        canvas.getContext("2d").scale(ratio, ratio);
-        signaturePad.clear();
+  function resizeCanvas() {
+    var ratio = Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    var w = window.innerWidth;
+    if (canvas.width == 0 && canvas.height == 0) {
+      if (w > 1200) {
+        canvas.width = 496 * ratio;
+        canvas.height = 200 * ratio;
+      } else if (w < 1200 && w > 992) {
+        canvas.width = 334 * ratio;
+        canvas.height = 200 * ratio;
+      } else if (w < 992) {
+        canvas.width = 399 * ratio;
+        canvas.height = 200 * ratio;
+      }
+    } else {
+      canvas.width = canvas.offsetWidth * ratio;
+      canvas.height = canvas.offsetHeight * ratio;
     }
-    window.addEventListener("resize", resizeCanvas)
-    resizeCanvas()
+    canvas.getContext("2d").scale(ratio, ratio);
+    signaturePad.clear();
+  }
+  window.addEventListener("resize", resizeCanvas)
+  resizeCanvas()
 
-    // clearButton.addEventListener("click", function(event) {
-    //     signaturePad.clear();
-    // });
-</script>
+  //   clearButton.addEventListener("click", function(event) {
+  //     signaturePad.clear();
+  //   });
+</script> --}}
 
 {{-- <script>
-    var hours = 2, // obtain these values somewhere else 
+    var hours = 2, // obtain these values somewhere else
         minutes = 00,
         seconds = 00,
         target = new Date(),
@@ -112,7 +113,7 @@
     init();
 </script> --}}
 
-    $(document).ready(function() {
+{{-- $(document).ready(function() {
         $('select[name="sekolah_id"]').on('change', function() {
             let sekolahId = $(this).val();
             if (sekolahId) {
@@ -136,12 +137,12 @@
                     '<option value="" disabled selected>Pilih Jurusan</option>');
             }
         });
-    });
-    
-</script>
+    }); --}}
+
+{{-- </script> --}}
 {{-- COUNTDOWN --}}
 {{-- <script>
-    var hours = 2, // obtain these values somewhere else 
+    var hours = 2, // obtain these values somewhere else
         minutes = 00,
         seconds = 00,
         target = new Date(),

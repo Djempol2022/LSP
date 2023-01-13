@@ -54,7 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->name('admin.')->middleware(['isAdmin'])->group(function () {
         Route::get('dashboard', [Admin_DashboardController::class, 'dashboard'])->name('Dashboard');
 
-        
+
         Route::controller(Admin_AssessmentController::class)->group(function () {
             Route::get('Assessment', 'assessment')->name('Assessment');
         });
@@ -79,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('hapus-kualifikasi-pendidikan/{id}', 'hapus_kualifikasi_pendidikan');
             Route::post('ubah-kualifikasi-pendidikan', 'ubah_kualifikasi_pendidikan')->name('UbahKualifikasiPendidikan');
             Route::any('data-kualifikasi-pendidikan', 'data_kualifikasi_pendidikan')->name('DataKualifikasiPendidikan');
-        });  
+        });
         Route::controller(Admin_MUKController::class)->group(function () {
             Route::any('data-muk', 'data_muk')->name('DataMUK');
             Route::get('muk', 'daftar_data_muk')->name('DaftarMUK');
@@ -94,14 +94,14 @@ Route::middleware(['auth'])->group(function () {
             Route::any('data-jadwal-uji-kompetensi/{id}', 'data_jadwal_uji_kompetensi');
             Route::post('ubah-jadwal-uji-kompetensi', 'ubah_jadwal_uji_kompetensi')->name('UbahJadwalUjiKompetensi');
             Route::get('detail-jadwal-uji-kompetensi/{id}', 'detail_jadwal_uji_kompetensi')->name('DetailJadwalUjiKompetensi');
-        }); 
+        });
         Route::controller(Admin_PenggunaController::class)->group(function () {
             Route::get('pengguna', 'daftar_data_pengguna')->name('DaftarPengguna');
             Route::any('data-pengguna', 'data_pengguna')->name('DataPengguna');
             Route::get('hapus-pengguna/{id}', 'hapus_pengguna');
             Route::post('tambah-pengguna', 'tambah_pengguna')->name('TambahPengguna');
             Route::post('ubah-pengguna', 'ubah_pengguna')->name('UbahPengguna');
-        }); 
+        });
     });
     // Contoh Pemanggilan Route di Blade -> asesor.Dashboard
     Route::prefix('asesor')->name('asesor.')->middleware(['isAsesor'])->group(function () {
@@ -128,7 +128,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(ProfilController::class)->group(function () {
             Route::get('dashboard/profile', 'index')->name('Dashboard.Profile');
-            Route::put('dashboard/profile', 'update')->name('Dashboard.Update');
+            Route::post('dashboard/profile', 'update')->name('Dashboard.Update');
         });
     });
 

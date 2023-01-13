@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Jurusan;
 use App\Models\Sekolah;
 use App\Models\Institusi;
+use App\Models\Kebangsaan;
+use App\Models\KualifikasiPendidikan;
 use App\Models\Pekerjaan;
 use App\Models\UserDetail;
 use Illuminate\Database\Seeder;
@@ -108,10 +110,8 @@ class DatabaseSeeder extends Seeder
             'ktp_nik_paspor' => '32019170233',
             'tempat_lahir' => 'Sambas',
             'jenis_kelamin' => 'laki-laki',
-            'kebangsaan' => 'Indonesia',
             'alamat_rumah' => 'Tanray',
             'nomor_hp' => '081256607174',
-            'kualifikasi_pendidikan' => 'D3'
         ]);
 
         UserDetail::create([
@@ -120,10 +120,8 @@ class DatabaseSeeder extends Seeder
             'ktp_nik_paspor' => '32019170213',
             'tempat_lahir' => 'Sambas',
             'jenis_kelamin' => 'laki-laki',
-            'kebangsaan' => 'Indonesia',
             'alamat_rumah' => 'Tanray',
             'nomor_hp' => '081256607222',
-            'kualifikasi_pendidikan' => 'D3'
         ]);
 
         Pekerjaan::create([
@@ -135,6 +133,30 @@ class DatabaseSeeder extends Seeder
             'kode_pos' => '3333',
             'nomor_hp_institusi' => '081256607271',
             'email_institusi' => 'aa@gmail.com',
+        ]);
+
+        KualifikasiPendidikan::create([
+            'pendidikan' => 'SD'
+        ]);
+
+        KualifikasiPendidikan::create([
+            'pendidikan' => 'SMP'
+        ]);
+
+        KualifikasiPendidikan::create([
+            'pendidikan' => 'SMK'
+        ]);
+
+        Kebangsaan::create([
+            'kebangsaan' => 'Indonesia'
+        ]);
+
+        Kebangsaan::create([
+            'kebangsaan' => 'Malaysia'
+        ]);
+
+        Kebangsaan::create([
+            'kebangsaan' => 'Singapore'
         ]);
     }
 }

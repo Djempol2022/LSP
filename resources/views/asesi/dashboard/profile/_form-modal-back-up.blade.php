@@ -28,7 +28,8 @@
                         <label for="nama_lengkap" class="form-label fw-semibold">Nama
                           Lengkap</label>
                         <input type="text" id="nama_lengkap" class="form-control input-text"
-                          placeholder="Masukkan Nama Lengkap. . ." name="nama_lengkap" required>
+                          placeholder="Masukkan Nama Lengkap. . ." name="nama_lengkap"
+                          value="{{ $data->relasi_user_detail->nama_lengkap ?? '' }}" required>
                         <label class="text-danger error-text nama_lengkap_error mt-1"></label>
                       </div>
                       <div class="col edit-profil-left">
@@ -40,6 +41,12 @@
                             Institusi
                             /
                             Perusahaan</option>
+                          @foreach ($institusis as $institusi)
+                            <option value="{{ $institusi->id }}"
+                              {{ $institusi->id === $data->relasi_institusi->id ? 'selected' : '' }}>
+                              {{ $institusi->nama_institusi }}
+                            </option>
+                          @endforeach
                         </select>
                         <label class="text-danger error-text institusi_error mt-1"></label>
                       </div>
@@ -47,6 +54,11 @@
                         <label for="jurusan" class="form-label fw-semibold">Jurusan</label>
                         <select class="form-select input-text" id="jurusan" name="jurusan" required>
                           <option value="" selected disabled>Pilih Jurusan</option>
+                          @foreach ($jurusans as $jurusan)
+                            <option value="{{ $jurusan->id }}"
+                              {{ $jurusan->id === $data->relasi_jurusan->id ? 'selected' : '' }}>{{ $jurusan->jurusan }}
+                            </option>
+                          @endforeach
                         </select>
                         <label class="text-danger error-text jurusan_error mt-1"></label>
                       </div>
@@ -54,20 +66,23 @@
                         <label for="ktp_nik_paspor" class="form-label fw-semibold">Nomor
                           KTP/NIK/Paspor</label>
                         <input type="text" id="ktp_nik_paspor" class="form-control input-text"
-                          placeholder="Masukkan Nomor KTP/NIK/Paspor. . ." name="ktp_nik_paspor">
+                          placeholder="Masukkan Nomor KTP/NIK/Paspor. . ."
+                          value="{{ $data->relasi_user_detail->ktp_nik_paspor ?? '' }}" name="ktp_nik_paspor">
                         <label class="text-danger error-text ktp_nik_paspor_error mt-1"></label>
                       </div>
                       <div class="col edit-profil-left">
                         <label for="tempat_lahir" class="form-label fw-semibold">Tempat
                           Lahir</label>
                         <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-control input-text"
-                          placeholder="Masukkan Tempat Lahir. . .">
+                          placeholder="Masukkan Tempat Lahir. . ."
+                          value="{{ $data->relasi_user_detail->tempat_lahir ?? '' }}">
                         <label class="text-danger error-text tempat_lahir_error mt-1"></label>
                       </div>
                       <div class="col edit-profil-left">
                         <label for="tanggal_lahir" class="form-label fw-semibold">Tanggal
                           Lahir</label>
-                        <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="form-control input-text">
+                        <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="form-control input-text"
+                          value="{{ $data->relasi_user_detail->tanggal_lahir ?? '' }}">
                         <label class="text-danger error-text tanggal_lahir_error mt-1"></label>
                       </div>
                       <div class="col edit-profil-left">
@@ -75,6 +90,12 @@
                           Kelamin</label>
                         <select class="form-select input-text" id="jenis_kelamin" name="jenis_kelamin">
                           <option value="" selected disabled>Pilih Jenis Kelamin
+                          </option>
+                          <option value="laki-laki"
+                            {{ $data->relasi_user_detail->jenis_kelamin === 'laki-laki' ? 'selected' : '' }}>LAKI-LAKI
+                          </option>
+                          <option value="perempuan"
+                            {{ $data->relasi_user_detail->jenis_kelamin === 'perempuan' ? 'selected' : '' }}>PEREMPUAN
                           </option>
                         </select>
                         <label class="text-danger error-text jenis_kelamin_error mt-1"></label>
@@ -86,6 +107,18 @@
                         <select name="kebangsaan" class="form-select input-text" id="kebangsaan">
                           <option value="" selected disabled>Pilih Kebangsaan
                           </option>
+                          @foreach ($kebangsaan as $item)
+                            @isset($data->relasi_user_detail->relasi_kebangsaan->id)
+                              <option value="{{ $item->id }}"
+                                {{ $item->id === $data->relasi_user_detail->relasi_kebangsaan->id ? 'selected' : '' }}>
+                                {{ $item->kebangsaan }}
+                              </option>
+                            @else
+                              <option value="{{ $item->id }}">
+                                {{ $item->kebangsaan }}
+                              </option>
+                            @endisset
+                          @endforeach
                         </select>
                         <label class="text-danger error-text kebangsaan_error mt-1"></label>
                       </div>
@@ -93,26 +126,29 @@
                         <label for="alamat_rumah" class="form-label fw-semibold">Alamat
                           Rumah</label>
                         <input type="text" id="alamat_rumah" class="form-control input-text"
-                          placeholder="Masukkan Alamat Rumah. . ." name="alamat_rumah">
+                          placeholder="Masukkan Alamat Rumah. . ." name="alamat_rumah"
+                          value="{{ $data->relasi_user_detail->alamat_rumah ?? '' }}">
                         <label class="text-danger error-text alamat_rumah_error mt-1"></label>
                       </div>
                       <div class="col edit-profil-right">
                         <label for="kode_pos" class="form-label fw-semibold">Kode Pos</label>
                         <input type="text" id="kode_pos" class="form-control input-text"
-                          placeholder="Masukkan Kode Pos. . ." name="kode_pos">
+                          placeholder="Masukkan Kode Pos. . ." name="kode_pos"
+                          value="{{ $data->relasi_institusi->kode_pos ?? '' }}">
                         <label class="text-danger error-text kode_pos_error mt-1"></label>
                       </div>
                       <div class="col edit-profil-right">
                         <label for="nomor_hp" class="form-label fw-semibold">Nomor
                           Telepon</label>
                         <input type="number" id="nomor_hp" class="form-control input-text"
-                          placeholder="Masukkan Nomor Telepon. . ." name="nomor_hp">
+                          placeholder="Masukkan Nomor Telepon. . ." name="nomor_hp"
+                          value="{{ $data->relasi_user_detail->nomor_hp ?? '' }}">
                         <label class="text-danger error-text nomor_hp_error mt-1"></label>
                       </div>
                       <div class="col edit-profil-right">
                         <label for="email" class="form-label fw-semibold">Email</label>
                         <input type="text" id="email" class="form-control input-text"
-                          placeholder="Masukkan Email. . ." name="email">
+                          placeholder="Masukkan Email. . ." name="email" value="{{ $data->email ?? '' }}">
                         <label class="text-danger error-text email_error mt-1"></label>
                       </div>
                       <div class="col edit-profil-right">
@@ -123,6 +159,18 @@
                           <option value="" selected disabled>Pilih Kualifikasi
                             Pendidikan
                           </option>
+                          @foreach ($kualifikasi_pendidikan as $item)
+                            @isset($data->relasi_user_detail->relasi_kualifikasi_pendidikan->id)
+                              <option value="{{ $item->id }}"
+                                {{ $item->id === $data->relasi_user_detail->relasi_kualifikasi_pendidikan->id ? 'selected' : '' }}>
+                                {{ $item->pendidikan }}
+                              </option>
+                            @else
+                              <option value="{{ $item->id }}">
+                                {{ $item->pendidikan }}
+                              </option>
+                            @endisset
+                          @endforeach
                         </select>
                         <label class="text-danger error-text kualifikasi_pendidikan_error mt-1"></label>
                       </div>
@@ -137,40 +185,77 @@
                     <div class="col edit-profil-left">
                       <label for="nama_institusi_pekerjaan" class="form-label fw-semibold">Nama Institusi /
                         Perusahaan</label>
-                      <input type="text" id="nama_institusi_pekerjaan" class="form-control input-text"
-                        placeholder="Masukkan Nama Institusi / Perusahaan" name="nama_institusi_pekerjaan">
+                      @isset($data->relasi_pekerjaan->nama_institusi)
+                        <input type="text" id="nama_institusi_pekerjaan" class="form-control input-text"
+                          placeholder="Masukkan Nama Institusi / Perusahaan" name="nama_institusi_pekerjaan"
+                          value="{{ $data->relasi_pekerjaan->nama_institusi }}">
+                      @else
+                        <input type="text" id="nama_institusi_pekerjaan" class="form-control input-text"
+                          placeholder="Masukkan Nama Institusi / Perusahaan" name="nama_institusi_pekerjaan">
+                      @endisset
                     </div>
                     <div class="col edit-profil-left">
                       <label for="jabatan" class="form-label fw-semibold">Jabatan</label>
-                      <input type="text" id="jabatan" class="form-control input-text"
-                        placeholder="Masukkan Jabatan. . ." name="jabatan">
+                      @isset($data->relasi_pekerjaan->jabatan)
+                        <input type="text" id="jabatan" class="form-control input-text"
+                          placeholder="Masukkan Jabatan. . ." name="jabatan"
+                          value="{{ $data->relasi_pekerjaan->jabatan }}">
+                      @else
+                        <input type="text" id="jabatan" class="form-control input-text"
+                          placeholder="Masukkan Jabatan. . ." name="jabatan">
+                      @endisset
                     </div>
                     <div class="col edit-profil-left">
                       <label for="alamat_kantor_pekerjaan" class="form-label fw-semibold">Alamat
                         Kantor</label>
-                      <input type="text" id="alamat_kantor_pekerjaan" class="form-control input-text"
-                        placeholder="Masukkan Alamat Kantor. . ." name="alamat_kantor_pekerjaan">
+                      @isset($data->relasi_pekerjaan->alamat_institusi)
+                        <input type="text" id="alamat_kantor_pekerjaan" class="form-control input-text"
+                          placeholder="Masukkan Alamat Kantor. . ." name="alamat_kantor_pekerjaan"
+                          value="{{ $data->relasi_pekerjaan->alamat_institusi }}">
+                      @else
+                        <input type="text" id="alamat_kantor_pekerjaan" class="form-control input-text"
+                          placeholder="Masukkan Alamat Kantor. . ." name="alamat_kantor_pekerjaan">
+                      @endisset
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="col edit-profil-right">
                       <label for="kode_pos_pekerjaan" class="form-label fw-semibold">Kode Pos</label>
-                      <input type="text" id="kode_pos_pekerjaan" class="form-control input-text"
-                        placeholder="Masukkan Kode Pos. . ." name="kode_pos_pekerjaan">
+                      @isset($data->relasi_pekerjaan->kode_pos)
+                        <input type="text" id="kode_pos_pekerjaan" class="form-control input-text"
+                          placeholder="Masukkan Kode Pos. . ." name="kode_pos_pekerjaan"
+                          value="{{ $data->relasi_pekerjaan->kode_pos }}">
+                      @else
+                        <input type="text" id="kode_pos_pekerjaan" class="form-control input-text"
+                          placeholder="Masukkan Kode Pos. . ." name="kode_pos_pekerjaan">
+                      @endisset
                     </div>
                     <div class="col edit-profil-right">
                       <label for="nomor_hp_institusi_pekerjaan" class="form-label fw-semibold">Nomor
                         Telepon Institusi / Perusahaan</label>
-                      <input type="number" id="nomor_hp_institusi_pekerjaan" class="form-control input-text"
-                        placeholder="Masukkan Nomor Telepon Institusi / Perusahaan. . ."
-                        name="nomor_hp_institusi_pekerjaan">
+                      @isset($data->relasi_pekerjaan->nomor_hp_institusi)
+                        <input type="number" id="nomor_hp_institusi_pekerjaan" class="form-control input-text"
+                          placeholder="Masukkan Nomor Telepon Institusi / Perusahaan. . ."
+                          name="nomor_hp_institusi_pekerjaan"
+                          value="{{ $data->relasi_pekerjaan->nomor_hp_institusi }}">
+                      @else
+                        <input type="number" id="nomor_hp_institusi_pekerjaan" class="form-control input-text"
+                          placeholder="Masukkan Nomor Telepon Institusi / Perusahaan. . ."
+                          name="nomor_hp_institusi_pekerjaan">
+                      @endisset
                     </div>
                     <div class="col edit-profil-right">
                       <label for="email_institusi_pekerjaan" class="form-label fw-semibold">Email Institusi
                         /
                         Perusahaan</label>
-                      <input type="email" id="email_institusi_pekerjaan" class="form-control input-text"
-                        placeholder="Masukkan Email Institusi / Perusahaan.." name="email_institusi_pekerjaan">
+                      @isset($data->relasi_pekerjaan->email_institusi)
+                        <input type="email" id="email_institusi_pekerjaan" class="form-control input-text"
+                          placeholder="Masukkan Email Institusi / Perusahaan.." name="email_institusi_pekerjaan"
+                          value="{{ $data->relasi_pekerjaan->email_institusi }}">
+                      @else
+                        <input type="email" id="email_institusi_pekerjaan" class="form-control input-text"
+                          placeholder="Masukkan Email Institusi / Perusahaan.." name="email_institusi_pekerjaan">
+                      @endisset
                     </div>
                   </div>
                 </div>
@@ -185,36 +270,65 @@
               <div class="col profil-section">
                 <p>Tujuan Assesment</p>
                 <div class="form-check mb-2">
-                  <input class="form-check-input" type="radio" name="data_sertifikasi" id="sertifikasi"
-                    value="sertifikasi">
+                  @isset($data->relasi_sertifikasi->tujuan_asesmen)
+                    <input class="form-check-input" type="radio" name="data_sertifikasi" id="sertifikasi"
+                      value="sertifikasi"
+                      {{ $data->relasi_sertifikasi->tujuan_asesmen === 'sertifikasi' ? 'checked' : '' }}>
+                  @else
+                    <input class="form-check-input" type="radio" name="data_sertifikasi" id="sertifikasi"
+                      value="sertifikasi">
+                  @endisset
                   <label class="form-check-label" for="sertifikasi">
                     Sertifikasi
                   </label>
                 </div>
                 <div class="form-check mb-2">
-                  <input class="form-check-input" type="radio" name="data_sertifikasi" id="sertifikasiUlang"
-                    value="sertifikasi ulang">
+                  @isset($data->relasi_sertifikasi->tujuan_asesmen)
+                    <input class="form-check-input" type="radio" name="data_sertifikasi" id="sertifikasiUlang"
+                      value="sertifikasi ulang"
+                      {{ $data->relasi_sertifikasi->tujuan_asesmen === 'sertifikasi ulang' ? 'checked' : '' }}>
+                  @else
+                    <input class="form-check-input" type="radio" name="data_sertifikasi" id="sertifikasiUlang"
+                      value="sertifikasi ulang">
+                  @endisset
                   <label class="form-check-label" for="sertifikasiUlang">
                     Sertifikasi Ulang
                   </label>
                 </div>
                 <div class="form-check mb-2">
-                  <input class="form-check-input" type="radio" name="data_sertifikasi"
-                    id="pengakuanKompetensiTerkini" value="pengakuan komptetensi terkini">
+                  @isset($data->relasi_sertifikasi->tujuan_asesmen)
+                    <input class="form-check-input" type="radio" name="data_sertifikasi"
+                      id="pengakuanKompetensiTerkini" value="pengakuan komptetensi terkini"
+                      {{ $data->relasi_sertifikasi->tujuan_asesmen === 'pengakuan komptetensi terkini' ? 'checked' : '' }}>
+                  @else
+                    <input class="form-check-input" type="radio" name="data_sertifikasi"
+                      id="pengakuanKompetensiTerkini" value="pengakuan komptetensi terkini">
+                  @endisset
                   <label class="form-check-label" for="pengakuanKompetensiTerkini">
                     Pengakuan Kompetensi Terkini (PKT)
                   </label>
                 </div>
                 <div class="form-check mb-2">
-                  <input class="form-check-input" type="radio" name="data_sertifikasi"
-                    id="rekognisiPembelajaranLampau" value="rekognisi pembelajaran lampau">
+                  @isset($data->relasi_sertifikasi->tujuan_asesmen)
+                    <input class="form-check-input" type="radio" name="data_sertifikasi"
+                      id="rekognisiPembelajaranLampau" value="rekognisi pembelajaran lampau"
+                      {{ $data->relasi_sertifikasi->tujuan_asesmen === 'rekognisi pembelajaran lampau' ? 'checked' : '' }}>
+                  @else
+                    <input class="form-check-input" type="radio" name="data_sertifikasi"
+                      id="rekognisiPembelajaranLampau" value="rekognisi pembelajaran lampau">
+                  @endisset
                   <label class="form-check-label" for="rekognisiPembelajaranLampau">
                     Rekognisi Pembelajaran Lampau
                   </label>
                 </div>
                 <div class="form-check mb-2">
-                  <input class="form-check-input" type="radio" name="data_sertifikasi" id="lainnya"
-                    value="lainnya">
+                  @isset($data->relasi_sertifikasi->tujuan_asesmen)
+                    <input class="form-check-input" type="radio" name="data_sertifikasi" id="lainnya"
+                      value="lainnya" {{ $data->relasi_sertifikasi->tujuan_asesmen === 'lainnya' ? 'checked' : '' }}>
+                  @else
+                    <input class="form-check-input" type="radio" name="data_sertifikasi" id="lainnya"
+                      value="lainnya">
+                  @endisset
                   <label class="form-check-label" for="lainnya">
                     Lainnya
                   </label>
@@ -330,8 +444,8 @@
                   </div>
                   <div class="col edit-profil-left">
                     <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
-                    <input type="date" id="tanggal" class="form-control input-text" name="tanggal"
-                      placeholder="Masukkan Nama Lengkap" value="{{ $date->format('Y-m-d') }}" readonly>
+                    <input type="date" id="tanggal" class="form-control input-text"
+                      placeholder="Masukkan Nama Lengkap">
                   </div>
                 </div>
               </div>
@@ -351,153 +465,21 @@
   <script>
     let data = @json($data);
     let institusis = @json($institusis);
-    let jurusans = @json($jurusans);
-    let kebangsaan = @json($kebangsaan);
-    let kualifikasi_pendidikan = @json($kualifikasi_pendidikan);
-    let kartu_keluarga = @json($kartu_keluarga);
-
-    function isset(accessor) {
-      try {
-        // Note we're seeing if the returned value of our function is not
-        // undefined or null
-        return accessor() !== undefined && accessor() !== null
-      } catch (e) {
-        // And we're able to catch the Error it would normally throw for
-        // referencing a property of undefined
-        return false
-      }
-    }
 
     $("#edit-btn").on('click', function() {
       $("#editProfil").modal('show')
 
-      $("#nama_lengkap").val(data.relasi_user_detail.nama_lengkap)
+      $("#form-update input:not([name='_token'])").val('')
 
-      $("#form-update [name='institusi']").append(institusis.map(function(d) {
-        return $(
-          `<option value='${d.id}' ${d.id === data.institusi_id ? 'selected' : ''}>${d.nama_institusi}</option>`
-        )
-      }))
-
-      $("#form-update [name='jurusan']").append(jurusans.map(function(d) {
-        return $(
-          `<option value='${d.id}' ${d.id === data.jurusan_id ? 'selected' : ''}>${d.jurusan}</option>`
-        )
-      }))
-
-      $("#form-update [name='ktp_nik_paspor']").val(data.relasi_user_detail.ktp_nik_paspor)
-
-      $("#form-update [name='tempat_lahir']").val(data.relasi_user_detail.tempat_lahir)
-
-      $("#form-update [name='tanggal_lahir']").val(data.relasi_user_detail.tanggal_lahir)
-
-      $("#form-update [name='jenis_kelamin']").append(
-        $(
-          `<option value='laki-laki' ${'laki-laki' === data.relasi_user_detail.jenis_kelamin ? 'selected' : ''}>Laki-laki</option>
-          <option value='perempuan' ${'perempuan' === data.relasi_user_detail.jenis_kelamin ? 'selected' : ''}>Perempuan</option>`
-        ))
-      $("#form-update [name='kebangsaan']").append(kebangsaan.map(function(d) {
-        if (isset(data.relasi_user_detail.kebangsaan_id)) {
-          return $(
-            `<option value='${d.id}'>${d.kebangsaan}</option>`)
-        } else {
-          return $(
-            `<option value='${d.id}' ${d.id === data.relasi_user_detail.kebangsaan_id ? 'selected' : ''}>${d.kebangsaan}</option>`
-          )
-        }
-      }))
-
-      $("#form-update [name='alamat_rumah']").val(data.relasi_user_detail.alamat_rumah)
-
-      $("#form-update [name='kode_pos']").val(data.relasi_institusi.kode_pos)
-
-      $("#form-update [name='nomor_hp']").val(data.relasi_user_detail.nomor_hp)
-
-      $("#form-update [name='email']").val(data.email)
-
-      $("#form-update [name='kualifikasi_pendidikan']").append(kualifikasi_pendidikan.map(function(d) {
-        if (isset(data.relasi_user_detail.kualifikasi_pendidikan_id)) {
-          return $(
-            `<option value='${d.id}'>${d.pendidikan}</option>`)
-        } else {
-          return $(
-            `<option value='${d.id}' ${d.id === data.relasi_user_detail.kualifikasi_pendidikan_id ? 'selected' : ''}>${d.pendidikan}</option>`
-          )
-        }
-      }))
-
-      if (isset(data.relasi_pekerjaan.nama_institusi)) {
-        $("#form-update [name='nama_institusi_pekerjaan']").val('')
-      } else {
-        $("#form-update [name='nama_institusi_pekerjaan']").val(data.relasi_pekerjaan.nama_institusi)
-      }
-
-      if (isset(data.relasi_pekerjaan.jabatan)) {
-        $("#form-update [name='jabatan']").val('')
-      } else {
-        $("#form-update [name='jabatan']").val(data.relasi_pekerjaan.jabatan)
-      }
-
-      if (isset(data.relasi_pekerjaan.alamat_institusi)) {
-        $("#form-update [name='alamat_kantor_pekerjaan']").val('')
-      } else {
-        $("#form-update [name='alamat_kantor_pekerjaan']").val(data.relasi_pekerjaan.alamat_institusi)
-      }
-
-      if (isset(data.relasi_pekerjaan.kode_pos)) {
-        $("#form-update [name='kode_pos_pekerjaan']").val('')
-      } else {
-        $("#form-update [name='kode_pos_pekerjaan']").val(data.relasi_pekerjaan.kode_pos)
-      }
-
-      if (isset(data.relasi_pekerjaan.nomor_hp_institusi)) {
-        $("#form-update [name='nomor_hp_institusi_pekerjaan']").val('')
-      } else {
-        $("#form-update [name='nomor_hp_institusi_pekerjaan']").val(data.relasi_pekerjaan.nomor_hp_institusi)
-      }
-
-      if (isset(data.relasi_pekerjaan.email_institusi)) {
-        $("#form-update [name='email_institusi_pekerjaan']").val('')
-      } else {
-        $("#form-update [name='email_institusi_pekerjaan']").val(data.relasi_pekerjaan.email_institusi)
-      }
-
-      //   sertifikasi
-      if (isset(data.relasi_sertifikasi.tujuan_asesmen)) {} else {
-        if (data.relasi_sertifikasi.tujuan_asesmen === 'sertifikasi') {
-          $("#sertifikasi").prop('checked', true)
-        } else if (data.relasi_sertifikasi.tujuan_asesmen === 'sertifikasi ulang') {
-          $("#sertifikasiUlang").prop('checked', true)
-        } else if (data.relasi_sertifikasi.tujuan_asesmen === 'pengakuan komptetensi terkini') {
-          $("#pengakuanKompetensiTerkini").prop('checked', true)
-        } else if (data.relasi_sertifikasi.tujuan_asesmen === 'rekognisi pembelajaran lampau') {
-          $("#rekognisiPembelajaranLampau").prop('checked', true)
-        } else {
-          $("#lainnya").prop('checked', true)
-        }
-      }
-
-      //   kelengkapan pemohon
-      //   if (!isset(data.relasi_kelengkapan_pemohon.kartu_keluarga)) {
-      //   }
-
-      //   if (!isset(data.relasi_kelengkapan_pemohon.kartu_pelajar)) {
-      //     return `<input type="hidden" name="kartu_pelajar_old" value="${data.relasi_kelengkapan_pemohon.kartu_pelajar}">`
-      //   }
-
-      //   if (!isset(data.relasi_kelengkapan_pemohon.pas_foto)) {
-      //     return `<input type="hidden" name="pas_foto_old" value="${data.relasi_kelengkapan_pemohon.pas_foto}">`
-      //   }
-
-      //   if (!isset(data.relasi_kelengkapan_pemohon.sertifikat_prakerin)) {
-      //     return `<input type="hidden" name="sertifikat_prakerin_old" value="${data.relasi_kelengkapan_pemohon.sertifikat_prakerin}">`
-      //   }
-
-      //   if (!isset(data.relasi_kelengkapan_pemohon.nilai_raport)) {
-      //     return `<input type="hidden" name="nilai_raport_old" value="${data.relasi_kelengkapan_pemohon.nilai_raport}">`
-      //   }
-
+      $("#form-update [name='nama_lengkap']").val(data.relasi_user_detail.nama_lengkap)
+      $("#form-update [name='institusi']").append(institusi(institusis))
     })
+
+    function institusi(institusi) {
+      institusi.map(function(id, value) {
+        return $(`<option value='${id}'>${value}</option>`)
+      })
+    }
 
     $("#form-update").on('submit', function(e) {
       e.preventDefault()
@@ -507,12 +489,12 @@
         data: new FormData(this),
         processData: false,
         dataType: 'json',
-        cache: false,
         contentType: false,
         beforeSend: function() {
           $(document).find('label.error-text').text('');
         },
         success: function(data) {
+          console.log(data)
           if (data.status == 0) {
             $.each(data.error, function(prefix, val) {
               $('label.' + prefix + '_error').text(val[0]);
@@ -523,11 +505,6 @@
           } else {
             $("#profile-section").load(location.href + " #profile-section>*", "");
             $("#editProfil").modal('hide')
-            $("#form-update [name='kartu_keluarga']").val('');
-            $("#form-update [name='kartu_pelajar']").val('');
-            $("#form-update [name='pas_foto']").val('');
-            $("#form-update [name='sertifikat_prakerin']").val('');
-            $("#form-update [name='nilai_raport']").val('');
             $('html, body').animate({
               scrollTop: 0
             }, 'fast');

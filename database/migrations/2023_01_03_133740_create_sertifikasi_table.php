@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('judul_skema_sertifikasi')->nullable();
             $table->string('nomor_skema_sertifikasi')->nullable();
             $table->string('tujuan_asesmen')->nullable();
+            $table->text('ttd_asesi')->nullable();
+            $table->date('tanggal')->nullable();
             $table->timestamps();
         });
     }

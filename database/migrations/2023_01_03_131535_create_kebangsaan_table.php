@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kelengkapan_pemohon', function (Blueprint $table) {
+        Schema::create('kebangsaan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('kartu_keluarga')->nullable();
-            $table->text('kartu_pelajar')->nullable();
-            $table->text('sertifikat_prakerin')->nullable();
-            $table->text('nilai_raport')->nullable();
+            $table->string('kebangsaan');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kelengkapan_pemohon');
+        Schema::dropIfExists('kebangsaan');
     }
 };
