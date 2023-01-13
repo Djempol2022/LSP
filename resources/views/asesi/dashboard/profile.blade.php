@@ -276,8 +276,7 @@
                                                         placeholder="Masukkan Nama Lengkap. . .">
                                                 </div>
                                                 <div class="col edit-profil-left">
-                                                    <label for="instansi" class="form-label fw-semibold">Nama Sekolah /
-                                                        Instansi /
+                                                    <label for="instansi" class="form-label fw-semibold">Nama Institusi /
                                                         Perusahaan</label>
                                                     <select name="" class="form-select input-text" id="instansi">
                                                         <option value="" selected disabled>Pilih Nama Sekolah /
@@ -376,12 +375,6 @@
                                                         <option value="">SMP</option>
                                                         <option value="">SMK</option>
                                                     </select>
-                                                </div>
-                                                <div class="col edit-profil-right">
-                                                    <label for="fotoProfil" class="form-label fw-semibold">Foto
-                                                        Profil</label>
-                                                    <input type="file" id="fotoProfil"
-                                                        class="form-control form-control-lg input-file">
                                                 </div>
                                             </div>
                                         </div>

@@ -20,7 +20,7 @@
                 </div>
             </div>
         @else
-            <div class="container">
+            <div class="container-fluid px-5 pt-3">
                 @include('layout.header-main')
                 @yield('soal-section')
                 @include('layout.footer-main')
