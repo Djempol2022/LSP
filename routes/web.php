@@ -136,6 +136,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'dashboard')->name('Dashboard');
+            Route::post('dashboard', 'downloadWord')->name('DownloadWord');
             // Route::get('dashboard/profile', 'profile')->name('Dashboard.Profile');
         });
 
