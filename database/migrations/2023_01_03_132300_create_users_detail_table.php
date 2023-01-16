@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('kualifikasi_pendidikan_id')->nullable();
             $table->foreignId('kebangsaan_id')->nullable();
-            $table->string('nama_lengkap');
             $table->text('ktp_nik_paspor')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->text('tanggal_lahir')->nullable();
@@ -26,6 +25,7 @@ return new class extends Migration
             $table->text('alamat_rumah')->nullable();
             $table->string('nomor_hp')->nullable();
             $table->string('foto')->nullable();
+            $table->text('ttd')->nullable();
             $table->timestamps();
         });
     }

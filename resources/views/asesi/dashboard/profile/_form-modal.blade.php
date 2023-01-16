@@ -310,8 +310,7 @@
                     <label for="namaLengkapPemohon" class="form-label fw-semibold">Nama
                       Lengkap</label>
                     <input type="text" id="namaLengkapPemohon" class="form-control input-text"
-                      placeholder="Masukkan Nama Lengkap. . ." disabled
-                      value="{{ $data->relasi_user_detail->nama_lengkap }}">
+                      placeholder="Masukkan Nama Lengkap. . ." disabled value="{{ $data->nama_lengkap }}">
                   </div>
                   {{-- TANDA TANGAN / TTD --}}
                   <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
@@ -320,8 +319,8 @@
                     <input type="hidden" name="ttd" value="" id="ttd">
                   </div>
                   <div class="mb-2">
-                    @isset($data->relasi_sertifikasi->ttd_asesi)
-                      <img src="{{ $data->relasi_sertifikasi->ttd_asesi }}" alt="ttd" width="180px">
+                    @isset($data->relasi_user_detail->ttd)
+                      <img src="{{ $data->relasi_user_detail->ttd }}" alt="ttd" width="180px">
                     @endisset
                   </div>
                   <div id="signature-clear">
@@ -371,7 +370,7 @@
     $("#edit-btn").on('click', function() {
       $("#editProfil").modal('show')
 
-      $("#nama_lengkap").val(data.relasi_user_detail.nama_lengkap)
+      $("#nama_lengkap").val(data.nama_lengkap)
 
       $("#form-update [name='institusi']").append(institusis.map(function(d) {
         return $(
@@ -632,7 +631,7 @@
 
     function sentToController() {
       if (signaturePad.isEmpty()) {
-        let ttdData = data.relasi_sertifikasi.ttd_asesi;
+        let ttdData = data.relasi_user_detail.ttd;
         document.getElementById('ttd').value = ttdData;
       } else {
         let ttdData = signaturePad.toDataURL();

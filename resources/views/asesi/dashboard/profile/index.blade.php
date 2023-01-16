@@ -45,7 +45,7 @@
                 <p class="fw-bold">Nama Lengkap</p>
                 <span
                   class="
-                  {{ $data->relasi_user_detail->nama_lengkap ? '' : 'text-danger fw-semibold' }}">{{ $data->relasi_user_detail->nama_lengkap ?? 'Data Belum Lengkap!' }}</span>
+                  {{ auth()->user()->nama_lengkap ? '' : 'text-danger fw-semibold' }}">{{ auth()->user()->nama_lengkap ?? 'Data Belum Lengkap!' }}</span>
               </div>
               <div class="col pb-4">
                 <p class="fw-bold">Nama Institusi / Perusahaan</p>
@@ -294,12 +294,12 @@
               <h5 class="pb-4">Pemohon / Kandidat :</h5>
               <div class="col pb-4">
                 <p class="fw-bold">Nama Lengkap</p>
-                <span>{{ $data->relasi_user_detail->nama_lengkap }}</span>
+                <span>{{ auth()->user()->nama_lengkap }}</span>
               </div>
               <div class="col pb-4">
                 <p class="fw-bold">Tanda Tangan</p>
-                @isset($data->relasi_sertifikasi->ttd_asesi)
-                  <img src="{{ $data->relasi_sertifikasi->ttd_asesi }}" alt="ttd" width="180px">
+                @isset($data->relasi_user_detail->ttd)
+                  <img src="{{ $data->relasi_user_detail->ttd }}" alt="ttd" width="180px">
                 @else
                   <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                 @endisset

@@ -145,7 +145,9 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::controller(AsesmenController::class)->group(function () {
-            Route::get('assesment', 'assesment')->name('Assesment');
+            Route::get('assesment', 'index')->name('Assesment');
+            Route::any('materi-uji-kompetensi', 'materi_uji_kompetensi')->name('MateriUjiKompetensi');
+            Route::post('assesment', 'store')->name('Assesment.Store');
             Route::get('soal', 'soal')->name('Assesment.Soal');
         });
 

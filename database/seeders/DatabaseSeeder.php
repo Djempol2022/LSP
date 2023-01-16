@@ -9,9 +9,15 @@ use App\Models\User;
 use App\Models\Jurusan;
 use App\Models\Sekolah;
 use App\Models\Institusi;
+use App\Models\JadwalUjiKompetensi;
 use App\Models\Kebangsaan;
 use App\Models\KualifikasiPendidikan;
+use App\Models\MateriUjiKompetensi;
 use App\Models\Pekerjaan;
+use App\Models\Sertifikasi;
+use App\Models\UnitKompetensi;
+use App\Models\UnitKompetensiIsi;
+use App\Models\UnitKompetensiSub;
 use App\Models\UserDetail;
 use Illuminate\Database\Seeder;
 
@@ -106,7 +112,6 @@ class DatabaseSeeder extends Seeder
 
         UserDetail::create([
             'user_id' => 4,
-            'nama_lengkap' => 'Hendra Afrizal',
             'ktp_nik_paspor' => '32019170233',
             'tempat_lahir' => 'Sambas',
             'jenis_kelamin' => 'laki-laki',
@@ -116,7 +121,6 @@ class DatabaseSeeder extends Seeder
 
         UserDetail::create([
             'user_id' => 5,
-            'nama_lengkap' => 'Vinz',
             'ktp_nik_paspor' => '32019170213',
             'tempat_lahir' => 'Sambas',
             'jenis_kelamin' => 'laki-laki',
@@ -157,6 +161,117 @@ class DatabaseSeeder extends Seeder
 
         Kebangsaan::create([
             'kebangsaan' => 'Singapore'
+        ]);
+
+        Sertifikasi::create([
+            'user_id' => 4,
+            'judul_skema_sertifikasi' => 'Skema Sertifikasi KKNI Level II Pada Kompetensi Keahlian Multimedia',
+            'nomor_skema_sertifikasi' => 'MM-06/LSP.SMKN1-STG/2020',
+            'tujuan_asesmen' => 'sertifikasi',
+            'tanggal' => '2023-01-13'
+        ]);
+
+        UnitKompetensi::create([
+            'sertifikasi_id' => 1,
+            'kode_unit' => 'TIK.MM01.007.01',
+            'judul_unit' => 'Memilih dan Memakai Software Dan Hardware Untuk Multimedia',
+            'jenis_standar' => 'SKKNI',
+        ]);
+
+        UnitKompetensiSub::create([
+            'unit_kompetensi_id' => 1,
+            'judul_unit_kompetensi_sub' => 'Mengembangkan Persyaratan Fungsi',
+        ]);
+
+        UnitKompetensiSub::create([
+            'unit_kompetensi_id' => 1,
+            'judul_unit_kompetensi_sub' => 'Memilih peralatan',
+        ]);
+
+        UnitKompetensiIsi::create([
+            'unit_kompetensi_sub_id' => 1,
+            'judul_unit_kompetensi_isi' => 'Persyaratan  fungsi  yang  akurat,  komplit  dan sesuai  prioritas    diidentifikasi  sesuai  keperluan dengan referensi semua tipe media.',
+        ]);
+
+        UnitKompetensiIsi::create([
+            'unit_kompetensi_sub_id' => 1,
+            'judul_unit_kompetensi_isi' => 'Persyaratan  yang  berlawanan  dan  overlapping diidentifikasi.',
+        ]);
+
+        UnitKompetensiIsi::create([
+            'unit_kompetensi_sub_id' => 1,
+            'judul_unit_kompetensi_isi' => 'Persyaratan fungsi didokumentasi dan divalidasi oleh klien.',
+        ]);
+
+        UnitKompetensiIsi::create([
+            'unit_kompetensi_sub_id' => 1,
+            'judul_unit_kompetensi_isi' => 'Sumber-sumber  dan  pembiayaan  yang  tersedia diidentifikasi dan divalidasi oleh klien.',
+        ]);
+
+        UnitKompetensiIsi::create([
+            'unit_kompetensi_sub_id' => 2,
+            'judul_unit_kompetensi_isi' => 'Produk-produk  dan  peralatan  yang  relevan diidentifikasi  dan  dievaluasi  dengan  referensi persyaratan fungsi.',
+        ]);
+
+        UnitKompetensiIsi::create([
+            'unit_kompetensi_sub_id' => 2,
+            'judul_unit_kompetensi_isi' => 'Kemandirian  produk  dan  peralatan  diidentifikasi dan dianalisa dengan referensi pada persyaratan fungsi dan arsitektur sistem.',
+        ]);
+
+        UnitKompetensiIsi::create([
+            'unit_kompetensi_sub_id' => 2,
+            'judul_unit_kompetensi_isi' => 'Produk  terbaik  dan  solusi  peralatan,  termasuk keterbatasan-keterbatasan  diidentifikasi  dan didokumentasikan',
+        ]);
+
+        UnitKompetensiIsi::create([
+            'unit_kompetensi_sub_id' => 2,
+            'judul_unit_kompetensi_isi' => 'Peralatan  dipilih  dan  dipesan  sebagaimana diperlukan  sehubungan  dengan  kebijaksanaan perusahaan penjualan.',
+        ]);
+
+        MateriUjiKompetensi::create([
+            'muk' => 'Klaster Desain Grafis',
+            'jurusan_id' => 1
+        ]);
+
+        MateriUjiKompetensi::create([
+            'muk' => 'Klaster Pengolahan Audio Video',
+            'jurusan_id' => 2
+        ]);
+
+        MateriUjiKompetensi::create([
+            'muk' => 'Klaster Animasi',
+            'jurusan_id' => 3
+        ]);
+
+        JadwalUjiKompetensi::create([
+            'muk_id' => 1,
+            'sesi' => 1,
+            'tanggal' => '2023-01-27',
+            'waktu_mulai' => '07:00',
+            'waktu_selesai' => '09:00',
+            'kelas' => 'IA',
+            'tempat' => 'POLNEP',
+            'jenis_tes' => 'Tertulis'
+        ]);
+        JadwalUjiKompetensi::create([
+            'muk_id' => 2,
+            'sesi' => 2,
+            'tanggal' => '2023-01-27',
+            'waktu_mulai' => '09:00',
+            'waktu_selesai' => '11:00',
+            'kelas' => 'IA',
+            'tempat' => 'POLNEP',
+            'jenis_tes' => 'Tertulis'
+        ]);
+        JadwalUjiKompetensi::create([
+            'muk_id' => 3,
+            'sesi' => 3,
+            'tanggal' => '2023-01-27',
+            'waktu_mulai' => '13:00',
+            'waktu_selesai' => '14:00',
+            'kelas' => 'IA',
+            'tempat' => 'POLNEP',
+            'jenis_tes' => 'Tertulis'
         ]);
     }
 }

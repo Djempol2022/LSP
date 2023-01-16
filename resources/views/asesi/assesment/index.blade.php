@@ -1,534 +1,198 @@
 @extends('layout.main-layout', ['title' => 'Assesment'])
 @section('main-section')
-    <div class="container-fluid">
-        {{-- JALUR FILE --}}
-        <nav class="jalur-file mb-5" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-                        href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item text-primary active">Assesment</li>
-            </ol>
-        </nav>
+  <div class="container-fluid">
+    {{-- JALUR FILE --}}
+    <nav class="jalur-file mb-5" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+            href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item text-primary active">Assesment</li>
+      </ol>
+    </nav>
 
-        {{-- ASSESMENT MANDIRI --}}
-        <div class="col-auto card-assesment mb-5">
-            <h5>Formulir Assesment Mandiri</h5>
-            <p>Isi formulir assesment mandiri dengan menekan tombol di bawah, untuk melanjutkan assesment </p>
-            <button type="button" class="btn btn-primary tombol-primary-small" data-bs-toggle="modal"
-                data-bs-target="#assesmentMandiri">Assesment Mandiri</button>
-        </div>
-        {{-- TABEL MATERI UJI KOMPETENSI --}}
-        <div class="col-auto card-assesment">
-            <h5>Materi Uji Kompetensi</h5>
-            <p>Daftar Materi Uji Kompetensi LSP Multimedia</p>
-            <table class="table tabel-muk">
-                <thead>
-                    <tr>
-                        <th class="px-4" style="width: 70%" scope="col">Materi Uji Kompetensi</th>
-                        <th class="text-center" scope="col">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="fw-semibold">
-                    <tr>
-                        <td class="my-1 px-4">Desain Grafis Percetakkan (Stiker dan Packaging)</td>
-                        <td class="text-center"><button class="btn btn-warning my-1 text-black" data-bs-toggle="modal"
-                                data-bs-target="#detailUjian">Detail
-                                Ujian</button></td>
-                    </tr>
-                    <tr>
-                        <td class="my-1 px-4">Desain Grafis Percetakkan (Stiker dan Packaging)</td>
-                        <td class="text-center"><button class="btn btn-warning my-1 text-black" data-bs-toggle="modal"
-                                data-bs-target="#detailUjian">Detail
-                                Ujian</button></td>
-                    </tr>
-                    <tr>
-                        <td class="my-1 px-4">Desain Grafis Percetakkan (Stiker dan Packaging)</td>
-                        <td class="text-center"><button class="btn btn-warning my-1 text-black" data-bs-toggle="modal"
-                                data-bs-target="#detailUjian">Detail
-                                Ujian</button></td>
-                    </tr>
-                    <tr>
-                        <td class="my-1 px-4">Desain Grafis Percetakkan (Stiker dan Packaging)</td>
-                        <td class="text-center"><button class="btn btn-warning my-1 text-black" data-bs-toggle="modal"
-                                data-bs-target="#detailUjian">Detail
-                                Ujian</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        {{-- FORMULIR UMPAN BALIK --}}
-        <div class="col-auto card-assesment my-5">
-            <h5>Formulir Umpan Balik</h5>
-            <p>Isi formulir umpan balik dengan menekan tombol di bawah, untuk memberi ulasan mengenai assesment </p>
-            <button type="button" class="btn btn-primary tombol-primary-small" data-bs-toggle="modal"
-                data-bs-target="#umpanBalik">Umpan Balik</button>
-        </div>
+    {{-- ASSESMENT MANDIRI --}}
+    <div class="col-auto card-assesment mb-5">
+      <h5>Formulir Assesment Mandiri</h5>
+      <p>Isi formulir assesment mandiri dengan menekan tombol di bawah, untuk melanjutkan assesment </p>
+      <button type="button" class="btn btn-primary tombol-primary-small" data-bs-toggle="modal"
+        data-bs-target="#assesmentMandiri">Assesment Mandiri</button>
     </div>
-
-    {{-- MODAL ASSESMENT MANDIRI --}}
-    <div class="modal fade" id="assesmentMandiri" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
-        aria-labelledby="assesmentMandiriLabel" aria-hidden="true">
-        <form action="">
-            @csrf
-            <div class="modal-dialog modal-dialog-scrollable modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="assesmentMandiriLabel">Formulir Asesmen Mandiri</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-black m-2">
-
-
-                        {{-- HEADER --}}
-                        <div class="col">
-                            <div class="assesment-mandiri-header">
-                                <p class="assesment-mandiri-title">Judul Skema Sertifikasi</p>
-                                <p>Skema Sertifikasi KKNI Level II Pada Kompetensi Keahlian Multimedia</p>
-                            </div>
-                            <div class="assesment-mandiri-header">
-                                <p class="assesment-mandiri-title">Nomor Skema Sertifikasi</p>
-                                <p>MM-06/LSP.SMKN1-STG/2020</p>
-                            </div>
-                            <div class="assesment-mandiri-header">
-                                <p class="assesment-mandiri-title">Skema Sertifikasi</p>
-                                <p>SKKNI No.115 Tahun 2007</p>
-                            </div>
-                        </div>
-                        {{-- TITLE --}}
-                        <div class="col">
-                            <div class="row col unit-kompetensi">
-                                <span>Unit Kompetensi</span><br>
-                                <div class="col row fs-6">
-                                    <div class="col-lg-auto unit-kode">TIK.MM01.007.01</div>
-                                    <div class="col-lg-auto unit-isi">Memilih dan Memakai Software Dan Hardware Untuk
-                                        Multimedia
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="my-4 fw-bold fs-6">Dapatkah Saya ?</div>
-                        <div class="col mb-5">
-                            <ol class="list-group list-group-numbered">
-                                <li
-                                    class="list-group-item d-flex justify-content-between align-items-start border-0 fw-semibold">
-                                    <div class="ms-2 me-auto ">
-                                        Elemen: Mengembangkan Pesyaratan Fungsi
-                                        <div class="py-1">Kriteria Kerja:</div>
-                                        {{-- KRITERIA KERJA --}}
-                                        <div class="row col mx-3">
-                                            <div class="col mb-3">
-                                                <div class="row mt-3">
-                                                    <div class="col-auto kriteria-nomor">1.1</div>
-                                                    <div class="col-auto kriteria-isi">Persyaratan fungsi
-                                                        yang akurat,
-                                                        komplit
-                                                        dan sesuai prioritas
-                                                        diidentifikasi sesuai keperluan dengan referensi semua tipe
-                                                        media.
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten1_1" value="" id="kompeten1_1">
-                                                        <label class="form-check-label text-success"
-                                                            for="kompeten1_1">Kompeten</label>
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten1_1" value="" id="belumKompeten1_1">
-                                                        <label class="form-check-label text-danger"
-                                                            for="belumKompeten1_1">Belum
-                                                            Kompeten</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="col mb-3">
-                                                <div class="row mt-3">
-                                                    <div class="col-auto kriteria-nomor">1.2</div>
-                                                    <div class="col-auto kriteria-isi">Persyaratan yang berlawanan dan
-                                                        overlapping diidentifikasi.
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten1_2" value="" id="kompeten1_2">
-                                                        <label class="form-check-label text-success"
-                                                            for="kompeten1_2">Kompeten</label>
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten1_2" value="" id="belumKompeten1_2">
-                                                        <label class="form-check-label text-danger"
-                                                            for="belumKompeten1_2">Belum
-                                                            Kompeten</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="col mb-3">
-                                                <div class="row mt-3">
-                                                    <div class="col-auto kriteria-nomor">1.3</div>
-                                                    <div class="col-auto kriteria-isi">Persyaratan fungsi didokumentasi
-                                                        dan
-                                                        divalidasi oleh klien.
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten1_3" value="" id="kompeten1_3">
-                                                        <label class="form-check-label text-success"
-                                                            for="kompeten1_3">Kompeten</label>
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten1_3" value="" id="belumKompeten1_3">
-                                                        <label class="form-check-label text-danger"
-                                                            for="belumKompeten1_3">Belum
-                                                            Kompeten</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="col mb-3">
-                                                <div class="row mt-3">
-                                                    <div class="col-auto kriteria-nomor">1.4</div>
-                                                    <div class="col-auto kriteria-isi">Sumber-sumber dan pembiayaan
-                                                        yang
-                                                        tersedia diidentifikasi dan divalidasi oleh klien.
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten1_4" value="" id="kompeten1_4">
-                                                        <label class="form-check-label text-success"
-                                                            for="kompeten1_4">Kompeten</label>
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten1_4" value="" id="belumKompeten1_4">
-                                                        <label class="form-check-label text-danger"
-                                                            for="belumKompeten1_4">Belum
-                                                            Kompeten</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        </div>
-                                        <div class="col mt-4">
-                                            <div class="mb-3 fw-semibold fs-6">
-                                                <label for="bukti1" class="form-label">Bukti yang
-                                                    relevan</label>
-                                                <textarea class="form-control border-tiernary" id="bukti1" rows="7"
-                                                    placeholder="Masukkan Bukti Disini. . ."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li
-                                    class="list-group-item d-flex justify-content-between align-items-start border-0 fw-semibold">
-                                    <div class="ms-2 me-auto ">
-                                        Elemen: Mengembangkan Pesyaratan Fungsi
-                                        <div class="py-1">Kriteria Kerja:</div>
-                                        {{-- KRITERIA KERJA --}}
-                                        <div class="row col mx-3">
-                                            <div class="col mb-3">
-                                                <div class="row mt-3">
-                                                    <div class="col-auto kriteria-nomor">2.1</div>
-                                                    <div class="col-auto kriteria-isi">Persyaratan fungsi
-                                                        yang akurat,
-                                                        komplit
-                                                        dan sesuai prioritas
-                                                        diidentifikasi sesuai keperluan dengan referensi semua tipe
-                                                        media.
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten2_1" value="" id="kompeten2_1">
-                                                        <label class="form-check-label text-success"
-                                                            for="kompeten2_1">Kompeten</label>
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten2_1" value="" id="belumKompeten2_1">
-                                                        <label class="form-check-label text-danger"
-                                                            for="belumKompeten2_1">Belum
-                                                            Kompeten</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="col mb-3">
-                                                <div class="row mt-3">
-                                                    <div class="col-auto kriteria-nomor">2.2</div>
-                                                    <div class="col-auto kriteria-isi">Persyaratan yang berlawanan dan
-                                                        overlapping diidentifikasi.
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten2_2" value="" id="kompeten2_2">
-                                                        <label class="form-check-label text-success"
-                                                            for="kompeten2_2">Kompeten</label>
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten2_2" value="" id="belumKompeten2_2">
-                                                        <label class="form-check-label text-danger"
-                                                            for="belumKompeten2_2">Belum
-                                                            Kompeten</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="col mb-3">
-                                                <div class="row mt-3">
-                                                    <div class="col-auto kriteria-nomor">2.3</div>
-                                                    <div class="col-auto kriteria-isi">Persyaratan fungsi didokumentasi
-                                                        dan
-                                                        divalidasi oleh klien.
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten2_3" value="" id="kompeten2_3">
-                                                        <label class="form-check-label text-success"
-                                                            for="kompeten2_3">Kompeten</label>
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten2_3" value="" id="belumKompeten2_3">
-                                                        <label class="form-check-label text-danger"
-                                                            for="belumKompeten2_3">Belum
-                                                            Kompeten</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="col mb-3">
-                                                <div class="row mt-3">
-                                                    <div class="col-auto kriteria-nomor">2.4</div>
-                                                    <div class="col-auto kriteria-isi">Sumber-sumber dan pembiayaan
-                                                        yang
-                                                        tersedia diidentifikasi dan divalidasi oleh klien.
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten2_4" value="" id="kompeten2_4">
-                                                        <label class="form-check-label text-success"
-                                                            for="kompeten2_4">Kompeten</label>
-                                                    </div>
-                                                    <div class="col-auto kriteria-kompeten">
-                                                        <input class="form-check-input me-1" type="radio"
-                                                            name="kompeten2_4" value="" id="belumKompeten2_4">
-                                                        <label class="form-check-label text-danger"
-                                                            for="belumKompeten2_4">Belum
-                                                            Kompeten</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        </div>
-                                        <div class="col mt-4">
-                                            <div class="mb-3 fw-semibold fs-6">
-                                                <label for="bukti2" class="form-label">Bukti yang
-                                                    relevan</label>
-                                                <textarea class="form-control border-tiernary" id="bukti2" rows="7"
-                                                    placeholder="Masukkan Bukti Disini. . ."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ol>
-                        </div>
-                        {{-- TITLE --}}
-                        <div class="col profil-section">
-                            <div class="profil-section-title mb-5">
-                                Ditinjau oleh Asesor
-                            </div>
-                            <div class="row col">
-                                <div class="col-lg-6">
-                                    <h5>Mengetahui Asesi</h5>
-                                    <div class="col edit-profil-left">
-                                        <label for="namaAsesi" class="form-label fw-semibold">Nama Asesi</label>
-                                        <input type="text" id="namaAsesi" class="form-control input-text"
-                                            placeholder="Masukkan Nama Asesi. . .">
-                                    </div>
-                                    <div class="col edit-profil-left">
-                                        <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
-                                        <input type="date" id="tanggal" class="form-control input-text">
-                                    </div>
-                                    {{-- TANDA TANGAN / TTD --}}
-                                    <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
-                                    <div class="col edit-profil mb-4 signature-pad" id="signature-pad">
-                                        <canvas></canvas>
-                                    </div>
-                                    {{-- <div id="signature-clear">
-                                            <button type="button" class="button button-primary tombol-primary-small mb-4"
-                                                data-action="clear">Clear</button>
-                                        </div> --}}
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary tombol-primary-small">Simpan</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+    {{-- TABEL MATERI UJI KOMPETENSI --}}
+    <div class="col-auto card-assesment">
+      <h5>Materi Uji Kompetensi</h5>
+      <p>Daftar Materi Uji Kompetensi LSP Multimedia</p>
+      <table class="table" id="table-muk">
+        <thead>
+          <tr>
+            <th class="px-4" style="width: 70%" scope="col">Materi Uji Kompetensi</th>
+            <th class="text-center" scope="col">Aksi</th>
+          </tr>
+        </thead>
+      </table>
     </div>
-
-    {{-- MODAL DETAIL UJIAN --}}
-    <div class="modal fade" id="detailUjian" tabindex="-1" aria-labelledby="detailUjianLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <form action="{{ route('asesi.Assesment.Soal') }}">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="detailUjianLabel">Desain Grafis</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row col justify-content-center d-flex text-black fw-semibold">
-                            <div class="col-11 my-1">Sesi : 1</div>
-                            <div class="col-11 my-1">Jenis Tes : Tertulis</div>
-                            <div class="col-11 my-1">Nama Asesor : Rika Eka Kembara, S.Kom</div>
-                            <div class="col-11 my-1">Ujian dibuka pada Selasa, 08 Februari 2022, Pukul 07:00</div>
-                            <div class="col-11 my-1">TUK : Lab MULTIMEDIA</div>
-                            <div class="col-11 my-1">Waktu Pengerjaan: 120 Menit</div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        {{-- <button type="submit" class="btn btn-primary tombol-primary-max">Mulai Ujian</button> --}}
-                        <a href="{{ route('asesi.Assesment.Soal') }}" class="btn btn-primary tombol-primary-max">Mulai
-                            Ujian</a>
-                    </div>
-                </div>
-        </div>
-        </form>
+    {{-- FORMULIR UMPAN BALIK --}}
+    <div class="col-auto card-assesment my-5">
+      <h5>Formulir Umpan Balik</h5>
+      <p>Isi formulir umpan balik dengan menekan tombol di bawah, untuk memberi ulasan mengenai assesment </p>
+      <button type="button" class="btn btn-primary tombol-primary-small" data-bs-toggle="modal"
+        data-bs-target="#umpanBalik">Umpan Balik</button>
     </div>
+  </div>
 
-    {{-- MODAL UMPAN BALIK --}}
-    <div class="modal fade" id="umpanBalik" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-labelledby="umpanBalikLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-xl">
-            <form action="">
-                @csrf
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="umpanBalikLabel">Formulir Umpan Balik</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col p-4">
-                            {{-- HEADER --}}
-                            <div class="row col text-black">
-                                <div class="col-lg-3">
-                                    <h6>Nama Asesi</h6>
-                                    <div class="mb-4">Muhammad Agung</div>
-                                    <h6>Nama Asesor</h6>
-                                    <div class="mb-5">Wawan Sukmawadi, S.Pd.,</div>
-                                </div>
-                                <div class="col-lg-3 text-black">
-                                    <h6>Hari dan Tanggal</h6>
-                                    <div class="mb-4">Senin, 25-12-2022</div>
-                                    <h6>Waktu</h6>
-                                    <div class="mb-5">09:00</div>
-                                </div>
-                                <div class="fst-italic my-2">Umpan balik dari Asesi (diisi oleh Asesi setelah
-                                    pengambilan
-                                    keputusan) :
-                                </div>
-                            </div>
+  {{-- MODAL ASSESMENT MANDIRI --}}
+  @include('asesi.assesment._form-modal-assesment-mandiri')
 
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="border-0 col-5 gap-3" scope="col">
-                                            <h5>Komponen</h5>
-                                        </th>
-                                        <th class="border-0 col-2" scope="col">
-                                            <h5>Hasil</h5>
-                                        </th>
-                                        <th class="border-0 col-4" scope="col">
-                                            <h5>Catatan / Komentar Asesi</h5>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <p>Saya mendapatkan penjelasan yang cukup memadai mengenai proses
-                                                asesmen/uji
-                                                kompetensi</p>
-                                        </td>
-                                        <td>
-                                            <div class="align-items-start">
-                                                <div class="row col">
-                                                    <div class="col-lg-6 form-check">
-                                                        <input class="form-check-input" type="radio" name="hasil1"
-                                                            id="ya1">
-                                                        <label class="form-check-label text-success" for="ya1">
-                                                            Iya
-                                                        </label>
-                                                    </div>
-                                                    <div class="col-lg-6 form-check">
-                                                        <input class="form-check-input" type="radio" name="hasil1"
-                                                            id="tidak1">
-                                                        <label class="form-check-label text-danger" for="tidak1">
-                                                            Tidak
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <textarea class="form-control border-tiernary my-4" id="" cols="30" rows="5"
-                                                placeholder="Masukan Catatan / Komentar Disini. . ."></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p>Saya diberikan kesempatan untuk mempelajari standar kompetensi yang akan
-                                                diujikan dan menilai diri sendiri terhadap pencapaiannya</p>
-                                        </td>
-                                        <td>
-                                            <div class="align-items-start">
-                                                <div class="row col">
-                                                    <div class="col-lg-6 form-check">
-                                                        <input class="form-check-input" type="radio" name="hasil2"
-                                                            id="ya1">
-                                                        <label class="form-check-label text-success" for="ya1">
-                                                            Iya
-                                                        </label>
-                                                    </div>
-                                                    <div class="col-lg-6 form-check">
-                                                        <input class="form-check-input" type="radio" name="hasil2"
-                                                            id="tidak1">
-                                                        <label class="form-check-label text-danger" for="tidak1">
-                                                            Tidak
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <textarea class="form-control border-tiernary my-4" id="" cols="30" rows="5"
-                                                placeholder="Masukan Catatan / Komentar Disini. . ."></textarea>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="col mt-5">
-                                <label for="catatan/komentar" class="form-label">
-                                    <h5>Catatan / komentar lainnya (apabila ada)
-                                        :</h5>
-                                </label>
-                                <textarea class="form-control border-tiernary" id="catatan/komentar" rows="7"
-                                    placeholder="Masukan Catatan / Komentar Disini. . ."></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary tombol-primary-small">Simpan</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+  {{-- MODAL DETAIL UJIAN --}}
+  @include('asesi.assesment._form-modal-detail-ujian')
+
+  {{-- MODAL UMPAN BALIK --}}
+  @include('asesi.assesment._form-modal-umpan-balik')
+
+
+
+@section('script')
+  <script>
+    //   TTD
+    let canvas;
+    let signaturePad;
+
+    function setupSignatureBox() {
+      canvas = document.getElementById('sig');
+      signaturePad = new SignaturePad(canvas);
+
+      var ratio = Math.max(window.devicePixelRatio || 1, 1);
+
+      canvas.width = canvas.offsetWidth * ratio;
+      canvas.height = canvas.offsetHeight * ratio;
+      var w = window.innerWidth;
+      if (canvas.width == 0 && canvas.height == 0) {
+        if (w > 1200) {
+          canvas.width = 496 * ratio;
+          canvas.height = 200 * ratio;
+        } else if (w < 1200 && w > 992) {
+          canvas.width = 334 * ratio;
+          canvas.height = 200 * ratio;
+        } else if (w < 992) {
+          canvas.width = 399 * ratio;
+          canvas.height = 200 * ratio;
+        }
+      } else {
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+      }
+      canvas.getContext("2d").scale(ratio, ratio);
+      signaturePad.clear();
+    }
+
+    function clear() {
+      signaturePad.clear();
+    }
+
+    function sentToController() {
+      if (signaturePad.isEmpty()) {
+        let ttdData = data.relasi_sertifikasi.ttd_asesi;
+        document.getElementById('ttd').value = ttdData;
+      } else {
+        let ttdData = signaturePad.toDataURL();
+        document.getElementById('ttd').value = ttdData;
+      }
+    }
+
+    document.getElementById('clear').addEventListener("click", clear);
+    document.getElementById('simpan').addEventListener("click", sentToController);
+    document.addEventListener("DOMContentLoaded", setupSignatureBox);
+
+
+
+    // table muk
+    $(document).ready(function() {
+      $('#table-muk').DataTable();
+    });
+    let list_muk = [];
+    const table_muk = $('#table-muk').DataTable({
+      //   "pageLength": 10,
+      //   "lengthMenu": [
+      //     [10, 25, 50, 100, -1],
+      //     [10, 25, 50, 100, 'semua']
+      //   ],
+      "bLengthChange": false,
+      "bFilter": false,
+      "bInfo": true,
+      "processing": true,
+      "bServerSide": true,
+      "responsive": true,
+      ajax: {
+        url: "{{ route('asesi.MateriUjiKompetensi') }}",
+        type: "POST",
+      },
+      columnDefs: [{
+          targets: '_all',
+          visible: true
+        },
+        {
+          "targets": 0,
+          "class": "text-nowrap my-1 px-4",
+          "render": function(data, type, row, meta) {
+            list_muk[row.id] = row;
+            return row.muk;
+          }
+        },
+        {
+          "targets": 1,
+          "class": "text-nowrap text-center",
+          "render": function(data, type, row, meta) {
+            let tampilan;
+            tampilan = `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailUjian(${row.id})">Detail
+                Ujian</button>`
+            return tampilan;
+          }
+        },
+      ]
+    });
+
+    // detail ujian
+    function detailUjian(id) {
+      const data_muk = list_muk[id];
+      $("#detailUjian").modal('show');
+      $("#detailUjianLabel").text(data_muk.muk);
+      $(".sesi").text('Sesi : ' + data_muk.relasi_jadwal_uji_kompetensi.sesi);
+      $(".jenis_tes").text('Jenis Tes : ' + data_muk.relasi_jadwal_uji_kompetensi.jenis_tes);
+      //   $("#formDetailUjian [name='id']").val(id)
+      //   $("#formDetailUjian .muk").val(data_muk.muk);
+
+      //   $('#formDetailUjian').on('submit', function(e) {
+      //     e.preventDefault();
+      //     $.ajax({
+      //       url: $(this).attr('action'),
+      //       method: $(this).attr('method'),
+      //       data: new FormData(this),
+      //       processData: false,
+      //       dataType: 'json',
+      //       contentType: false,
+      //       beforeSend: function() {
+      //         $(document).find('label.error-text').text('');
+      //       },
+      //       success: function(data) {
+      //         if (data.status == 0) {
+      //           $.each(data.error, function(prefix, val) {
+      //             $('label.' + prefix + '_error').text(val[0]);
+      //             // $('span.'+prefix+'_error').text(val[0]);
+      //           });
+      //         } else if (data.status == 1) {
+      //           $("#detailUjian").modal('hide');
+      //           swal({
+      //               title: "Berhasil",
+      //               text: `${data.msg}`,
+      //               icon: "success",
+      //               buttons: true,
+      //               successMode: true,
+      //             }),
+      //             table_muk.ajax.reload(null, false);
+      //         }
+      //       }
+      //     });
+      //   });
+    }
+  </script>
+@endsection
 @endsection

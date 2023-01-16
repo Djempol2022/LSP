@@ -20,10 +20,9 @@ return new class extends Migration
             $table->text('tanggal');
             $table->text('waktu_mulai');
             $table->text('waktu_selesai');
-            $table->text('total_waktu');
             $table->string('kelas');
             $table->string('tempat');
-            $table->integer('jenis_tes');
+            $table->string('jenis_tes');
             $table->timestamps();
         });
     }

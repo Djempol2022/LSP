@@ -43,7 +43,7 @@
                 <span class="tulisan-profile">Profil</span>
               </div>
               <div class="col-12">
-                <span class="tulisan-nama">{{ $user->nama_lengkap }}</span>
+                <span class="tulisan-nama">{{ auth()->user()->nama_lengkap }}</span>
               </div>
             </div>
           </div>

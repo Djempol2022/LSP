@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('unit_kompetensi_sub', function (Blueprint $table) {
             $table->id();
             $table->foreignId('unit_kompetensi_id')->constrained('unit_kompetensi')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('judul_unit_kompetensi_sub');
-            $table->text('bukti_relevan');
+            $table->text('judul_unit_kompetensi_sub')->nullable();
+            $table->text('bukti_relevan')->nullable();
             $table->timestamps();
         });
     }

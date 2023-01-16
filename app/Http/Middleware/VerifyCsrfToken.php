@@ -21,6 +21,7 @@ class VerifyCsrfToken extends Middleware
         '/admin/data-asesi/*',
         '/admin/data-asesor/*',
         '/admin/data-peninjau/*',
-        '/admin/data-permohonan-sertifikasi-kompetensi/'
+        '/admin/data-permohonan-sertifikasi-kompetensi/',
+        '/asesi/materi-uji-kompetensi'
     ];
 }
