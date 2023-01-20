@@ -13,6 +13,11 @@ use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\Asesi\AsesmenController;
 use App\Http\Controllers\Asesi\DashboardController;
 use App\Http\Controllers\Asesi\PengaturanController;
+
+use App\Http\Controllers\Asesor\AsesorController;
+use App\Http\Controllers\Asesor\PengesahanController;
+use App\Http\Controllers\Asesor\DataUjianController;
+use App\Http\Controllers\Asesor\KelolaSoalController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -103,6 +108,19 @@ Route::middleware(['auth'])->group(function () {
     });
     // Contoh Pemanggilan Route di Blade -> asesor.Dashboard
     Route::prefix('asesor')->name('asesor.')->middleware(['isAsesor'])->group(function () {
+        Route::get('asesor', [AsesorController::class, 'dashboard'])->name('Dashboard');
+        Route::get('dataprofil', [AsesorController::class, 'halamanprofil'])->name('HalamanProfil');
+
+        Route::get('pengesahan', [PengesahanController::class, 'halamanpengesahan'])->name('HalamanPengesahan');
+        Route::post('mengesahkan{id}',[PengesahanController::class, 'mengesahkan'])->name('Mengesahkan');
+
+        
+        Route::get('dataujian', [DataUjianController::class, 'halamandataujian'])->name('HalamanUjian');
+
+        Route::get('datakelolasoal', [KelolaSoalController::class, 'halamankelolasoal'])->name('HalamanKelolaSoal');
+
+        
+  
     });
 
     //ASESI

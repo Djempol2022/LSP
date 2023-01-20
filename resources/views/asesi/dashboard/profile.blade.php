@@ -525,7 +525,7 @@
                                         {{-- TANDA TANGAN / TTD --}}
                                         <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
                                         <div class="col edit-profil mb-4 signature-pad" id="signature-pad">
-                                            <canvas></canvas>
+                                            <canvas ></canvas>
                                         </div>
                                         {{-- <div id="signature-clear">
                                             <button type="button" class="button button-primary tombol-primary-small mb-4"

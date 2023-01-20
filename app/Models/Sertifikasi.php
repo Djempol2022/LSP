@@ -15,4 +15,8 @@ class Sertifikasi extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function relasi_detail_jadwal(){
+        return $this->belongsTo(Jadwal);
+    }
 }

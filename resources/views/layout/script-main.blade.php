@@ -38,10 +38,6 @@
 {{-- TTD --}}
 <script type="text/javascript">
     var wrapper = document.getElementById("signature-pad");
-    // var clear = document.getElementById("signature-clear");
-    // var clearButton = clear.querySelector("[data-action=clear]");
-    // var undoButton = wrapper.querySelector("[data-action=undo]");
-    // var savePNGButton = wrapper.querySelector("[data-action=save-png]");
     var canvas = wrapper.querySelector("canvas");
     var signaturePad = new SignaturePad(canvas, {
         backgroundColor: 'rgb(255, 255, 255)'
@@ -76,9 +72,62 @@
     // clearButton.addEventListener("click", function(event) {
     //     signaturePad.clear();
     // });
-</script>
+   
+    var wrapper2 = document.getElementById("signature-pad2");
+    var canvas2 = wrapper2.querySelector("canvas");
+    var signaturePad2 = new SignaturePad(canvas2, {
+        backgroundColor: 'rgb(255, 255, 255)'
+    });
+      
+    function resizeCanvas2() {
+        var ratio2 = Math.max(window.devicePixelRatio || 1, 1);
+        canvas2.width = canvas2.offsetWidth * ratio2;
+        canvas2.height = canvas2.offsetHeight * ratio2;
+        var w2 = window.innerWidth;
+        if (canvas2.width == 0 && canvas2.height == 0) {
+            if (w2 > 1200) {
+                canvas2.width = 496 * ratio2;
+                canvas2.height = 200 * ratio2;
+            } else if (w2 < 1200 && w2 > 992) {
+                canvas2.width = 334 * ratio2;
+                canvas2.height = 200 * ratio2;
+            } else if (w2 < 992) {
+                canvas2.width = 399 * ratio2;
+                canvas2.height = 200 * ratio2;
+            }
+        } else {
+            canvas2.width = canvas2.offsetWidth * ratio2;
+            canvas2.height = canvas2.offsetHeight * ratio2;
+        }
+        canvas2.getContext("2d").scale(ratio2, ratio2);
+        signaturePad2.clear();
+    }
+    window.addEventListener("resize", resizeCanvas)
+    resizeCanvas2()
 
-{{-- <script>
+    function sentToControllerAsesi(){
+        let ttdAsesi = signaturePad.toDataURL();
+        document.getElementById('ttd_asesi').value = ttdAsesi;
+    }
+    function sentToControllerAsesor(){
+        let ttdAsesor = signaturePad.toDataURL();
+        document.getElementById('ttd_asesor').value = ttdAsesor;
+    }
+
+
+    document.getElementById('simpan').addEventListener("click", sentToControllerAsesi);
+    document.getElementById('simpan').addEventListener("click", sentToControllerAsesor);
+    document.getElementById("DOMContentLoaded", setupSignatureBOX); 
+</script>   
+<!-- ttd 2 -->
+<script type="text/javascript">
+    
+
+    // clearButton.addEventListener("click", function(event) {
+    //     signaturePad.clear();
+    // });
+</script>
+<!-- <script>
     var hours = 2, // obtain these values somewhere else 
         minutes = 00,
         seconds = 00,
@@ -170,4 +219,4 @@
     }
     handler = setInterval(updateTimer, 1000);
     init();
-</script> --}}
+</script> --}} -->

@@ -29,7 +29,7 @@ class LoginController extends Controller
                 return redirect()->route('asesi.Dashboard');
             }
             elseif (auth()->user()->relasiRole->role == 'asesor') {
-                return "Asesor";
+                return redirect()->route('asesor.Dashboard');
                 // return redirect()->route('dealer.Dashboard');
             }
             elseif (auth()->user()->relasiRole->role == 'peninjau') {

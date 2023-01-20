@@ -52,4 +52,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Jurusan::class, 'jurusan_id', 'id');
     }
+    public function Asesment()
+    {
+        return $this->hasMany(Acc_sertifikasi::class, 'acc_sertifikasi_id')->orderBy('id', 'DESC');
+    }
 }
