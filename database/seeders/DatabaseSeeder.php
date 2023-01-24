@@ -13,8 +13,11 @@ use App\Models\JadwalUjiKompetensi;
 use App\Models\Kebangsaan;
 use App\Models\KualifikasiPendidikan;
 use App\Models\MateriUjiKompetensi;
+use App\Models\NamaTempatUjiKompetensi;
 use App\Models\Pekerjaan;
 use App\Models\Sertifikasi;
+use App\Models\SkemaSertifikasi;
+use App\Models\TempatUjiKompetensi;
 use App\Models\UnitKompetensi;
 use App\Models\UnitKompetensiIsi;
 use App\Models\UnitKompetensiSub;
@@ -163,10 +166,21 @@ class DatabaseSeeder extends Seeder
             'kebangsaan' => 'Singapore'
         ]);
 
-        Sertifikasi::create([
-            'user_id' => 4,
+        SkemaSertifikasi::create([
             'judul_skema_sertifikasi' => 'Skema Sertifikasi KKNI Level II Pada Kompetensi Keahlian Multimedia',
             'nomor_skema_sertifikasi' => 'MM-06/LSP.SMKN1-STG/2020',
+            'jurusan_id' => 1,
+        ]);
+
+        SkemaSertifikasi::create([
+            'judul_skema_sertifikasi' => 'Skema Sertifikasi KKNI Level II Pada Kompetensi Keahlian TEKNIK INSTALASI TENAGA LISTRIK',
+            'nomor_skema_sertifikasi' => 'ITL-06/LSP.SMKN1-STG/2020',
+            'jurusan_id' => 2,
+        ]);
+
+        Sertifikasi::create([
+            'user_id' => 4,
+            'skema_sertifikasi_id' => 1,
             'tujuan_asesmen' => 'sertifikasi',
             'tanggal' => '2023-01-13'
         ]);
@@ -272,6 +286,18 @@ class DatabaseSeeder extends Seeder
             'kelas' => 'IA',
             'tempat' => 'POLNEP',
             'jenis_tes' => 'Tertulis'
+        ]);
+
+        NamaTempatUjiKompetensi::create([
+            'nama_tuk' => 'TUK TEKNIK INSTALASI TENAGA LISTRIK',
+        ]);
+
+        NamaTempatUjiKompetensi::create([
+            'nama_tuk' => 'TUK TEKNIK KENDARAAN RINGAN OTOMOTIF',
+        ]);
+
+        NamaTempatUjiKompetensi::create([
+            'nama_tuk' => 'TUK TEKNIK PEMESINAN',
         ]);
     }
 }

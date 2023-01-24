@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('sertifikasi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('judul_skema_sertifikasi')->nullable();
-            $table->string('nomor_skema_sertifikasi')->nullable();
+            $table->foreignId('skema_sertifikasi_id')->constrained('skema_sertifikasi')->onUpdate('cascade')->onDelete('cascade');
             $table->string('tujuan_asesmen')->nullable();
             $table->text('ttd_asesi')->nullable();
             $table->date('tanggal')->nullable();

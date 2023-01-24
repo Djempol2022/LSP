@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\Admin_PengaturanController;
 use App\Http\Controllers\Admin\Admin_PenggunaController;
 use App\Http\Controllers\Admin\Admin_AssessmentController;
 use App\Http\Controllers\Admin\Admin_DetailJadwalUjiKompetensi;
+use App\Http\Controllers\Admin\Berkas\BerkasController;
+use App\Http\Controllers\Admin\Berkas\Daftar_TUK_Terverifikasi_Controller;
+use App\Http\Controllers\Admin\Berkas\SK_Penetapan_TUK_Terverifikasi_Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrasiController;
@@ -124,6 +127,31 @@ Route::middleware(['auth'])->group(function () {
             Route::get('hapus-pengguna/{id}', 'hapus_pengguna');
             Route::post('tambah-pengguna', 'tambah_pengguna')->name('TambahPengguna');
             Route::post('ubah-pengguna', 'ubah_pengguna')->name('UbahPengguna');
+        });
+
+        Route::controller(BerkasController::class)->group(function () {
+            Route::get('berkas', 'index')->name('Berkas');
+        });
+
+        // Berkas
+        Route::controller(SK_Penetapan_TUK_Terverifikasi_Controller::class)->group(function () {
+            Route::get('berkas/sk-penetapan-tuk-terverifikasi', 'index')->name('Berkas.SKPenetapanTUKTerverifikasi');
+            Route::post('berkas/sk-penetapan-tuk-terverifikasi', 'store')->name('Berkas.SKPenetapanTUKTerverifikasi.Add');
+        });
+
+        Route::controller(Daftar_TUK_Terverifikasi_Controller::class)->group(function () {
+            Route::get('berkas/daftar-tuk-terverifikasi', 'index')->name('Berkas.DaftarTUKTerverifikasi');
+            Route::post('berkas/daftar-tuk-terverifikasi', 'store')->name('Berkas.DaftarTUKTerverifikasi.Add');
+        });
+
+
+        Route::controller(BerkasController::class)->group(function () {
+            Route::any('table-surat-sk-penetapan', 'table_surat_sk_penetapan')->name('SuratSKPenetapan');
+            Route::any('table-surat-daftar-tuk', 'table_surat_daftar_tuk')->name('SuratDaftarTUK');
+            Route::any('table-surat-daftar-tuk/{id}', 'show_sk_penetapan')->name('SuratDaftarTUK.Show');
+
+            // PDF
+            Route::get('cetak-sk-penetapan-tuk/{id}', 'cetak_sk_penetapan_pdf')->name('CetakSKPentapanTUKPDF');
         });
     });
     // Contoh Pemanggilan Route di Blade -> asesor.Dashboard

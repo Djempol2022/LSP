@@ -13,11 +13,12 @@
           <table class="table tabel-jadwal text-black">
             <thead>
               <tr class="teks-tabel">
-                <th class="text-end" style="width: 8%" scope="col">No</th>
-                <th class="text-center" style="width: 19.5%" scope="col">MUK</th>
-                <th class="text-center" style="width: 30%" scope="col">Hari/Tanggal</th>
-                <th class="text-center" style="width: 17.5%" scope="col">TUK</th>
-                <th class="text-center" style="width: 30%" scope="col">Nama Asesor</th>
+                <th class="text-end" style="width: 7%" scope="col">No</th>
+                <th class="text-center" style="width: 17.5%" scope="col">MUK</th>
+                <th class="text-center" style="width: 22%" scope="col">Hari/Tanggal</th>
+                <th class="text-center" style="width: 15.5%" scope="col">TUK</th>
+                <th class="text-center" style="width: 25%" scope="col">Nama Asesor</th>
+                <th class="text-center" style="width: 18%" scope="col">Jenis Tes</th>
               </tr>
             </thead>
           </table>
