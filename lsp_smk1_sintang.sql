@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 25, 2023 at 02:55 PM
+-- Generation Time: Jan 30, 2023 at 07:41 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -35,6 +35,15 @@ CREATE TABLE `asesi_uji_kompetensi` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `asesi_uji_kompetensi`
+--
+
+INSERT INTO `asesi_uji_kompetensi` (`id`, `jadwal_uji_kompetensi_id`, `user_asesi_id`, `created_at`, `updated_at`) VALUES
+(24, 52, 33, '2023-01-29 14:52:29', '2023-01-29 14:52:29'),
+(25, 52, 34, '2023-01-29 14:52:30', '2023-01-29 14:52:30'),
+(26, 52, 35, '2023-01-29 14:52:30', '2023-01-29 14:52:30');
+
 -- --------------------------------------------------------
 
 --
@@ -56,7 +65,8 @@ CREATE TABLE `asesor_uji_kompetensi` (
 INSERT INTO `asesor_uji_kompetensi` (`id`, `jadwal_uji_kompetensi_id`, `user_asesor_id`, `created_at`, `updated_at`) VALUES
 (35, 52, 38, '2019-11-29 12:52:00', '2019-11-29 12:52:00'),
 (37, 54, 36, '2023-01-24 21:30:32', '2023-01-24 21:30:32'),
-(38, 55, 36, '2023-01-24 21:30:40', '2023-01-24 21:30:40');
+(38, 55, 36, '2023-01-24 21:30:40', '2023-01-24 21:30:40'),
+(41, 58, 38, '2023-01-30 03:53:27', '2023-01-30 03:53:27');
 
 -- --------------------------------------------------------
 
@@ -130,14 +140,6 @@ INSERT INTO `institusi` (`id`, `nama_institusi`, `alamat_institusi`, `kode_pos`,
 CREATE TABLE `jadwal_uji_kompetensi` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `muk_id` bigint(20) UNSIGNED NOT NULL,
-  `sesi` varchar(255) DEFAULT NULL,
-  `tanggal` timestamp NULL DEFAULT current_timestamp(),
-  `waktu_mulai` time DEFAULT NULL,
-  `waktu_selesai` time DEFAULT NULL,
-  `total_waktu` text DEFAULT NULL,
-  `kelas` varchar(255) DEFAULT NULL,
-  `tempat` varchar(255) DEFAULT NULL,
-  `jenis_tes` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -146,10 +148,11 @@ CREATE TABLE `jadwal_uji_kompetensi` (
 -- Dumping data for table `jadwal_uji_kompetensi`
 --
 
-INSERT INTO `jadwal_uji_kompetensi` (`id`, `muk_id`, `sesi`, `tanggal`, `waktu_mulai`, `waktu_selesai`, `total_waktu`, `kelas`, `tempat`, `jenis_tes`, `created_at`, `updated_at`) VALUES
-(52, 31, NULL, '2019-11-29 19:52:00', NULL, NULL, NULL, NULL, NULL, NULL, '2019-11-29 12:52:00', '2019-11-29 12:52:00'),
-(54, 28, NULL, '2023-01-25 04:30:32', NULL, NULL, NULL, NULL, NULL, NULL, '2023-01-24 21:30:32', '2023-01-24 21:30:32'),
-(55, 30, NULL, '2023-01-25 04:30:40', NULL, NULL, NULL, NULL, NULL, NULL, '2023-01-24 21:30:40', '2023-01-24 21:30:40');
+INSERT INTO `jadwal_uji_kompetensi` (`id`, `muk_id`, `created_at`, `updated_at`) VALUES
+(52, 31, '2019-11-29 12:52:00', '2019-11-29 12:52:00'),
+(54, 28, '2023-01-24 21:30:32', '2023-01-24 21:30:32'),
+(55, 30, '2023-01-24 21:30:40', '2023-01-24 21:30:40'),
+(58, 31, '2023-01-30 03:53:27', '2023-01-30 03:53:27');
 
 -- --------------------------------------------------------
 
@@ -321,7 +324,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (39, '2019_11_29_165136_create_unit_kompetensi_isi_2_table', 20),
 (40, '2019_11_29_164332_create_jenis_soal_table', 21),
 (41, '2023_01_25_093822_create_soal_table', 22),
-(42, '2023_01_25_093941_create_jawaban_asesi_table', 22);
+(42, '2023_01_25_093941_create_jawaban_asesi_table', 22),
+(43, '2023_01_26_155523_create_pelaksanaan_ujian_table', 23),
+(44, '2023_01_26_160001_drop_kolom_jadwal_uji_kompetensi_table', 24),
+(45, '2023_01_30_110200_add_kolom_foto_table', 25);
 
 -- --------------------------------------------------------
 
@@ -383,6 +389,36 @@ CREATE TABLE `pekerjaan` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pelaksanaan_ujian`
+--
+
+CREATE TABLE `pelaksanaan_ujian` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `jadwal_uji_kompetensi_id` bigint(20) UNSIGNED NOT NULL,
+  `sesi` varchar(255) DEFAULT NULL,
+  `tanggal` text DEFAULT NULL,
+  `waktu_mulai` time DEFAULT NULL,
+  `waktu_selesai` time DEFAULT NULL,
+  `total_waktu` text DEFAULT NULL,
+  `kelas` varchar(255) DEFAULT NULL,
+  `tempat` varchar(255) DEFAULT NULL,
+  `jenis_tes` int(11) NOT NULL,
+  `acc` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `pelaksanaan_ujian`
+--
+
+INSERT INTO `pelaksanaan_ujian` (`id`, `jadwal_uji_kompetensi_id`, `sesi`, `tanggal`, `waktu_mulai`, `waktu_selesai`, `total_waktu`, `kelas`, `tempat`, `jenis_tes`, `acc`, `created_at`, `updated_at`) VALUES
+(25, 52, '1', '2023-01-25', '14:54:00', '15:54:00', '60', 'as', 'sasa', 1, 1, '2023-01-27 12:17:44', '2023-01-29 14:52:41'),
+(27, 58, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2023-01-30 03:54:00', '2023-01-30 03:54:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `peninjau_uji_kompetensi`
 --
 
@@ -401,7 +437,8 @@ CREATE TABLE `peninjau_uji_kompetensi` (
 INSERT INTO `peninjau_uji_kompetensi` (`id`, `jadwal_uji_kompetensi_id`, `user_peninjau_id`, `created_at`, `updated_at`) VALUES
 (32, 52, 40, '2019-11-29 12:52:00', '2019-11-29 12:52:00'),
 (34, 54, 41, '2023-01-24 21:30:32', '2023-01-24 21:30:32'),
-(35, 55, 41, '2023-01-24 21:30:40', '2023-01-24 21:30:40');
+(35, 55, 41, '2023-01-24 21:30:40', '2023-01-24 21:30:40'),
+(38, 58, 41, '2023-01-30 03:53:28', '2023-01-30 03:53:28');
 
 -- --------------------------------------------------------
 
@@ -501,14 +538,24 @@ INSERT INTO `skema_sertifikasi` (`id`, `jurusan_id`, `judul_skema_sertifikasi`, 
 
 CREATE TABLE `soal` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `jadwal_uji_kompetensi_id` bigint(20) UNSIGNED NOT NULL,
+  `jadwal_uji_kompetensi_id` bigint(20) UNSIGNED DEFAULT NULL,
   `pertanyaan` text DEFAULT NULL,
   `pilihan` varchar(255) DEFAULT NULL,
-  `jawaban` int(11) DEFAULT NULL,
-  `acc` int(11) NOT NULL,
+  `jawaban` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `soal`
+--
+
+INSERT INTO `soal` (`id`, `jadwal_uji_kompetensi_id`, `pertanyaan`, `pilihan`, `jawaban`, `created_at`, `updated_at`) VALUES
+(28, 52, 'Pertanyaan 1 Video Editor Dasar', 'a1;b1;c1;d1', '1', '2023-01-27 12:17:44', '2023-01-27 12:17:44'),
+(29, 52, 'Pertanyaan 2 Video Editor Dasar', 'a2;b2;c2;d2', '2', '2023-01-27 12:17:45', '2023-01-27 12:17:45'),
+(30, 52, 'Pertanyaan 3 Video Editor Dasar', 'a3;b3;c3;d3', '4', '2023-01-27 12:17:45', '2023-01-27 12:17:45'),
+(37, 58, 'asd', 'ad;asd;asd;asd', '3', '2023-01-30 03:54:01', '2023-01-30 03:54:01'),
+(38, 58, 'asda', 'asd;asd;asd;asd', '2', '2023-01-30 03:54:01', '2023-01-30 03:54:01');
 
 -- --------------------------------------------------------
 
@@ -592,18 +639,14 @@ CREATE TABLE `unit_kompetensi_isi` (
 --
 
 INSERT INTO `unit_kompetensi_isi` (`id`, `unit_kompetensi_sub_id`, `judul_unit_kompetensi_isi`, `status`, `created_at`, `updated_at`) VALUES
-(57, 146, NULL, NULL, NULL, '2019-11-29 09:57:29'),
 (58, 146, 'Isi 2 Persyaratan fungsi yang akurat, komplit dan sesuai prioritas diidentifikasi sesuai keperluan dengan referensi semua tipe media.', NULL, NULL, '2019-11-29 09:47:37'),
-(59, 146, 'Isi 3 Elemen 1', NULL, NULL, NULL),
-(60, 146, 'Isi 4 Elemen 1', NULL, NULL, NULL),
 (61, 147, 'Persyaratan fungsi yang akurat, komplit dan sesuai prioritas diidentifikasi sesuai keperluan dengan referensi semua tipe media.', NULL, NULL, '2019-11-29 09:53:34'),
 (62, 147, 'Isi 2 Elemen 2', NULL, NULL, NULL),
 (63, 147, 'Isi 3 Elemen 2', NULL, NULL, NULL),
-(65, 146, 'SASLHAS', NULL, NULL, NULL),
-(66, 146, 'SASLHASdasdasddsd', NULL, NULL, NULL),
-(67, 146, 'asdas', NULL, NULL, NULL),
-(68, 146, 'dasd', NULL, NULL, NULL),
-(69, 146, 'asdasdasd', NULL, NULL, NULL);
+(67, 146, 'asdasasd', NULL, NULL, '2023-01-30 03:12:58'),
+(70, 146, 'sdfzxczxca', NULL, NULL, '2023-01-30 03:13:06'),
+(75, NULL, NULL, NULL, '2023-01-27 07:29:37', '2023-01-27 07:29:37'),
+(76, NULL, NULL, NULL, '2023-01-27 07:31:42', '2023-01-27 07:31:42');
 
 -- --------------------------------------------------------
 
@@ -618,6 +661,16 @@ CREATE TABLE `unit_kompetensi_isi_2` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `unit_kompetensi_isi_2`
+--
+
+INSERT INTO `unit_kompetensi_isi_2` (`id`, `unit_kompetensi_isi_id`, `judul_unit_kompetensi_isi_2`, `created_at`, `updated_at`) VALUES
+(2, 58, 'fvbdfgsdfsdf', '2023-01-27 07:44:58', '2023-01-27 07:44:58'),
+(3, 58, 'zxcxzcvasdf', '2023-01-27 07:50:13', '2023-01-27 07:50:13'),
+(4, 58, 'gtr4uyrh', '2023-01-27 08:24:01', '2023-01-27 08:24:01'),
+(5, 67, 'xzx', '2023-01-30 03:06:47', '2023-01-30 03:22:39');
 
 -- --------------------------------------------------------
 
@@ -639,7 +692,7 @@ CREATE TABLE `unit_kompetensi_sub` (
 --
 
 INSERT INTO `unit_kompetensi_sub` (`id`, `unit_kompetensi_id`, `judul_unit_kompetensi_sub`, `bukti_relevan`, `created_at`, `updated_at`) VALUES
-(146, 20, 'Elemen 1 Editable', NULL, NULL, '2019-11-29 10:05:14'),
+(146, 20, 'Mengembangkan Persyaratan dan Fungsi', NULL, NULL, '2023-01-27 04:09:30'),
 (147, 20, 'Elemen 2 Editable', NULL, NULL, '2019-11-29 10:05:33');
 
 -- --------------------------------------------------------
@@ -673,7 +726,7 @@ INSERT INTO `users` (`id`, `nama_lengkap`, `email`, `institusi_id`, `jurusan_id`
 (35, 'asesi3', 'asesi3@gmail.com', 1, 66, '$2y$10$56sbVTYIbS/iUtj/LR7.DOL2tWEkbv4jsKVH6wA6l/npGb7r64Aci', 4, NULL, NULL, '2023-01-19 00:34:09', '2023-01-19 00:34:09'),
 (36, 'asesor1', 'asesor1@gmail.com', NULL, 66, '$2y$10$9bLEbWx8ZtMn.d99uCke0e3XMTmwO5FvDt6eMgxnhjkk5BdPvW9ZS', 3, NULL, NULL, '2019-11-29 10:51:02', '2019-11-29 10:51:02'),
 (37, 'asesor2', 'asesor2@gmail.com', NULL, NULL, '$2y$10$CTdTO82.EyPVQSV5t8G3kOn1kBeGlfRxGxYw9HlzxwkUOSN2asDuq', 3, NULL, NULL, '2019-11-29 10:51:02', '2019-11-29 10:51:02'),
-(38, 'asesor3', 'asesor3@gmail.com', NULL, NULL, '$2y$10$OHHwER9RZgyXDJfKZG.xleemc9377n6ZxSczNbscuqKCUdU5kOdl6', 3, NULL, NULL, '2019-11-29 10:51:02', '2019-11-29 10:51:02'),
+(38, 'asesor3', 'asesor3@gmail.com', NULL, 66, '$2y$10$OHHwER9RZgyXDJfKZG.xleemc9377n6ZxSczNbscuqKCUdU5kOdl6', 3, NULL, NULL, '2019-11-29 10:51:02', '2019-11-29 10:51:02'),
 (39, 'peninjau1', 'peninjau1@gmail.com', NULL, NULL, '$2y$10$fZvHe1V1F7pJfVsQV7D1VeJoaA1sMAfsBnqdhsRcuFhjKrzm2BK3q', 2, NULL, NULL, '2019-11-29 10:51:02', '2019-11-29 10:51:02'),
 (40, 'peninjau2', 'peninjau2@gmail.com', NULL, NULL, '$2y$10$8swn/Zv7W6cC2dM32v6MdO160yY8K25ZRgo8h6sLoiJ43v7wUuIpO', 2, NULL, NULL, '2019-11-29 10:51:02', '2019-11-29 10:51:02'),
 (41, 'peninjau3', 'peninjau3@gmail.com', NULL, NULL, '$2y$10$jX9g3ZYXKjWhJ4QgDyStjuXGAqJwP2Wi81b3cHjYPhBdBJzs2o5tW', 2, NULL, NULL, '2019-11-29 10:51:02', '2019-11-29 10:51:02');
@@ -695,6 +748,7 @@ CREATE TABLE `users_detail` (
   `alamat_rumah` text DEFAULT NULL,
   `nomor_hp` varchar(255) DEFAULT NULL,
   `kualifikasi_pendidikan` varchar(255) DEFAULT NULL,
+  `foto` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -812,6 +866,13 @@ ALTER TABLE `pekerjaan`
   ADD KEY `pekerjaan_user_id_foreign` (`user_id`);
 
 --
+-- Indexes for table `pelaksanaan_ujian`
+--
+ALTER TABLE `pelaksanaan_ujian`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pelaksanaan_ujian_jadwal_uji_kompetensi_id_foreign` (`jadwal_uji_kompetensi_id`);
+
+--
 -- Indexes for table `peninjau_uji_kompetensi`
 --
 ALTER TABLE `peninjau_uji_kompetensi`
@@ -921,13 +982,13 @@ ALTER TABLE `users_detail`
 -- AUTO_INCREMENT for table `asesi_uji_kompetensi`
 --
 ALTER TABLE `asesi_uji_kompetensi`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `asesor_uji_kompetensi`
 --
 ALTER TABLE `asesor_uji_kompetensi`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -951,7 +1012,7 @@ ALTER TABLE `institusi`
 -- AUTO_INCREMENT for table `jadwal_uji_kompetensi`
 --
 ALTER TABLE `jadwal_uji_kompetensi`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `jawaban_asesi`
@@ -993,13 +1054,13 @@ ALTER TABLE `kualifikasi_pendidikan`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `muk`
 --
 ALTER TABLE `muk`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `pekerjaan`
@@ -1008,10 +1069,16 @@ ALTER TABLE `pekerjaan`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `pelaksanaan_ujian`
+--
+ALTER TABLE `pelaksanaan_ujian`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
 -- AUTO_INCREMENT for table `peninjau_uji_kompetensi`
 --
 ALTER TABLE `peninjau_uji_kompetensi`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -1041,7 +1108,7 @@ ALTER TABLE `skema_sertifikasi`
 -- AUTO_INCREMENT for table `soal`
 --
 ALTER TABLE `soal`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `tanda_tangan`
@@ -1065,13 +1132,13 @@ ALTER TABLE `unit_kompetensi`
 -- AUTO_INCREMENT for table `unit_kompetensi_isi`
 --
 ALTER TABLE `unit_kompetensi_isi`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `unit_kompetensi_isi_2`
 --
 ALTER TABLE `unit_kompetensi_isi_2`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `unit_kompetensi_sub`
@@ -1145,6 +1212,12 @@ ALTER TABLE `muk`
 --
 ALTER TABLE `pekerjaan`
   ADD CONSTRAINT `pekerjaan_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pelaksanaan_ujian`
+--
+ALTER TABLE `pelaksanaan_ujian`
+  ADD CONSTRAINT `pelaksanaan_ujian_jadwal_uji_kompetensi_id_foreign` FOREIGN KEY (`jadwal_uji_kompetensi_id`) REFERENCES `jadwal_uji_kompetensi` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `peninjau_uji_kompetensi`
