@@ -16,7 +16,8 @@ class UnitKompetensi extends Model
         return $this->belongsTo(SkemaSertifikasi::class, 'skema_sertifikasi_id', 'id');
     }
 
-    public function relasi_unit_kompetensi_sub(){
-        return $this->hasOne(UnitKompetensiSub::class, 'unit_kompetensi_id', 'id');
+    public function relasi_unit_kompetensi_sub()
+    {
+        return $this->hasMany(UnitKompetensiSub::class, 'unit_kompetensi_id', 'id');
     }
 }

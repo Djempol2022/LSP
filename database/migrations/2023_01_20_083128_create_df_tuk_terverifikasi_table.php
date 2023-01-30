@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('unit_kompetensi_sub', function (Blueprint $table) {
+        Schema::create('df_tuk_terverifikasi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('unit_kompetensi_id')->constrained('unit_kompetensi')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('judul_unit_kompetensi_sub')->nullable();
-            $table->text('bukti_relevan')->nullable();
+            $table->string('tempat_ditetapkan');
+            $table->date('tanggal_ditetapkan');
+            $table->string('nama_bttd');
+            $table->string('jabatan_bttd');
+            $table->text('ttd');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unit_kompetensi_sub');
+        Schema::dropIfExists('df_tuk_terverifikasi');
     }
 };

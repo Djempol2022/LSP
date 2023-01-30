@@ -1,7 +1,6 @@
-@extends('layout.main-layout', ['title'=>"Permohonan Sertifikasi"])
+@extends('layout.main-layout', ['title' => 'Permohonan Sertifikasi'])
 @section('main-section')
-
-<div class="page-content">
+  <div class="page-content">
     <section class="section">
         <div class="card">
             <div class="row">
@@ -38,8 +37,21 @@
                 </table>
             </div>
         </div>
+
+
+        <div class="card-body">
+          <table class="table table-striped" id="table-sertifikasi">
+            <thead>
+              <tr>
+                <th>Jurusan</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
     </section>
-</div>
+  </div>
 @endsection
 @section('script')
 <script>
@@ -112,10 +124,10 @@
                     tampilan = `<span onclick="detailJadwalUjiKompetensi(${row.id})" class="badge bg-info rounded-pill">
                                     <a class="text-white" href="/admin/detail-permohonan-sertifikasi-kompetensi/${row.user_id}">Detail</a>
                                 </span>`
-                    return tampilan;
-                }
-            },
-        ]
+            return tampilan;
+          }
+        },
+      ]
     });
     
     $(".filter").on('change', function () {

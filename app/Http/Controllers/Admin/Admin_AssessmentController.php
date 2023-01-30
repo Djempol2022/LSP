@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Validator;
 
 class Admin_AssessmentController extends Controller
 {
-    public function assessment(){
+    public function assessment()
+    {
         return view('admin.assessment.assessment');
     }
 
@@ -47,7 +48,7 @@ class Admin_AssessmentController extends Controller
             $data = $data->with('relasi_user')->whereRelation('relasi_user', 'jurusan_id', $request->data_jurusan);
         }
 
-        if($request->input('length')!=-1) 
+        if ($request->input('length') != -1)
             $data = $data->skip($request->input('start'))->take($request->input('length'));
             $rekamTotal = $data->count();
             $data = $data->with('relasi_user.relasi_jurusan')->with('relasi_user.relasi_institusi')->get()->toArray();

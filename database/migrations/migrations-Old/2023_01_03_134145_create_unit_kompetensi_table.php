@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('unit_kompetensi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sertifikasi_id')->constrained('sertifikasi')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('kode_unit');
-            $table->text('judul_unit');
-            $table->text('jenis_standar');
+            $table->string('kode_unit')->nullable();
+            $table->text('judul_unit')->nullable();
+            $table->text('jenis_standar')->nullable();
             $table->timestamps();
         });
     }

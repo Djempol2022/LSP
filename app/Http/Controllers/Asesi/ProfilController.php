@@ -31,7 +31,6 @@ class ProfilController extends Controller
         $kualifikasi_pendidikan = KualifikasiPendidikan::get(['id', 'pendidikan']);
         $kebangsaan = Kebangsaan::get(['id', 'kebangsaan']);
         $date = Carbon::now();
-        $tanggal = $user->relasi_sertifikasi->tanggal;
 
         // pas_foto
         if (!empty($user->relasi_user_detail->foto)) {
@@ -144,7 +143,6 @@ class ProfilController extends Controller
 
         // tambah/edit user detail
         UserDetail::where('user_id', auth()->user()->id)->update([
-            'nama_lengkap' => $request->nama_lengkap,
             'ktp_nik_paspor' => $request->ktp_nik_paspor,
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
@@ -153,11 +151,13 @@ class ProfilController extends Controller
             'alamat_rumah' => $request->alamat_rumah,
             'nomor_hp' => $request->nomor_hp,
             'kualifikasi_pendidikan_id' => $request->kualifikasi_pendidikan,
+            'ttd' => $request->ttd,
             'foto' => $image
         ]);
 
         // tambah/edit user
         User::find(auth()->user()->id)->update([
+            'nama_lengkap' => $request->nama_lengkap,
             'institusi_id' => $request->institusi,
             'jurusan_id' => $request->jurusan
         ]);
@@ -192,14 +192,12 @@ class ProfilController extends Controller
             Sertifikasi::create([
                 'user_id' => auth()->user()->id,
                 'tujuan_asesmen' => $request->data_sertifikasi,
-                'ttd_asesi' => $request->ttd,
                 'tanggal' => $request->tanggal,
             ]);
         } else {
             // edit sertifikasi
             Sertifikasi::where('user_id', auth()->user()->id)->update([
                 'tujuan_asesmen' => $request->data_sertifikasi,
-                'ttd_asesi' => $request->ttd,
                 'tanggal' => $request->tanggal,
             ]);
         }
