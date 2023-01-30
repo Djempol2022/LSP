@@ -11,4 +11,8 @@ class Jurusan extends Model
 
     protected $table = "jurusan";
     protected $guarded = ['id'];
+
+    public function relasi_skema_sertifikasi(){
+        return $this->belongsTo(SkemaSertifikasi::class, 'id', 'jurusan_id');
+    }
 }

@@ -412,26 +412,5 @@
         }
       });
     }
-
-
-    $.ajax({
-      url: "/admin/detail-data-permohonan-sertifikasi-kompetensi/" + id,
-      type: "POST",
-      dataType: 'json',
-      success: function(response) {
-        if (response.status == 0) {
-          alert("Gagal Hapus")
-        } else if (response.status == 1) {
-          swal({
-              title: "Berhasil",
-              text: `${response.msg}`,
-              icon: "success",
-              buttons: true,
-              successMode: true,
-            }),
-            table_jadwal_uji_kompetensi.ajax.reload(null, false)
-        }
-      }
-    });
   </script>
 @endsection

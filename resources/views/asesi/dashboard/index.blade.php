@@ -32,20 +32,20 @@
                     <a href="{{ route('asesi.Dashboard.Profile') }}">
                         <div class="row bg-profile px-4 py-4 align-items-center">
                             <div class="col-auto col-foto-profile">
-                                @if ($user->foto)
+                                @isset ($user->foto)
                                     <img src="{{ asset('storage/' . $user->foto) }}" style="width: 85%"
                                         class="rounded-circle" alt="image">
                                 @else
                                     <img src="{{ asset('images/logo/favicon.png') }}" style="width: 85%"
                                         class="rounded-circle" alt="image">
-                                @endif
+                                @endisset
                             </div>
                             <div class="col-9 row p-0">
                                 <div class="col-auto col-tulisan-profile">
                                     <span class="tulisan-profile">Profil</span>
                                 </div>
                                 <div class="col-12">
-                                    <span class="tulisan-nama">{{ $user->nama_lengkap }}</span>
+                                    <span class="tulisan-nama">{{Auth::user()->nama_lengkap}}</span>
                                 </div>
                             </div>
                         </div>
@@ -66,13 +66,13 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                {{-- <div class="modal-body">
                                     <form action="{{ route('asesi.DownloadWord') }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-primary tombol-primary-max">Download SK
                                             PENETAPAN TUK TERVERIFIKASI</button>
                                     </form>
-                                </div>
+                                </div> --}}
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                 </div>

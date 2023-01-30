@@ -11,9 +11,9 @@ class UnitKompetensi extends Model
     protected $table = "unit_kompetensi";
     protected $guarded = ['id'];
 
-    public function relasi_sertifikasi()
+    public function relasi_skema_sertifikasi()
     {
-        return $this->belongsTo(Sertifikasi::class, 'sertifikasi_id', 'id');
+        return $this->belongsTo(SkemaSertifikasi::class, 'skema_sertifikasi_id', 'id');
     }
 
     public function relasi_unit_kompetensi_sub(){

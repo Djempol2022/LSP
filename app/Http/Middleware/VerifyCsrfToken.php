@@ -14,13 +14,22 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         '/admin/data-jurusan',
         '/admin/data-muk',
-        '/admin/data-jadwal-uji-kompetensi/*',
+        '/admin/data-jadwal-uji-kompetensi',
         '/admin/data-pengguna',
         '/admin/data-institusi',
         '/admin/data-kualifikasi-pendidikan',
         '/admin/data-asesi/*',
         '/admin/data-asesor/*',
         '/admin/data-peninjau/*',
-        '/admin/data-permohonan-sertifikasi-kompetensi/'
+        '/admin/data-permohonan-sertifikasi-kompetensi/',
+        '/admin/data-unit-kompetensi/*',
+        '/admin/data-muk-asesor-peninjau/*',
+        '/admin/data-asesi-uji-kompetensi/*',
+        
+        '/asesor/data-unit-kompetensi-jurusan-asesor',
+        '/asesor/data-elemen-unit-kompetensi-jurusan-asesor/*',
+        '/asesor/data-isi-elemen-unit-kompetensi-jurusan-asesor',
+        '/asesor/data-kelola-soal',
+        '/asesor/data-peserta-pelaksanaan-uji-kompetensi'
     ];
 }

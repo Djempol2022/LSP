@@ -17,13 +17,10 @@ class Sertifikasi extends Model
     }
 
     public function relasi_unit_kompetensi(){
-        return $this->hasOne(UnitKompetensi::class, 'sertifikasi_id', 'id');
+        return $this->belongsTo(UnitKompetensi::class, 'id', 'sertifikasi_id');
     }
 
-    protected function id(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => ucfirst($value),
-        );
+    public function relasi_tanda_tangan_admin(){
+        return $this->belongsTo(TandaTangan::class, 'id', 'sertifikasi_id');
     }
 }

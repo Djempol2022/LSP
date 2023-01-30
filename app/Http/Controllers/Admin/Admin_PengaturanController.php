@@ -11,7 +11,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\KualifikasiPendidikan;
+use App\Models\SkemaSertifikasi;
 use Illuminate\Support\Facades\Validator;
+use Str;
 
 class Admin_PengaturanController extends Controller
 {
@@ -111,7 +113,13 @@ class Admin_PengaturanController extends Controller
                 ]);
             }else{
                 $tambah_jurusan = Jurusan::create([
-                    'jurusan' => $request->jurusan
+                    'jurusan' => $request->jurusan,
+                    'slug' => Str::slug($request->jurusan)
+                ]);
+                // $id_jurusan = $tambah_jurusan->id()
+
+                SkemaSertifikasi::create([
+                    'jurusan_id' => $tambah_jurusan->id
                 ]);
                 
                 if(!$tambah_jurusan){
@@ -142,7 +150,8 @@ class Admin_PengaturanController extends Controller
             ]);
         }else{
             $ubah_jurusan = Jurusan::where('id', $request->id)->update([
-                'jurusan' => $request->jurusan
+                'jurusan' => $request->jurusan,
+                'slug' => Str::slug($request->jurusan)
             ]);
             
             if(!$ubah_jurusan){

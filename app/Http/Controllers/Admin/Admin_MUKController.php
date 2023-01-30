@@ -60,8 +60,8 @@ class Admin_MUKController extends Controller
                         'status'=>1,
                         'msg'=>'Berhasil menambahkan Materi uji Kompetensi'
                     ]);
-                }
             }
+        }
     }
 
     public function ubah_muk(Request $request){

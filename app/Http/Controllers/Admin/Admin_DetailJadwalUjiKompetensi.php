@@ -18,23 +18,16 @@ class Admin_DetailJadwalUjiKompetensi extends Controller
 {
     public function detail_jadwal_uji_kompetensi($id){
         $jadwal_uji_kompetensi = JadwalUjiKompetensi::where('id', $id)->with('relasi_muk.relasi_jurusan')->first()->toArray();
-        // ->with([
-        //     'relasi_muk' => function($query) {
-        //         return $query->with('relasi_jurusan');
-        //     }])->get()->toArray();
-        // $asesi = DetailJadwalUjiKompetensi::with('relasi_user_asesi.relasi_role')->first();
-        // dd($asesi);
-        $muk = MateriUjiKompetensi::where('id', $jadwal_uji_kompetensi['muk_id'])
-                ->with('relasi_jurusan')->first()->toArray();
+        $muk = MateriUjiKompetensi::where('id', $jadwal_uji_kompetensi['muk_id'])->with('relasi_jurusan')->first()->toArray();
         $user_asesi = User::with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesi')->get()->toArray();
         $user_asesor = User::with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesor')->get()->toArray();
         $user_peninjau = User::with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'peninjau')->get()->toArray();
-        // dd($user_asesi, $user_asesor, $user_peninjau);
         return view('admin.jadwal_uji_kompetensi.detail_jadwal_uji_kompetensi', 
                 compact('jadwal_uji_kompetensi', 'user_asesi', 'user_asesor', 'user_peninjau'));
     }
 
-    // ASESI
+
+    // BAGIAN CRUD ASESI
     public function data_asesi(Request $request, $id){
         $data = AsesiUjiKompetensi::select([
             'asesi_uji_kompetensi.*'
@@ -128,8 +121,10 @@ class Admin_DetailJadwalUjiKompetensi extends Controller
             ]);
         }
     }
-    
-    // ASESOR
+    // END BAGIAN CRUD ASESI
+
+
+    // BAGIAN CRUD ASESOR
     public function data_asesor(Request $request, $id){
         $data = AsesorUjiKompetensi::select([
             'asesor_uji_kompetensi.*'
@@ -224,8 +219,10 @@ class Admin_DetailJadwalUjiKompetensi extends Controller
             ]);
         }
     }
+    // END BAGIAN CRUD ASESOR
 
-    // PENINJAU
+
+    // BAGIAN CRUD PENINJAU
     public function data_peninjau(Request $request, $id){
         $data = PeninjauUjiKompetensi::select([
             'peninjau_uji_kompetensi.*'
@@ -319,6 +316,5 @@ class Admin_DetailJadwalUjiKompetensi extends Controller
             ]);
         }
     }
-
-
+    // END BAGIAN CRUD PENINJAU
 }

@@ -29,8 +29,8 @@ class LoginController extends Controller
                 return redirect()->route('asesi.Dashboard');
             }
             elseif (auth()->user()->relasi_role->role == 'asesor') {
-                return "Asesor";
-                // return redirect()->route('dealer.Dashboard');
+
+                return redirect()->route('asesor.Dashboard');
             }
             elseif (auth()->user()->relasi_role->role == 'peninjau') {
                 return "Peninjau";

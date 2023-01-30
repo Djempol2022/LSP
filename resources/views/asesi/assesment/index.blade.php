@@ -111,7 +111,7 @@
                             <ol class="list-group list-group-numbered">
                                 <li
                                     class="list-group-item d-flex justify-content-between align-items-start border-0 fw-semibold">
-                                    <div class="ms-2 me-auto ">
+                                    <div class="ms-2 me-auto">
                                         Elemen: Mengembangkan Pesyaratan Fungsi
                                         <div class="py-1">Kriteria Kerja:</div>
                                         {{-- KRITERIA KERJA --}}

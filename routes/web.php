@@ -15,6 +15,8 @@ use App\Http\Controllers\Asesi\AsesmenController;
 use App\Http\Controllers\Asesi\DashboardController;
 use App\Http\Controllers\Asesi\PengaturanController;
 use App\Http\Controllers\Asesi\ProfilController;
+use App\Http\Controllers\Asesor\AsesorDashboard;
+use App\Http\Controllers\Asesor\AsesorKelolaSoal;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     // LOGOUT
     Route::get('logout', [LoginController::class, 'logout'])->name('Logout');
     Route::post('ubah-password', [Admin_PengaturanController::class, 'ubah_password'])->name('UbahPassword');
+
     //ADMIN
     // Contoh Pemanggilan Route di Blade -> admin.Dashboard
     Route::prefix('admin')->name('admin.')->middleware(['isAdmin'])->group(function () {
@@ -62,6 +65,18 @@ Route::middleware(['auth'])->group(function () {
             Route::any('data-permohonan-sertifikasi-kompetensi', 'data_permohonan_sertifikasi_kompetensi')->name('DataPermohonanSertifikasiKompetensi');
             Route::get('detail-permohonan-sertifikasi-kompetensi/{id}', 'detail_permohonan_sertifikasi_kompetensi')->name('DetailPermohonanSertifikasiKompetensi');
             Route::get('detail-data-permohonan-sertifikasi-kompetensi/{id}', 'detail_data_permohonan_sertifikasi_kompetensi');
+            Route::get('data-sertifikasi-jurusan/{id}', 'data_sertifikasi_jurusan');
+
+            Route::post('update-judul-sertifikasi', 'update_judul_sertifikasi')->name('UpdateJudulSertifikasi');
+            Route::post('update-nomor-sertifikasi', 'update_nomor_sertifikasi')->name('UpdateNomorSertifikasi');
+            Route::post('tambah-unit-kompetensi', 'tambah_unit_kompetensi')->name('TambahUnitKompetensi');
+            Route::any('data-unit-kompetensi/{id}', 'data_unit_kompetensi')->name('DataUnitKompetensi');
+            Route::post('ubah-unit-kompetensi', 'ubah_unit_kompetensi')->name('UbahUnitKompetensi');
+            Route::get('hapus-unit-kompetensi/{id}', 'hapus_unit_kompetensi');
+
+            Route::post('persetujuan-admin', 'tambah_ubah_persetujuan_admin')->name('TambahOrUbahPersetujuanAdmin');
+            Route::post('nomor-urut', 'tambah_ubah_nomor_urut')->name('TambahOrUbahNomorUrutAsesi');
+
         });
 
         Route::controller(Admin_PengaturanController::class)->group(function () {
@@ -96,8 +111,17 @@ Route::middleware(['auth'])->group(function () {
             Route::any('tampilan_jadwal-uji-kompetensi', 'tampilan_jadwal_uji_kompetensi')->name('TampilanJadwalUjiKompetensi');
             Route::post('tambah-jadwal-uji-kompetensi', 'tambah_jadwal_uji_kompetensi')->name('TambahJadwalUjiKompetensi');
             Route::get('hapus-jadwal-uji-kompetensi/{id}', 'hapus_jadwal_uji_kompetensi');
-            Route::any('data-jadwal-uji-kompetensi/{id}', 'data_jadwal_uji_kompetensi');
+            Route::any('data-jadwal-uji-kompetensi', 'data_jadwal_uji_kompetensi')->name('DataJadwalUjiKompetensi');
             Route::post('ubah-jadwal-uji-kompetensi', 'ubah_jadwal_uji_kompetensi')->name('UbahJadwalUjiKompetensi');
+
+            Route::get('tambah-asesor-peninjau/{id}', 'halaman_tambah_data_asesor_peninjau');
+            Route::any('data-muk-asesor-peninjau/{id}', 'data_muk_asesor_peninjau');
+            Route::post('tambah-muk-asesor-peninjau', 'tambah_muk_asesor_peninjau')->name('TambahMukAsesorPeninjau');
+            Route::get('detail-jadwal-uji-kompetensi-acc/{id}', 'halaman_detail_jadwal_uji_kompetensi_acc');
+            Route::post('ubah-jadwal-pelaksanaan-ujian/{id}', 'ubah_jadwal_pelaksanaan_ujian')->name('UbahJadwalPelaksanaanUjian');
+            Route::post('tambah-asesi-ukom', 'tambah_asesi_ke_ukom')->name('TambahDataAsesiKeJadwalUkom');
+            Route::any('data-asesi-uji-kompetensi/{id}', 'data_asesi_uji_kompetensi');
+            Route::get('hapus-asesi-uji-kompetensi/{id}', 'hapus_asesi_uji_kompetensi');
         });
 
         Route::controller(Admin_DetailJadwalUjiKompetensi::class)->group(function () {
@@ -126,8 +150,43 @@ Route::middleware(['auth'])->group(function () {
             Route::post('ubah-pengguna', 'ubah_pengguna')->name('UbahPengguna');
         });
     });
+
+    // ASESOR
     // Contoh Pemanggilan Route di Blade -> asesor.Dashboard
     Route::prefix('asesor')->name('asesor.')->middleware(['isAsesor'])->group(function () {
+        Route::controller(AsesorDashboard::class)->group(function () {
+            Route::get('dashboard', 'dashboard')->name('Dashboard');
+            // Data Unit Kompetensi
+            Route::any('data-unit-kompetensi-jurusan-asesor', 'data_unit_kompetensi_perjurusan_asesor');
+            // Data Elemen atau Unit Kompetensi Sub
+            Route::get('tambah-elemen-unit-kompetensi/{id}', 'halaman_tambah_elemen_unit_kompetensi');
+            // Route::any('data-elemen-unit-kompetensi-jurusan-asesor/{id}', 'data_elemen_unit_kompetensi');
+            Route::post('tambah-elemen', 'tambah_elemen_unit_kompetensi')->name('TambahElemen');
+            Route::post('ubah-elemen', 'ubah_elemen_unit_kompetensi')->name('UbahElemen');
+            Route::get('hapus-elemen/{id}', 'hapus_elemen_unit_kompetensi');
+            // Data Isi Elemen
+            Route::any('data-isi-elemen-unit-kompetensi-jurusan-asesor', 'data_isi_elemen_unit_kompetensi_perjurusan_asesor');
+            Route::post('tambah-isi-elemen', 'tambah_isi_elemen_unit_kompetensi')->name('TambahIsiElemenKonten');
+            Route::post('ubah-konten-elemen', 'ubah_konten_elemen')->name('UbahKontenElemen');
+            Route::get('hapus-isi-elemen/{id}', 'hapus_isi_elemen_unit_kompetensi');
+            Route::get('isi-sub-elemen/{id}', 'isi_sub_elemen_unit_kompetensi')->name('IsiSubElemen');
+            Route::post('tambah-isi-sub-elemen', 'tambah_isi_sub_elemen_unit_kompetensi')->name('TambahIsiSubElemen');
+            Route::any('data-peserta-pelaksanaan-uji-kompetensi', 'data_peserta_pelaksanaan_uji_kompetensi');
+
+            Route::post('ubah-isi-2-elemen', 'ubah_isi_2_elemen')->name('UbahIsiElemen2');
+            Route::get('hapus-isi-2-elemen/{id}', 'hapus_isi_2_elemen_unit_kompetensi');
+
+        });
+        Route::controller(AsesorKelolaSoal::class)->group(function () {
+            // HALAMAN KELOLA SOAL
+            Route::get('kelola-soal', 'kelola_soal')->name('KelolaSoal');            
+            Route::any('data-kelola-soal', 'data_kelola_soal')->name('DataKelolaSoal');
+            Route::get('jenis-soal/{id}', 'pilih_jenis_soal');
+            Route::get('buat-soal/{id}/{jenis_soal_id}', 'buat_soal')->name('BuatSoal');
+            Route::post('tambah-soal-pilihan-ganda', 'tambah_soal_pilihan_ganda')->name('TambahSoalPilihanGanda');
+            Route::post('tambah-soal-essay', 'tambah_soal_essay')->name('TambahSoalEssay');
+            Route::post('tambah-soal-wawancara', 'tambah_soal_wawancara')->name('TambahSoalWawancara');
+        });
     });
 
     //ASESI
@@ -136,7 +195,6 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'dashboard')->name('Dashboard');
-            Route::post('dashboard', 'downloadWord')->name('DownloadWord');
             // Route::get('dashboard/profile', 'profile')->name('Dashboard.Profile');
         });
 

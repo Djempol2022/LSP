@@ -19,10 +19,7 @@
 
 
 
-
-
-
-
+                {{-- ADMIN AUTH --}}
                 {{-- MENU DASHBOARD --}}
                 {{-- JIKA MENU DASHBOARD DIPILIH MAKA TOMBOL AKAN AKTIF --}}
                 @if(Auth::user()->relasi_role->role == "admin")
@@ -80,7 +77,7 @@
 
 
 
-
+                {{-- PENINJAU AUTH --}}
                 @elseif(Auth::user()->relasi_role->role == "peninjau")
                 <li class="sidebar-item {{ request()->routeIs('peninjau.Dashboard*') ? 'active' : '' }} ">
                     <a href="{{ route('peninjau.Dashboard') }}" class='sidebar-link'>
@@ -115,8 +112,7 @@
 
 
 
-
-
+                {{-- ASESOR AUTH --}}
                 @elseif(Auth::user()->relasi_role->role == "asesor")
                 <li class="sidebar-item {{ request()->routeIs('asesor.Dashboard*') ? 'active' : '' }} ">
                     <a href="{{ route('asesor.Dashboard') }}" class='sidebar-link'>
@@ -126,35 +122,36 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ request()->routeIs('asesor.KelolaSoal*') ? 'active' : '' }} ">
+                    <a href="{{ route('asesor.KelolaSoal') }}" class='sidebar-link'>
+                        <i
+                            class="bi bi-grid{{ request()->routeIs('asesor.KelolaSoal*') ? '-fill warna-white' : '' }} 
+                            warna-secondary"></i>
+                        <span>Kelola Soal</span>
+                    </a>
+                </li>
                 {{-- MENU ASSESMENT --}}
                 {{-- JIKA MENU ASSESMENT DIPILIH MAKA TOMBOL AKAN AKTIF --}}
-                <li class="sidebar-item {{ request()->routeIs('asesor.Assesment*') ? 'active' : '' }}">
+                {{-- <li class="sidebar-item {{ request()->routeIs('asesor.Assesment*') ? 'active' : '' }}">
                     <a href="{{ route('asesor.Assesment') }}" class='sidebar-link'>
                         <i class="bi bi-journal-text {{ request()->routeIs('asesor.Assesment*') ? 'warna-white' : '' }} warna-secondary"
                             style="{{ request()->routeIs('asesor.Assesment*') ? 'font-weight: 1000' : '' }}"></i>
                         <span>Assesment</span>
                     </a>
-                </li>
+                </li> --}}
                 {{-- MENU PENGATURAN --}}
                 {{-- JIKA MENU PENGATURAN DIPILIH MAKA TOMBOL AKAN AKTIF --}}
-                <li class="sidebar-item {{ request()->routeIs('asesor.Pengaturan*') ? 'active' : '' }}">
+                {{-- <li class="sidebar-item {{ request()->routeIs('asesor.Pengaturan*') ? 'active' : '' }}">
                     <a href="{{ route('asesor.Pengaturan') }}" class='sidebar-link'>
                         <i
                             class="bi bi-gear{{ request()->routeIs('asesor.Pengaturan*') ? '-fill warna-white' : '' }} warna-secondary"></i>
                         <span>Pengaturan</span>
                     </a>
-                </li>
+                </li> --}}
 
 
 
-
-
-
-
-
-
-
-
+                {{-- ASESI AUTH --}}
                 @elseif(Auth::user()->relasi_role->role == "asesi")
                 <li class="sidebar-item {{ request()->routeIs('asesi.Dashboard*') ? 'active' : '' }} ">
                     <a href="{{ route('asesi.Dashboard') }}" class='sidebar-link'>
