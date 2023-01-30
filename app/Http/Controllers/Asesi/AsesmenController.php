@@ -2,24 +2,37 @@
 
 namespace App\Http\Controllers\Asesi;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\MateriUjiKompetensi;
+use Carbon\Carbon;
 use App\Models\Sertifikasi;
+use Illuminate\Http\Request;
+use App\Models\SkemaSertifikasi;
 use App\Models\UnitKompetensiIsi;
 use App\Models\UnitKompetensiSub;
-use Carbon\Carbon;
+use App\Models\MateriUjiKompetensi;
+use App\Http\Controllers\Controller;
+use App\Models\UnitKompetensi;
+use Illuminate\Support\Facades\Auth;
 
 class AsesmenController extends Controller
 {
     private $path = 'asesi/assesment/';
     public function index()
     {
-        $sertifikasi = Sertifikasi::with('relasi_unit_kompetensi.relasi_unit_kompetensi_sub.relasi_unit_kompetensi_isi')->where('user_id', auth()->user()->id)->first();
+        $sertifikasi = SkemaSertifikasi::with( 
+            'relasi_jurusan',
+            'relasi_unit_kompetensi.relasi_unit_kompetensi_sub')
+            ->where('jurusan_id', Auth::user()->jurusan_id)->first();
+
+        $unit_kompetensi = UnitKompetensi::with('skema_sertifikasi_id')->
+            whereRelation('skema_sertifikasi_id', 'skema_sertifikasi_id', $sertifikasi->id)->get();
+            
+        // $sertifikasi = Sertifikasi::with('relasi_unit_kompetensi.relasi_unit_kompetensi_sub.relasi_unit_kompetensi_isi')
+        //     ->where('user_id', auth()->user()->id)->first();
         $date = Carbon::now();
         // dd($sertifikasi);
         return view($this->path . 'index', [
             'where' => 'Pengaturan',
+            'unit_kompetensi' => $unit_kompetensi,
             'sertifikasi' => $sertifikasi,
             'tanggal' => $date->format('Y-m-d')
         ]);
@@ -27,7 +40,8 @@ class AsesmenController extends Controller
 
     public function store(Request $request)
     {
-        $sertifikasi = Sertifikasi::with('relasi_unit_kompetensi.relasi_unit_kompetensi_sub.relasi_unit_kompetensi_isi')->where('user_id', auth()->user()->id)->first();
+        $sertifikasi = Sertifikasi::with('relasi_unit_kompetensi.relasi_unit_kompetensi_sub.relasi_unit_kompetensi_isi',
+                        'relasi_unit_kompetensi.relasi_skema_sertifikasi')->where('user_id', auth()->user()->id)->first();
 
         foreach ($sertifikasi->relasi_unit_kompetensi->relasi_unit_kompetensi_sub as $item) {
             foreach ($item->relasi_unit_kompetensi_isi as $isi) {

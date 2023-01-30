@@ -17,7 +17,7 @@ class Sertifikasi extends Model
     }
 
     public function relasi_unit_kompetensi(){
-        return $this->belongsTo(UnitKompetensi::class, 'id', 'sertifikasi_id');
+        return $this->belongsTo(UnitKompetensi::class, 'id', 'skema_sertifikasi_id');
     }
 
     public function relasi_tanda_tangan_admin(){

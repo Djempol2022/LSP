@@ -15,15 +15,15 @@
           <div class="col">
             <div class="assesment-mandiri-header">
               <p class="assesment-mandiri-title">Judul Skema Sertifikasi</p>
-              <p>{{ $sertifikasi->judul_skema_sertifikasi }}</p>
+              <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->judul_skema_sertifikasi }}</p>
             </div>
             <div class="assesment-mandiri-header">
               <p class="assesment-mandiri-title">Nomor Skema Sertifikasi</p>
-              <p>{{ $sertifikasi->nomor_skema_sertifikasi }}</p>
+              <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->nomor_skema_sertifikasi }}</p>
             </div>
             <div class="assesment-mandiri-header">
               <p class="assesment-mandiri-title">Skema Sertifikasi</p>
-              <p>{{ $sertifikasi->relasi_unit_kompetensi->jenis_standar }}</p>
+              <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->jenis_standar }}</p>
             </div>
           </div>
           {{-- TITLE --}}
