@@ -1,25 +1,28 @@
 <?php
 
-use App\Http\Controllers\Admin\Admin_DashboardController;
-use App\Http\Controllers\Admin\Admin_JadwalUjiKompetensi;
-use App\Http\Controllers\Admin\Admin_MUKController;
-use App\Http\Controllers\Admin\Admin_PengaturanController;
-use App\Http\Controllers\Admin\Admin_PenggunaController;
-use App\Http\Controllers\Admin\Admin_AssessmentController;
-use App\Http\Controllers\Admin\Admin_DetailJadwalUjiKompetensi;
-use App\Http\Controllers\Admin\Berkas\BerkasController;
-use App\Http\Controllers\Admin\Berkas\Daftar_TUK_Terverifikasi_Controller;
-use App\Http\Controllers\Admin\Berkas\SK_Penetapan_TUK_Terverifikasi_Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrasiController;
 
+use App\Http\Controllers\Asesor\AsesorDashboard;
+use App\Http\Controllers\Asesor\AsesorKelolaSoal;
+use App\Http\Controllers\Asesor\AsesorPengesahan;
+
+use App\Http\Controllers\Asesi\ProfilController;
 use App\Http\Controllers\Asesi\AsesmenController;
 use App\Http\Controllers\Asesi\DashboardController;
 use App\Http\Controllers\Asesi\PengaturanController;
-use App\Http\Controllers\Asesi\ProfilController;
-use App\Http\Controllers\Asesor\AsesorDashboard;
-use App\Http\Controllers\Asesor\AsesorKelolaSoal;
+
+use App\Http\Controllers\Admin\Berkas\BerkasController;
+use App\Http\Controllers\Admin\Admin_PenggunaController;
+use App\Http\Controllers\Admin\Admin_MUKController;
+use App\Http\Controllers\Admin\Admin_DashboardController;
+use App\Http\Controllers\Admin\Admin_JadwalUjiKompetensi;
+use App\Http\Controllers\Admin\Admin_AssessmentController;
+use App\Http\Controllers\Admin\Admin_PengaturanController;
+use App\Http\Controllers\Admin\Admin_DetailJadwalUjiKompetensi;
+use App\Http\Controllers\Admin\Berkas\Daftar_TUK_Terverifikasi_Controller;
+use App\Http\Controllers\Admin\Berkas\SK_Penetapan_TUK_Terverifikasi_Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +83,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('persetujuan-admin', 'tambah_ubah_persetujuan_admin')->name('TambahOrUbahPersetujuanAdmin');
             Route::post('nomor-urut', 'tambah_ubah_nomor_urut')->name('TambahOrUbahNomorUrutAsesi');
 
+            Route::any('data-asesi-asessment-mandiri', 'data_asesi_asessment_mandiri')->name('DataAsesiAsessmentMandiri');
         });
 
         Route::controller(Admin_PengaturanController::class)->group(function () {
@@ -200,11 +204,19 @@ Route::middleware(['auth'])->group(function () {
             Route::get('isi-sub-elemen/{id}', 'isi_sub_elemen_unit_kompetensi')->name('IsiSubElemen');
             Route::post('tambah-isi-sub-elemen', 'tambah_isi_sub_elemen_unit_kompetensi')->name('TambahIsiSubElemen');
             Route::any('data-peserta-pelaksanaan-uji-kompetensi', 'data_peserta_pelaksanaan_uji_kompetensi');
-
             Route::post('ubah-isi-2-elemen', 'ubah_isi_2_elemen')->name('UbahIsiElemen2');
             Route::get('hapus-isi-2-elemen/{id}', 'hapus_isi_2_elemen_unit_kompetensi');
 
         });
+
+        Route::controller(AsesorPengesahan::class)->group(function () {
+            // HALAMAN PENGESAHAN            
+            Route::get('pengesahan-asesmen-mandiri', 'halaman_pengesahan_asesmen_mandiri')->name('HalamanPengesahanAsesmemMandiri');
+            Route::any('data-asesmen-mandiri', 'data_asesmen_mandiri')->name('DataAsesmenMandiri');
+            Route::get('detail-pengesahan-asesmen-mandiri/{user_asesi_id}', 'detail_pengesahan_asesmen_mandiri')->name('DetailPengesahanAsesmemMandiri');
+            Route::put('asesor-acc-asesmen-mandiri/{id}', 'asesor_acc_asesmen_mandiri')->name('AsesorAccAsesmenMandiri');
+        });
+
         Route::controller(AsesorKelolaSoal::class)->group(function () {
             // HALAMAN KELOLA SOAL
             Route::get('kelola-soal', 'kelola_soal')->name('KelolaSoal');            
@@ -233,9 +245,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(AsesmenController::class)->group(function () {
             Route::get('assesment', 'index')->name('Assesment');
-            Route::any('materi-uji-kompetensi', 'materi_uji_kompetensi')->name('MateriUjiKompetensi');
+            Route::any('asesi-materi-uji-kompetensi', 'materi_uji_kompetensi')->name('AsesiMateriUjiKompetensi');
             Route::post('assesment', 'store')->name('Assesment.Store');
-            Route::get('soal', 'soal')->name('Assesment.Soal');
+            Route::get('soal/{jadwal_id}/{soal_id}', 'pengerjaan_soal')->name('PengerjaanSoal');
+            Route::post('simpan-jawaban-asesi', 'simpan_jawaban_asesi')->name('SimpanJawabanAsesi');            
         });
 
         Route::controller(ProfilController::class)->group(function () {

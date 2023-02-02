@@ -18,6 +18,6 @@ class UnitKompetensi extends Model
 
     public function relasi_unit_kompetensi_sub()
     {
-        return $this->hasMany(UnitKompetensiSub::class, 'unit_kompetensi_id', 'id');
+        return $this->belongsTo(UnitKompetensiSub::class, 'id', 'unit_kompetensi_id');
     }
 }

@@ -36,7 +36,7 @@
                     <div class="col-6 col-lg-3 col-md-8">
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
-                                <a href="{{ route('admin.DaftarMUK') }}">
+                                <a href="{{ route('admin.DataAsesiAsessmentMandiri') }}">
                                 <div class="row">
                                     <div class="col-md-2 col-xl-4 col-xxl-4">
                                         <div class="stats-icon blue mb-2">

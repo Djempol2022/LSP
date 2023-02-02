@@ -17,11 +17,12 @@
       <button type="button" class="btn btn-primary tombol-primary-small" data-bs-toggle="modal"
         data-bs-target="#assesmentMandiri">Assesment Mandiri</button>
     </div>
+
     {{-- TABEL MATERI UJI KOMPETENSI --}}
     <div class="col-auto card-assesment">
       <h5>Materi Uji Kompetensi</h5>
       <p>Daftar Materi Uji Kompetensi LSP Multimedia</p>
-      <table class="table" id="table-muk">
+      <table class="table" id="table-pelaksanaan-ujian">
         <thead>
           <tr>
             <th class="px-4" style="width: 70%" scope="col">Materi Uji Kompetensi</th>
@@ -30,6 +31,7 @@
         </thead>
       </table>
     </div>
+    
     {{-- FORMULIR UMPAN BALIK --}}
     <div class="col-auto card-assesment my-5">
       <h5>Formulir Umpan Balik</h5>
@@ -103,13 +105,8 @@
     document.addEventListener("DOMContentLoaded", setupSignatureBox);
 
 
-
-    // table muk
-    $(document).ready(function() {
-      $('#table-muk').DataTable();
-    });
-    let list_muk = [];
-    const table_muk = $('#table-muk').DataTable({
+    let list_ujian_asesi = [];
+    const table_pelaksanaan_ujian = $('#table-pelaksanaan-ujian').DataTable({
       //   "pageLength": 10,
       //   "lengthMenu": [
       //     [10, 25, 50, 100, -1],
@@ -122,7 +119,7 @@
       "bServerSide": true,
       "responsive": true,
       ajax: {
-        url: "{{ route('asesi.MateriUjiKompetensi') }}",
+        url: "{{ route('asesi.AsesiMateriUjiKompetensi') }}",
         type: "POST",
       },
       columnDefs: [{
@@ -133,8 +130,8 @@
           "targets": 0,
           "class": "text-nowrap my-1 px-4",
           "render": function(data, type, row, meta) {
-            list_muk[row.id] = row;
-            return row.muk;
+            list_ujian_asesi[row.id] = row;
+            return row.relasi_jadwal_uji_kompetensi.relasi_muk.muk;
           }
         },
         {
@@ -142,7 +139,7 @@
           "class": "text-nowrap text-center",
           "render": function(data, type, row, meta) {
             let tampilan;
-            tampilan = `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailUjian(${row.id})">Detail
+            tampilan = `<button id-jadwal-ujian class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailUjian(${row.id})">Detail
                 Ujian</button>`
             return tampilan;
           }
@@ -150,49 +147,62 @@
       ]
     });
 
-    // detail ujian
+    // DETAIL UJIAN ASESI
     function detailUjian(id) {
-      const data_muk = list_muk[id];
+      const data_ujian_asesi = list_ujian_asesi[id];
       $("#detailUjian").modal('show');
-      $("#detailUjianLabel").text(data_muk.muk);
-      $(".sesi").text('Sesi : ' + data_muk.relasi_jadwal_uji_kompetensi.sesi);
-      $(".jenis_tes").text('Jenis Tes : ' + data_muk.relasi_jadwal_uji_kompetensi.jenis_tes);
-      //   $("#formDetailUjian [name='id']").val(id)
-      //   $("#formDetailUjian .muk").val(data_muk.muk);
+      $("#detailUjianLabel").text(data_ujian_asesi.relasi_jadwal_uji_kompetensi.relasi_muk.muk);
 
-      //   $('#formDetailUjian').on('submit', function(e) {
-      //     e.preventDefault();
-      //     $.ajax({
-      //       url: $(this).attr('action'),
-      //       method: $(this).attr('method'),
-      //       data: new FormData(this),
-      //       processData: false,
-      //       dataType: 'json',
-      //       contentType: false,
-      //       beforeSend: function() {
-      //         $(document).find('label.error-text').text('');
-      //       },
-      //       success: function(data) {
-      //         if (data.status == 0) {
-      //           $.each(data.error, function(prefix, val) {
-      //             $('label.' + prefix + '_error').text(val[0]);
-      //             // $('span.'+prefix+'_error').text(val[0]);
-      //           });
-      //         } else if (data.status == 1) {
-      //           $("#detailUjian").modal('hide');
-      //           swal({
-      //               title: "Berhasil",
-      //               text: `${data.msg}`,
-      //               icon: "success",
-      //               buttons: true,
-      //               successMode: true,
-      //             }),
-      //             table_muk.ajax.reload(null, false);
-      //         }
-      //       }
-      //     });
-      //   });
+      $(".sesi").text('Sesi : ' + data_ujian_asesi.sesi);
+      $(".nama_asesor").text('Nama Asesor : ' + data_ujian_asesi.relasi_jadwal_uji_kompetensi.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap);
+      $(".tanggal").text('Tanggal : ' + data_ujian_asesi.tanggal);
+      $(".tuk").text('TUK : ' + data_ujian_asesi.tempat);
+
+      if(data_ujian_asesi.jenis_tes == 1){
+        $(".jenis_tes").text('Jenis Tes : Pilihan Ganda');
+      }else if(data_ujian_asesi.jenis_tes == 2){
+        $(".jenis_tes").text('Jenis Tes : Essay');
+      }
+      var url ="/asesi/soal/";
+
+      $(".total_waktu").text('Waktu Pengerjaan : ' + data_ujian_asesi.total_waktu + ' Menit');
+      $('.mulai_ujian').html('<a href='+url+data_ujian_asesi.jadwal_uji_kompetensi_id+'/'+data_ujian_asesi.relasi_jadwal_uji_kompetensi.relasi_soal.id+' class="btn btn-primary tombol-primary-max btn-block">Mulai Ujian</a>');
     }
+
+    // FORM PENGAJUAN ASESMEN MANDIRI
+    $('#form-PengajuanAsesmenMandiri').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: new FormData(this),
+            processData: false,
+            dataType: 'json',
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('label.error-text').text('');
+            },
+            success: function (data) {
+                if (data.status == 0) {
+                    $.each(data.error, function (prefix, val) {
+                        $('label.' + prefix + '_error').text(val[0]);
+                        // $('span.'+prefix+'_error').text(val[0]);
+                    });
+                } 
+                else if(data.status == 1){
+                    swal({
+                        title: "Berhasil",
+                        text: `${data.msg}`,
+                        icon: "success",
+                        buttons: true,
+                        successMode: true,
+                    }),
+                  location.reload();
+                }
+            }
+        });
+    });
   </script>
 @endsection
 @endsection
+ 

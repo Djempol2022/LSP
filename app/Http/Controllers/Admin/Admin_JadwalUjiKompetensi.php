@@ -175,8 +175,8 @@ class Admin_JadwalUjiKompetensi extends Controller
             $ubah_jadwal_uji_kompetensi = PelaksanaanUjian::where('id', $id)->update([
                 'sesi' => $request->sesi,
                 'tanggal' => $request->tanggal,
-                'waktu_mulai' => $request->waktu_mulai,
-                'waktu_selesai' => $request->waktu_selesai,
+                'waktu_mulai' => $request->tanggal.' '.$request->waktu_mulai,
+                'waktu_selesai' => $request->tanggal.' '.$request->waktu_selesai,
                 'kelas' => $request->kelas,
                 'tempat' => $request->tempat,
                 'total_waktu' => $waktu_mulai->diffInMinutes($waktu_selesai)

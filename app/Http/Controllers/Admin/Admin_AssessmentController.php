@@ -10,6 +10,7 @@ use App\Models\UnitKompetensi;
 use App\Http\Controllers\Controller;
 use App\Models\Jurusan;
 use App\Models\SkemaSertifikasi;
+use App\Models\StatusUnitKompetensiAsesi;
 use App\Models\TandaTangan;
 use Illuminate\Support\Facades\Validator;
 
@@ -146,7 +147,7 @@ class Admin_AssessmentController extends Controller
 
     // UNIT KOMPETENSI ---------------------------------
     public function data_unit_kompetensi($id){
-        $data = UnitKompetensi::where('skema_sertifikasi_id', $id)->get();
+        $data = UnitKompetensi::with('relasi_skema_sertifikasi')->whereRelation('relasi_skema_sertifikasi','skema_sertifikasi_id', $id)->get();
         return response()->json([
             'data'=>$data,
         ]);
@@ -326,5 +327,15 @@ class Admin_AssessmentController extends Controller
                 ]);
             }
         }
+    }
+    public function data_asesi_asessment_mandiri(Request $request){
+        $status_kompeten_asesi = StatusUnitKompetensiAsesi::select('user_asesi_id')->get();
+        foreach($status_kompeten_asesi as $cek_user_asesi){
+            $data_user_asesi = User::where('id', $cek_user_asesi->user_asesi_id)
+                    ->with('relasi_role')
+                    ->whereRelation('relasi_role', 'role', '=', 'asesi')
+                    ->get();
+        }
+        return view('admin.assessment.asessment_mandiri.data_asessment_mandiri', compact('data_user_asesi', 'status_kompeten_asesi'));
     }
 }
