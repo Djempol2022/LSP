@@ -24,6 +24,8 @@ class VerifyCsrfToken extends Middleware
         '/admin/data-permohonan-sertifikasi-kompetensi/',
         '/asesi/materi-uji-kompetensi',
         '/admin/table-surat-sk-penetapan',
-        '/admin/table-surat-daftar-tuk'
+        '/admin/table-surat-daftar-tuk',
+        '/admin/table-surat-hasil-verifikasi-tuk',
+        '/admin/table-surat-st-verifikasi-tuk'
     ];
 }

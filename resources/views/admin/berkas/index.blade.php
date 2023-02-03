@@ -18,6 +18,7 @@
               <option value="sk-penetapan-tuk-terverifikasi">001 - SK Penetapan TUK Terverifikasi</option>
               <option value="daftar-tuk-terverifikasi">002 - Daftar TUK Terverifikasi</option>
               <option value="hasil-verifikasi-tuk">Hasil Verifikasi TUK</option>
+              <option value="st-verifikasi-tuk">005 - ST Verifikasi TUK</option>
             </select>
           </div>
           <div>
@@ -35,6 +36,12 @@
 
   {{-- modal sk ketetapan tuk terverifikasi --}}
   @include('admin.berkas._modal-sk-penetapan-tuk-terverifikasi')
+
+  {{-- modal hasil verifikasi tuk --}}
+  @include('admin.berkas._modal-hasil-verifikasi-tuk')
+
+  {{-- modal st verifikasi tuk --}}
+  @include('admin.berkas._modal-st-verifikasi-tuk')
 
 @section('script')
   @include('admin.berkas.script-berkas')

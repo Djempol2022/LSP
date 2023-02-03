@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\Admin_DetailJadwalUjiKompetensi;
 use App\Http\Controllers\Admin\Berkas\BerkasController;
 use App\Http\Controllers\Admin\Berkas\Daftar_TUK_Terverifikasi_Controller;
 use App\Http\Controllers\Admin\Berkas\SK_Penetapan_TUK_Terverifikasi_Controller;
+use App\Http\Controllers\Admin\Berkas\Hasil_Verifikasi_TUK_Controller;
+use App\Http\Controllers\Admin\Berkas\ST_Verifikasi_TUK_Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrasiController;
@@ -129,10 +131,6 @@ Route::middleware(['auth'])->group(function () {
             Route::post('ubah-pengguna', 'ubah_pengguna')->name('UbahPengguna');
         });
 
-        Route::controller(BerkasController::class)->group(function () {
-            Route::get('berkas', 'index')->name('Berkas');
-        });
-
         // Berkas
         Route::controller(SK_Penetapan_TUK_Terverifikasi_Controller::class)->group(function () {
             Route::get('berkas/sk-penetapan-tuk-terverifikasi', 'index')->name('Berkas.SKPenetapanTUKTerverifikasi');
@@ -144,11 +142,31 @@ Route::middleware(['auth'])->group(function () {
             Route::post('berkas/daftar-tuk-terverifikasi', 'store')->name('Berkas.DaftarTUKTerverifikasi.Add');
         });
 
+        Route::controller(Hasil_Verifikasi_TUK_Controller::class)->group(function () {
+            Route::get('berkas/hasil-verifikasi-tuk', 'index')->name('Berkas.HasilVerifikasiTUK');
+            Route::post('berkas/hasil-verifikasi-tuk', 'store')->name('Berkas.HasilVerifikasiTUK.Add');
+        });
+
+        Route::controller(ST_Verifikasi_TUK_Controller::class)->group(function () {
+            Route::get('berkas/st-verifikasi-tuk', 'index')->name('Berkas.STVerifikasiTUK');
+            Route::post('berkas/st-verifikasi-tuk', 'store')->name('Berkas.STVerifikasiTUK.Add');
+        });
+
 
         Route::controller(BerkasController::class)->group(function () {
+            Route::get('berkas', 'index')->name('Berkas');
+
             Route::any('table-surat-sk-penetapan', 'table_surat_sk_penetapan')->name('SuratSKPenetapan');
+            Route::get('table-surat-sk-penetapan/{id}', 'show_sk_penetapan')->name('SuratSKPenetapan.Show');
+
             Route::any('table-surat-daftar-tuk', 'table_surat_daftar_tuk')->name('SuratDaftarTUK');
-            Route::any('table-surat-daftar-tuk/{id}', 'show_sk_penetapan')->name('SuratDaftarTUK.Show');
+
+            Route::any('table-surat-hasil-verifikasi-tuk', 'table_surat_hasil_verifikasi_tuk')->name('SuratHasilVerifikasiTUK');
+            Route::get('table-hasil-verifikasi-tuk/{id}', 'show_hasil_verifikasi_tuk')->name('SuratHasilVerifikasiTUK.Show');
+
+            Route::any('table-surat-st-verifikasi-tuk', 'table_surat_st_verifikasi_tuk')->name('SuratSTVerifikasiTUK');
+            Route::get('table-surat-st-verifikasi-tuk/{id}', 'show_st_verifikasi_tuk')->name('SuratSTVerifikasiTUK.Show');
+
 
             // PDF
             Route::get('cetak-sk-penetapan-tuk/{id}', 'cetak_sk_penetapan_pdf')->name('CetakSKPentapanTUKPDF');
