@@ -7,6 +7,9 @@ use App\Models\DaftarTUKTerverifikasi;
 use App\Models\HasilVerifikasiTUK;
 use App\Models\SKPenetapanTUK;
 use App\Models\STVerifikasiTUK;
+use App\Models\X03STVerifikasiTUK;
+use App\Models\X04BeritaAcara;
+use App\Models\ZBAPecahRP;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -87,6 +90,55 @@ class BerkasController extends Controller
         ]);
     }
 
+    public function table_surat_x03_st_verifikasi_tuk(Request $request)
+    {
+        $data = X03STVerifikasiTUK::select([
+            'x03_st_verifikasi_tuk.*'
+        ]);
+
+        if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
+
+        $rekamTotal = $data->count();
+        $data = $data->get()->toArray();
+
+        return response()->json([
+            'data' => $data,
+            'recordsTotal' => $rekamTotal
+        ]);
+    }
+
+    public function table_surat_x04_berita_acara(Request $request)
+    {
+        $data = X04BeritaAcara::select([
+            'x04_berita_acara.*'
+        ]);
+
+        if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
+
+        $rekamTotal = $data->count();
+        $data = $data->get()->toArray();
+
+        return response()->json([
+            'data' => $data,
+            'recordsTotal' => $rekamTotal
+        ]);
+    }
+
+    public function table_surat_z_ba_pecah_rp(Request $request)
+    {
+        $data = ZBAPecahRP::select([
+            'z_ba_pecah_rp.*'
+        ]);
+
+        if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
+
+        $data = $data->get();
+
+        return response()->json([
+            'data' => $data,
+        ]);
+    }
+
     public function show_sk_penetapan($id)
     {
         $sk_penetapan_tuk = SKPenetapanTUK::with(['relasi_sk_penetapan_tuk_child.relasi_nama_tuk', 'relasi_sk_penetapan_tuk_child.relasi_skema_sertifikasi'])->find($id);
@@ -116,5 +168,26 @@ class BerkasController extends Controller
         $st_verifikasi_tuk = STVerifikasiTUK::with(['relasi_skema_sertifikasi', 'relasi_nama_jabatan'])->find($id);
 
         return response()->json($st_verifikasi_tuk);
+    }
+
+    public function show_x03_st_verifikasi_tuk($id)
+    {
+        $x03_st_verifikasi_tuk = X03STVerifikasiTUK::with(['relasi_nama_tuk', 'relasi_nama_jabatan'])->find($id);
+
+        return response()->json($x03_st_verifikasi_tuk);
+    }
+
+    public function show_x04_berita_acara($id)
+    {
+        $x04_berita_acara = X04BeritaAcara::with(['relasi_skema_sertifikasi.relasi_jurusan'])->find($id);
+
+        return response()->json($x04_berita_acara);
+    }
+
+    public function show_z_ba_pecah_rp($id)
+    {
+        $z_ba_pecah_rp = ZBAPecahRP::with(['relasi_skema_sertifikasi', 'relasi_institusi', 'relasi_nama_tuk', 'relasi_nama_jabatan', 'relasi_bahasan_diskusi'])->find($id);
+
+        return response()->json($z_ba_pecah_rp);
     }
 }

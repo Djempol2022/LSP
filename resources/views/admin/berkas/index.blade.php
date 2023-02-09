@@ -19,6 +19,9 @@
               <option value="daftar-tuk-terverifikasi">002 - Daftar TUK Terverifikasi</option>
               <option value="hasil-verifikasi-tuk">Hasil Verifikasi TUK</option>
               <option value="st-verifikasi-tuk">005 - ST Verifikasi TUK</option>
+              <option value="x03-st-verifikasi-tuk">X 03 ST Verifikasi TUK</option>
+              <option value="x04-berita-acara">X 04 Berita Acara</option>
+              <option value="z-ba-pecah-rp">Z Berita Acara Pecah Rapat Pleno</option>
             </select>
           </div>
           <div>
@@ -42,6 +45,15 @@
 
   {{-- modal st verifikasi tuk --}}
   @include('admin.berkas._modal-st-verifikasi-tuk')
+
+  {{-- modal x03 st verifikasi tuk --}}
+  @include('admin.berkas._modal-x03-st-verifikasi-tuk')
+
+  {{-- modal x04 berita acara --}}
+  @include('admin.berkas._modal-x04-berita-acara')
+
+  {{-- modal z ba pecah rp --}}
+  @include('admin.berkas._modal-z-ba-pecah-rp')
 
 @section('script')
   @include('admin.berkas.script-berkas')
