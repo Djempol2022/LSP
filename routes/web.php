@@ -110,6 +110,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('asesor')->name('asesor.')->middleware(['isAsesor'])->group(function () {
         Route::get('asesor', [AsesorController::class, 'dashboard'])->name('Dashboard');
         Route::get('dataprofil', [AsesorController::class, 'halamanprofil'])->name('HalamanProfil');
+        Route::post ('editprofil{id}', [AsesorController::class, 'editprofil'])->name('EditProfil');
 
         Route::get('pengesahan', [PengesahanController::class, 'halamanpengesahan'])->name('HalamanPengesahan');
         Route::post('mengesahkan{id}',[PengesahanController::class, 'mengesahkan'])->name('Mengesahkan');

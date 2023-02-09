@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Acc_sertifikasi::class, 'acc_sertifikasi_id')->orderBy('id', 'DESC');
     }
+    public function Relasi_User_Asesor()
+    {
+        return $this->hasOne(User_Asesor::class, 'users_id')->orderBy('id', 'DESC');
+    }
+
 }

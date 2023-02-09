@@ -33,39 +33,57 @@
 
                 {{-- DATA PRIBADI --}}
                 <div class="col profil-section">
-                    <h5>A. Data Pribssadi</h5>
+                    <h5>A. Data Pribadi</h5>
+                    
                     <div class="row my-4">
                         <div class="col-md-6">
                             <div class="col pb-4">
                                 <p class="fw-bold">Nama Lengkap</p>
-                                <span>Muhammad Agung</span>
+                                <span>{{$profil_asesor->nama_lengkap}}</span>
                             </div>
                             <div class="col pb-4">
                                 <p class="fw-bold">Jabatan</p>
-                                <span>SMK NEGERI 1 SINTANG</span>
+                                <span>{{$profil_asesor->jabatan}}</span>
                             </div>
                             <div class="col pb-4">
                                 <p class="fw-bold">Jurusan</p>
-                                <span>MULTIMEDIA</span>
+                                <span>{{$profil_asesor->users->relasiJurusan->jurusan}}</span>
                             </div>
                     
                         </div>
                         <div class="col-md-6">
                         <div class="col pb-4">
                                 <p class="fw-bold">Tempat Lahir</p>
+                                @if($profil_asesor->tempat_lahir == NULL)
                                 <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
+                                @else
+                                <span> {{$profil_asesor->tempat_lahir}}</span>
+                                @endif
                             </div>
                             <div class="col pb-4">
                                 <p class="fw-bold">Tanggal Lahir</p>
+                                @if($profil_asesor->tanggal_lahir == NULL)
                                 <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-                            </div>
+                                @else
+                                <span> {{$profil_asesor->tanggal_lahir}}</span>
+                                    @endif
+                        </div>
                             <div class="col pb-4">
+                          
                                 <p class="fw-bold">Jenis Kelamin</p>
+                                @if($profil_asesor->jenis_kelamin == NULL)
                                 <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
+                                @else
+                                <span >{{$profil_asesor->jenis_kelamin}}</span>
+                                @endif
                             </div>
                             <div class="col pb-4">
                                 <p class="fw-bold">Alamat Rumah</p>
+                                @if($profil_asesor->alamat_rumah == NULL)
                                 <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
+                                @else
+                                <span>{{$profil_asesor->alamat_rumah}}</span>
+                                @endif
                             </div>
 
                         </div>
@@ -90,8 +108,7 @@
     {{-- MODAL PROFIL --}}
     <div class="modal fade" id="editProfil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="editProfilLabel" aria-hidden="true">
-        <form action="" method="POST">
-            @csrf
+    
             <div class="modal-dialog modal-dialog-scrollable modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -99,6 +116,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <form action="{{route('asesor.EditProfil', $profil_asesor->id )}}" method="POST">
+                            @csrf
                         <div class="mx-3">
 
                             <div class="col my-3">
@@ -111,27 +130,30 @@
                                     {{-- DATA PRIBADI --}}
                                     <div class="mt-5">
                                         <h5>A. Data Pribadi</h5>
+                                            
                                         <div class="row mt-4">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6">  
                                                 <div class="col edit-profil-left">
                                                     <label for="namaLengkap" class="form-label fw-semibold">Nama
                                                         Lengkap</label>
                                                     <input type="text" id="namaLengkap"
-                                                        class="form-control input-text"
-                                                        placeholder="Masukkan Nama Lengkap. . .">
+                                                        class="form-control input-text" name="nama_lengkap" value="{{$profil_asesor->nama_lengkap}}"
+                                                 >
                                                 </div>
                                                 <div class="col edit-profil-left">
                                                     <label for="namaLengkap" class="form-label fw-semibold">Jabatan</label>
-                                                    <input type="text" id="namaLengkap"
+                                                    <input type="text" name="jabatan" value = "{{$profil_asesor->jabatan}}"
                                                         class="form-control input-text"
-                                                        placeholder="Masukkan Jabatan. . .">
+                                                        >
                                                 </div>
                                                 <div class="col edit-profil-left">
                                                     <label for="jurusan" class="form-label fw-semibold">Jurusan</label>
-                                                    <select name="" class="form-select input-text" id="jurusan">
-                                                        <option value="" selected disabled>Pilih Jurusan</option>
-                                                        <option value="">TEKNIK KOMPUTER DAN JARINGAN</option>
-                                                        <option value="">MULTIMEDIA</option>
+                                                    <select  class="form-select input-text"  name="jurusan_id" value =" {{$profil_asesor->users->relasiJurusan->jurusan}}">
+                                                    <option value="" selected disabled>Pilih Jurusan</option>
+                                                        @foreach ($jurusan as $jurusans)
+                                                       
+                                                        <option value="{{ $jurusans->id }}">{{$jurusans->jurusan}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                
@@ -143,29 +165,29 @@
                                                         Lahir</label>
                                                     <input type="text" id="tempatLahir"
                                                         class="form-control input-text"
-                                                        placeholder="Masukkan Tempat Lahir. . .">
+                                                        value = "{{$profil_asesor->tempat_lahir}}" name="tempat_lahir">
                                                 </div>
                                                 <div class="col edit-profil-left">
                                                     <label for="tanggalLahir" class="form-label fw-semibold">Tanggal
                                                         Lahir</label>
                                                     <input type="date" id="tanggalLahir"
-                                                        class="form-control input-text">
+                                                        class="form-control input-text" name="tanggal_lahir" value = "{{$profil_asesor->tanggal_lahir}}">
                                                 </div>
                                                 <div class="col edit-profil-left">
                                                     <label for="jenisKelamin" class="form-label fw-semibold">Jenis
                                                         Kelamin</label>
-                                                    <select name="" class="form-select input-text"
+                                                    <select name="jenis_kelamin" class="form-select input-text" value = "{{$profil_asesor->jenis_kelamin}}"
                                                         id="jenisKelamin">
                                                         <option value="" selected disabled>Pilih Jenis Kelamin
                                                         </option>
-                                                        <option value="">LAKI-LAKI</option>
-                                                        <option value="">PEREMPUAN</option>
+                                                        <option value="Laki-laki">LAKI-LAKI</option>
+                                                        <option value="Perempuan">PEREMPUAN</option>
                                                     </select>
                                                 </div>
                                                 <div class="col edit-profil-left">
                                                     <label for="alamatRumah" class="form-label fw-semibold">Alamat
-                                                        Rumah</label>
-                                                    <input type="text" id="alamatRumah"
+                                                        Rumah</label >
+                                                    <input type="text" name="alamat_rumah" id="alamatRumah" value = "{{$profil_asesor->alamat_rumah}}"
                                                         class="form-control input-text"
                                                         placeholder="Masukkan Alamat Rumah. . .">
                                                 </div>
@@ -174,17 +196,18 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     {{-- DATA PEKERJAAN SEKARANG --}}
-                                  
-                            </div>                 
+                                    
+                                </div>                 
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary tombol-primary-small">Simpan</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary tombol-primary-small">Simpan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
+     
     </div>
 @endsection
