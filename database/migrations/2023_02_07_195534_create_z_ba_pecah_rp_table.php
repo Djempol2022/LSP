@@ -32,6 +32,9 @@ return new class extends Migration
             $table->string('notulis');
             $table->string('no_met_notulis');
             $table->text('ttd')->nullable();
+            $table->date('tgl_rapat')->nullable();
+            $table->time('wkt_rapat')->nullable();
+            $table->boolean('status');
             $table->timestamps();
         });
     }

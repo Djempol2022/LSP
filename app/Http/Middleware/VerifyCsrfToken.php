@@ -30,5 +30,6 @@ class VerifyCsrfToken extends Middleware
         '/admin/table-surat-x03-st-verifikasi-tuk',
         '/admin/table-surat-x04-berita-acara',
         '/admin/table-surat-z-ba-pecah-rp',
+        '/admin/table-surat-z-ba-rp',
     ];
 }

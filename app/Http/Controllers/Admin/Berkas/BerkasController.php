@@ -139,6 +139,21 @@ class BerkasController extends Controller
         ]);
     }
 
+    public function table_surat_z_ba_rp(Request $request)
+    {
+        $data = ZBAPecahRP::select([
+            'z_ba_pecah_rp.*'
+        ])->where('status', 1);
+
+        if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
+
+        $data = $data->get();
+
+        return response()->json([
+            'data' => $data,
+        ]);
+    }
+
     public function show_sk_penetapan($id)
     {
         $sk_penetapan_tuk = SKPenetapanTUK::with(['relasi_sk_penetapan_tuk_child.relasi_nama_tuk', 'relasi_sk_penetapan_tuk_child.relasi_skema_sertifikasi'])->find($id);
@@ -189,5 +204,12 @@ class BerkasController extends Controller
         $z_ba_pecah_rp = ZBAPecahRP::with(['relasi_skema_sertifikasi', 'relasi_institusi', 'relasi_nama_tuk', 'relasi_nama_jabatan', 'relasi_bahasan_diskusi'])->find($id);
 
         return response()->json($z_ba_pecah_rp);
+    }
+
+    public function show_z_ba_rp($id)
+    {
+        $z_ba_rp = ZBAPecahRP::with(['relasi_skema_sertifikasi', 'relasi_institusi', 'relasi_nama_tuk', 'relasi_nama_jabatan', 'relasi_bahasan_diskusi'])->find($id);
+
+        return response()->json($z_ba_rp);
     }
 }

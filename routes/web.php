@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\Berkas\ST_Verifikasi_TUK_Controller;
 use App\Http\Controllers\Admin\Berkas\X03_ST_verifikasi_TUK_controller;
 use App\Http\Controllers\Admin\Berkas\X04_Berita_Acara_Controller;
 use App\Http\Controllers\Admin\Berkas\Z_BA_Pecah_RP_Controller;
+use App\Http\Controllers\Admin\Berkas\Z_BA_RP_Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistrasiController;
@@ -171,6 +172,11 @@ Route::middleware(['auth'])->group(function () {
             Route::post('berkas/z-ba-pecah-rp', 'store')->name('Berkas.ZBAPecahRP.Add');
         });
 
+        Route::controller(Z_BA_RP_Controller::class)->group(function () {
+            Route::get('berkas/z-ba-rp', 'index')->name('Berkas.ZBARP');
+            Route::post('berkas/z-ba-rp', 'store')->name('Berkas.ZBARP.Add');
+        });
+
 
         Route::controller(BerkasController::class)->group(function () {
             Route::get('berkas', 'index')->name('Berkas');
@@ -194,6 +200,9 @@ Route::middleware(['auth'])->group(function () {
 
             Route::any('table-surat-z-ba-pecah-rp', 'table_surat_z_ba_pecah_rp')->name('SuratZBAPecahRP');
             Route::get('table-surat-z-ba-pecah-rp/{id}', 'show_z_ba_pecah_rp')->name('SuratZBAPecahRP.Show');
+
+            Route::any('table-surat-z-ba-rp', 'table_surat_z_ba_rp')->name('SuratZBARP');
+            Route::get('table-surat-z-ba-rp/{id}', 'show_z_ba_rp')->name('SuratZBARP.Show');
 
 
             // PDF
