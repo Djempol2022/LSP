@@ -12,6 +12,9 @@
 <script src="/js/moment.js"></script>
 {{-- <script src="/js/dataTables.responsive.min.js"></script> --}}
 
+{{-- yearpicker --}}
+<script src="{{ asset('js/yearpicker.js') }}"></script>
+
 @yield('script')
 @stack('script')
 <script>

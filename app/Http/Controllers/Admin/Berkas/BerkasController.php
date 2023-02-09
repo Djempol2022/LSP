@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Berkas;
 
 use App\Http\Controllers\Controller;
 use App\Models\DaftarTUKTerverifikasi;
+use App\Models\DFHadirAsesorPleno;
 use App\Models\HasilVerifikasiTUK;
 use App\Models\SKPenetapanTUK;
 use App\Models\STVerifikasiTUK;
@@ -26,7 +27,7 @@ class BerkasController extends Controller
     {
         $data = SKPenetapanTUK::select([
             'sk_penetapan_tuk.*'
-        ]);
+        ])->latest();
 
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
@@ -43,7 +44,7 @@ class BerkasController extends Controller
     {
         $data = DaftarTUKTerverifikasi::select([
             'df_tuk_terverifikasi.*'
-        ]);
+        ])->latest();
 
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
@@ -60,7 +61,7 @@ class BerkasController extends Controller
     {
         $data = HasilVerifikasiTUK::select([
             'hasil_verifikasi_tuk.*'
-        ]);
+        ])->latest();
 
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
@@ -77,7 +78,7 @@ class BerkasController extends Controller
     {
         $data = STVerifikasiTUK::select([
             'st_verifikasi_tuk.*'
-        ]);
+        ])->latest();
 
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
@@ -94,7 +95,7 @@ class BerkasController extends Controller
     {
         $data = X03STVerifikasiTUK::select([
             'x03_st_verifikasi_tuk.*'
-        ]);
+        ])->latest();
 
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
@@ -111,7 +112,7 @@ class BerkasController extends Controller
     {
         $data = X04BeritaAcara::select([
             'x04_berita_acara.*'
-        ]);
+        ])->latest();
 
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
@@ -128,7 +129,7 @@ class BerkasController extends Controller
     {
         $data = ZBAPecahRP::select([
             'z_ba_pecah_rp.*'
-        ])->where('status', 0);
+        ])->where('status', 0)->latest();
 
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
@@ -143,7 +144,37 @@ class BerkasController extends Controller
     {
         $data = ZBAPecahRP::select([
             'z_ba_pecah_rp.*'
-        ])->where('status', 1);
+        ])->where('status', 1)->latest();
+
+        if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
+
+        $data = $data->get();
+
+        return response()->json([
+            'data' => $data,
+        ]);
+    }
+
+    public function table_surat_df_hadir_asesor_pleno(Request $request)
+    {
+        $data = DFHadirAsesorPleno::select([
+            'df_hadir_asesor_pleno.*'
+        ])->where('is_pleno', 1)->latest();
+
+        if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
+
+        $data = $data->get();
+
+        return response()->json([
+            'data' => $data,
+        ]);
+    }
+
+    public function table_surat_df_hadir_asesor(Request $request)
+    {
+        $data = DFHadirAsesorPleno::select([
+            'df_hadir_asesor_pleno.*'
+        ])->where('is_pleno', 0)->latest();
 
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
@@ -211,5 +242,19 @@ class BerkasController extends Controller
         $z_ba_rp = ZBAPecahRP::with(['relasi_skema_sertifikasi', 'relasi_institusi', 'relasi_nama_tuk', 'relasi_nama_jabatan', 'relasi_bahasan_diskusi'])->find($id);
 
         return response()->json($z_ba_rp);
+    }
+
+    public function show_df_hadir_asesor_pleno($id)
+    {
+        $df_hadir_asesor_pleno = DFHadirAsesorPleno::with(['relasi_nama_jabatan'])->find($id);
+
+        return response()->json($df_hadir_asesor_pleno);
+    }
+
+    public function show_df_hadir_asesor($id)
+    {
+        $df_hadir_asesor = DFHadirAsesorPleno::with(['relasi_nama_jabatan'])->find($id);
+
+        return response()->json($df_hadir_asesor);
     }
 }

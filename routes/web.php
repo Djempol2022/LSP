@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\Admin_AssessmentController;
 use App\Http\Controllers\Admin\Admin_DetailJadwalUjiKompetensi;
 use App\Http\Controllers\Admin\Berkas\BerkasController;
 use App\Http\Controllers\Admin\Berkas\Daftar_TUK_Terverifikasi_Controller;
+use App\Http\Controllers\Admin\Berkas\DF_Hadir_Asesor_Controller;
+use App\Http\Controllers\Admin\Berkas\DF_Hadir_Asesor_Pleno_Controller;
 use App\Http\Controllers\Admin\Berkas\SK_Penetapan_TUK_Terverifikasi_Controller;
 use App\Http\Controllers\Admin\Berkas\Hasil_Verifikasi_TUK_Controller;
 use App\Http\Controllers\Admin\Berkas\ST_Verifikasi_TUK_Controller;
@@ -24,7 +26,6 @@ use App\Http\Controllers\Asesi\AsesmenController;
 use App\Http\Controllers\Asesi\DashboardController;
 use App\Http\Controllers\Asesi\PengaturanController;
 use App\Http\Controllers\Asesi\ProfilController;
-use App\Models\X04BeritaAcara;
 
 /*
 |--------------------------------------------------------------------------
@@ -177,6 +178,16 @@ Route::middleware(['auth'])->group(function () {
             Route::post('berkas/z-ba-rp', 'store')->name('Berkas.ZBARP.Add');
         });
 
+        Route::controller(DF_Hadir_Asesor_Pleno_Controller::class)->group(function () {
+            Route::get('berkas/df-hadir-asesor-pleno', 'index')->name('Berkas.DFHadirAsesorPleno');
+            Route::post('berkas/df-hadir-asesor-pleno', 'store')->name('Berkas.DFHadirAsesorPleno.Add');
+        });
+
+        Route::controller(DF_Hadir_Asesor_Controller::class)->group(function () {
+            Route::get('berkas/df-hadir-asesor', 'index')->name('Berkas.DFHadirAsesor');
+            Route::post('berkas/df-hadir-asesor', 'store')->name('Berkas.DFHadirAsesor.Add');
+        });
+
 
         Route::controller(BerkasController::class)->group(function () {
             Route::get('berkas', 'index')->name('Berkas');
@@ -203,6 +214,12 @@ Route::middleware(['auth'])->group(function () {
 
             Route::any('table-surat-z-ba-rp', 'table_surat_z_ba_rp')->name('SuratZBARP');
             Route::get('table-surat-z-ba-rp/{id}', 'show_z_ba_rp')->name('SuratZBARP.Show');
+
+            Route::any('table-surat-df-hadir-asesor-pleno', 'table_surat_df_hadir_asesor_pleno')->name('SuratDFHadirAsesorPleno');
+            Route::get('table-surat-df-hadir-asesor-pleno/{id}', 'show_df_hadir_asesor_pleno')->name('SuratDFHadirAsesorPleno.Show');
+
+            Route::any('table-surat-df-hadir-asesor', 'table_surat_df_hadir_asesor')->name('SuratDFHadirAsesor');
+            Route::get('table-surat-df-hadir-asesor/{id}', 'show_df_hadir_asesor')->name('SuratDFHadirAsesor.Show');
 
 
             // PDF

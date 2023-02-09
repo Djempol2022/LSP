@@ -23,6 +23,8 @@
               <option value="x04-berita-acara">X 04 Berita Acara</option>
               <option value="z-ba-pecah-rp">Z Berita Acara Pecah Rapat Pleno</option>
               <option value="z-ba-rp">Z Berita Acara Rapat Pleno</option>
+              <option value="df-hadir-asesor-pleno">Daftar Hadir Asesor Pleno</option>
+              <option value="df-hadir-asesor">Daftar Hadir Asesor</option>
             </select>
           </div>
           <div>
@@ -58,6 +60,12 @@
 
   {{-- modal z ba rp --}}
   @include('admin.berkas._modal-z-ba-rp')
+
+  {{-- modal df hadir asesor pleno --}}
+  @include('admin.berkas._modal-df-hadir-asesor-pleno')
+
+  {{-- modal df hadir asesor --}}
+  @include('admin.berkas._modal-df-hadir-asesor')
 
 @section('script')
   @include('admin.berkas.script-berkas')

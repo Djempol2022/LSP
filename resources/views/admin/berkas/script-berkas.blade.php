@@ -31,6 +31,10 @@
         zBAPecahRP();
       } else if (berkasValue === 'z-ba-rp') {
         zBARP();
+      } else if (berkasValue === 'df-hadir-asesor-pleno') {
+        dfHadirAsesorPleno();
+      } else if (berkasValue === 'df-hadir-asesor') {
+        dfHadirAsesor();
       } else {
         $('#table-surat').DataTable();
       }
@@ -659,6 +663,154 @@
       });
     }
 
+    function dfHadirAsesorPleno() {
+      let list_df_hadir_asesor_pleno = [];
+      $('#table-surat').DataTable({
+        destroy: true,
+        "pageLength": 5,
+        "lengthMenu": [
+          [5, 10, 25, -1],
+          [5, 10, 25, 'semua']
+        ],
+        "bLengthChange": true,
+        "bFilter": false,
+        "bInfo": true,
+        "processing": true,
+        "bServerSide": true,
+        "responsive": true,
+        ajax: {
+          url: "{{ route('admin.SuratDFHadirAsesorPleno') }}",
+          type: "POST",
+        },
+        'columns': [{
+            title: 'Nama Surat'
+          },
+          {
+            title: 'Tempat Ditetapkan'
+          },
+          {
+            title: 'Tanggal Ditetapkan'
+          },
+          {
+            title: 'Aksi'
+          },
+        ],
+        columnDefs: [{
+            targets: '_all',
+            visible: true
+          },
+          {
+            "targets": 0,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              list_df_hadir_asesor_pleno[row.id] = row;
+              return 'Surat Daftar Hadir Asesor Pleno';
+            }
+          },
+          {
+            "targets": 1,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              list_df_hadir_asesor_pleno[row.id] = row;
+              return 'Surat Daftar Hadir Asesor Pleno';
+            }
+          },
+          {
+            "targets": 2,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              list_df_hadir_asesor_pleno[row.id] = row;
+              return 'Surat Daftar Hadir Asesor Pleno';
+            }
+          },
+          {
+            "targets": 3,
+            "class": "text-nowrap text-center",
+            "render": function(data, type, row, meta) {
+              let tampilan;
+              tampilan =
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailDFHadirAsesorPleno(${row.id})">Detail</button>`
+              return tampilan;
+            }
+          },
+        ]
+      });
+    }
+
+    function dfHadirAsesor() {
+      let list_df_hadir_asesor = [];
+      $('#table-surat').DataTable({
+        destroy: true,
+        "pageLength": 5,
+        "lengthMenu": [
+          [5, 10, 25, -1],
+          [5, 10, 25, 'semua']
+        ],
+        "bLengthChange": true,
+        "bFilter": false,
+        "bInfo": true,
+        "processing": true,
+        "bServerSide": true,
+        "responsive": true,
+        ajax: {
+          url: "{{ route('admin.SuratDFHadirAsesor') }}",
+          type: "POST",
+        },
+        'columns': [{
+            title: 'Nama Surat'
+          },
+          {
+            title: 'Tempat Ditetapkan'
+          },
+          {
+            title: 'Tanggal Ditetapkan'
+          },
+          {
+            title: 'Aksi'
+          },
+        ],
+        columnDefs: [{
+            targets: '_all',
+            visible: true
+          },
+          {
+            "targets": 0,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              list_df_hadir_asesor[row.id] = row;
+              return 'Surat Daftar Hadir Asesor ';
+            }
+          },
+          {
+            "targets": 1,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              list_df_hadir_asesor[row.id] = row;
+              return 'Surat Daftar Hadir Asesor ';
+            }
+          },
+          {
+            "targets": 2,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              list_df_hadir_asesor[row.id] = row;
+              return 'Surat Daftar Hadir Asesor ';
+            }
+          },
+          {
+            "targets": 3,
+            "class": "text-nowrap text-center",
+            "render": function(data, type, row, meta) {
+              let tampilan;
+              tampilan =
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailDFHadirAsesor(${row.id})">Detail</button>`
+              return tampilan;
+            }
+          },
+        ]
+      });
+    }
+
   })
 
   function detailSKPenetapan(id) {
@@ -982,6 +1134,85 @@
       $('#no_met_bttd_2_z_ba_rp').text(data.no_met_bttd);
       $('#notulis_2_z_ba_rp').text(data.notulis);
       $('#no_met_notulis_2_z_ba_rp').text(data.no_met_notulis);
+    })
+  }
+
+  function detailDFHadirAsesorPleno(id) {
+    let url = "table-surat-df-hadir-asesor-pleno/" + id;
+    $.get(url, function(data) {
+      $('#modalDetailDFHadirAsesorPleno').modal('show');
+      const date_hari_df_hadir_asesor_pleno = new Date(data.tgl);
+      let hari_df_hadir_asesor_pleno = date_hari_df_hadir_asesor_pleno.getDay();
+      $('#hari_df_hadir_asesor_pleno').text(hari(hari_df_hadir_asesor_pleno));
+      $('#tgl_df_hadir_asesor_pleno').text(date_format(data.tgl));
+      $('#wkt_df_hadir_asesor_pleno').text(time_format(data.wkt_mulai));
+      $('#tempat_df_hadir_asesor_pleno').text(data.tempat);
+      $('#tbody_df_hadir_asesor_pleno').html(data.relasi_nama_jabatan.map(function(d, i) {
+        return $(
+          `<tr>
+                    <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                    <td>${d.nama}</td>
+                    <td>${d.no_reg_met}</td>
+                    <td>${d.jabatan}</td>
+                    <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+                </tr>`
+        )
+      }));
+      $('#nama_bttd_df_hadir_asesor_pleno').text(data.nama_bttd);
+      $('#jabatan_bttd_df_hadir_asesor_pleno').text(data.jabatan_bttd);
+      $('#no_met_bttd_df_hadir_asesor_pleno').text(data.no_met_bttd);
+      $('#ttd_df_hadir_asesor_pleno').attr('src', data.ttd);
+    })
+  }
+
+  function detailDFHadirAsesor(id) {
+    let url = "table-surat-df-hadir-asesor/" + id;
+    $.get(url, function(data) {
+      $('#modalDetailDFHadirAsesor').modal('show');
+      $('#thn_ajaran_df_hadir_asesor_1').text(data.thn_ajaran);
+      $('#thn_ajaran_df_hadir_asesor_2').text(data.thn_ajaran + 1);
+      let nama_nip = data.relasi_nama_jabatan.filter(function(d) {
+        return d.is_nip === 1;
+      });
+      $('#tbody_table_panitia_df_hadir_asesor').html(nama_nip.map(function(d, i) {
+        return $(
+          `<tr>
+                      <td class="text-center">${i + 1}.</td>
+                      <td>
+                        <span>${d.nama}</span> <br/>
+                        <span>${d.nip}</span>
+                        </td>
+                      <td>${d.jabatan}</td>
+                      <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 7%;"' : ''}>${i + 1}</td>
+                  </tr>`
+        )
+      }));
+      $('#thn_ajaran_df_hadir_asesor_3').text(data.thn_ajaran);
+      $('#thn_ajaran_df_hadir_asesor_4').text(data.thn_ajaran + 1);
+      const date_hari_df_hadir_asesor = new Date(data.tgl);
+      let hari_df_hadir_asesor = date_hari_df_hadir_asesor.getDay();
+      $('#hari_df_hadir_asesor').text(hari(hari_df_hadir_asesor));
+      $('#tgl_df_hadir_asesor').text(date_format(data.tgl));
+      $('#wkt_df_hadir_asesor').text(time_format(data.wkt_mulai));
+      $('#tempat_df_hadir_asesor').text(data.tempat);
+      let nama = data.relasi_nama_jabatan.filter(function(d) {
+        return d.is_nip === 0;
+      });
+      $('#tbody_table_df_hadir_asesor').html(nama.map(function(d, i) {
+        return $(
+          `<tr>
+                    <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                    <td>${d.nama}</td>
+                    <td>${d.no_reg_met}</td>
+                    <td>${d.jabatan}</td>
+                    <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+                </tr>`
+        )
+      }));
+      $('#nama_bttd_df_hadir_asesor').text(data.nama_bttd);
+      $('#jabatan_bttd_df_hadir_asesor').text(data.jabatan_bttd);
+      $('#no_met_bttd_df_hadir_asesor').text(data.no_met_bttd);
+      $('#ttd_df_hadir_asesor').attr('src', data.ttd);
     })
   }
 

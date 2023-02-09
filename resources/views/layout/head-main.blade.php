@@ -17,4 +17,7 @@
   <link rel="stylesheet" href="/css/select2.min.css">
   <link rel="stylesheet" href="/css/select2-bootstrap-5-theme.min.css">
 
+  {{-- year picker --}}
+  <link rel="stylesheet" href="{{ asset('css/yearpicker.css') }}">
+
 </head>

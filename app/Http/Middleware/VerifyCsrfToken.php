@@ -31,5 +31,7 @@ class VerifyCsrfToken extends Middleware
         '/admin/table-surat-x04-berita-acara',
         '/admin/table-surat-z-ba-pecah-rp',
         '/admin/table-surat-z-ba-rp',
+        '/admin/table-surat-df-hadir-asesor-pleno',
+        '/admin/table-surat-df-hadir-asesor',
     ];
 }
