@@ -29,6 +29,8 @@
         x04BeritaAcara();
       } else if (berkasValue === 'z-ba-pecah-rp') {
         zBAPecahRP();
+      } else if (berkasValue === 'z-ba-rp') {
+        zBARP();
       } else {
         $('#table-surat').DataTable();
       }
@@ -583,6 +585,80 @@
       });
     }
 
+    function zBARP() {
+      let list_z_ba_rp = [];
+      $('#table-surat').DataTable({
+        destroy: true,
+        "pageLength": 5,
+        "lengthMenu": [
+          [5, 10, 25, -1],
+          [5, 10, 25, 'semua']
+        ],
+        "bLengthChange": true,
+        "bFilter": false,
+        "bInfo": true,
+        "processing": true,
+        "bServerSide": true,
+        "responsive": true,
+        ajax: {
+          url: "{{ route('admin.SuratZBARP') }}",
+          type: "POST",
+        },
+        'columns': [{
+            title: 'Nama Surat'
+          },
+          {
+            title: 'Tempat Ditetapkan'
+          },
+          {
+            title: 'Tanggal Ditetapkan'
+          },
+          {
+            title: 'Aksi'
+          },
+        ],
+        columnDefs: [{
+            targets: '_all',
+            visible: true
+          },
+          {
+            "targets": 0,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              list_z_ba_rp[row.id] = row;
+              return 'Surat Z Berita Acara  Rapat Pleno';
+            }
+          },
+          {
+            "targets": 1,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              list_z_ba_rp[row.id] = row;
+              return 'Surat Z Berita Acara  Rapat Pleno';
+            }
+          },
+          {
+            "targets": 2,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              list_z_ba_rp[row.id] = row;
+              return 'Surat Z Berita Acara  Rapat Pleno';
+            }
+          },
+          {
+            "targets": 3,
+            "class": "text-nowrap text-center",
+            "render": function(data, type, row, meta) {
+              let tampilan;
+              tampilan =
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailZBARP(${row.id})">Detail</button>`
+              return tampilan;
+            }
+          },
+        ]
+      });
+    }
+
   })
 
   function detailSKPenetapan(id) {
@@ -859,6 +935,53 @@
       $('#no_met_bttd_2_z_ba_pecah_rp').text(data.no_met_bttd);
       $('#notulis_2_z_ba_pecah_rp').text(data.notulis);
       $('#no_met_notulis_2_z_ba_pecah_rp').text(data.no_met_notulis);
+    })
+  }
+
+  function detailZBARP(id) {
+    let url = "table-surat-z-ba-rp/" + id;
+    $.get(url, function(data) {
+
+      $('#modalDetailZBARP').modal('show');
+      $('#institusi_z_ba_rp').text(data.relasi_institusi.nama_institusi);
+      $('#skema_sertifikasi_z_ba_rp').text(data.relasi_skema_sertifikasi.judul_skema_sertifikasi);
+      $('#tgl_tes_tertulis_z_ba_rp').text(date_format(data.tgl_tes_tertulis));
+      $('#tgl_tes_praktek_z_ba_rp').text(date_format(data.tgl_tes_praktek));
+      $('#jumlah_asesi_z_ba_rp').text(data.jml_asesi);
+      $('#wkt_mulai_uk_z_ba_rp').text(time_format(data.wkt_mulai_uk));
+      $('#wkt_selesai_uk_z_ba_rp').text(time_format(data.wkt_selesai_uk));
+      $('#nama_tuk_z_ba_rp').text(data.relasi_nama_tuk.nama_tuk);
+      $('#nama_bttd_z_ba_rp').text(data.nama_bttd);
+      $('#jabatan_bttd_z_ba_rp').text(data.jabatan_bttd);
+      $('#no_met_bttd_z_ba_rp').text(data.no_met_bttd);
+      $('#tgl_rapat_z_ba_rp').text(date_format(data.tgl_rapat));
+      $('#wkt_rapat_z_ba_rp').text(time_format(data.wkt_rapat) + ' WIB - Selesai');
+      $('#tempat_rapat_z_ba_rp').text(data.tempat_rapat);
+      $('#topik_z_ba_rp').text(data.topik);
+      $('#ketua_rapat_z_ba_rp').text(data.ketua_rapat);
+      $('#notulis_z_ba_rp').text(data.notulis);
+      //   $("#tbody_z_ba_rp").html(data.relasi_nama_jabatan.map(function(d, i) {
+      //     return $(
+      //       `<tr>
+      //         <td class="text-center" style="width: 10px;">${i + 1}.</td>
+      //                   <td>${d.nama}</td>
+      //                   <td>${d.jabatan}</td>
+      //                   <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+      //               </tr>`
+      //     )
+      //   }));
+      $('#tgl_tes_tertulis_2_z_ba_rp').text(date_format(data.tgl_tes_tertulis, false));
+      $('#tgl_tes_praktek_2_z_ba_rp').text(date_format(data.tgl_tes_praktek));
+      $("#bahasan_diskusi_z_ba_rp").html(data.relasi_bahasan_diskusi.map(function(d, i) {
+        return $(
+          `<li>${d.bahasan_diskusi}</li>`
+        )
+      }));
+      $('#nama_bttd_2_z_ba_rp').text(data.nama_bttd);
+      $('#jabatan_bttd_2_z_ba_rp').text(data.jabatan_bttd);
+      $('#no_met_bttd_2_z_ba_rp').text(data.no_met_bttd);
+      $('#notulis_2_z_ba_rp').text(data.notulis);
+      $('#no_met_notulis_2_z_ba_rp').text(data.no_met_notulis);
     })
   }
 

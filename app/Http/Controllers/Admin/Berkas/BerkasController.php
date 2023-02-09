@@ -128,7 +128,7 @@ class BerkasController extends Controller
     {
         $data = ZBAPecahRP::select([
             'z_ba_pecah_rp.*'
-        ]);
+        ])->where('status', 0);
 
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 

@@ -157,7 +157,7 @@
                   <td style="width: 3%;">:</td>
                   <td style="width: 75%;"><input type="date"
                       class="form-control w-50 @error('tgl_rapat') is-invalid @enderror" name="tgl_rapat"
-                      value="Ruang Sekretariat SMKN 1 Jawai Selatan" />
+                      value="Ruang Sekretariat SMKN 1 Jawai Selatan" required />
                     @error('tgl_rapat')
                       <div class="text-danger">
                         {{ $message }}
@@ -169,7 +169,8 @@
                   <td>Waktu Rapat</td>
                   <td>:</td>
                   <td class="d-flex align-items-center"><input type="time"
-                      class="form-control w-25 @error('wkt_rapat') is-invalid @enderror" name="wkt_rapat" /> - Selesai
+                      class="form-control w-25 @error('wkt_rapat') is-invalid @enderror" name="wkt_rapat" required /> -
+                    Selesai
                     @error('wkt_rapat')
                       <div class="text-danger">
                         {{ $message }}
@@ -182,7 +183,7 @@
                   <td>:</td>
                   <td>
                     <input type="text" class="form-control w-50 @error('tempat_rapat') is-invalid @enderror"
-                      name="tempat_rapat" value="Ruang Sekretariat SMKN 1 Jawai Selatan" />
+                      name="tempat_rapat" value="Ruang Sekretariat SMKN 1 Jawai Selatan" required />
                     @error('tempat_rapat')
                       <div class="text-danger">
                         {{ $message }}
@@ -195,7 +196,7 @@
                   <td>:</td>
                   <td>
                     <input type="text" class="form-control w-50 @error('topik') is-invalid @enderror" name="topik"
-                      value="Kendala dan hasil uji kompetensi" />
+                      value="Kendala dan hasil uji kompetensi" required />
                     @error('topik')
                       <div class="text-danger">
                         {{ $message }}
@@ -208,7 +209,7 @@
                   <td>:</td>
                   <td>
                     <input type="text" class="form-control w-50 @error('ketua_rapat') is-invalid @enderror"
-                      name="ketua_rapat" value="Agus Pramono, ST, M.Pd" />
+                      name="ketua_rapat" value="Agus Pramono, ST, M.Pd" required />
                     @error('ketua_rapat')
                       <div class="text-danger">
                         {{ $message }}
@@ -222,7 +223,7 @@
                   <td>
                     <input type="text" id="notulis_1"
                       class="form-control w-50 @error('notulis') is-invalid @enderror" name="notulis"
-                      value="Ivo Fajrin Hartini, S.Pd" onkeyup="inputAutoNotulis()" />
+                      value="Ivo Fajrin Hartini, S.Pd" onkeyup="inputAutoNotulis()" required />
                     @error('notulis')
                       <div class="text-danger">
                         {{ $message }}

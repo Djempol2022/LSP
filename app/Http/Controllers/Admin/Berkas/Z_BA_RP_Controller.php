@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Berkas;
 
 use App\Http\Controllers\Controller;
+use App\Models\AsesorUjiKompetensi;
 use App\Models\BahasanDiskusi;
 use App\Models\Institusi;
 use App\Models\NamaTempatUjiKompetensi;
@@ -18,7 +19,7 @@ class Z_BA_RP_Controller extends Controller
         $institusi = Institusi::get();
         $nama_tuk = NamaTempatUjiKompetensi::get();
         $skema_sertifikasi = SkemaSertifikasi::get();
-        $b = 0;
+        $b = AsesorUjiKompetensi::get();
         dd($b);
         return view('admin.berkas.z_ba_rp.index', [
             'institusis' => $institusi,
