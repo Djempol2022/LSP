@@ -43,6 +43,9 @@
   {{-- modal sk ketetapan tuk terverifikasi --}}
   @include('admin.berkas._modal-sk-penetapan-tuk-terverifikasi')
 
+  {{-- modal daftar tuk terverifikasi --}}
+  @include('admin.berkas._modal-daftar-tuk-terverifikasi')
+
   {{-- modal hasil verifikasi tuk --}}
   @include('admin.berkas._modal-hasil-verifikasi-tuk')
 

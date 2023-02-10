@@ -193,7 +193,7 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detail(${row.id})">Detail</button>`
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailDaftarTUK(${row.id})">Detail</button>`
               return tampilan;
             }
           },
@@ -840,6 +840,28 @@
         )
       }))
       $("#pdfSKPenetapan").attr('href', 'cetak-sk-penetapan-tuk/' + data.id);
+    })
+  }
+
+  function detailDaftarTUK(id) {
+    let url = "table-surat-daftar-tuk/" + id;
+    $.get(url, function(data) {
+      $('#modalDetailDaftarTUK').modal('show');
+      $("#tbody_daftar_tuk_terverifikasi").html(data.relasi_daftar_tuk_terverifikasi_child.map(function(d, i) {
+        return $(
+          `<tr>
+                    <td>${i + 1}.</td>
+                    <td>${d.relasi_nama_tuk.nama_tuk}</td>
+                    <td>${d.relasi_skema_sertifikasi.judul_skema_sertifikasi}</td>
+                    <td>${d.penanggung_jawab}</td>
+                </tr>`
+        )
+      }));
+      $('#ditetapkan_di_df_tuk_terverifikasi').text(data.tempat_ditetapkan);
+      $('#tanggal_ditetapkan_df_tuk_terverifikasi').text(date_format(data.tanggal_ditetapkan));
+      $('#jabatan_bttd_df_tuk_terverifikasi').text(data.jabatan_bttd);
+      $('#nama_bttd_df_tuk_terverifikasi').text(data.nama_bttd);
+      $('#ttd_df_tuk_terverifikasi').attr('src', data.ttd);
     })
   }
 

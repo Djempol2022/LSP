@@ -196,6 +196,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('table-surat-sk-penetapan/{id}', 'show_sk_penetapan')->name('SuratSKPenetapan.Show');
 
             Route::any('table-surat-daftar-tuk', 'table_surat_daftar_tuk')->name('SuratDaftarTUK');
+            Route::get('table-surat-daftar-tuk/{id}', 'show_daftar_tuk')->name('SuratDaftarTUK.Show');
 
             Route::any('table-surat-hasil-verifikasi-tuk', 'table_surat_hasil_verifikasi_tuk')->name('SuratHasilVerifikasiTUK');
             Route::get('table-hasil-verifikasi-tuk/{id}', 'show_hasil_verifikasi_tuk')->name('SuratHasilVerifikasiTUK.Show');
