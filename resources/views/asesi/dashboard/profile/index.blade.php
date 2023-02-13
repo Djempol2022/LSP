@@ -17,15 +17,15 @@
         Ujian Sertifikasi!
       </div>
       <h5 class="text-black my-4">Permohonan Sertifikasi Kompetensi</h5>
-      @if ($data->relasi_user_detail->foto)
+      @isset ($data->relasi_user_detail->foto)
         <img src="{{ asset('storage/' . $data->relasi_user_detail->foto) }}" width="180px" class="rounded-circle"
           alt="image">
       @else
         <img src="/images/logo/favicon_lsp.png" width="180px" class="rounded-circle" alt="image">
-      @endif
+      @endisset
 
       {{-- RINCIAN DATA PEMOHON SERTIFIKASI --}}
-      <div class="mb-5 pb-5">
+      <div class="mb-5 pb-5" style="margin-bottom: 0% !important">
         <div class="col profil-section-title">
           Bagian 1 : Rincian Data Pemohon Sertifikasi
         </div>
@@ -37,7 +37,7 @@
         </p>
 
         {{-- DATA PRIBADI --}}
-        <div class="col profil-section">
+        <div class="col profil-section" style="margin-bottom:0% !important">
           <h5>A. Data Pribadi</h5>
           <div class="row my-4">
             <div class="col-md-6">
@@ -103,7 +103,7 @@
                 <p class="fw-bold">Kode Pos</p>
                 <span
                   class="
-                  {{ $data->relasi_institusi->kode_pos ? '' : 'text-danger fw-semibold' }}">{{ $data->relasi_institusi->kode_pos ?? 'Data Belum Lengkap!' }}</span>
+                  {{ $data->relasi_user_detail->kode_pos ? '' : 'text-danger fw-semibold' }}">{{ $data->relasi_user_detail->kode_pos ?? 'Data Belum Lengkap!' }}</span>
               </div>
               <div class="col pb-4">
                 <p class="fw-bold">Nomor Telepon</p>
@@ -129,14 +129,14 @@
           </div>
         </div>
         {{-- DATA PEKERJAAN SEKARANG --}}
-        <div class="col profil-section">
+        <div class="col profil-section" style="margin-bottom:0% !important">
           <h5>B. Data Pekerjaan Sekarang</h5>
           <div class="row my-4">
             <div class="col-md-6">
               <div class="col pb-4">
                 <p class="fw-bold">Nama Institusi / Perusahaan</p>
-                @isset($data->relasi_pekerjaan->nama_institusi)
-                  <span>{{ $data->relasi_pekerjaan->nama_institusi }}</span>
+                @isset($data->relasi_pekerjaan->nama_pekerjaan)
+                  <span>{{ $data->relasi_pekerjaan->nama_pekerjaan }}</span>
                 @else
                   <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                 @endisset
@@ -151,8 +151,8 @@
               </div>
               <div class="col pb-4">
                 <p class="fw-bold">Alamat Kantor</p>
-                @isset($data->relasi_pekerjaan->alamat_institusi)
-                  <span>{{ $data->relasi_pekerjaan->alamat_institusi }}</span>
+                @isset($data->relasi_pekerjaan->alamat_pekerjaan)
+                  <span>{{ $data->relasi_pekerjaan->alamat_pekerjaan }}</span>
                 @else
                   <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                 @endisset
@@ -169,16 +169,16 @@
               </div>
               <div class="col pb-4">
                 <p class="fw-bold">Nomor Telepon Institusi / Perusahaan</p>
-                @isset($data->relasi_pekerjaan->nomor_hp_institusi)
-                  <span>{{ $data->relasi_pekerjaan->nomor_hp_institusi }}</span>
+                @isset($data->relasi_pekerjaan->nomor_hp_pekerjaan)
+                  <span>{{ $data->relasi_pekerjaan->nomor_hp_pekerjaan }}</span>
                 @else
                   <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                 @endisset
               </div>
               <div class="col pb-4">
                 <p class="fw-bold">Email Institusi / Peerusahaan</p>
-                @isset($data->relasi_pekerjaan->email_institusi)
-                  <span>{{ $data->relasi_pekerjaan->email_institusi }}</span>
+                @isset($data->relasi_pekerjaan->email_pekerjaan)
+                  <span>{{ $data->relasi_pekerjaan->email_pekerjaan }}</span>
                 @else
                   <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                 @endisset
@@ -189,7 +189,7 @@
       </div>
 
       {{-- DATA SERTIFIKASI --}}
-      <div class="mb-5 pb-5">
+      <div class="mb-5 pb-5" style="margin-bottom: 0% !important">
         <div class="col profil-section-title">
           Bagian 2 : Data Sertifikasi
         </div>
@@ -199,7 +199,7 @@
           latar
           belakang pendidikan, pelatihan serta pengalaman kerja yang anda miliki.
         </p>
-        <div class="col profil-section">
+        <div class="col profil-section" style="margin-bottom:0% !important">
           <div class="col pb-45">
             <p class="fw-bold">Judul Skema Sertifikasi</p>
             @isset($data->relasi_sertifikasi->judul_skema_sertifikasi)
@@ -232,12 +232,12 @@
       </div>
 
       {{-- BUKTI KELENGKAPAN PEMOHON --}}
-      <div class="mb-5 pb-5">
+      <div class="mb-5 pb-5" style="margin-bottom: 0% !important">
         <div class="col profil-section-title">
           Bagian 3 : Bukti Kelengkapan Pemohon
         </div>
         <p class="py-3" style="font-size: 18px">Bukti Persyaratan Dasar Pemohon.</p>
-        <div class="col profil-section">
+        <div class="col profil-section" style="margin-bottom:0% !important">
           <div class="col pb-45">
             <p class="fw-bold">Kartu Keluarga</p>
             @if (!empty($kartu_keluarga))
@@ -283,11 +283,11 @@
       </div>
 
       {{-- HASIL PERSYARATAN --}}
-      <div class="mb-5 pb-5">
+      <div class="mb-5 pb-5" style="margin-bottom: 0% !important">
         <div class="col profil-section-title">
           Hasil Persyaratan
         </div>
-        <div class="col profil-section">
+        <div class="col profil-section" style="margin-bottom:0% !important">
           <div class="row my-4">
             {{-- PEMOHON / KANDIDAT --}}
             <div class="col-md-6">
@@ -314,33 +314,85 @@
               </div>
             </div>
             {{-- ADMIN LSP --}}
-            <div class="col-md-6">
-              <h5 class="pb-4">Admin LSP :</h5>
-              <div class="col pb-4">
-                <p class="fw-bold">Nama Lengkap</p>
-                <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-              </div>
-              <div class="col pb-4">
-                <p class="fw-bold">No. Reg</p>
-                <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-              </div>
-              <div class="col pb-4">
-                <p class="fw-bold">Tanda Tangan</p>
-                <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-              </div>
-              <div class="col pb-4">
-                <p class="fw-bold">Tanggal</p>
-                <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-              </div>
-              <div class="col pb-4">
-                <p class="fw-bold">Catatan</p>
-                <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-              </div>
-            </div>
+               <div class="col-md-6">
+                        <h5 class="pb-4">Admin LSP :</h5>
+                        <div class="col pb-4">
+                            <p class="fw-bold">Nama Lengkap</p>
+                            @isset($data->relasi_sertifikasi->relasi_tanda_tangan_admin->nama_admin)
+                            <span class="fw-semibold">
+                                {{ $data->relasi_sertifikasi->relasi_tanda_tangan_admin->nama_admin }}
+                            </span>
+                            @else
+                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
+                            @endisset
+                        </div>
+                        <div class="col pb-4">
+                            <p class="fw-bold">No. Reg</p>
+                            @isset($data->relasi_sertifikasi->relasi_tanda_tangan_admin->no_reg)
+                            <span class="fw-semibold">
+                                {{ $data->relasi_sertifikasi->relasi_tanda_tangan_admin->no_reg }}
+                            </span>
+                            @else
+                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
+                            @endisset
+                        </div>
+                        <div class="col pb-4">
+                            <p class="fw-bold">Tanda Tangan</p>
+                            @isset($data->relasi_sertifikasi->relasi_tanda_tangan_admin->ttd_admin)
+                            <img src="{{ $data->relasi_sertifikasi->relasi_tanda_tangan_admin->ttd_admin }}"
+                                alt="ttd_admin" width="180px">
+                            @else
+                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
+                            @endisset
+                        </div>
+                        <div class="col pb-4">
+                            <p class="fw-bold">Tanggal</p>
+                            @isset($data->relasi_sertifikasi->relasi_tanda_tangan_admin->tanggal)
+                            <span class="fw-semibold">
+                                {{ $data->relasi_sertifikasi->relasi_tanda_tangan_admin->tanggal }}
+                            </span>
+                            @else
+                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
+                            @endisset
+                        </div>
+                        <div class="col pb-4">
+                            <p class="fw-bold">Catatan</p>
+                            @isset($data->relasi_sertifikasi->relasi_tanda_tangan_admin->catatan)
+                            <span class="fw-semibold">
+                                {{ $data->relasi_sertifikasi->relasi_tanda_tangan_admin->catatan }}
+                            </span>
+                            @else
+                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
+                            @endisset
+                        </div>
+                    </div>
           </div>
           <div class="pt-5">
             <span>Berdasarkan ketentuan persyaratan dasar, maka pemohon:</span><br>
-            <p><span class="fw-bold">Diterima/Tidak Diterima</span> sebagai peserta sertifikasi</p>
+            <p>
+              @php
+                  $sertifikasi = \App\Models\Sertifikasi::where('user_id', Auth::user()->id)->first() ?? new \App\Models\Sertifikasi();
+                  $acc_admin = \App\Models\TandaTangan::with('relasi_sertifikasi')
+                              ->where('sertifikasi_id', $sertifikasi->id)
+                              ->first();
+              @endphp
+              @isset($acc_admin)
+                @if ($acc_admin->status == 0)
+                <span class="fw-bold"><s>Diterima</s></span>   
+                <span class="fw-bold">/</span>
+                <span class="fw-bold">Tidak Diterima</span>  
+                @elseif ($acc_admin->status == 1)
+                <span class="fw-bold">Diterima</span>   
+                <span class="fw-bold">/</span>
+                <span class="fw-bold"><s>Tidak Diterima</s></span>
+                @endif
+              @else
+                <span class="fw-bold">Diterima</span>   
+                <span class="fw-bold">/</span>
+                <span class="fw-bold">Tidak Diterima</span>
+              @endisset
+                sebagai peserta sertifikasi
+            </p>
             <button type="button" class="btn btn-primary tombol-primary-medium mt-5" id="edit-btn"
               data-bs-toggle="modal" data-bs-target="#editProfil">Edit Profil</button>
           </div>

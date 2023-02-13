@@ -16,6 +16,22 @@ class AsesorPengesahan extends Controller
         return view('asesor.asesmen_mandiri.daftar_asesmen_mandiri');
     }
 
+    // UBAH STATUS REKOMENDASI ASESMEN
+    public function batalkan_asesmen($id){
+        AsesmenMandiri::where('id', $id)->update([
+            'rekomendasi' => 0
+        ]);
+        return redirect()->back();
+    }
+
+    public function setujui_asesmen($id){
+        AsesmenMandiri::where('id', $id)->update([
+            'rekomendasi' => 1
+        ]);
+        return redirect()->back();
+    }
+
+    // DATA DAFTAR ASESMEN MANDIRI
     public function data_asesmen_mandiri(){
         
         $data = AsesmenMandiri::with('relasi_user_asesi', 'relasi_user_asesor')
@@ -27,6 +43,7 @@ class AsesorPengesahan extends Controller
         ]);
     }
 
+    // DETAIL PENGESAHAN ASESMEN MANDIRI
     public function detail_pengesahan_asesmen_mandiri($user_asesi_id){
         $sertifikasi = SkemaSertifikasi::with( 
             'relasi_jurusan',
@@ -46,11 +63,11 @@ class AsesorPengesahan extends Controller
         ]);
     }
 
+    // ACC ASESOR ASESMEN MANDIRI
     public function asesor_acc_asesmen_mandiri(Request $request, $id){
         AsesmenMandiri::where('id', $id)->update([
             'user_asesor_id' => Auth::user()->id,
             'tanggal_asesor' => Carbon::now(),
-            'rekomendasi'    => 1,
             'ttd_asesor'     => $request->ttd_asesor
         ]);
     return redirect()->back();

@@ -23,4 +23,8 @@ class Sertifikasi extends Model
     public function relasi_tanda_tangan_admin(){
         return $this->belongsTo(TandaTangan::class, 'id', 'sertifikasi_id');
     }
+
+    public function relasi_user_asesmen_mandiri(){
+        return $this->belongsTo(AsesmenMandiri::class, 'user_id', 'user_asesi_id');
+    }
 }

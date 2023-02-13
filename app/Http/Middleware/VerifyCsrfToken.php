@@ -28,6 +28,7 @@ class VerifyCsrfToken extends Middleware
         '/admin/table-surat-sk-penetapan',
         '/admin/table-surat-daftar-tuk',
         '/admin/data-asesi-asessment-mandiri',
+        '/admin/data-pengajuan-asesmen-mandiri-acc',
         
         '/asesor/data-unit-kompetensi-jurusan-asesor',
         '/asesor/data-elemen-unit-kompetensi-jurusan-asesor/*',
@@ -35,6 +36,8 @@ class VerifyCsrfToken extends Middleware
         '/asesor/data-kelola-soal',
         '/asesor/data-peserta-pelaksanaan-uji-kompetensi',
         '/asesor/data-asesmen-mandiri',
+        '/asesor/data-list-asesi-peserta-uji-kompetensi/*',
+        '/asesor/data-asesi-telah-selesai-ujian/',
         
         '/asesi/asesi-materi-uji-kompetensi',
 

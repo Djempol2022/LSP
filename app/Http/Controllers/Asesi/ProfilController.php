@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\Asesi;
 
-use App\Http\Controllers\Controller;
-use App\Models\Institusi;
-use App\Models\Jurusan;
-use App\Models\Kebangsaan;
-use App\Models\KelengkapanPemohon;
-use App\Models\KualifikasiPendidikan;
-use App\Models\Pekerjaan;
-use App\Models\Sertifikasi;
-use App\Models\User;
-use App\Models\UserDetail;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Validator;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Jurusan;
+use App\Models\Institusi;
+use App\Models\Pekerjaan;
+use App\Models\Kebangsaan;
+use App\Models\UserDetail;
+use App\Models\Sertifikasi;
+use Illuminate\Http\Request;
+use App\Models\KelengkapanPemohon;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Models\KualifikasiPendidikan;
 
 use function PHPUnit\Framework\isNull;
+use Illuminate\Support\Facades\Storage;
 
 class ProfilController extends Controller
 {
@@ -25,7 +26,22 @@ class ProfilController extends Controller
 
     public function index()
     {
-        $user = User::with('relasi_institusi', 'relasi_user_detail.relasi_kebangsaan', 'relasi_user_detail.relasi_kualifikasi_pendidikan', 'relasi_jurusan', 'relasi_pekerjaan', 'relasi_sertifikasi', 'relasi_kelengkapan_pemohon')->find(auth()->user()->id);
+        $permohonan_user_sertifikasi = User::with(
+            'relasi_institusi', 
+            'relasi_user_detail.relasi_kebangsaan', 
+            'relasi_user_detail.relasi_kualifikasi_pendidikan',
+            'relasi_jurusan.relasi_skema_sertifikasi', 
+            'relasi_pekerjaan',
+            'relasi_sertifikasi.relasi_tanda_tangan_admin',
+            'relasi_kelengkapan_pemohon')
+            ->where('id', Auth::user()->id)->first();
+
+        $user = User::with('relasi_pekerjaan', 'relasi_user_detail.relasi_kebangsaan', 
+                'relasi_user_detail.relasi_kualifikasi_pendidikan', 'relasi_jurusan', 
+                'relasi_pekerjaan', 'relasi_sertifikasi.relasi_tanda_tangan_admin', 
+                'relasi_kelengkapan_pemohon')
+                ->find(Auth::user()->id);
+                
         $institusi = Institusi::get(['id', 'nama_institusi']);
         $jurusan = Jurusan::get(['id', 'jurusan']);
         $kualifikasi_pendidikan = KualifikasiPendidikan::get(['id', 'pendidikan']);
@@ -85,7 +101,8 @@ class ProfilController extends Controller
             'sertifikat_prakerin' => $sertifikat_prakerin,
             'nilai_raport' => $nilai_raport,
             'date' => $date,
-            'tanggal' => $date->format('d F Y')
+            'tanggal' => $date->format('d F Y'),
+            'data_permohonan_user_sertifikasi' => $permohonan_user_sertifikasi
         ]);
     }
 
@@ -151,6 +168,7 @@ class ProfilController extends Controller
             'alamat_rumah' => $request->alamat_rumah,
             'nomor_hp' => $request->nomor_hp,
             'kualifikasi_pendidikan_id' => $request->kualifikasi_pendidikan,
+            'kode_pos' => $request->kode_pos,
             'ttd' => $request->ttd,
             'foto' => $image
         ]);
@@ -167,22 +185,22 @@ class ProfilController extends Controller
             // tambah pekerjaan
             Pekerjaan::create([
                 'user_id' => auth()->user()->id,
-                'nama_institusi' => $request->nama_institusi_pekerjaan,
+                'nama_pekerjaan' => $request->nama_pekerjaan,
                 'jabatan' => $request->jabatan,
-                'alamat_institusi' => $request->alamat_kantor_pekerjaan,
+                'alamat_pekerjaan' => $request->alamat_kantor_pekerjaan,
                 'kode_pos' => $request->kode_pos_pekerjaan,
-                'nomor_hp_institusi' => $request->nomor_hp_institusi_pekerjaan,
-                'email_institusi' => $request->email_institusi_pekerjaan
+                'nomor_hp_pekerjaan' => $request->nomor_hp_institusi_pekerjaan,
+                'email_pekerjaan' => $request->email_institusi_pekerjaan
             ]);
         } else {
             // edit pekerjaan
             Pekerjaan::where('user_id', auth()->user()->id)->update([
-                'nama_institusi' => $request->nama_institusi_pekerjaan,
+                'nama_pekerjaan' => $request->nama_pekerjaan,
                 'jabatan' => $request->jabatan,
-                'alamat_institusi' => $request->alamat_kantor_pekerjaan,
+                'alamat_pekerjaan' => $request->alamat_kantor_pekerjaan,
                 'kode_pos' => $request->kode_pos_pekerjaan,
-                'nomor_hp_institusi' => $request->nomor_hp_institusi_pekerjaan,
-                'email_institusi' => $request->email_institusi_pekerjaan
+                'nomor_hp_pekerjaan' => $request->nomor_hp_institusi_pekerjaan,
+                'email_pekerjaan' => $request->email_institusi_pekerjaan
             ]);
         }
 
@@ -191,14 +209,16 @@ class ProfilController extends Controller
             // tambah sertifikasi
             Sertifikasi::create([
                 'user_id' => auth()->user()->id,
-                'tujuan_asesmen' => $request->data_sertifikasi,
-                'tanggal' => $request->tanggal,
+                'tujuan_asesi' => $request->data_sertifikasi,
+                'ttd_asesi' => $request->ttd,
+                'created_at' => $request->tanggal,
             ]);
         } else {
             // edit sertifikasi
             Sertifikasi::where('user_id', auth()->user()->id)->update([
-                'tujuan_asesmen' => $request->data_sertifikasi,
-                'tanggal' => $request->tanggal,
+                'tujuan_asesi' => $request->data_sertifikasi,
+                'ttd_asesi' => $request->ttd,
+                'created_at' => $request->tanggal,
             ]);
         }
 

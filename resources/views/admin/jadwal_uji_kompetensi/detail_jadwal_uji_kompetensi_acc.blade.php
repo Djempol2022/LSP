@@ -4,30 +4,45 @@
     <section class="section">
         <div class="container mt-5 jalur-file">
             {{-- JALUR FOLDER --}}
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-                            href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Profil</li>
-                </ol>
+            <nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                      <a class="text-black text-decoration-none"
+                          href="{{ route('admin.Dashboard') }}">
+                          Dashboard
+                      </a>
+                  </li>
+                  <li class="breadcrumb-item">
+                        <a class="text-black text-decoration-none"
+                        href="{{route('admin.TampilanJadwalUjiKompetensi')}}">
+                        Jadwal Uji Kompetensi
+                        </a>
+                  </li>
+                  <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">
+                        <a class="text-black text-decoration-none"
+                        href="/admin/tambah-asesor-peninjau/{{ $data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_muk->relasi_jurusan->id }}">
+                        Rencana Jadwal Uji Kompetensi
+                        </a>
+                  </li>
+                  <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">
+                        Detail Jadwal Uji Kompetensi
+                  </li>
+              </ol>
             </nav>
             {{-- EDIT PROFIL --}}
             <div class="mt-5">
 
                 {{-- JADWAL --}}
                 <div class="col profil-section-title">
-                    Bagian 1 : Jadwal Uji Kompetensi
+                    Uji Kompetensi
                 </div>
-                <p class="py-3" style="font-size: 18px">Pada bagian ini, cantumkan data pribadi, data pendidikan formal
-                    serta
-                    data pekerjaan
-                    anda saat
-                    ini.
-                </p>
-
                 <div class="col profil-section" style="margin-bottom: 0% !important">
                     <div class="row my-4">
                         <div class="col-md-6">
+                            <div class="col pb-4">
+                              <p class="fw-bold">Jurusan</p>
+                              <span>{{ $data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_muk->relasi_jurusan->jurusan }}</span>
+                            </div>
                             <div class="col pb-4">
                                 <p class="fw-bold">Materi Uji Kompetensi</p>
                                 <span>{{ $data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_muk->muk }}</span>
@@ -56,14 +71,8 @@
             </div>
 
             <div class="col profil-section-title">
-                Bagian 1 : Jadwal Uji Kompetensi
+                Detail Jadwal Uji Kompetensi
             </div>
-            <p class="py-3" style="font-size: 18px">Pada bagian ini, cantumkan data pribadi, data pendidikan formal
-                serta
-                data pekerjaan
-                anda saat
-                ini.
-            </p>
 
             <div class="col profil-section" style="margin-bottom: 0% !important">
               <form action="{{route('admin.UbahJadwalPelaksanaanUjian', $data_pelaksanaan_ujian->id)}}" method="POST" id="form-ubahJadwalPelaksanaanUjian">
@@ -96,7 +105,7 @@
                         <div class="row">
                         <div class="col-md-6">
                             <label for="waktu_mulai" class="form-label fw-semibold">Waktu Mulai</label>
-                            <input type="time" id="waktu_mulai" class="form-control rounded-4"
+                            <input type="datetime" id="waktu_mulai" class="form-control rounded-4"
                                 placeholder="Masukkan Waktu Mulai" name="waktu_mulai"
                                 @isset($data_pelaksanaan_ujian->waktu_mulai)
                                 value="{{\Carbon\Carbon::parse($data_pelaksanaan_ujian->waktu_mulai)->format('H:i')}}"
@@ -107,7 +116,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="waktu_selesai" class="form-label fw-semibold">Waktu Selesai</label>
-                            <input type="time" id="waktu_selesai" class="form-control rounded-4"
+                            <input type="datetime" id="waktu_selesai" class="form-control rounded-4"
                                 placeholder="Masukkan Waktu Selesai" name="waktu_selesai"
                                 @isset($data_pelaksanaan_ujian->waktu_selesai)
                                 value="{{\Carbon\Carbon::parse($data_pelaksanaan_ujian->waktu_selesai)->format('H:i')}}"
@@ -141,40 +150,41 @@
                               <label class="text-danger error-text tempat_error"></label>
                           </div>
                       </div>
-                      <div class="col pb-4">
-                        <p class="fw-bold">Asesi</p>
-                        {{-- @isset($relasi_jadwal_uji_kompetensi->relasi_user_asesi) --}}
-                        @php
-                          $count_data_asesi = \App\Models\AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $data_pelaksanaan_ujian->jadwal_uji_kompetensi_id)->count();
-                        @endphp
-
-                        @if(!empty($count_data_asesi))
-                        <table class="table table-striped">
-                          <thead>
-                            <tr>
-                              <th scope="col">Nama Asesi</th>
-                              <th scope="col">Aksi</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @foreach ($user_asesi_kompetensi as $data_user_asesi_kompetensi)
-                            <tr>
-                              <td>{{$data_user_asesi_kompetensi->relasi_user_asesi->nama_lengkap}}</td>
-                              <th><span class="btn bg-danger text-white btn-sm" onclick="hapusAsesiUjiKompetensi({{$data_user_asesi_kompetensi->id}})">Hapus</span></th>
-                            </tr>
-                            @endforeach
-                          </tbody>
-                        </table>
-                        @else
-                        <span class="text-danger fw-semibold">Asesi Belum di tentukan</span>
-                          <span class="btn btn-primary btn-sm btn-rounded text-white"
-                            href="#" data-bs-toggle="modal" data-bs-target="#modalTambahAsesiKeJadwalUkom">Tambah Asesi
-                          </span>
-                        @endif
                     </div>
-                    
-                  </div>
-                  <button type="submit" class="bg-primary btn-sm btn rounded-3 text-white">Simpan</button>
+                    <div class="col pb-12">
+                      <p class="fw-bold">Asesi</p>
+                      <span class="btn btn-primary btn-sm btn-rounded text-white"
+                        href="#" data-bs-toggle="modal" data-bs-target="#modalTambahAsesiKeJadwalUkom">Tambah Asesi
+                      </span>
+                      <br>
+                      {{-- @isset($relasi_jadwal_uji_kompetensi->relasi_user_asesi) --}}
+                      @php
+                        $count_data_asesi = \App\Models\AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $data_pelaksanaan_ujian->jadwal_uji_kompetensi_id)->count();
+                      @endphp
+
+                      @if(!empty($count_data_asesi))
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">Nama Asesi</th>
+                            <th scope="col">Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($user_asesi_kompetensi as $data_user_asesi_kompetensi)
+                          <tr>
+                            <td>{{$data_user_asesi_kompetensi->relasi_user_asesi->nama_lengkap}}</td>
+                            <th><span class="btn bg-danger text-white btn-sm" 
+                              onclick="hapusAsesiUjiKompetensi({{$data_user_asesi_kompetensi->user_asesi_id}}, {{$data_user_asesi_kompetensi->jadwal_uji_kompetensi_id}})">Hapus</span></th>
+                          </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+                      @else
+                        <span class="text-danger fw-semibold">Asesi Belum di tentukan</span>
+                      @endif
+                    </div>
+                    <button type="submit" class="bg-primary btn-sm btn rounded-3 text-white">Simpan</button>
                 </form>
                 </div>
             </div>
@@ -192,6 +202,7 @@
         </button>
       </div>
       <form action="{{route('admin.TambahDataAsesiKeJadwalUkom')}}" method="POST" id="form-tambahDataAsesiKeJadwalUkom">
+      @csrf
       <div class="modal-body">
         <table class="table table-striped">
           <thead>
@@ -202,7 +213,8 @@
           </thead>
           <tbody>
               <input type="hidden" name="jadwal_uji_kompetensi_id" value="{{$data_pelaksanaan_ujian->jadwal_uji_kompetensi_id}}" hidden>
-              @csrf
+              <input type="hidden" name="pelaksanaan_ujian_id" value="{{$data_pelaksanaan_ujian->id}}" hidden>
+              <input type="hidden" name="jenis_tes" value="{{$data_pelaksanaan_ujian->jenis_tes}}" hidden>              
             @foreach ($user_asesi as $data_user_asesi)
             <tr>
               <th><input type="checkbox" name="user_asesi_id[]" class="cek" value="{{$data_user_asesi->id}}"></th>
@@ -301,7 +313,7 @@
     });
 
 
-    function hapusAsesiUjiKompetensi(id) {
+    function hapusAsesiUjiKompetensi(asesi_id, jadwal_id) {
       swal({
           title: "Yakin ?",
           text: "Menghapus Data ?",
@@ -312,7 +324,7 @@
 
           if (willDelete) {
               $.ajax({
-          url: "/admin/hapus-asesi-uji-kompetensi/" + id,
+          url: "/admin/hapus-asesi-uji-kompetensi/" + asesi_id + "/" + jadwal_id,
           dataType: 'json',
           success: function (response) {
               if (response.status == 0) {

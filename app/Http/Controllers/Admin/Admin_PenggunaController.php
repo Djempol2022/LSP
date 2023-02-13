@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
+use App\Models\Jurusan;
+use App\Models\Institusi;
+use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Institusi;
-use App\Models\Jurusan;
-use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class Admin_PenggunaController extends Controller
@@ -21,15 +23,21 @@ class Admin_PenggunaController extends Controller
             'users.*'
         ]);
 
+        if($request->input('role_pengguna')!=null){
+            $data = $data->where('role_id', $request->role_pengguna);
+        }
+
+        $rekamFilter = $data->get()->count();
         if($request->input('length')!=-1) 
             $data = $data->skip($request->input('start'))->take($request->input('length'));
-            $rekamTotal = $data->count();
-            // $data = $data->with('relasi_muk')->where('jurusan_id', $id)->get();
             $data = $data->with('relasi_institusi')->with('relasi_jurusan')->with('relasi_role')->get();
-            // return $data;
+            $rekamTotal = $data->count();
+
             return response()->json([
+            'draw'=>$request->input('draw'),
             'data'=>$data,
-            'recordsTotal'=>$rekamTotal
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter,
         ]);
     }
 
@@ -63,8 +71,12 @@ class Admin_PenggunaController extends Controller
                 'email' => $request->email,
                 'institusi_id' => $request->institusi_id,
                 'jurusan_id' => $request->jurusan_id,
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
                 'role_id' => $request->role_id,
+                'status_terlibat_uji_kompetensi' => 0
+            ]);
+            UserDetail::create([
+                'user_id' => $tambah_pengguna->id
             ]);
             
             if(!$tambah_pengguna){

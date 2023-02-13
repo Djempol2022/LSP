@@ -15,4 +15,8 @@ class Soal extends Model
     public function relasi_jadwal_uji_kompetensi(){
         return $this->belongsTo(JadwalUjiKompetensi::class, 'jadwal_uji_kompetensi_id', 'id');
     }
+
+    public function relasi_jawaban_asesi(){
+        return $this->belongsTo(JawabanAsesi::class, 'id', 'soal_id');
+    }
 }

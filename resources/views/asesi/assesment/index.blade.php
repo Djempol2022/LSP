@@ -14,15 +14,31 @@
     <div class="col-auto card-assesment mb-5">
       <h5>Formulir Assesment Mandiri</h5>
       <p>Isi formulir assesment mandiri dengan menekan tombol di bawah, untuk melanjutkan assesment </p>
-      <button type="button" class="btn btn-primary tombol-primary-small" data-bs-toggle="modal"
-        data-bs-target="#assesmentMandiri">Assesment Mandiri</button>
+      @php
+          $sertifikasis = \App\Models\Sertifikasi::where('user_id', Auth::user()->id)->first() ?? new \App\Models\Sertifikasi();
+          $acc_admin = \App\Models\TandaTangan::with('relasi_sertifikasi')
+                      ->where('sertifikasi_id', $sertifikasis->id)->where('status', 1)
+                      ->count();
+          $asesmen_mandiri = \App\Models\AsesmenMandiri::where('user_asesi_id', Auth::user()->id)->where('rekomendasi', 1)->count();
+          $jawaban_asesi = \App\Models\JawabanAsesi::where('user_asesi_id', Auth::user()->id)->count();
+      @endphp
+      
+      {{-- @if($acc_admin == 0)
+      <button type="button" class="btn btn-primary tombol-primary-small" disabled>Assesment Mandiri</button>
+      @else --}}
+      <button type="button" class="btn btn-primary tombol-primary-small" data-bs-toggle="modal" data-bs-target="#assesmentMandiri">Assesment Mandiri</button>
+      {{-- @endif --}}
     </div>
 
     {{-- TABEL MATERI UJI KOMPETENSI --}}
     <div class="col-auto card-assesment">
       <h5>Materi Uji Kompetensi</h5>
-      <p>Daftar Materi Uji Kompetensi LSP Multimedia</p>
-      <table class="table" id="table-pelaksanaan-ujian">
+      <p>Daftar Materi Uji Kompetensi LSP {{Auth::user()->relasi_jurusan->jurusan}}</p>
+      <table class="table" 
+      @if ($asesmen_mandiri === 1)
+      id="table-pelaksanaan-ujian">
+      @elseif($asesmen_mandiri === 0) 
+      @endif
         <thead>
           <tr>
             <th class="px-4" style="width: 70%" scope="col">Materi Uji Kompetensi</th>
@@ -36,8 +52,11 @@
     <div class="col-auto card-assesment my-5">
       <h5>Formulir Umpan Balik</h5>
       <p>Isi formulir umpan balik dengan menekan tombol di bawah, untuk memberi ulasan mengenai assesment </p>
-      <button type="button" class="btn btn-primary tombol-primary-small" data-bs-toggle="modal"
-        data-bs-target="#umpanBalik">Umpan Balik</button>
+      @if ($jawaban_asesi == 0)
+      <button type="button" class="btn btn-primary tombol-primary-small" disabled>Umpan Balik</button>    
+      @else
+      <button type="button" class="btn btn-primary tombol-primary-small" data-bs-toggle="modal" data-bs-target="#umpanBalik">Umpan Balik</button>
+      @endif
     </div>
   </div>
 
@@ -131,6 +150,20 @@
           "class": "text-nowrap my-1 px-4",
           "render": function(data, type, row, meta) {
             list_ujian_asesi[row.id] = row;
+            let tampilan;
+            // if(row.jenis_tes == 1){
+            //   tampilan = `${row.relasi_jadwal_uji_kompetensi.relasi_muk.muk}<span class="badge btn-sm bg-warning rounded-pill">
+            //                   <a class="text-white" href="#!">Pilihan Ganda</a>
+            //               </span>`
+            // }else if(row.jenis_tes == 2){
+            //   tampilan = `${row.relasi_jadwal_uji_kompetensi.relasi_muk.muk}<span class="badge btn-sm bg-warning rounded-pill">
+            //                   <a class="text-white" href="#!">Essay</a>
+            //               </span>`
+            // }else if(row.jenis_tes == 3){
+            //   tampilan = `${row.relasi_jadwal_uji_kompetensi.relasi_muk.muk}<span class="badge btn-sm bg-warning rounded-pill">
+            //                   <a class="text-white" href="#!">Wawancara</a>
+            //               </span>`
+            // }
             return row.relasi_jadwal_uji_kompetensi.relasi_muk.muk;
           }
         },
@@ -139,8 +172,46 @@
           "class": "text-nowrap text-center",
           "render": function(data, type, row, meta) {
             let tampilan;
-            tampilan = `<button id-jadwal-ujian class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailUjian(${row.id})">Detail
-                Ujian</button>`
+            if(row.waktu_mulai < moment().format('YYYY-MM-DD HH:mm:ss') && row.waktu_selesai > moment().format('YYYY-MM-DD HH:mm:ss')){
+                  if (row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.user_asesi_id == {!! json_encode(Auth::user()->id) !!} && 
+                      row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.jadwal_uji_kompetensi_id == row.jadwal_uji_kompetensi_id && 
+                      row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.status_ujian_berlangsung == 0) {
+                    tampilan = `<button class="btn btn-warning my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjian(${row.id})">
+                                  Detail Ujian
+                                </button>`  
+                  }
+                  else if (row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.user_asesi_id == {!! json_encode(Auth::user()->id) !!} && 
+                          row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.jadwal_uji_kompetensi_id == row.jadwal_uji_kompetensi_id && 
+                          row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.status_ujian_berlangsung == 1){
+                    tampilan = `<button class="btn btn-warning my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjian(${row.id})">
+                                  Ujian Berlangsung
+                                </button>`
+                  }
+                  else if (row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.user_asesi_id == {!! json_encode(Auth::user()->id) !!} && 
+                          row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.jadwal_uji_kompetensi_id == row.jadwal_uji_kompetensi_id && 
+                          row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.status_ujian_berlangsung == 2){
+                    tampilan = `<span class="btn btn-sm bg-danger text-white rounded-4">Selesai</span> 
+                                <a href="/asesi/review-jawaban/${row.jadwal_uji_kompetensi_id}" class="btn btn-warning my-1 text-black btn-sm rounded-4">
+                                  Review Jawaban
+                                </a>`
+                  }else if (row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.user_asesi_id == {!! json_encode(Auth::user()->id) !!} && 
+                          row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.jadwal_uji_kompetensi_id == row.jadwal_uji_kompetensi_id && 
+                          row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.status_ujian_berlangsung == 3){
+                    tampilan = `<button class="btn btn-warning my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjian(${row.id}, ${row.jenis_tes})">
+                                  Wawancara
+                                </button>`
+                  }
+              }
+              else if(row.waktu_mulai > moment().format('YYYY-MM-DD HH:mm:ss') && row.waktu_selesai > moment().format('YYYY-MM-DD HH:mm:ss')){
+                  tampilan = `<span class="btn btn-sm bg-info text-white rounded-4">Belum di Mulai</span>`
+              }
+              else if(row.waktu_mulai < moment().format('YYYY-MM-DD HH:mm:ss') && row.waktu_selesai < moment().format('YYYY-MM-DD HH:mm:ss')){
+                  tampilan = `<span class="btn btn-sm bg-danger text-white rounded-4">Selesai</span> 
+                              <a href="/asesi/review-jawaban/${row.jadwal_uji_kompetensi_id}" class="btn btn-warning my-1 text-black btn-sm rounded-4">
+                                  Waktu Lewat
+                              </a>`
+              }
+            
             return tampilan;
           }
         },
@@ -148,7 +219,7 @@
     });
 
     // DETAIL UJIAN ASESI
-    function detailUjian(id) {
+    function detailUjian(id, jenis_tes) {
       const data_ujian_asesi = list_ujian_asesi[id];
       $("#detailUjian").modal('show');
       $("#detailUjianLabel").text(data_ujian_asesi.relasi_jadwal_uji_kompetensi.relasi_muk.muk);
@@ -164,9 +235,12 @@
         $(".jenis_tes").text('Jenis Tes : Essay');
       }
       var url ="/asesi/soal/";
-
+      
       $(".total_waktu").text('Waktu Pengerjaan : ' + data_ujian_asesi.total_waktu + ' Menit');
-      $('.mulai_ujian').html('<a href='+url+data_ujian_asesi.jadwal_uji_kompetensi_id+'/'+data_ujian_asesi.relasi_jadwal_uji_kompetensi.relasi_soal.id+' class="btn btn-primary tombol-primary-max btn-block">Mulai Ujian</a>');
+      if(jenis_tes == 3){
+      }else{
+        $('.mulai_ujian').html('<a href='+url+data_ujian_asesi.jadwal_uji_kompetensi_id+'/'+data_ujian_asesi.relasi_jadwal_uji_kompetensi.relasi_soal.id+' class="btn btn-primary tombol-primary-max btn-block">Mulai Ujian</a>');
+      }
     }
 
     // FORM PENGAJUAN ASESMEN MANDIRI
@@ -202,6 +276,7 @@
             }
         });
     });
+
   </script>
 @endsection
 @endsection

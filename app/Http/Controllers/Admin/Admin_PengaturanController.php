@@ -21,6 +21,15 @@ class Admin_PengaturanController extends Controller
         return view('admin.pengaturan.pengaturan');
     }
 
+    // public function jurusan_get(Request $request){
+    //     $html = '';
+    //     $cities = City::where('country_id', $request->country_id)->get();
+    //     foreach ($cities as $city) {
+    //         $html .= '<option value="'.$city->id.'">'.$city->name.'</option>';
+    //     }
+    //     return response()->json(['html' => $html]);
+    // }
+
     public function jurusan_id($id){
         $jurusan = MateriUjiKompetensi::where('jurusan_id', $id)->pluck('muk', 'id');
         return response()->json($jurusan);
@@ -89,13 +98,22 @@ class Admin_PengaturanController extends Controller
             'jurusan.*'
         ]);
 
+        if($request->input('search.value')!=null){
+            $data = $data->where(function($q)use($request){
+                    $q->whereRaw('LOWER(jurusan) like ?',['%'.strtolower($request->input('search.value')).'%']);
+            });
+        }
+
+        $rekamFilter = $data->get()->count();
         if($request->input('length')!=-1) 
             $data = $data->skip($request->input('start'))->take($request->input('length'));
             $rekamTotal = $data->count();
             $data = $data->get();
         return response()->json([
+            'draw'=>$request->input('draw'),
             'data'=>$data,
-            'recordsTotal'=>$rekamTotal
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter
         ]);
     }
 
@@ -193,13 +211,16 @@ class Admin_PengaturanController extends Controller
             'institusi.*'
         ]);
 
+        $rekamFilter = $data->get()->count();
         if($request->input('length')!=-1) 
             $data = $data->skip($request->input('start'))->take($request->input('length'));
             $rekamTotal = $data->count();
             $data = $data->get();
         return response()->json([
+            'draw'=>$request->input('draw'),
             'data'=>$data,
-            'recordsTotal'=>$rekamTotal
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter
         ]);
     }
 
@@ -316,13 +337,16 @@ class Admin_PengaturanController extends Controller
             'kualifikasi_pendidikan.*'
         ]);
 
+        $rekamFilter = $data->get()->count();
         if($request->input('length')!=-1) 
             $data = $data->skip($request->input('start'))->take($request->input('length'));
             $rekamTotal = $data->count();
             $data = $data->get();
         return response()->json([
+            'draw'=>$request->input('draw'),
             'data'=>$data,
-            'recordsTotal'=>$rekamTotal
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter
         ]);
     }
 

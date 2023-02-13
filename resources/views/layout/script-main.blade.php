@@ -10,9 +10,11 @@
 <script src="/extensions/fontawesome/js/all.min.js"></script>
 <script src="/js/jquery.form.min.js"></script>
 <script src="/js/jquery.dataTables.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.js"></script> --}}
 <script src="/js/dataTables.bootstrap4.min.js"></script>
 <script src="/js/select2.full.min.js"></script>
 <script src="/js/moment.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script>$.fn.poshytip={defaults:null}</script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js"></script> --}}
 <script src="/js/bootstrap-editable.min.js"></script>
@@ -21,6 +23,17 @@
 @yield('script')
 @stack('script')
 <script>
+ 
+  $('#waktu_mulai, #waktu_selesai').datetimepicker({
+    format: 'HH:mm:ss',
+    icons: {
+      up: 'fas fa-chevron-up',
+      down: 'fas fa-chevron-down',
+      previous: 'fas fa-chevron-left',
+      next: 'fas fa-chevron-right'
+    }
+  })
+
   $(document).ready(function() {
     $('#table1').DataTable({
       drawCallback: function() {

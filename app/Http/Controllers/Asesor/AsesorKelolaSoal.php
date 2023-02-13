@@ -25,8 +25,9 @@ class AsesorKelolaSoal extends Controller
 
     public function data_kelola_soal(){
         $data = JadwalUjiKompetensi::with('relasi_muk', 'relasi_user_asesor.relasi_user_asesor_detail', 
-            'relasi_user_peninjau.relasi_user_peninjau_detail')
-            ->whereRelation('relasi_muk', 'jurusan_id', Auth::user()->jurusan_id)->get();
+            'relasi_user_peninjau.relasi_user_peninjau_detail', 'relasi_pelaksanaan_ujian')
+            ->whereRelation('relasi_muk', 'jurusan_id', Auth::user()->jurusan_id)
+            ->whereRelation('relasi_user_asesor.relasi_user_asesor_detail', 'id', Auth::user()->id)->get();
             
             return response()->json([
             'data'=>$data,
@@ -113,14 +114,13 @@ class AsesorKelolaSoal extends Controller
 
     public function tambah_soal_wawancara(Request $request){
         $jadwal_uji_kompetensi_id = $request->input('jadwal_uji_kompetensi_id');
-        $jenis_tes = $request->input('jenis_tes');
 
         $pertanyaans = $request->input('wawancara_pertanyaan');
         $jawaban = $request->input('wawancara_jawaban');
 
         PelaksanaanUjian::create([
             'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
-            'jenis_tes' => $jenis_tes,
+            'jenis_tes' => 3,
             'acc' => 0
         ]);
 
@@ -139,5 +139,51 @@ class AsesorKelolaSoal extends Controller
         ]);
         }
         return redirect()->back();
+    }
+
+    public function review_soal($jadwal_id, $jenis_tes){
+        $pelaksanaan_ujian = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $jadwal_id)->where('jenis_tes', $jenis_tes)->first();
+        $soal = Soal::where('jadwal_uji_kompetensi_id', $jadwal_id)->paginate(10);
+        return view('asesor.kelola_soal.review_soal', compact('soal', 'pelaksanaan_ujian'));
+    }
+
+    public function ubah_soal(Request $request, $soal_id){
+        $soal_id = $request->input('soal_id');
+        $pertanyaans = $request->input('pertanyaan');
+        $pilihan = $request->input('pilihan');
+        $jawaban = $request->input('jawaban');
+
+        $ambil_pilihan = 
+            $pilihan[0] . ";" . 
+            $pilihan[1] . ";" . 
+            $pilihan[2] . ";" . 
+            $pilihan[3];
+
+        Soal::where('id', $soal_id)->update([
+            'pertanyaan' => $pertanyaans,
+            'pilihan' => $ambil_pilihan,
+            'jawaban' => $jawaban
+        ]);
+        return redirect()->back();
+    }
+
+    public function ubah_soal_essay(Request $request, $soal_id){
+        $soal_id = $request->input('soal_id');
+        $pertanyaans = $request->input('pertanyaan');
+        $jawaban = $request->input('jawaban');
+
+        Soal::where('id', $soal_id)->update([
+            'pertanyaan' => $pertanyaans,
+            'jawaban' => $jawaban
+        ]);
+        return redirect()->back();
+    }
+
+    public function hapus_soal($soal_id){
+        Soal::where('id', $soal_id)->delete();
+        return response()->json([
+            'status' => 1,
+            'msg' => 'success'
+        ]);
     }
 }

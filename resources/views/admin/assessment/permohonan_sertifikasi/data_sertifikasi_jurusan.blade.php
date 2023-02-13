@@ -5,25 +5,17 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-                    href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Profil</li>
+                    href="{{ route('admin.Dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a class="text-black text-decoration-none" href="{{route('admin.Assessment')}}">Asessment</a></li>
+            <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Skema Sertifikasi Kompetensi</li>
         </ol>
     </nav>
     {{-- EDIT PROFIL --}}
     <div class="mt-5">
-        <h5 class="text-black my-4">Permohonan Sertifikasi Kompetensi</h5>
-        <img src="/images/logo/favicon_lsp.png" width="180px" class="rounded-circle" alt="">
-        {{-- DATA SERTIFIKASI --}}
         <div class="mb-5 pb-5">
             <div class="col profil-section-title">
-                Bagian 2 : Data Sertifikasi
+                Data Skema Sertifikasi Kompetensi Jurusan {{$sertifikasi_jurusan->relasi_jurusan->jurusan}} 
             </div>
-            <p class="py-3" style="font-size: 18px">Tuliskan Judul dan Nomor Skema Sertifikasi yang anda ajukan
-                berikut.
-                Daftar Unit Kompetensi sesuai kemasan pada skema sertifikasi untuk mendapatkan pengakuan sesuai dengan
-                latar
-                belakang pendidikan, pelatihan serta pengalaman kerja yang anda miliki.
-            </p>
             <div class="col profil-section">
                 <div class="col pb-45">
                     <p class="fw-bold">Judul Skema Sertifikasi</p>
@@ -44,10 +36,6 @@
                             data-title="Enter name">{{ $sertifikasi_jurusan->nomor_skema_sertifikasi ?? ''}}
                         </a>
                     </span>
-                </div>
-                <div class="col pb-45">
-                    <p class="fw-bold">Tujuan Asesmen</p>
-                    <span>{{ $sertifikasi_jurusan->relasi_sertifikasi->tujuan_asesi ?? ''}}</span>
                 </div>
                 <div class="col pb-45">
                     <p class="fw-bold">Daftar Unit Kompetensi Sesuai Kemasan</p>
@@ -97,8 +85,8 @@
                 <div class="modal-body">
                     <label>Kode Unit Kompetensi</label>
                     <div class="form-group">
-                        <input type="text" class="skema_sertifikasi_id" name="skema_sertifikasi_id"
-                            value="{{ $sertifikasi_jurusan->id}}">
+                        <input type="hidden" class="skema_sertifikasi_id" name="skema_sertifikasi_id"
+                            value="{{ $sertifikasi_jurusan->id}}" hidden>
                         <input type="text" name="kode_unit" placeholder="Kode Unit Kompetensi"
                             class="form-control rounded-5">
                         <div class="input-group has-validation">
@@ -199,14 +187,11 @@
     
     let list_unit_kompetensi = [];
     const table_data_unit_kompetensi = $('#table-data-unit-kompetensi').DataTable({
-        "pageLength": 10,
-        "lengthMenu": [
-            [10, 25, 50, 100, -1],
-            [10, 25, 50, 100, 'semua']
-        ],
-        "bLengthChange": true,
-        "bFilter": true,
-        "bInfo": true,
+        "pageLength": false,
+        "lengthMenu": false,
+        "bLengthChange": false,
+        "bFilter": false,
+        "bInfo": false,
         "processing": true,
         "bServerSide": true,
         "responsive": true,
@@ -225,7 +210,7 @@
             },
             {
                 "targets": 0,
-                "class": "text-nowrap text-center",
+                "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
                     return row.kode_unit;
@@ -233,7 +218,7 @@
             },
             {
                 "targets": 1,
-                "class": "text-nowrap text-center",
+                "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
                     return row.judul_unit;
@@ -249,7 +234,7 @@
             },
             {
                 "targets": 3,
-                "class": "text-nowrap text-center",
+                "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     let tampilan;
                     tampilan = `

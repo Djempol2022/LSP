@@ -13,14 +13,14 @@
             </div>
         @endif
         {{-- IMAGE LEFT --}}
-        <div class="col-sm-6 px-0">
+        <div class="col-sm-6 px-0 login">
             <img src="images/login.png" alt="Login image" class="w-100 vh-100"
                 style="object-fit: cover; object-position: center;">
         </div>
 
         {{-- INPUT LOGIN --}}
         <div class="container-fluid p-4 col-sm-6 justify-content-center align-items-center d-flex">
-            <div class="col-md-6">
+            <div class="col-md-6 ">
                 <img src="images/logo/logo.png" alt="">
                 <div class="login-title mt-4">Login</div>
                 <div class="col-md-10">

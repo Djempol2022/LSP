@@ -15,15 +15,15 @@
           <div class="col">
             <div class="assesment-mandiri-header">
               <p class="assesment-mandiri-title">Judul Skema Sertifikasi</p>
-              <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->judul_skema_sertifikasi }}</p>
+              <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->judul_skema_sertifikasi ?? ''}}</p>
             </div>
             <div class="assesment-mandiri-header">
               <p class="assesment-mandiri-title">Nomor Skema Sertifikasi</p>
-              <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->nomor_skema_sertifikasi }}</p>
+              <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->nomor_skema_sertifikasi ?? ''}}</p>
             </div>
             <div class="assesment-mandiri-header">
               <p class="assesment-mandiri-title">Skema Sertifikasi</p>
-              <p>{{ $sertifikasi->relasi_unit_kompetensi->jenis_standar }}</p>
+              <p>{{ $sertifikasi->relasi_unit_kompetensi->jenis_standar ?? ''}}</p>
             </div>
           </div>
           {{-- TITLE --}}
@@ -32,7 +32,7 @@
             <div class="row col unit-kompetensi">
               <span>Unit Kompetensi</span><br>
               <div class="col row fs-6">
-                <div class="col-lg-auto unit-kode">{{ $data_unit_kompetensi->kode_unit }}</div>
+                <div class="col-lg-auto unit-kode" style="width: auto !important">{{ $data_unit_kompetensi->kode_unit }}</div>
                 <div class="col-lg-auto unit-isi">{{ $data_unit_kompetensi->judul_unit }}
                 </div>
               </div>
@@ -102,7 +102,10 @@
                             <input class="form-check-input me-1" type="radio"
                               name="status-{{ $isi->id }}" value="kompeten"
                               id="kompeten-{{ $isi->id }}"
-                              {{ $data_status_kompeten_asesi->status === 'kompeten' ? 'checked' : '' }}>
+                              @if(empty($data_status_kompeten_asesi->status))
+                              @else
+                                {{ $data_status_kompeten_asesi->status === 'kompeten' ? 'checked' : '' }}>
+                              @endif
                             <label class="form-check-label text-success"
                               for="kompeten-{{ $isi->id }}">Kompeten</label>
                           </div>
@@ -110,10 +113,12 @@
                             <input class="form-check-input me-1" type="radio"
                               name="status-{{ $isi->id }}"
                               value="belum kompeten" id="belum_kompeten-{{ $isi->id }}"
-                              {{ $data_status_kompeten_asesi->status === 'belum kompeten' ? 'checked' : '' }}>
+                              @if(empty($data_status_kompeten_asesi->status))
+                              @else
+                                {{ $data_status_kompeten_asesi->status === 'belum kompeten' ? 'checked' : '' }}>
+                              @endif
                             <label class="form-check-label text-danger"
-                              for="belum_kompeten-{{ $isi->id }}">Belum
-                              Kompeten</label>
+                              for="belum_kompeten-{{ $isi->id }}">Belum Kompeten</label>
                           </div>
                         </div>
                       </div>
@@ -183,11 +188,11 @@
                 <h5>Mengetahui Asesor</h5>
                 <div class="col edit-profil-left">
                   <label for="namaAsesi" class="form-label fw-semibold">Nama Asesor</label>
-                  <p>{{$data_asesmen_mandiri->relasi_user_asesor->nama_lengkap}}</p>
+                  <p>{{$data_asesmen_mandiri->relasi_user_asesor->nama_lengkap ?? ''}}</p>
                 </div>
                 <div class="col edit-profil-left">
                   <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
-                  <p>{{Carbon\Carbon::parse($data_asesmen_mandiri->tanggal_asesor)->format('d F Y')}}</p>
+                  <p>{{Carbon\Carbon::parse($data_asesmen_mandiri->tanggal_asesor ?? '')->format('d F Y')}}</p>
                 </div>
                 {{-- TANDA TANGAN / TTD --}}
                 <label class="form-label fw-semibold">Tanda Tangan</label>

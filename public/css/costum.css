@@ -477,8 +477,13 @@ hr {
     .teks-tabel {
         font-size: 67%;
     }
+ 
 }
 @media (max-width: 560px) {
+    .login{
+        content-visibility: hidden;
+        overflow: hidden;
+    }
     .notifikasi {
         width: 35px;
     }

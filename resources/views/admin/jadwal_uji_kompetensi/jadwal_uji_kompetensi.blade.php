@@ -147,6 +147,13 @@
         </div>
     </div>
 </div> --}}
+<nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+                href="{{ route('admin.Dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Jadwal Uji Kompetensi</li>
+    </ol>
+</nav>
 <div class="page-content">
     <section class="section">
         <div class="card">
@@ -208,8 +215,8 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     let tampilan;
-                    tampilan = `<span class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="/admin/tambah-asesor-peninjau/${row.id}">Tambah Data</a>
+                    tampilan = `<span class="badge bg-info rounded-pill">
+                                    <a class="text-white" href="/admin/tambah-asesor-peninjau/${row.id}">Detail</a>
                                 </span>`
                     return tampilan;
                 }

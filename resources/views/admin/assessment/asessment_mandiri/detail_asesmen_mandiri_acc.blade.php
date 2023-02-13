@@ -1,5 +1,15 @@
-@extends('layout.main-layout', ['title' => 'Detail Asesmen Mandiri Asesi'])
+@extends('layout.main-layout', ['title' => 'Detail Asesmen Mandiri'])
 @section('main-section')
+<div class="container mt-5 jalur-file">
+  {{-- JALUR FOLDER --}}
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+                  href="{{ route('admin.Dashboard') }}">Dashboard</a></li>
+          <li class="breadcrumb-item"><a class="text-black text-decoration-none" href="{{route('admin.Assessment')}}">Asessment</a></li>
+          <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Detail Asesmen Mandiri</li>
+      </ol>
+  </nav>
 <div class="container-fluid">
     <section class="section">
       <div class="card">
@@ -64,8 +74,8 @@
                               </div>
                               <div class="col-auto kriteria-isi">{{ $isi->judul_unit_kompetensi_isi }}
                               </div>
-                              <input type="hidden" name="unit_kompetensi_sub[]" value="{{$isi->unit_kompetensi_sub_id}}" hidden>
-                              <input type="hidden" name="unit_kompetensi_isi[]" value="{{$isi->id}}" hidden>
+                              {{-- <input type="hidden" name="unit_kompetensi_sub[]" value="{{$isi->unit_kompetensi_sub_id}}" hidden>
+                              <input type="hidden" name="unit_kompetensi_isi[]" value="{{$isi->id}}" hidden> --}}
     
                               <div class="col-auto kriteria-kompeten">
                                 @if($data_status_kompeten_asesi->status === 'kompeten')
@@ -123,19 +133,17 @@
                   </div>
                   <div class="col-lg-6">
                     <h5>Mengetahui Asesor</h5>
-                    <form action="{{route('asesor.AsesorAccAsesmenMandiri', $data_asesmen_mandiri->id)}}" method="POST">
-                        @csrf
-                        @method('PUT')
                         <div class="col edit-profil-left">
                         <label for="namaAsesi" class="form-label fw-semibold">Nama Asesor</label>
-                        <input type="text" id="namaAsesi" class="form-control input-text rounded-4"
-                            placeholder="Masukkan Nama Asesi. . ." value="{{ auth()->user()->nama_lengkap }}" readonly>
+                            @isset($data_asesmen_mandiri->relasi_user_asesor->nama_lengkap)
+                              <p>{{$data_asesmen_mandiri->relasi_user_asesor->nama_lengkap}}</p>
+                            @else
+                              <p>Nama Asesor Belum Di Ketahui</p>
+                            @endisset
                         </div>
-
                         <div class="col edit-profil-left">
                         <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
-                        <input type="text" id="tanggal" name="tanggal" class="form-control input-text rounded-4"
-                            value="{{ Carbon\Carbon::now()->format('d F Y') }}" readonly>
+                          <p>{{ Carbon\Carbon::parse($data_asesmen_mandiri->tanggal_asesor)->format('d F Y') }}</p>
                         </div>
                         <div class="col edit-profil-left">
                           <label for="rekomendasi" class="form-label fw-semibold">Rekomendasi</label>
@@ -152,22 +160,14 @@
                           @endif
                           </div>
                         </div>
-                        <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
-                        <div class="col edit-profil mb-2 signature-pad rounded-4" id="signature-pad">
-                        <canvas id="sig"></canvas>
-                        <input type="hidden" name="ttd_asesor" value="" id="ttd_asesi" hidden>
-                        </div>
-                        <div class="mb-2">
-                        @isset($data_asesmen_mandiri->ttd_asesor)
-                            <img src="{{ $data_asesmen_mandiri->ttd_asesor }}" alt="ttd_asesi" width="180px">
-                        @endisset
-                        </div>
-                        
-                        <div id="signature-clear">
-                            <button type="button" class="button button-primary tombol-primary-small mb-4" id="clear">Clear</button>
-                            <button type="submit" class="btn btn-primary tombol-primary-small" id="simpan">Simpan</button>
-                        </div>
-                    </form>
+                        <div class="col edit-profil-left">
+                          <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
+                          <div class="col-auto kriteria-kompeten" style="width: auto;">
+                            @isset($data_asesmen_mandiri->ttd_asesor)
+                                <img src="{{ $data_asesmen_mandiri->ttd_asesor }}" alt="ttd_asesi" width="180px">
+                            @endisset
+                          </div>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -176,7 +176,8 @@
         </div>
     </section>
   </div>
-@endsection
+</div>
+  @endsection
 @section('script')
 <script>
 

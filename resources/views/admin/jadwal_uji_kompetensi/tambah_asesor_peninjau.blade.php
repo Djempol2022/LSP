@@ -1,14 +1,26 @@
-@extends('layout.main-layout', ['title' => 'Tambah Pihak Terkait Uji Kompetensi'])
+@extends('layout.main-layout', ['title' => 'Rencana Jadwal Uji Kompetensi'])
 @section('main-section')
 <div class="page-content">
     <section class="section">
         <div class="container mt-5 jalur-file">
             {{-- JALUR FOLDER --}}
-            <nav aria-label="breadcrumb">
+            <nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-                            href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Profil</li>
+                    <li class="breadcrumb-item">
+                        <a class="text-black text-decoration-none"
+                            href="{{ route('admin.Dashboard') }}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="text-black text-decoration-none"
+                            href="{{route('admin.TampilanJadwalUjiKompetensi')}}">
+                            Jadwal Uji Kompetensi
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">
+                        Rencana Jadwal Uji Kompetensi
+                    </li>
                 </ol>
             </nav>
             {{-- EDIT PROFIL --}}
@@ -17,15 +29,8 @@
                 {{-- JADWAL --}}
                 <div class="mb-5 pb-5">
                     <div class="col profil-section-title">
-                        Jurusan : {{ $data_jurusan->jurusan }}
+                        Jadwal Uji Kompetensi Jurusan {{ $data_jurusan->jurusan }}
                     </div>
-                    <p class="py-3" style="font-size: 18px">Pada bagian ini, cantumkan data pribadi, data pendidikan
-                        formal
-                        serta
-                        data pekerjaan
-                        anda saat
-                        ini.
-                    </p>
                     <a class="btn btn-primary btn-sm btn-rounded text-white"
                         href="#" data-bs-toggle="modal" data-bs-target="#modalTambahMukAsesorPeninjau">Tambah Data</a>
                     <div class="col profil-section">
@@ -293,7 +298,7 @@
                                         <a class="text-white" href="#">Hapus</a>
                                     </span>
                                     <span class="badge bg-info rounded-pill">
-                                    <a class="text-white" href="/admin/detail-jadwal-uji-kompetensi-acc/${row.relasi_pelaksanaan_ujian.jadwal_uji_kompetensi_id}">Detail</a>
+                                    <a class="text-white" href="/admin/detail-jadwal-uji-kompetensi-acc/${row.id}/${row.relasi_muk.jurusan_id}">Detail</a>
                                     </span>`     
                     }          
                     return tampilan;

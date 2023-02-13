@@ -34,7 +34,7 @@
                             <select id="asal_sekolah" class="form-select register-input-select" name="sekolah_id" required>
                                 <option value="" selected disabled>Pilih Asal Sekolah</option>
                                 @foreach ($sekolah as $data)
-                                    <option value="{{ $data->id }}">{{ $data->nama_sekolah }}</option>
+                                    <option value="{{ $data->id }}">{{ $data->nama_institusi }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -42,10 +42,13 @@
                             <label for="jurusan" class="register-label">Jurusan</label>
                             <select id="jurusan" class="form-select register-input-select jurusan" name="jurusan_id"
                                 required>
-                                <option value="" selected disabled>Pilih Jurusan</option>
+                                @foreach ($jurusan as $data)
+                                <option value="{{ $data->id }}">{{ $data->jurusan }}</option>
+                            @endforeach
                             </select>
                         </div>
                         <div class="mb-2">
+                            <input type="hidden" name="status_terlibat_uji_kompetensi" value="1" hidden>
                             <label for="email_user" class="register-label">Email</label>
                             <input
                                 class="form-control login-input-text @error('email')

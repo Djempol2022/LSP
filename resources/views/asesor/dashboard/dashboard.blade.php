@@ -21,7 +21,7 @@
         </p>
 
         {{-- JADWAL UJI KOMPETENSI --}}
-        <div class="col profil-section">
+        <div class="col profil-section" style="margin-bottom: 0% !important">
           <div class="col pb-45">
             <table class="table table-striped" id="table-peserta-pelaksanaan-uji-kompetensi">
               <thead>
@@ -34,6 +34,7 @@
                       <th>Jenis Tes</th>
                       <th>Kelas</th>
                       <th>Sesi</th>
+                      <th>Status Soal</th>
                       <th>Aksi</th>
                   </tr>
               </thead>
@@ -65,9 +66,35 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
+
+   {{-- MODAL DAFTAR NAMA ASESI PESERTA UJI KOMPETENSI --}}
+   <div class="modal fade" id="modalDaftarAsesiPesertaUkom" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table class="table table-striped" id="table-data-asesi-peserta-uji-kompetensi">
+                <thead>
+                    <tr>
+                        <th>Nama Asesi</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 @endsection
 @section('script')
 <script>
@@ -167,18 +194,31 @@
             },
             {
                 "targets": 0,
-                "class": "text-nowrap text-center",
+                "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
-                    return row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.relasi_user_asesi.nama_lengkap;
+                    let data_asesi;
+                    if(row.relasi_jadwal_uji_kompetensi.relasi_user_asesi == null){
+                        data_asesi = `<p style="color:red">Asesi Belum ditentukan</p>`
+                    }else{
+                        data_asesi = `<a href="#!" onclick="lihatDaftarAsesi(${row.relasi_jadwal_uji_kompetensi.id})">Lihat Daftar Asesi</a>`;
+                        // data_asesi = row.relasi_jadwal_uji_kompetensi.relasi_user_asesi.relasi_user_asesi.nama_lengkap;
+                    }
+                    return data_asesi;
                 }
             },
             {
                 "targets": 1,
-                "class": "text-nowrap text-center",
+                "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
-                    return row.tanggal;
+                    let data_tanggal;
+                    if(row.tanggal == null){
+                        data_tanggal = `<p style="color:red">Tanggal Belum ditentukan</p>`
+                    }else{
+                        data_tanggal = moment(row.tanggal).format("d MMMM y");
+                    }
+                    return data_tanggal;
                 }
             },
             {
@@ -186,7 +226,13 @@
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
-                    return row.waktu_mulai;
+                    let data_waktu;
+                    if(row.waktu_mulai == null){
+                        data_waktu = `<p style="color:red">Waktu Belum ditentukan</p>`
+                    }else{
+                        data_waktu = moment(row.waktu_mulai).format("HH:mm:ss") +` - `+ moment(row.waktu_selesai).format("HH:mm:ss");
+                    }
+                    return data_waktu;
                 }
             },
             {
@@ -202,7 +248,12 @@
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
-                    return row.tempat;
+                    if(row.tempat == null){
+                        data_tempat = `<p style="color:red">Tempat Belum ditentukan</p>`
+                    }else{
+                        data_tempat = row.tempat;
+                    }
+                    return data_tempat;
                 }
             },
             {
@@ -210,7 +261,16 @@
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
-                    return row.jenis_tes;
+                    if(row.jenis_tes == null){
+                        data_jenis_tes = `<p style="color:red">Jenis Tes belum ditentukan</p>`
+                    }else if(row.jenis_tes == 1){
+                        data_jenis_tes = `<p style="color:green">Pilihan Ganda</p>`
+                    }else if(row.jenis_tes == 2){
+                        data_jenis_tes = `<p style="color:green">Essay</p>`
+                    }else if(row.jenis_tes == 3){
+                        data_jenis_tes = `<p style="color:green">Wawancara</p>`
+                    }
+                    return data_jenis_tes;
                 }
             },
             {
@@ -218,7 +278,12 @@
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
-                    return row.kelas;
+                    if(row.kelas == null){
+                        data_kelas = `<p style="color:red">Kelas Belum ditentukan</p>`
+                    }else{
+                        data_kelas = row.kelas;
+                    }
+                    return data_kelas;
                 }
             },
             {
@@ -226,11 +291,29 @@
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
-                    return row.sesi;
+                    if(row.sesi == null){
+                        data_sesi = `<p style="color:red">Sesi Belum ditentukan</p>`
+                    }else{
+                        data_sesi = row.sesi;
+                    }
+                    return data_sesi;
                 }
             },
             {
                 "targets": 8,
+                "class": "text-wrap text-center",
+                "render": function (data, type, row, meta) {
+                    list_peserta_uji_kompetensi[row.id] = row;
+                    if(row.sesi == 0){
+                        data_status_soal = `<p style="color:red">Soal belum di acc peninjau</p>`
+                    }else{
+                        data_status_soal = `<p style="color:green">Acc</p>`;
+                    }
+                    return data_status_soal;
+                }
+            },
+            {
+                "targets": 9,
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
                     let tampilan;
@@ -244,5 +327,48 @@
             },
         ]
     });
+
+    function lihatDaftarAsesi(id){
+    $('#modalDaftarAsesiPesertaUkom').modal('show');
+
+    let list_asesi_peserta_uji_kompetensi = [];
+        const asesi_peserta_uji_kompetensi = $('#table-data-asesi-peserta-uji-kompetensi').DataTable({
+            "destroy": true,
+            "pageLength": 10,
+            "lengthMenu": [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, 'semua']
+            ],
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "processing": true,
+            "bServerSide": true,
+            "responsive": true,
+            ajax: {
+                url: "/asesor/data-list-asesi-peserta-uji-kompetensi/"+id,
+                type: "POST",
+                // data:function(d){
+                //     d.data_kabupaten = data_kabupaten;
+                //     d.data_status_id = data_status_id;
+                //     return d
+                // }
+            },
+            columnDefs: [{
+                    targets: '_all',
+                    visible: true
+                },
+                {
+                    "targets": 0,
+                    "class": "text-nowrap text-center",
+                    "render": function (data, type, row, meta) {
+                        list_asesi_peserta_uji_kompetensi[row.id] = row;
+                        return row.relasi_user_asesi.nama_lengkap;
+                    }
+                },
+            ]
+        });
+
+    }
 </script>
 @endsection

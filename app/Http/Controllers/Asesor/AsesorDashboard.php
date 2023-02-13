@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UnitKompetensi;
 use App\Models\SkemaSertifikasi;
 use App\Http\Controllers\Controller;
+use App\Models\AsesiUjiKompetensi;
 use App\Models\UnitKompetensiIsi;
 use App\Models\UnitKompetensiIsi2;
 use App\Models\UnitKompetensiSub;
@@ -46,9 +47,27 @@ class AsesorDashboard extends Controller
 
         $data = $data->skip($request->input('start'))->take($request->input('length'));
         $rekamTotal = $data->count();
-        $data = $data->with('relasi_jadwal_uji_kompetensi.relasi_muk', 'relasi_jadwal_uji_kompetensi.relasi_user_asesi.relasi_user_asesi', 
+        $data = $data->with('relasi_jadwal_uji_kompetensi.relasi_muk', 
+                        'relasi_jadwal_uji_kompetensi.relasi_user_asesi.relasi_user_asesi', 
                         'relasi_jadwal_uji_kompetensi.relasi_user_asesor')
-                        ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_user_asesor', 'user_asesor_id', Auth::user()->id)->get();
+                        ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_user_asesor', 'user_asesor_id', Auth::user()->id)
+                        ->get();
+        
+        return response()->json([
+        'data'=>$data,
+        'recordsTotal'=>$rekamTotal
+        ]);
+    }
+
+    public function data_list_asesi_peserta_uji_kompetensi(Request $request, $jadwal_uji_kompetensi_id){
+        $data = AsesiUjiKompetensi::select([
+            'asesi_uji_kompetensi.*'
+        ]);
+
+        $data = $data->skip($request->input('start'))->take($request->input('length'));
+        $rekamTotal = $data->count();
+        $data = $data->with('relasi_user_asesi')->where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)
+                        ->get();
         
         return response()->json([
         'data'=>$data,

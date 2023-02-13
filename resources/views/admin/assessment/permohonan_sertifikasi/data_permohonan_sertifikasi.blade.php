@@ -1,5 +1,13 @@
 @extends('layout.main-layout', ['title' => 'Permohonan Sertifikasi'])
 @section('main-section')
+<nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+                href="{{ route('admin.Dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a class="text-black text-decoration-none" href="{{route('admin.Assessment')}}">Asessment</a></li>
+        <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Permohonan Sertifikasi</li>
+    </ol>
+</nav>
   <div class="page-content">
     <section class="section">
         <div class="card">
@@ -7,7 +15,7 @@
                 <div class="col-md-6 stretch-card">
                     <div class="card-body">
                         <select class="form-control form-control-sm filter" id="filter-jurusan">
-                            <option value="">Pilih Jurusan</option>
+                            <option value="">Semua Jurusan</option>
                             @foreach ($jurusan as $data_jurusan)
                             <option value="{{ $data_jurusan->id }}">{{ $data_jurusan->jurusan }}</option>
                             @endforeach
@@ -36,18 +44,6 @@
                     </thead>
                 </table>
             </div>
-        </div>
-
-
-        <div class="card-body">
-          <table class="table table-striped" id="table-sertifikasi">
-            <thead>
-              <tr>
-                <th>Jurusan</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-          </table>
         </div>
       </div>
     </section>
@@ -113,7 +109,14 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_sertifikasi[row.id] = row;
-                    return "Status";
+                    let status;
+                    if(row.relasi_tanda_tangan_admin == null || row.relasi_tanda_tangan_admin.status == null){
+                        status = `<h6 class="text-danger" style="font-size:0.8rem;" >Belum di Verifikasi</h6>`;
+                    }
+                    else{
+                        status = `<h6 class="text-success" style="font-size:0.8rem;">Telah di Verifikasi</h6>`;
+                    }
+                    return status;
                 }
             },
             {
@@ -121,7 +124,7 @@
                 "class": "none",
                 "render": function (data, type, row, meta) {
                     let tampilan;
-                    tampilan = `<span onclick="detailJadwalUjiKompetensi(${row.id})" class="badge bg-info rounded-pill">
+                    tampilan = `<span class="badge bg-info rounded-pill">
                                     <a class="text-white" href="/admin/detail-permohonan-sertifikasi-kompetensi/${row.user_id}">Detail</a>
                                 </span>`
             return tampilan;
@@ -134,9 +137,13 @@
         data_jurusan = $('#filter-jurusan').val()
         nama_jurusan = $("#filter-jurusan option:selected").text();
         table_sertifikasi.ajax.reload(null, false)
-        $('#tambah_edit_sertifikasi').html(
-            `<span class="badge bg-info rounded-pill"><a class="text-white" href="/admin/data-sertifikasi-jurusan/${data_jurusan}">Data Sertifikasi ${nama_jurusan}</a></span>`
-            );
+        if(data_jurusan == ""){
+            $('#tambah_edit_sertifikasi').html("");
+        }else{
+            $('#tambah_edit_sertifikasi').html(
+                `<span class="badge bg-info rounded-pill"><a class="text-white" href="/admin/data-sertifikasi-jurusan/${data_jurusan}">Data Sertifikasi ${nama_jurusan}</a></span>`
+                );
+        }
     })
 
 </script>

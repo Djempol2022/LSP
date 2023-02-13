@@ -13,6 +13,7 @@
                             <th>Materi Uji Kompetensi</th>
                             <th>Asesor</th>
                             <th>Peninjau</th>
+                            <th>Jenis Soal</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -81,13 +82,47 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) 
                 {
+					list_kelola_soal[row.id] = row;
+                    let jenis_tes;
+                    if(row.relasi_pelaksanaan_ujian == null || row.relasi_pelaksanaan_ujian.jenis_tes == null){
+                        jenis_tes = `<p>Belum di tentukan</p>`;
+                    }else if(row.relasi_pelaksanaan_ujian.jenis_tes){
+                        if(row.relasi_pelaksanaan_ujian.jenis_tes == 1){
+                            jenis_tes = `<p>Pilihan Ganda</p>`
+                        }else if(row.relasi_pelaksanaan_ujian.jenis_tes == 2){
+                            jenis_tes = `<p>Essay</p>`
+                        }else if(row.relasi_pelaksanaan_ujian.jenis_tes == 3){
+                            jenis_tes = `<p>Wawancara</p>`
+                        }
+                    }
+                    return jenis_tes;
+                }
+            },
+            {
+                "targets": 4,
+                "class": "text-nowrap",
+                "render": function (data, type, row, meta) 
+                {
 					let tampilan;
-                    tampilan =  `<span class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="/asesor/jenis-soal/${row.id}">Buat Soal</a>
-                                </span>
-                                <span onclick="hapusMUK(${row.id})" class="badge bg-danger rounded-pill">
-                                    <a class="text-white" href="#">Hapus</a>
-                                </span>`
+                    if (row.relasi_pelaksanaan_ujian == null ){
+                        tampilan =  `<span class="badge bg-warning rounded-pill">
+                                        <a class="text-white" href="/asesor/jenis-soal/${row.id}">Buat Soal</a>
+                                    </span>`
+                    }
+                    else if (row.relasi_pelaksanaan_ujian.jadwal_uji_kompetensi_id == row.id ) {
+                        if(row.relasi_pelaksanaan_ujian.jenis_tes == null){
+                            tampilan = `<span class="badge bg-info rounded-pill">
+                                        <a class="text-white" href="/asesor/review-soal/${row.id}">Review Soal</a>
+                                        </span>`
+                        }else if(row.relasi_pelaksanaan_ujian.jenis_tes != null){
+                            tampilan = `<span class="badge bg-info rounded-pill">
+                                        <a class="text-white" href="/asesor/review-soal/${row.id}/${row.relasi_pelaksanaan_ujian.jenis_tes}">Review Soal</a>
+                                        </span>`
+                        }
+                    }
+                        tampilan += `<span onclick="hapusMUK(${row.id})" class="badge bg-danger rounded-pill">
+                                        <a class="text-white" href="#">Hapus</a>
+                                    </span>`
                     return tampilan;
                 }
             },

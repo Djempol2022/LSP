@@ -24,8 +24,7 @@ class Admin_JadwalUjiKompetensi extends Controller
         $data_pelaksanaan_ujian = PelaksanaanUjian::with('relasi_jadwal_uji_kompetensi.relasi_muk');
         
         // dd($data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_muk->jurusan_id);
-        return view('admin.jadwal_uji_kompetensi.jadwal_uji_kompetensi', 
-        [
+        return view('admin.jadwal_uji_kompetensi.jadwal_uji_kompetensi', [
             'data_pelaksanaan_ujian'=>$data_pelaksanaan_ujian,
             'jurusan'=>$jurusan
         ]);
@@ -35,9 +34,9 @@ class Admin_JadwalUjiKompetensi extends Controller
         // $jadwal_uji_kompetensi = JadwalUjiKompetensi::where('id', $id)->with('relasi_muk.relasi_jurusan')->first()->toArray();
         $data_jurusan = Jurusan::where('id', $id)->first();
         $muk = MateriUjiKompetensi::where('jurusan_id', $id)->get()->toArray();
-        $user_asesi = User::with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesi')->get()->toArray();
-        $user_asesor = User::with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesor')->get()->toArray();
-        $user_peninjau = User::with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'peninjau')->get()->toArray();
+        $user_asesi = User::where('jurusan_id', $id)->with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesi')->get()->toArray();
+        $user_asesor = User::where('jurusan_id', $id)->with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesor')->get()->toArray();
+        $user_peninjau = User::where('jurusan_id', $id)->with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'peninjau')->get()->toArray();
         $data_jadwal_uji_kompetensi = JadwalUjiKompetensi::with('relasi_muk', 'relasi_user_asesor.relasi_user_asesor_detail', 
                 'relasi_user_peninjau.relasi_user_peninjau_detail')->get();
 
@@ -66,38 +65,46 @@ class Admin_JadwalUjiKompetensi extends Controller
             'jadwal_uji_kompetensi.*'
         ]);
 
+        $rekamFilter = $data->get()->count();
         if($request->input('length')!=-1) 
-            $data = $data->skip($request->input('start'))->take($request->input('length'));
-            
+        $data = $data->skip($request->input('start'))->take($request->input('length'));
+        $data = $data->with('relasi_pelaksanaan_ujian','relasi_muk', 'relasi_user_asesor.relasi_user_asesor_detail', 
+        'relasi_user_peninjau.relasi_user_peninjau_detail')
+        ->whereRelation('relasi_muk', 'jurusan_id', $id)->get();
             $rekamTotal = $data->count();
-            $data = $data->with('relasi_pelaksanaan_ujian', 'relasi_muk', 'relasi_user_asesor.relasi_user_asesor_detail', 
-                        'relasi_user_peninjau.relasi_user_peninjau_detail')
-                        ->whereRelation('relasi_muk', 'jurusan_id', $id)->get();
             
             return response()->json([
-            'data'=>$data,
-            'recordsTotal'=>$rekamTotal
+                'draw'=>$request->input('draw'),
+                'data'=>$data,
+                'recordsTotal'=>$rekamTotal,
+                'recordsFiltered'=>$rekamFilter,
             ]);
         }
 
         // DETAIL JADWAL UJI KOMPETENSI ACC
-        public function halaman_detail_jadwal_uji_kompetensi_acc($id){
-            $data_pelaksanaan_ujian = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $id)
-                ->with('relasi_jadwal_uji_kompetensi.relasi_muk', 
-                    'relasi_jadwal_uji_kompetensi.relasi_user_asesor', 'relasi_jadwal_uji_kompetensi.relasi_user_peninjau', 
-                    'relasi_jadwal_uji_kompetensi.relasi_user_asesi')
-                ->first();
+        public function halaman_detail_jadwal_uji_kompetensi_acc($jadwal_id, $jurusan_id){
+            $data_pelaksanaan_ujian = PelaksanaanUjian::where('jadwal_uji_kompetensi_id',$jadwal_id)
+                    ->with('relasi_jadwal_uji_kompetensi.relasi_muk', 
+                        'relasi_jadwal_uji_kompetensi.relasi_user_asesor',
+                        'relasi_jadwal_uji_kompetensi.relasi_user_peninjau', 
+                        'relasi_jadwal_uji_kompetensi.relasi_user_asesi')
+                    ->first();
             
-            $user_asesi = User::with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesi')->get();
-            $user_asesi_kompetensi = AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $id)
-                ->with('relasi_user_asesi.relasi_role', 'relasi_jadwal_uji_kompetensi')
-                ->whereRelation('relasi_user_asesi.relasi_role', 'role', '=', 'asesi')->get();
-                // dd($user_asesi);
-            return view('admin.jadwal_uji_kompetensi.detail_jadwal_uji_kompetensi_acc', 
-                    compact('data_pelaksanaan_ujian', 'user_asesi', 'user_asesi_kompetensi'));
-            //     ['data_pelaksanaan_ujian' => $pelaksanaan_ujian,
-            //     'user_asesi' => $user_asesi
-            // ]);
+            $user_asesi = User::where('jurusan_id', $jurusan_id)
+                    ->with('relasi_role', 'relasi_user_asesi_ukom')
+                    ->whereRelation('relasi_role', 'role', '=', 'asesi')
+                    ->where('status_terlibat_uji_kompetensi', 0)
+                    ->get();
+            
+            $user_asesi_kompetensi = AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_id)
+                    ->with('relasi_user_asesi.relasi_role', 'relasi_jadwal_uji_kompetensi')
+                    ->whereRelation('relasi_user_asesi.relasi_role', 'role', '=', 'asesi')
+                    ->get();
+            
+            return view('admin.jadwal_uji_kompetensi.detail_jadwal_uji_kompetensi_acc',[ 
+                    'data_pelaksanaan_ujian' => $data_pelaksanaan_ujian, 
+                    'user_asesi' => $user_asesi, 
+                    'user_asesi_kompetensi' => $user_asesi_kompetensi]);
         }
 
         // DAFTAR ASESI MENGIKUTI UJI KOMPETENSI
@@ -112,8 +119,14 @@ class Admin_JadwalUjiKompetensi extends Controller
         }
 
         // HAPUS ASESI MENGIKUTI UJI KOMPETENSI
-        public function hapus_asesi_uji_kompetensi($id){
-            $hapus_asesi_uji_kompetensi = AsesiUjiKompetensi::find($id)->delete();
+        public function hapus_asesi_uji_kompetensi($asesi_id, $jadwal_id){
+            $data_asesi_ukom = AsesiUjiKompetensi::where('user_asesi_id', $asesi_id)->first();
+            User::where('id', $data_asesi_ukom->user_asesi_id)->update([
+                'status_terlibat_uji_kompetensi' => 0
+            ]);
+
+            $hapus_asesi_uji_kompetensi = AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_id)->where('user_asesi_id', $asesi_id)->delete();
+            
             if(!$hapus_asesi_uji_kompetensi){
                 return response()->json([
                     'status'=>0,
@@ -131,12 +144,22 @@ class Admin_JadwalUjiKompetensi extends Controller
         public function tambah_asesi_ke_ukom(Request $request){
             $id_jadwal_ukom = $request->jadwal_uji_kompetensi_id;
             $id_asesi = $request->user_asesi_id;
+            $jenis_tes = $request->jenis_tes;
 
             foreach($id_asesi as $key => $no)
             {
                 $input['jadwal_uji_kompetensi_id'] = $id_jadwal_ukom;
                 $input['user_asesi_id'] = $id_asesi[$key];
+                if($jenis_tes == 3){
+                    $input['status_ujian_berlangsung'] = 3;
+                }else{
+                    $input['status_ujian_berlangsung'] = 0;
+                }
                 AsesiUjiKompetensi::create($input);
+
+                User::where('id', $input['user_asesi_id'])->update([
+                    'status_terlibat_uji_kompetensi' => 0
+                ]);
             }
             return response()->json([
                 'status'=>1,
@@ -149,7 +172,7 @@ class Admin_JadwalUjiKompetensi extends Controller
         public function ubah_jadwal_pelaksanaan_ujian(Request $request, $id){
         $waktu_mulai = Carbon::parse($request->waktu_mulai);
         $waktu_selesai = Carbon::parse($request->waktu_selesai);
-        
+
         $validator = Validator::make($request->all(), [
             'sesi' => 'required',
             'tanggal' => 'required',

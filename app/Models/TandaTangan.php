@@ -11,4 +11,8 @@ class TandaTangan extends Model
     
     protected $table = "tanda_tangan";
     protected $guarded = ['id'];
+
+    public function relasi_sertifikasi(){
+        return $this->belongsTo(Sertifikasi::class, 'sertifikasi_id', 'id');
+    }
 }

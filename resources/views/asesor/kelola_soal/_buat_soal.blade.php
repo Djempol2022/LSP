@@ -169,8 +169,7 @@
                         @csrf
                         <div class="card-body">
 
-                            <input type="hidden" name="jadwal_uji_kompetensi_id" value="{{ $jadwal_id->id }} hidden">
-                            <input type="hidden" name="jenis_tes" value="{{ $data_jenis_soal->id }} hidden">
+                            <input type="text" name="jadwal_uji_kompetensi_id" value="{{ $jadwal_id->id }}">
                             <div class="row">
                                 <div class="col-md-12">
                                     <h4 class="card-title">Pertanyaan 1</h4>

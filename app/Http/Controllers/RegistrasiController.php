@@ -14,7 +14,7 @@ class RegistrasiController extends Controller
     public function registrasi()
     {
         return view('registrasi', [
-            'sekolah' => Institusi::with('relasi_jurusan')->get(),
+            'sekolah' => Institusi::get(),
             'jurusan' => Jurusan::get()
         ]);
     }
@@ -31,15 +31,16 @@ class RegistrasiController extends Controller
             'password.min' => 'Panjang password minimal 5 huruf',
         );
         $validatedData = $request->validate([
-            'nama_lengkap' => 'required|unique:users|max:255|min:5',
+            'nama_lengkap' => 'required|max:255|min:5',
             'email' => 'required|unique:users|max:255|email:dns',
             'sekolah_id' => 'required',
             'jurusan_id' => 'required',
             'role_id' => 'required',
-            'password' => ['required', 'min:5', 'max:255']
+            'password' => ['required', 'min:5', 'max:255'],
         ], $messages);
         $validatedData['password'] = Hash::make($validatedData['password']);
         User::create($validatedData);
+        
         return redirect('login')->with('success', 'Pendaftaran Berhasil');
     }
     public function getJurusan($sekolah_id)

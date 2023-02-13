@@ -1,5 +1,18 @@
 @extends('layout.main-layout', ['title'=>"Jurusan"])
 @section('main-section')
+<nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+                href="{{ route('admin.Dashboard') }}">Dashboard</a></li>
+
+        <li class="breadcrumb-item" aria-current="page">
+            <a class="text-black text-decoration-none"
+                href="{{ route('admin.Pengaturan') }}">Pengaturan
+            </a>
+        </li>
+        <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Jurusan</li>
+    </ol>
+</nav>
 <div class="page-content">
     <section class="section">
         <div class="card">

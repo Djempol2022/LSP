@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Sertifikasi;
-use Illuminate\Http\Request;
-use App\Models\UnitKompetensi;
-use App\Http\Controllers\Controller;
 use App\Models\Jurusan;
-use App\Models\SkemaSertifikasi;
-use App\Models\StatusUnitKompetensiAsesi;
+use App\Models\Sertifikasi;
 use App\Models\TandaTangan;
+use Illuminate\Http\Request;
+use App\Models\AsesmenMandiri;
+use App\Models\UnitKompetensi;
+use App\Models\SkemaSertifikasi;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Models\StatusUnitKompetensiAsesi;
 use Illuminate\Support\Facades\Validator;
 
 class Admin_AssessmentController extends Controller
@@ -45,17 +47,29 @@ class Admin_AssessmentController extends Controller
             'sertifikasi.*'
         ]);
         
+        // if($request->input('search.value')!=null){
+        //     $data = $data->with('relasi_user', 'relasi_tanda_tangan_admin','relasi_user.relasi_jurusan', 'relasi_user.relasi_institusi')
+        //         ->where(function($q)use($request){
+        //             $q->whereRaw('LOWER(relasi_user.nama_lengkap) like ?',['%'.strtolower($request->input('search.value')).'%'])
+        //             ->orWhereRaw('LOWER(relasi_user.relasi_jurusan.jurusan) like ?',['%'.strtolower($request->input('search.value')).'%']);
+        //     });
+        // }
+
         if($request->input('data_jurusan')!=null){
             $data = $data->with('relasi_user')->whereRelation('relasi_user', 'jurusan_id', $request->data_jurusan);
         }
 
+        $rekamFilter = $data->get()->count();
         if ($request->input('length') != -1)
             $data = $data->skip($request->input('start'))->take($request->input('length'));
+            $data = $data->with('relasi_tanda_tangan_admin','relasi_user.relasi_jurusan', 'relasi_user.relasi_institusi')->get();
             $rekamTotal = $data->count();
-            $data = $data->with('relasi_user.relasi_jurusan')->with('relasi_user.relasi_institusi')->get()->toArray();
+
         return response()->json([
+            'draw'=>$request->input('draw'),
             'data'=>$data,
             'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter,
         ]);
     }
 
@@ -70,6 +84,7 @@ class Admin_AssessmentController extends Controller
             'relasi_sertifikasi.relasi_tanda_tangan_admin',
             'relasi_kelengkapan_pemohon')
             ->where('id', $id)->first();
+
             $date = Carbon::now();
             $tanggal = $permohonan_user_sertifikasi->relasi_sertifikasi->tanggal;
         // pas_foto
@@ -248,12 +263,12 @@ class Admin_AssessmentController extends Controller
     // TANDA TANGAN ADMIN
     public function tambah_ubah_persetujuan_admin(Request $request){
         $validator = Validator::make($request->all(), [
-            'nama_admin'=>'required',
             'no_reg' => 'required',
             'ttd_admin' => 'required',
+            'status' => 'required',
         ],[
-            'nama_admin.required'=> 'Wajib diisi', // custom message
             'no_reg.required'=> 'Wajib diisi', // custom message
+            'status.required'=> 'Wajib diisi', // custom message
             'ttd_admin.required'=> 'Wajib diisi', // custom message
         ]);
 
@@ -267,30 +282,32 @@ class Admin_AssessmentController extends Controller
             // tambah kelengkapan pemohon
             $tanda_tangan_admin = TandaTangan::create([
                 'sertifikasi_id' => $request->sertifikasi_id,
-                'nama_admin' => $request->nama_admin,
+                'nama_admin' => Auth::user()->nama_lengkap,
                 'no_reg' => $request->no_reg,
                 'ttd_admin' => $request->ttd_admin,
                 'catatan' => $request->catatan,
+                'status' => $request->status,
                 'tanggal' => Carbon::now()
             ]);
         } else {
             // edit kelengkapan pemohon
             $tanda_tangan_admin = TandaTangan::where('sertifikasi_id', $request->sertifikasi_id)->update([
-                'nama_admin' => $request->nama_admin,
+                'nama_admin' => Auth::user()->nama_lengkap,
                 'no_reg' => $request->no_reg,
                 'ttd_admin' => $request->ttd_admin,
                 'catatan' => $request->catatan,
+                'status' => $request->status,
                 'tanggal' => Carbon::now()
             ]);
             if(!$tanda_tangan_admin){
                 return response()->json([
                     'status'=>0,
-                    'msg'=>'Terjadi kesalahan, Gagal menambah Materi Uji Kompetensi'
+                    'msg'=>'Terjadi kesalahan, Verifikasi Peserta Sertifikasi'
                 ]);
             }else{
                 return response()->json([
                     'status'=>1,
-                    'msg'=>'Berhasil Memverifikasi'
+                    'msg'=>'Berhasil Memverifikasi Peserta Sertifikasi'
                 ]);
             }
         }
@@ -336,6 +353,62 @@ class Admin_AssessmentController extends Controller
                     ->whereRelation('relasi_role', 'role', '=', 'asesi')
                     ->get();
         }
-        return view('admin.assessment.asessment_mandiri.data_asessment_mandiri', compact('data_user_asesi', 'status_kompeten_asesi'));
+        return view('admin.assessment.asessment_mandiri.data_asessment_mandiri', 
+        compact('data_user_asesi', 'status_kompeten_asesi'));
+    }
+
+    // ASESMEN MANDIRI
+    public function data_pengajuan_asesmen_mandiri_acc(Request $request){
+        // $data = Sertifikasi::select([
+        //     'sertifikasi.*'
+        // ]);
+
+
+        // if ($request->input('length') != -1)
+        //     $data = $data->skip($request->input('start'))->take($request->input('length'));
+        //     $rekamTotal = $data->count();
+        //     $data = $data->with('relasi_user_asesmen_mandiri.relasi_user_asesi.relasi_jurusan', 
+        //                     'relasi_user_asesmen_mandiri.relasi_user_asesi.relasi_institusi')->get();
+        // return response()->json([
+        //     'data'=>$data,
+        //     'recordsTotal'=>$rekamTotal,
+        // ]);
+
+        $data = AsesmenMandiri::select([
+            'asesmen_mandiri.*'
+        ]);
+    
+        $rekamFilter = $data->get()->count();
+        if ($request->input('length') != -1)
+            $data = $data->skip($request->input('start'))->take($request->input('length'));
+            $rekamTotal = $data->count();
+            $data = $data->with('relasi_user_asesi.relasi_jurusan', 
+                                'relasi_user_asesi.relasi_institusi')->get();
+        return response()->json([
+            'draw'=>$request->input('draw'),
+            'data'=>$data,
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter,
+        ]);
+    }
+
+    // DETAIL PENGESAHAN ASESMEN MANDIRI
+    public function detail_pengesahan_asesmen_mandiri_acc($user_asesi_id, $jurusan_id){
+        $sertifikasi = SkemaSertifikasi::with( 
+            'relasi_jurusan',
+            'relasi_unit_kompetensi', 'relasi_unit_kompetensi.relasi_unit_kompetensi_sub')
+            ->where('jurusan_id', $jurusan_id)->first();
+
+        $unit_kompetensi = UnitKompetensi::where('skema_sertifikasi_id', $sertifikasi->id)->get();
+        $data_asesmen_mandiri = AsesmenMandiri::with('relasi_user_asesi', 'relasi_user_asesor')
+            ->whereRelation('relasi_user_asesi', 'user_asesi_id', $user_asesi_id)
+            ->first();
+            
+        return view('admin.assessment.asessment_mandiri.detail_asesmen_mandiri_acc', [
+            'unit_kompetensi' => $unit_kompetensi,
+            'sertifikasi'     => $sertifikasi,
+            'data_asesmen_mandiri'   => $data_asesmen_mandiri,
+            'user_asesi_id'   => $user_asesi_id
+        ]);
     }
 }

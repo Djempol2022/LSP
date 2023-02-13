@@ -1,5 +1,18 @@
 @extends('layout.main-layout', ['title' => 'Materi Uji Kompetensi'])
 @section('main-section')
+<nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+              href="{{ route('admin.Dashboard') }}">Dashboard</a></li>
+
+      <li class="breadcrumb-item" aria-current="page">
+          <a class="text-black text-decoration-none"
+              href="{{ route('admin.Pengaturan') }}">Pengaturan
+          </a>
+      </li>
+      <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Materi Uji Kompetensi</li>
+  </ol>
+</nav>
   <div class="page-content">
     <section class="section">
       <div class="card">
@@ -11,7 +24,7 @@
           </span>
 
           {{-- MODAL TAMBAH --}}
-          <div class="modal fade text-left" id="tambahMuk" role="dialog" aria-labelledby="myModalLabel33"
+          <div class="modal fade text-left" id="tambahMuk" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
               <div class="modal-content">
@@ -26,7 +39,7 @@
                   <div class="modal-body">
                     <label>Materi Uji Kompetensi</label>
                     <div class="form-group">
-                      <input type="text" name="muk" placeholder="Materi Uji Kompetensi"
+                      <input type="text" name="muk" placeholder="Masukkan Materi Uji Kompetensi"
                         class="form-control rounded-5">
                       <div class="input-group has-validation">
                         <label class="text-danger error-text muk_error"></label>
@@ -34,12 +47,12 @@
                     </div>
 
                     <div class="form-group">
-                      <select class="js-example-basic-single" name="jurusan_id">
-                        <option value="" selected disabled>Pilih Jurusan</option>
-                        @foreach ($jurusan as $data_jurusan)
-                          <option value="{{ $data_jurusan->id }}">{{ $data_jurusan->jurusan }}</option>
-                        @endforeach
-                      </select>
+                      <label>Pilih Jurusan</label>
+                        <select class="js-example-basic-single" name="jurusan_id">
+                          @foreach ($jurusan as $data_jurusan)
+                            <option value="{{ $data_jurusan->id }}">{{ $data_jurusan->jurusan }}</option>
+                          @endforeach
+                        </select>
                       <div class="input-group has-validation">
                         <label class="text-danger error-text jurusan_id_error"></label>
                       </div>
@@ -64,6 +77,20 @@
         </div>
 
         <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 mb-4">
+                <fieldset class="form-group">
+                    <select class="form-select filter-jurusan" id="jurusan-id">
+                        <option value="" disabled selected>Filter berdasarkan jurusan</option>
+                        @foreach ($jurusan as $data_jurusan)
+                          <option value="{{ $data_jurusan['id'] }}">
+                            {{ $data_jurusan['jurusan'] }}
+                          </option>    
+                        @endforeach
+                    </select>
+                </fieldset>
+            </div>
+        </div>
           <table class="table table-striped" id="table-muk">
             <thead>
               <tr>
@@ -77,8 +104,8 @@
       </div>
 
       {{-- MODAL EDIT --}}
-      <div class="modal fade text-left" id="editMUK" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal fade text-left" id="editMUK" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title" id="myModalLabel33">Ubah Materi Uji Kompetensi</h4>
@@ -100,10 +127,14 @@
                 </div>
 
                 <div class="form-group">
-                  <select class="js-example-basic-single" name="jurusan_id">
-                    @foreach ($jurusan as $data_jurusan)
-                      <option value="{{ $data_jurusan->id }}">{{ $data_jurusan->jurusan }}</option>
-                    @endforeach
+                <label>Pilih Jurusan</label>
+                  <select class="js-example-basic-single" name="jurusan_id" id="jurusan_id">
+                    {{-- @foreach ($jurusan as $data_jurusan)
+                      <option value="{{ $data_jurusan->id }}"
+                        {{ $data_jurusan->id === $data_jurusan->id ? 'selected' : ''}}>
+                        {{ $data_jurusan->jurusan }}
+                      </option>
+                    @endforeach --}}
                   </select>
                   <div class="input-group has-validation">
                     <label class="text-danger error-text jurusan_id_error"></label>
@@ -112,7 +143,7 @@
 
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-light-secondary close" data-bs-dismiss="modal">
                   <i class="bx bx-x d-block d-sm-none"></i>
                   <span class="d-none d-sm-block">Batal</span>
                 </button>
@@ -132,6 +163,7 @@
 @section('script')
   <script>
     let list_muk = [];
+    let data_jurusan_id = $('#jurusan-id').val();
     const table_muk = $('#table-muk').DataTable({
       "pageLength": 10,
       "lengthMenu": [
@@ -143,14 +175,14 @@
       "bInfo": true,
       "processing": true,
       "bServerSide": true,
+      "searching": false,
       ajax: {
         url: "{{ route('admin.DataMUK') }}",
         type: "POST",
-        // data:function(d){
-        //     d.data_kabupaten = data_kabupaten;
-        //     d.data_status_id = data_status_id;
-        //     return d
-        // }
+        data:function(d){
+            d.jurusan_id = data_jurusan_id;
+                return d
+        }
       },
       columnDefs: [{
           targets: '_all',
@@ -178,10 +210,10 @@
           "render": function(data, type, row, meta) {
             let tampilan;
             tampilan = `<span onclick="editMUK(${row.id})" class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="#">Edit</a>
+                                    <a class="text-white" href="#!">Edit</a>
                                 </span>
-                                <span onclick="hapusMUK(${row.id})" class="badge bg-danger rounded-pill">
-                                    <a class="text-white" href="#">Hapus</a>
+                                <span id-muk = "${row.id}" class="badge bg-danger rounded-pill hapus_muk">
+                                    <a class="text-white" href="#!">Hapus</a>
                                 </span>`
             return tampilan;
           }
@@ -189,12 +221,21 @@
       ]
     });
 
+
+    let data_jurusan = @json($jurusan);
     function editMUK(id) {
       const data_muk = list_muk[id]
       $("#editMUK").modal('show');
-      $("#formEditMUK [name='id']").val(id)
+      $("#formEditMUK [name='id']").val(id);
       $("#formEditMUK .muk").val(data_muk.muk);
+      // $("#formEditMUK [name='jurusan_id']").val("jurusan")
 
+
+      $.each(data_jurusan, function(key, value) {
+          $('#jurusan_id')
+          .append(`<option value="${value.id}" ${value.id == data_muk.jurusan_id ? 'selected' : ''}>${value.jurusan}</option>`)
+      });
+      
       $('#formEditMUK').on('submit', function(e) {
         e.preventDefault();
         $.ajax({
@@ -229,33 +270,46 @@
       });
     }
 
-    function hapusMUK(id) {
-      swal({
-        title: "Yakin ?",
-        text: "Menghapus Data ?",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-      $.ajax({
-        url: "/admin/hapus-muk/" + id,
-        dataType: 'json',
-        success: function(response) {
-          if (response.status == 0) {
-            alert("Gagal Hapus")
-          } else if (response.status == 1) {
-            swal({
-                title: "Berhasil",
-                text: `${response.msg}`,
-                icon: "success",
-                buttons: true,
-                successMode: true,
-              }),
-              table_muk.ajax.reload(null, false)
-          }
-        }
-      });
-    }
+    $('.close').on('click', function(){
+        $("#jurusan_id").empty().append('');
+    })
+
+    $(document).on('click', '.hapus_muk', function (event) {
+        const id = $(event.currentTarget).attr('id-muk');
+
+        swal({
+            title: "Yakin ?",
+            text: "Menghapus Data ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+
+            if (willDelete) {
+                $.ajax({
+            url: "/admin/hapus-muk/" + id,
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == 0) {
+                    alert("Gagal Hapus")
+                } else if (response.status == 1) {
+                    swal({
+                            title: "Berhasil",
+                            text: `${response.msg}`,
+                            icon: "success",
+                            buttons: true,
+                            successMode: true,
+                        }),
+                    table_muk.ajax.reload(null, false)
+                }
+            }
+        });
+            } else {
+                //alert ('no');
+                return false;
+            }
+        });
+    });
 
     $('#isi-muk').on('submit', function(e) {
       e.preventDefault();
@@ -290,6 +344,11 @@
         }
       });
     });
+
+    $(".filter-jurusan").on('change', function(){
+        data_jurusan_id = $('#jurusan-id').val();
+        table_muk.ajax.reload(null, false);
+    })
     
 </script>
 @endsection

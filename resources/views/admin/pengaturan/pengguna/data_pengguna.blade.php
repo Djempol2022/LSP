@@ -2,6 +2,19 @@
 @section('main-section')
 <div class="page-content">
     <section class="section">
+        <nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a class="text-black text-decoration-none"
+                        href="{{ route('admin.Dashboard') }}">
+                        Dashboard
+                    </a>
+                </li>
+                <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">
+                    Pengguna
+                </li>
+            </ol>
+        </nav>
         <div class="card">
             <div class="card-header">
                 <span class="badge bg-info rounded-pill">
@@ -84,7 +97,7 @@
                                     <select class="js-example-basic-single" name="role_id">
                                         <option value="" selected disabled>Pilih Role</option>
                                         <option value="1">Admin</option>
-                                        <option value="2">Peninjau</option>
+                                        {{-- <option value="2">Peninjau</option> --}}
                                         <option value="3">Asesor</option>
                                         <option value="4">Asesi</option>
                                     </select>
@@ -113,6 +126,18 @@
             </div>
 
             <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <fieldset class="form-group">
+                            <select class="form-select filter-role-pengguna" id="role-id">
+                                <option value="" disabled selected>Filter berdasarkan role</option>
+                                <option value="2">Peninjau</option>
+                                <option value="3">Asesor</option>
+                                <option value="4">Asesi</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                </div>
                 <table class="table table-striped" id="table-pengguna">
                     <thead>
                         <tr>
@@ -203,7 +228,7 @@
                                 <select class="js-example-basic-single" name="role_id">
                                     <option value="" selected disabled>Pilih Role</option>
                                     <option value="1">Admin</option>
-                                    <option value="2">Peninjau</option>
+                                    {{-- <option value="2">Peninjau</option> --}}
                                     <option value="3">Asesor</option>
                                     <option value="4">Asesi</option>
                                 </select>
@@ -234,25 +259,28 @@
 @section('script')
 <script>
     let list_pengguna = [];    
+    let data_role_pengguna = $('#role-id').val();
     const table_pengguna = $('#table-pengguna').DataTable({
+        "destroy":true,
         "pageLength": 10,
         "lengthMenu": [
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, 'semua']
         ],
         "bLengthChange": true,
-        "bFilter": true,
+        "bFilter": false,
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
+        "responsive": true,
+        
         ajax: {
             url: "{{ route('admin.DataPengguna') }}",
             type: "POST",
-            // data:function(d){
-            //     d.data_kabupaten = data_kabupaten;
-            //     d.data_status_id = data_status_id;
-            //     return d
-            // }
+            data:function(d){
+                d.role_pengguna = data_role_pengguna;
+                return d
+            }
         },
         columnDefs: [{
                 targets: '_all',
@@ -260,7 +288,7 @@
             },
             {
                 "targets": 0,
-                "class": "text-nowrap",
+                "class": "text-wrap",
                 "render": function (data, type, row, meta) 
                 {
 					list_pengguna[row.id] = row;
@@ -269,7 +297,7 @@
             },
             {
                 "targets": 1,
-                "class": "text-nowrap",
+                "class": "text-wrap",
                 "render": function (data, type, row, meta) 
                 {
 					list_pengguna[row.id] = row;
@@ -278,16 +306,22 @@
             },
             {
                 "targets": 2,
-                "class": "text-nowrap",
+                "class": "text-wrap",
                 "render": function (data, type, row, meta) 
                 {
 					list_pengguna[row.id] = row;
-                    return row.relasi_institusi.nama_institusi;
+                    let institusi;
+                    if(row.relasi_institusi == null || row.relasi_institusi.nama_institusi == null){
+                        institusi = `<p>Institusi Belum di Tentukan</p>`
+                    }else{
+                        institusi = row.relasi_institusi.nama_institusi
+                    }
+                    return institusi;
                 }
             },
             {
                 "targets": 3,
-                "class": "text-nowrap",
+                "class": "text-wrap",
                 "render": function (data, type, row, meta) 
                 {
 					list_pengguna[row.id] = row;
@@ -296,7 +330,7 @@
             },
             {
                 "targets": 4,
-                "class": "text-nowrap",
+                "class": "text-wrap",
                 "render": function (data, type, row, meta) 
                 {
 					list_pengguna[row.id] = row;
@@ -439,5 +473,10 @@
             }
         });
     });
+
+    $(".filter-role-pengguna").on('change', function(){
+        data_role_pengguna = $('#role-id').val();
+        table_pengguna.ajax.reload(null, false);
+    })
 </script>
 @endsection
