@@ -139,6 +139,10 @@
           if (rowObj.name == btnName) {
             table.deleteRow(i);
             rowCount--;
+            for (let j = 1; j < rowCount; j++) {
+              let rowJ = table.rows[j];
+              rowJ.cells[0].innerHTML = j + '.';
+            }
           }
         }
       } catch (e) {
@@ -202,6 +206,7 @@
       cell4.appendChild(element3);
 
       let cell5 = row.insertCell(4);
+      cell5.className = 'text-center';
       let element4 = document.createElement("button");
       element4.className = 'border-0 bg-transparent text-danger';
       element4.innerHTML = 'X';

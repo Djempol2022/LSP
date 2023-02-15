@@ -192,6 +192,23 @@ class BerkasController extends Controller
         return response()->json($sk_penetapan_tuk);
     }
 
+    public function hapus_sk_penetapan($id)
+    {
+        $delete_berkas = SKPenetapanTUK::find($id)->delete();
+
+        if (!$delete_berkas) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Terjadi kesalahan, Gagal Menghapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Berhasil Menghapus'
+            ]);
+        }
+    }
+
     public function cetak_sk_penetapan_pdf($id)
     {
         $sk_penetapan_tuk = SKPenetapanTUK::with(['relasi_sk_penetapan_tuk_child.relasi_nama_tuk', 'relasi_sk_penetapan_tuk_child.relasi_skema_sertifikasi'])->find($id);
@@ -209,11 +226,45 @@ class BerkasController extends Controller
         return response()->json($daftar_tuk);
     }
 
+    public function hapus_daftar_tuk($id)
+    {
+        $delete_berkas = DaftarTUKTerverifikasi::find($id)->delete();
+
+        if (!$delete_berkas) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Terjadi kesalahan, Gagal Menghapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Berhasil Menghapus'
+            ]);
+        }
+    }
+
     public function show_hasil_verifikasi_tuk($id)
     {
         $hasil_verifikasi_tuk = HasilVerifikasiTUK::with(['relasi_skema_sertifikasi.relasi_jurusan', 'relasi_sarana_prasarana.relasi_sarana_prasarana_sub.relasi_sarana_prasarana_sub2', 'relasi_penguji_hasil_verifikasi'])->find($id);
 
         return response()->json($hasil_verifikasi_tuk);
+    }
+
+    public function hapus_hasil_verifikasi_tuk($id)
+    {
+        $delete_berkas = HasilVerifikasiTUK::find($id)->delete();
+
+        if (!$delete_berkas) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Terjadi kesalahan, Gagal Menghapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Berhasil Menghapus'
+            ]);
+        }
     }
 
     public function show_st_verifikasi_tuk($id)
@@ -223,11 +274,45 @@ class BerkasController extends Controller
         return response()->json($st_verifikasi_tuk);
     }
 
+    public function hapus_st_verifikasi_tuk($id)
+    {
+        $delete_berkas = STVerifikasiTUK::find($id)->delete();
+
+        if (!$delete_berkas) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Terjadi kesalahan, Gagal Menghapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Berhasil Menghapus'
+            ]);
+        }
+    }
+
     public function show_x03_st_verifikasi_tuk($id)
     {
         $x03_st_verifikasi_tuk = X03STVerifikasiTUK::with(['relasi_nama_tuk', 'relasi_nama_jabatan'])->find($id);
 
         return response()->json($x03_st_verifikasi_tuk);
+    }
+
+    public function hapus_x03_st_verifikasi_tuk($id)
+    {
+        $delete_berkas = X03STVerifikasiTUK::find($id)->delete();
+
+        if (!$delete_berkas) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Terjadi kesalahan, Gagal Menghapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Berhasil Menghapus'
+            ]);
+        }
     }
 
     public function show_x04_berita_acara($id)
@@ -237,11 +322,45 @@ class BerkasController extends Controller
         return response()->json($x04_berita_acara);
     }
 
+    public function hapus_x04_berita_acara($id)
+    {
+        $delete_berkas = X04BeritaAcara::find($id)->delete();
+
+        if (!$delete_berkas) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Terjadi kesalahan, Gagal Menghapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Berhasil Menghapus'
+            ]);
+        }
+    }
+
     public function show_z_ba_pecah_rp($id)
     {
         $z_ba_pecah_rp = ZBAPecahRP::with(['relasi_skema_sertifikasi', 'relasi_institusi', 'relasi_nama_tuk', 'relasi_nama_jabatan', 'relasi_bahasan_diskusi'])->find($id);
 
         return response()->json($z_ba_pecah_rp);
+    }
+
+    public function hapus_z_ba_pecah_rp($id)
+    {
+        $delete_berkas = ZBAPecahRP::find($id)->delete();
+
+        if (!$delete_berkas) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Terjadi kesalahan, Gagal Menghapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Berhasil Menghapus'
+            ]);
+        }
     }
 
     public function show_z_ba_rp($id)
@@ -256,6 +375,23 @@ class BerkasController extends Controller
         $df_hadir_asesor_pleno = DFHadirAsesorPleno::with(['relasi_nama_jabatan'])->find($id);
 
         return response()->json($df_hadir_asesor_pleno);
+    }
+
+    public function hapus_df_hadir_asesor_pleno($id)
+    {
+        $delete_berkas = DFHadirAsesorPleno::find($id)->delete();
+
+        if (!$delete_berkas) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Terjadi kesalahan, Gagal Menghapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Berhasil Menghapus'
+            ]);
+        }
     }
 
     public function show_df_hadir_asesor($id)

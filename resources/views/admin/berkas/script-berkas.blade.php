@@ -1,6 +1,8 @@
 <script>
   $(document).ready(function() {
 
+    $('#berkas').select2();
+
     skPenetapanTUKTerverifikasi();
     $('#tambah').attr('href', '/admin/berkas/sk-penetapan-tuk-terverifikasi');
 
@@ -39,6 +41,49 @@
         $('#table-surat').DataTable();
       }
     });
+
+    // lightbulb
+    // Get the modal
+    var modal = document.getElementById("myModalLightbulb");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById("myImgLightbulb");
+    var modalImg = document.getElementById("img01-lightbulb");
+    var captionText = document.getElementById("caption-lightbulb");
+
+    img.onclick = function() {
+      modal.style.display = "block";
+      modalImg.src = '/images/berkas/sk-penetapan-tuk-terverifikasi.png';
+      captionText.innerHTML = 'Contoh Berkas SK Penetapan TUK Terverifikasi';
+    }
+
+    // value berkas dropdown
+    $('#berkas').change(function() {
+      let berkasValue = $(this).val();
+
+      if (berkasValue === '#') {
+        img.onclick = function() {
+          modal.style.display = "block";
+          modalImg.src = '/images/berkas/sk-penetapan-tuk-terverifikasi.png';
+          captionText.innerHTML = 'Contoh Berkas SK Penetapan TUK Terverifikasi';
+        }
+      } else {
+        img.onclick = function() {
+          modal.style.display = "block";
+          modalImg.src = '/images/berkas/' + berkasValue + '.png';
+          captionText.innerHTML = 'Contoh Berkas ' + berkasValue.replace(/-/g, ' ');
+        }
+
+      }
+    });
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close-lightbulb")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
 
     // surat table
     function skPenetapanTUKTerverifikasi() {
@@ -113,7 +158,9 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailSKPenetapan(${row.id})" id="detailSKPenetapan">Detail</button>`
+                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailSKPenetapan(${row.id})" id="detailSKPenetapan">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'sk-penetapan-tuk-terverifikasi')">Hapus</button>
+                `
               return tampilan;
             }
           },
@@ -193,7 +240,9 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailDaftarTUK(${row.id})">Detail</button>`
+                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailDaftarTUK(${row.id})">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'daftar-tuk-terverifikasi')">Hapus</button>
+                `
               return tampilan;
             }
           },
@@ -273,7 +322,9 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailHasilVerifikasiTUK(${row.id})">Detail</button>`
+                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailHasilVerifikasiTUK(${row.id})">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'hasil-verifikasi-tuk')">Hapus</button>
+                `
               return tampilan;
             }
           },
@@ -353,7 +404,9 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailSTVerifikasiTUK(${row.id})">Detail</button>`
+                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailSTVerifikasiTUK(${row.id})">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'st-verifikasi-tuk')">Hapus</button>
+                `
               return tampilan;
             }
           },
@@ -433,7 +486,9 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailX03STVerifikasiTUK(${row.id})">Detail</button>`
+                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailX03STVerifikasiTUK(${row.id})">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'x03-st-verifikasi-tuk')">Hapus</button>
+                `
               return tampilan;
             }
           },
@@ -507,7 +562,9 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailX04BeritaAcara(${row.id})">Detail</button>`
+                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailX04BeritaAcara(${row.id})">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'x04-berita-acara')">Hapus</button>
+                `
               return tampilan;
             }
           },
@@ -581,7 +638,9 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailZBAPecahRP(${row.id})">Detail</button>`
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailZBAPecahRP(${row.id})">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'z-ba-pecah-rp')">Hapus</button>
+                `
               return tampilan;
             }
           },
@@ -655,7 +714,9 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailZBARP(${row.id})">Detail</button>`
+                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailZBARP(${row.id})">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'z-ba-pecah-rp')">Hapus</button>
+                `
               return tampilan;
             }
           },
@@ -729,7 +790,9 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailDFHadirAsesorPleno(${row.id})">Detail</button>`
+                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailDFHadirAsesorPleno(${row.id})">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesor-pleno')">Hapus</button>
+                `
               return tampilan;
             }
           },
@@ -803,7 +866,9 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailDFHadirAsesor(${row.id})">Detail</button>`
+                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailDFHadirAsesor(${row.id})">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesor-pleno')">Hapus</button>
+                `
               return tampilan;
             }
           },
@@ -847,7 +912,8 @@
     let url = "table-surat-daftar-tuk/" + id;
     $.get(url, function(data) {
       $('#modalDetailDaftarTUK').modal('show');
-      $("#tbody_daftar_tuk_terverifikasi").html(data.relasi_daftar_tuk_terverifikasi_child.map(function(d, i) {
+      $("#tbody_daftar_tuk_terverifikasi").html(data.relasi_daftar_tuk_terverifikasi_child.map(function(d,
+        i) {
         return $(
           `<tr>
                     <td>${i + 1}.</td>
@@ -1289,5 +1355,36 @@
     waktu = hour[0] + ':' + hour[1];
 
     return waktu;
+  }
+
+  function hapusBerkas(id, type) {
+    swal({
+      title: "Yakin ?",
+      text: "Menghapus Data ?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          url: "/admin/hapus-" + type + "/" + id,
+          dataType: 'json',
+          success: function(response) {
+            if (response.status == 0) {
+              alert("Gagal Hapus")
+            } else if (response.status == 1) {
+              swal({
+                  title: "Berhasil",
+                  text: `${response.msg}`,
+                  icon: "success",
+                  buttons: true,
+                  successMode: true,
+                }),
+                $('#table-surat').DataTable().ajax.reload(null, false)
+            }
+          }
+        });
+      }
+    });
   }
 </script>

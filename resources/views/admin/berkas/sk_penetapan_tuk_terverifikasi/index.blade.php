@@ -243,7 +243,7 @@
                     <th>NAMA TUK</th>
                     <th>NAMA SKEMA SERTIFIKASI</th>
                     <th>TEMPAT</th>
-                    <th></th>
+                    <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody id="bodyTable">

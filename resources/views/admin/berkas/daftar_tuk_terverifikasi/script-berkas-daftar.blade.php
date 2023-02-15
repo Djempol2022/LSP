@@ -62,6 +62,10 @@
           if (rowObj.name == btnName) {
             table.deleteRow(i);
             rowCount--;
+            for (let j = 1; j < rowCount; j++) {
+              let rowJ = table.rows[j];
+              rowJ.cells[0].innerHTML = j + '.';
+            }
           }
         }
       } catch (e) {

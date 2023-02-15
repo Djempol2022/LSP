@@ -27,7 +27,7 @@
                   <th>NAMA TUK</th>
                   <th>NAMA SKEMA SERTIFIKASI</th>
                   <th>PENANGGUNG JAWAB TUK</th>
-                  <th></th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody id="bodyTable">

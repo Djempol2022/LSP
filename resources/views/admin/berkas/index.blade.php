@@ -27,8 +27,13 @@
               <option value="df-hadir-asesor">Daftar Hadir Asesor</option>
             </select>
           </div>
-          <div>
-            <a href="#" class="btn btn-primary" id="tambah" disabled>Tambah</a>
+          <div class="d-flex justify-content-between align-items-center" style="width: 130px">
+            <div>
+              @include('admin.berkas.modal_image.index')
+            </div>
+            <div>
+              <a href="#" class="btn btn-primary" id="tambah" disabled>Tambah</a>
+            </div>
           </div>
         </div>
 

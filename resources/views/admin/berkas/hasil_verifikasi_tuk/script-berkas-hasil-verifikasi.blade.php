@@ -108,9 +108,13 @@
 
       let rowCount = table.rows.length - 1;
       let row = table.insertRow(rowCount);
-      row.className = 'rowMain' + rowCount;
-      arrayRowMain.push('rowMain' + rowCount);
 
+      let is_exists = arrayRowMain.includes('rowMain' + rowCount);
+      if (!is_exists) {
+        arrayRowMain.push('rowMain' + rowCount);
+      }
+
+      row.className = 'rowMain' + (arrayRowMain.length + 1);
       let cell1 = row.insertCell(0);
       cell1.innerHTML = arrayRowMain.length + '.';
 
@@ -123,11 +127,11 @@
       element1.name = 'sarana_prasarana[]';
       let element1_1 = document.createElement('button');
       element1_1.className = 'mt-2 border-0 bg-transparent text-primary font-extrabold';
-      element1_1.id = 'addRowSub';
+      element1_1.id = 'addRowSub_' + (arrayRowMain.length + 1);
       element1_1.innerHTML = '+';
       element1_1.type = 'button';
       element1_1.onclick = function() {
-        renderRowSub(rowCount);
+        renderRowSub(this.id);
       };
       cell2.appendChild(element1);
       cell2.appendChild(element1_1);
@@ -182,23 +186,47 @@
       element6.innerHTML = 'X';
       element6.dataToggle = 'modal';
       element6.type = "button";
+      element6.id = 'button' + rowCount;
       element6.onclick = function() {
-        removeRow("rowMain" + rowCount)
+        removeRow("rowMain" + rowCount);
       };
       cell7.appendChild(element6);
 
     }
 
+    let arrayRowSub = [];
     let renderRowSub = (lengthRowMain) => {
-      let table = document.getElementById('tableHasilVerifikasiTUK');
+      let rowMainString = lengthRowMain.split('_');
+      let rowMainCount = parseInt(rowMainString[1]);
 
-      let rowCount = $('tr.rowMain' + lengthRowMain).prevAll().length + 3;
+      let table = document.getElementById('tableHasilVerifikasiTUK');
+      console.log(table.rows);
+      console.log($('tr.rowMain' + rowMainCount).last()[0].className);
+      let index_table_array = 0;
+      let filtered_table_array = Array.from(table.rows);
+      filtered_table_array.forEach(function(row, i, arr) {
+        if (row.className === 'rowMain' + rowMainCount) {
+          index_table_array = i;
+        }
+      });
+
+
+      let rowCount = index_table_array + 1;
+
+      // let is_exists = arrayRowSub.includes('rowMain' + rowMainCount);
+      // if (is_exists) {
+      // arrayRowSub.push('rowMain' + rowMainCount);
+      arrayRowSub.push('rowMain' + rowMainCount);
+      // }
+
+      console.log(arrayRowSub);
+
       let row = table.insertRow(rowCount);
-      row.className = 'rowSub' + rowCount + ' rowMain' + lengthRowMain;
+      row.className = 'rowSub' + (arrayRowSub.length) + ' rowMain' + rowMainCount;
 
       let cell1 = row.insertCell(0);
-      let noMain = $('tr.rowMain' + lengthRowMain)[0].firstChild.innerHTML;
-      let noSub = $('tr.rowMain' + lengthRowMain).length - 1 + '.';
+      let noMain = $('tr.rowMain' + rowMainCount)[0].firstChild.innerHTML;
+      let noSub = $('tr.rowMain' + rowMainCount).length - 1 + '.';
       cell1.innerHTML = noMain + noSub;
 
       let cell2 = row.insertCell(1);
@@ -207,11 +235,11 @@
       element1.className = 'form-control';
       element1.type =
         "text";
-      element1.name = `sarana_prasarana_sub[${$('tr.rowMain' + lengthRowMain).length - 2}][]`;
+      element1.name = `sarana_prasarana_sub[${$('tr.rowMain' + rowMainCount).length - 2}][]`;
       let element1_1 = document.createElement('button');
       element1_1.className =
         'mt-2 border-0 bg-transparent text-primary font-extrabold';
-      element1_1.id = 'addRowSub2';
+      element1_1.id = 'addRowSub_2';
       element1_1
         .innerHTML = '+';
       element1_1.type = 'button';
@@ -225,45 +253,53 @@
       let cell3 = row.insertCell(2);
       let element2 = document.createElement("input");
       element2.className = 'form-check-input';
-      element2.type = "checkbox";
+      element2.type =
+        "checkbox";
       element2.name = "status_sub[]" + rowCount;
       element2.value = 1;
-      element2.onchange = function() {
-        $('input[name="' + this.name + '"]').not(this).prop('checked', false);
-      };
+      element2.onchange =
+        function() {
+          $('input[name="' + this.name + '"]').not(this).prop('checked', false);
+        };
       cell3.appendChild(element2);
 
       let cell4 = row.insertCell(3);
       let element3 = document.createElement("input");
       element3.className = 'form-check-input';
-      element3.type = "checkbox";
+      element3.type =
+        "checkbox";
       element3.name = "status_sub[]" + rowCount;
       element3.value = 0;
-      element3.onchange = function() {
-        $('input[name="' + this.name + '"]').not(this).prop('checked', false);
-      };
+      element3.onchange =
+        function() {
+          $('input[name="' + this.name + '"]').not(this).prop('checked', false);
+        };
       cell4.appendChild(element3);
 
       let cell5 = row.insertCell(4);
       let element4 = document.createElement("input");
       element4.className = 'form-check-input';
-      element4.type = "checkbox";
+      element4.type =
+        "checkbox";
       element4.name = "kondisi_sub[]" + rowCount;
       element4.value = 0;
-      element4.onchange = function() {
-        $('input[name="' + this.name + '"]').not(this).prop('checked', false);
-      };
+      element4.onchange =
+        function() {
+          $('input[name="' + this.name + '"]').not(this).prop('checked', false);
+        };
       cell5.appendChild(element4);
 
       let cell6 = row.insertCell(5);
       let element5 = document.createElement("input");
       element5.className = 'form-check-input';
-      element5.type = "checkbox";
+      element5.type =
+        "checkbox";
       element5.name = "kondisi_sub[]" + rowCount;
       element5.value = 0;
-      element5.onchange = function() {
-        $('input[name="' + this.name + '"]').not(this).prop('checked', false);
-      };
+      element5.onchange =
+        function() {
+          $('input[name="' + this.name + '"]').not(this).prop('checked', false);
+        };
       cell6.appendChild(element5);
 
       let cell7 = row.insertCell(6);
@@ -298,16 +334,38 @@
     }
 
     function removeRow(rowMain) {
+      console.log(document.querySelectorAll('.' + rowMain));
       document.querySelectorAll('.' + rowMain).forEach(e => {
-        e.remove()
+        e.remove();
+
+        // reset main input after remove
+        let table = document.getElementById('tableHasilVerifikasiTUK');
+
+        arrayRowMain = [];
+        let rowCount = table.rows.length - 1;
+        for (let i = 2; i < rowCount; i++) {
+          let row = table.rows[i];
+
+          arrayRowMain.push('rowMain' + i);
+
+          row.className = 'rowMain' + i;
+          row.cells[6].childNodes[0].id = 'button' + i;
+          row.cells[0].innerHTML = i - 1 + '.';
+          $('#button' + i).prop('onclick', null);
+          row.cells[6].onclick = function() {
+            removeRow("rowMain" + i)
+          };
+        }
+        // end reset main input after remove
       });
+
     }
 
     // coming soon
     // function removeRowSub(btnName) {
     //   try {
-    //     let table = document.getElementById('tableHasilVerifikasiTUK');
-    //     let rowCount = table.rows.length - 1;
+    // let table = document.getElementById('tableHasilVerifikasiTUK');
+    // let rowCount = table.rows.length - 1;
     //     for (let i = 2; i < rowCount; i++) {
     //       let row = table.rows[i];
     //       let rowObj = row.cells[6].childNodes[0];

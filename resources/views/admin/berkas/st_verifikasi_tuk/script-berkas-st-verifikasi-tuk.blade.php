@@ -96,6 +96,10 @@
           if (rowObj.name == btnName) {
             table.deleteRow(i);
             rowCount--;
+            for (let j = 1; j < rowCount; j++) {
+              let rowJ = table.rows[j];
+              rowJ.cells[0].innerHTML = j + '.';
+            }
           }
         }
       } catch (e) {
@@ -130,8 +134,9 @@
       cell3.appendChild(element2);
 
       let cell4 = row.insertCell(3);
+      cell4.className = 'text-center';
       let element3 = document.createElement("button");
-      element3.className = 'border-0 bg-transparent text-danger text-center';
+      element3.className = 'border-0 bg-transparent text-danger';
       element3.innerHTML = 'X'
       element3.type = "button";
       element3.name = "button" + (rowCount + 1);
