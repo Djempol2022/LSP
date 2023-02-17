@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('df_hadir_asesor_pleno', function (Blueprint $table) {
             $table->id();
-            $table->integer('thn_ajaran')->nullable();
+            $table->date('thn_ajaran')->nullable();
             $table->date('tgl')->nullable();
             $table->time('wkt_mulai')->nullable();
             $table->time('wkt_selesai')->nullable();

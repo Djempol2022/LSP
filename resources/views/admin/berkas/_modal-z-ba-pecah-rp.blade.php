@@ -58,7 +58,8 @@
               </tr>
               <tr>
                 <td></td>
-                <td style="height: 70px;"></td>
+                <td style="height: 70px;"><img id="ttd_z_ba_pecah_rp_1" src="" alt="ttd" width="180px"
+                    class="ttd"></td>
               </tr>
               <tr>
                 <td></td>
@@ -219,7 +220,8 @@
               </tr>
               <tr>
                 <td></td>
-                <td style="height: 70px;"></td>
+                <td style="height: 70px;"><img id="ttd_z_ba_pecah_rp_2" src="" alt="ttd"
+                    width="180px" class="ttd"></td>
               </tr>
               <tr>
                 <td style="font-weight: bold;" id="notulis_2_z_ba_pecah_rp"></td>
@@ -245,7 +247,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Close</button>
-        <a id='pdfSKPenetapan' href="#" class="btn btn-primary">Save as PDF</a>
+        <a id='pdfZBAPecahRP' href="#" class="btn btn-primary">Save as PDF</a>
       </div>
     </div>
   </div>

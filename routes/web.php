@@ -237,6 +237,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('cetak-st-verifikasi-tuk/{id}', 'cetak_st_verifikasi_tuk_pdf')->name('CetakSTVerifikasiTUKPDF');
             Route::get('cetak-x03-st-verifikasi-tuk/{id}', 'cetak_x03_st_verifikasi_tuk_pdf')->name('CetakX03STVerifikasiTUKPDF');
             Route::get('cetak-x04-berita-acara/{id}', 'cetak_x04_berita_acara_pdf')->name('CetakX04BeritaAcaraPDF');
+            Route::get('cetak-z-ba-pecah-rp/{id}', 'cetak_z_ba_pecah_rp_pdf')->name('CetakZBAPecahRPPDF');
+            Route::get('cetak-df-hadir-asesor-pleno/{id}', 'cetak_df_hadir_asesor_pleno_pdf')->name('CetakDFHadirAsesorPlenoPDF');
+            Route::get('cetak-df-hadir-asesor/{id}', 'cetak_df_hadir_asesor_pdf')->name('CetakDFHadirAsesorPDF');
         });
     });
     // Contoh Pemanggilan Route di Blade -> asesor.Dashboard

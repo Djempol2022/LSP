@@ -11,6 +11,7 @@ class DFHadirAsesorPleno extends Model
 
     protected $table = 'df_hadir_asesor_pleno';
     protected $guarded = ['id'];
+    protected $dates = ['tgl', 'wkt_mulai', 'wkt_selesai', 'thn_ajaran'];
 
     public function relasi_nama_jabatan()
     {

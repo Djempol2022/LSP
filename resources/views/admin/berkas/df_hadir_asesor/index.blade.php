@@ -154,8 +154,8 @@
             <h6 style="margin-bottom: 0; font-weight: bolder">UJI KOMPETENSI LSP-P1 SMKN 1 SINTANG</h6>
             <h6 style="margin-bottom: 0; font-weight: bolder"
               class="d-flex justify-content-center align-items-center gap-2">TAHUN PELAJARAN <span
-                id="thn_ajaran_df_hadir_asesor_1"><input type="integer" readonly class="yearpicker form-control"
-                  name="thn_ajaran" id="thn_ajaran_1" required>
+                id="thn_ajaran_df_hadir_asesor_1"><input type="integer" maxlength="4" pattern="\d{4}"
+                  class="yearpicker form-control" name="thn_ajaran" id="thn_ajaran_1" required>
               </span> / <span id="thn_ajaran_df_hadir_asesor_2"></span></h6>
           </div>
           <div style="margin-top: 20px; margin-left: 30px">

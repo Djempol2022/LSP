@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card px-5">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">DAFTAR HADIR ASESOR</h6>
@@ -60,8 +60,7 @@
               </tr>
               <tr>
                 <td></td>
-                <td style="height: 30px; text-align: center;"><img src="" id="ttd_df_hadir_asesor_pleno"
-                    width="90px"></td>
+                <td style="height: 30px;"><img src="" id="ttd_df_hadir_asesor_pleno" width="140px"></td>
               </tr>
               <tr>
                 <td></td>
@@ -86,7 +85,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Close</button>
-        <a id='pdfSKPenetapan' href="#" class="btn btn-primary">Save as PDF</a>
+        <a id='pdfDFHadirAsesorPleno' href="#" class="btn btn-primary">Save as PDF</a>
       </div>
     </div>
   </div>

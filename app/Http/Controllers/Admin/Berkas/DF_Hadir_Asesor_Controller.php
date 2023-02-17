@@ -17,6 +17,7 @@ class DF_Hadir_Asesor_Controller extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'thn_ajaran' => 'required',
             'nama_bttd' => 'required',

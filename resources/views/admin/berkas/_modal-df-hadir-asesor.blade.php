@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card px-5">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">DAFTAR HADIR ASESI</h6>
@@ -142,7 +142,7 @@
         </div>
 
         {{-- lembar 2 --}}
-        <div class="card p-5">
+        <div class="card px-5">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">DAFTAR HADIR PANITIA</h6>
@@ -199,7 +199,7 @@
         </div>
 
         {{-- lembar 3 --}}
-        <div class="card p-5">
+        <div class="card px-5">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">DAFTAR HADIR ASESOR</h6>
@@ -212,19 +212,19 @@
               <tr>
                 <td style="width: 12%">Hari/Tanggal</td>
                 <td style="width: 3%">:</td>
-                <td style="width: 85%"><span id="hari_df_hadir_asesor">Selasa</span> / <span id="tgl_df_hadir_asesor">1
-                    Maret 2022</span>
+                <td style="width: 85%"><span id="hari_df_hadir_asesor"></span> / <span id="tgl_df_hadir_asesor"></span>
                 </td>
               </tr>
               <tr>
                 <td>Waktu</td>
                 <td>:</td>
-                <td><span id="wkt_df_hadir_asesor">09.00</span> WIB - Selesai</td>
+                <td><span id="wkt_mulai_df_hadir_asesor"></span> s/d <span id="wkt_selesai_df_hadir_asesor"></span> WIB
+                </td>
               </tr>
               <tr>
                 <td>Tempat</td>
                 <td>:</td>
-                <td id="tempat_df_hadir_asesor">Ruang LSP SMKN 1 Sintang</td>
+                <td id="tempat_df_hadir_asesor"></td>
               </tr>
             </table>
           </div>
@@ -253,8 +253,7 @@
               </tr>
               <tr>
                 <td></td>
-                <td style="height: 30px; text-align: center;"><img src="" id="ttd_df_hadir_asesor"
-                    width="90px"></td>
+                <td style="height: 30px;"><img src="" id="ttd_df_hadir_asesor" width="140px"></td>
               </tr>
               <tr>
                 <td></td>
@@ -279,7 +278,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Close</button>
-        <a id='pdfSKPenetapan' href="#" class="btn btn-primary">Save as PDF</a>
+        <a id='pdfDFHadirAsesor' href="#" class="btn btn-primary">Save as PDF</a>
       </div>
     </div>
   </div>

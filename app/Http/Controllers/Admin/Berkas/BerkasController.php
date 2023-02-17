@@ -445,6 +445,17 @@ class BerkasController extends Controller
         }
     }
 
+    public function cetak_z_ba_pecah_rp_pdf($id)
+    {
+        $z_ba_pecah_rp = ZBAPecahRP::with(['relasi_skema_sertifikasi', 'relasi_institusi', 'relasi_nama_tuk', 'relasi_nama_jabatan', 'relasi_bahasan_diskusi'])->find($id);
+        // dd($z_ba_pecah_rp);
+        // return view('admin.berkas.z_ba_pecah_rp.pdf', [
+        //     'z_ba_pecah_rp' => $z_ba_pecah_rp,
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.z_ba_pecah_rp.pdf', compact('z_ba_pecah_rp'));
+        return $pdf->download('Z Berita Acara Pecah Rapat Pleno.pdf');
+    }
+
     public function show_z_ba_rp($id)
     {
         $z_ba_rp = ZBAPecahRP::with(['relasi_skema_sertifikasi', 'relasi_institusi', 'relasi_nama_tuk', 'relasi_nama_jabatan', 'relasi_bahasan_diskusi'])->find($id);
@@ -476,10 +487,32 @@ class BerkasController extends Controller
         }
     }
 
+    public function cetak_df_hadir_asesor_pleno_pdf($id)
+    {
+        $df_hadir_asesor_pleno = DFHadirAsesorPleno::with(['relasi_nama_jabatan'])->find($id);
+        // dd($df_hadir_asesor_pleno);
+        // return view('admin.berkas.df_hadir_asesor_pleno.pdf', [
+        //     'df_hadir_asesor_pleno' => $df_hadir_asesor_pleno,
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.df_hadir_asesor_pleno.pdf', compact('df_hadir_asesor_pleno'));
+        return $pdf->download('Daftar Hadir Asesor Pleno.pdf');
+    }
+
     public function show_df_hadir_asesor($id)
     {
         $df_hadir_asesor = DFHadirAsesorPleno::with(['relasi_nama_jabatan'])->find($id);
 
         return response()->json($df_hadir_asesor);
+    }
+
+    public function cetak_df_hadir_asesor_pdf($id)
+    {
+        $df_hadir_asesor = DFHadirAsesorPleno::with(['relasi_nama_jabatan'])->find($id);
+        // dd($df_hadir_asesor);
+        // return view('admin.berkas.df_hadir_asesor.pdf', [
+        //     'df_hadir_asesor' => $df_hadir_asesor,
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.df_hadir_asesor.pdf', compact('df_hadir_asesor'));
+        return $pdf->download('Daftar Hadir Asesor.pdf');
     }
 }

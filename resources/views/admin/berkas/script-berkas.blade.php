@@ -545,7 +545,7 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailZBAPecahRP(${row.id})">Detail</button>
+                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailZBAPecahRP(${row.id})">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'z-ba-pecah-rp')">Hapus</button>
                 `
               return tampilan;
@@ -1058,10 +1058,14 @@
         )
       }));
       $('#nama_bttd_2_z_ba_pecah_rp').text(data.nama_bttd);
+      $('#ttd_z_ba_pecah_rp_1').attr('src', data.ttd);
+      $('#ttd_z_ba_pecah_rp_2').attr('src', data.ttd);
       $('#jabatan_bttd_2_z_ba_pecah_rp').text(data.jabatan_bttd);
       $('#no_met_bttd_2_z_ba_pecah_rp').text(data.no_met_bttd);
       $('#notulis_2_z_ba_pecah_rp').text(data.notulis);
       $('#no_met_notulis_2_z_ba_pecah_rp').text(data.no_met_notulis);
+
+      $("#pdfZBAPecahRP").attr('href', 'cetak-z-ba-pecah-rp/' + data.id);
     })
   }
 
@@ -1137,15 +1141,21 @@
       $('#jabatan_bttd_df_hadir_asesor_pleno').text(data.jabatan_bttd);
       $('#no_met_bttd_df_hadir_asesor_pleno').text(data.no_met_bttd);
       $('#ttd_df_hadir_asesor_pleno').attr('src', data.ttd);
+
+      $("#pdfDFHadirAsesorPleno").attr('href', 'cetak-df-hadir-asesor-pleno/' + data.id);
     })
   }
 
   function detailDFHadirAsesor(id) {
     let url = "table-surat-df-hadir-asesor/" + id;
     $.get(url, function(data) {
+      console.log(data);
       $('#modalDetailDFHadirAsesor').modal('show');
-      $('#thn_ajaran_df_hadir_asesor_1').text(data.thn_ajaran);
-      $('#thn_ajaran_df_hadir_asesor_2').text(data.thn_ajaran + 1);
+      const thn_df_hadir_asesor = new Date(data.thn_ajaran);
+      let thn_df_hadir_asesor_1 = thn_df_hadir_asesor.getFullYear();
+      let thn_df_hadir_asesor_2 = thn_df_hadir_asesor_1 + 1;
+      $('#thn_ajaran_df_hadir_asesor_1').text(thn_df_hadir_asesor_1);
+      $('#thn_ajaran_df_hadir_asesor_2').text(thn_df_hadir_asesor_2);
       let nama_nip = data.relasi_nama_jabatan.filter(function(d) {
         return d.is_nip === 1;
       });
@@ -1162,13 +1172,23 @@
                   </tr>`
         )
       }));
-      $('#thn_ajaran_df_hadir_asesor_3').text(data.thn_ajaran);
-      $('#thn_ajaran_df_hadir_asesor_4').text(data.thn_ajaran + 1);
+      $('#thn_ajaran_df_hadir_asesor_3').text(thn_df_hadir_asesor_1);
+      $('#thn_ajaran_df_hadir_asesor_4').text(thn_df_hadir_asesor_2);
       const date_hari_df_hadir_asesor = new Date(data.tgl);
       let hari_df_hadir_asesor = date_hari_df_hadir_asesor.getDay();
       $('#hari_df_hadir_asesor').text(hari(hari_df_hadir_asesor));
       $('#tgl_df_hadir_asesor').text(date_format(data.tgl));
-      $('#wkt_df_hadir_asesor').text(time_format(data.wkt_mulai));
+      const time_wkt_mulai_df_hadir_asesor = new Date(data.wkt_mulai);
+      let wkt_mulai_df_hadir_asesor = ('0' + time_wkt_mulai_df_hadir_asesor.getHours()).substr(-2);
+      let menit_mulai_df_hadir_asesor = time_wkt_mulai_df_hadir_asesor.getMinutes();
+
+      const time_wkt_selesai_df_hadir_asesor = new Date(data.wkt_selesai);
+      let wkt_selesai_df_hadir_asesor = ('0' + time_wkt_selesai_df_hadir_asesor.getHours()).substr(-2);
+      let menit_selesai_df_hadir_asesor = time_wkt_selesai_df_hadir_asesor.getMinutes();
+
+      $('#wkt_mulai_df_hadir_asesor').text('' + wkt_mulai_df_hadir_asesor + ':' + menit_mulai_df_hadir_asesor);
+      $('#wkt_selesai_df_hadir_asesor').text('' + wkt_selesai_df_hadir_asesor + ':' +
+        menit_selesai_df_hadir_asesor);
       $('#tempat_df_hadir_asesor').text(data.tempat);
       let nama = data.relasi_nama_jabatan.filter(function(d) {
         return d.is_nip === 0;
@@ -1188,6 +1208,8 @@
       $('#jabatan_bttd_df_hadir_asesor').text(data.jabatan_bttd);
       $('#no_met_bttd_df_hadir_asesor').text(data.no_met_bttd);
       $('#ttd_df_hadir_asesor').attr('src', data.ttd);
+
+      $("#pdfDFHadirAsesor").attr('href', 'cetak-df-hadir-asesor/' + data.id);
     })
   }
 
