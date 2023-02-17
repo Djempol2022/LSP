@@ -29,14 +29,17 @@ class BerkasController extends Controller
             'sk_penetapan_tuk.*'
         ])->latest();
 
+        $rekamFilter = $data->get()->count();
+
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
+        $data = $data->get();
         $rekamTotal = $data->count();
-        $data = $data->get()->toArray();
 
         return response()->json([
             'data' => $data,
-            'recordsTotal' => $rekamTotal
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
         ]);
     }
 
@@ -46,14 +49,17 @@ class BerkasController extends Controller
             'df_tuk_terverifikasi.*'
         ])->latest();
 
+        $rekamFilter = $data->get()->count();
+
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
+        $data = $data->get();
         $rekamTotal = $data->count();
-        $data = $data->get()->toArray();
 
         return response()->json([
             'data' => $data,
-            'recordsTotal' => $rekamTotal
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
         ]);
     }
 
@@ -63,14 +69,17 @@ class BerkasController extends Controller
             'hasil_verifikasi_tuk.*'
         ])->latest();
 
+        $rekamFilter = $data->get()->count();
+
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
+        $data = $data->get();
         $rekamTotal = $data->count();
-        $data = $data->get()->toArray();
 
         return response()->json([
             'data' => $data,
-            'recordsTotal' => $rekamTotal
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
         ]);
     }
 
@@ -80,14 +89,17 @@ class BerkasController extends Controller
             'st_verifikasi_tuk.*'
         ])->latest();
 
+        $rekamFilter = $data->get()->count();
+
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
+        $data = $data->get();
         $rekamTotal = $data->count();
-        $data = $data->get()->toArray();
 
         return response()->json([
             'data' => $data,
-            'recordsTotal' => $rekamTotal
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
         ]);
     }
 
@@ -97,14 +109,17 @@ class BerkasController extends Controller
             'x03_st_verifikasi_tuk.*'
         ])->latest();
 
+        $rekamFilter = $data->get()->count();
+
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
+        $data = $data->get();
         $rekamTotal = $data->count();
-        $data = $data->get()->toArray();
 
         return response()->json([
             'data' => $data,
-            'recordsTotal' => $rekamTotal
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
         ]);
     }
 
@@ -114,14 +129,17 @@ class BerkasController extends Controller
             'x04_berita_acara.*'
         ])->latest();
 
+        $rekamFilter = $data->get()->count();
+
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
+        $data = $data->get();
         $rekamTotal = $data->count();
-        $data = $data->get()->toArray();
 
         return response()->json([
             'data' => $data,
-            'recordsTotal' => $rekamTotal
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
         ]);
     }
 
@@ -131,12 +149,17 @@ class BerkasController extends Controller
             'z_ba_pecah_rp.*'
         ])->where('status', 0)->latest();
 
+        $rekamFilter = $data->get()->count();
+
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
         $data = $data->get();
+        $rekamTotal = $data->count();
 
         return response()->json([
             'data' => $data,
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
         ]);
     }
 
@@ -146,12 +169,17 @@ class BerkasController extends Controller
             'z_ba_pecah_rp.*'
         ])->where('status', 1)->latest();
 
+        $rekamFilter = $data->get()->count();
+
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
         $data = $data->get();
+        $rekamTotal = $data->count();
 
         return response()->json([
             'data' => $data,
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
         ]);
     }
 
@@ -161,12 +189,17 @@ class BerkasController extends Controller
             'df_hadir_asesor_pleno.*'
         ])->where('is_pleno', 1)->latest();
 
+        $rekamFilter = $data->get()->count();
+
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
         $data = $data->get();
+        $rekamTotal = $data->count();
 
         return response()->json([
             'data' => $data,
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
         ]);
     }
 
@@ -176,12 +209,17 @@ class BerkasController extends Controller
             'df_hadir_asesor_pleno.*'
         ])->where('is_pleno', 0)->latest();
 
+        $rekamFilter = $data->get()->count();
+
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
         $data = $data->get();
+        $rekamTotal = $data->count();
 
         return response()->json([
             'data' => $data,
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
         ]);
     }
 
@@ -243,6 +281,17 @@ class BerkasController extends Controller
         }
     }
 
+    public function cetak_daftar_tuk_terverifikasi_pdf($id)
+    {
+        $daftar_tuk = DaftarTUKTerverifikasi::with(['relasi_daftar_tuk_terverifikasi_child.relasi_nama_tuk', 'relasi_daftar_tuk_terverifikasi_child.relasi_skema_sertifikasi'])->find($id);
+        // dd($daftar_tuk);
+        // return view('admin.berkas.daftar_tuk_terverifikasi.pdf', [
+        //     'daftar_tuk_terverifikasi' => $daftar_tuk,
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.daftar_tuk_terverifikasi.pdf', compact('daftar_tuk'));
+        return $pdf->download('Daftar TUK Terverifikasi.pdf');
+    }
+
     public function show_hasil_verifikasi_tuk($id)
     {
         $hasil_verifikasi_tuk = HasilVerifikasiTUK::with(['relasi_skema_sertifikasi.relasi_jurusan', 'relasi_sarana_prasarana.relasi_sarana_prasarana_sub.relasi_sarana_prasarana_sub2', 'relasi_penguji_hasil_verifikasi'])->find($id);
@@ -291,6 +340,17 @@ class BerkasController extends Controller
         }
     }
 
+    public function cetak_st_verifikasi_tuk_pdf($id)
+    {
+        $st_verifikasi_tuk = STVerifikasiTUK::with(['relasi_skema_sertifikasi', 'relasi_nama_jabatan'])->find($id);
+        // dd($st_verifikasi_tuk);
+        // return view('admin.berkas.st_verifikasi_tuk.pdf', [
+        //     'st_verifikasi_tuk' => $st_verifikasi_tuk,
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.st_verifikasi_tuk.pdf', compact('st_verifikasi_tuk'));
+        return $pdf->download('ST Verifikasi TUK.pdf');
+    }
+
     public function show_x03_st_verifikasi_tuk($id)
     {
         $x03_st_verifikasi_tuk = X03STVerifikasiTUK::with(['relasi_nama_tuk', 'relasi_nama_jabatan'])->find($id);
@@ -315,6 +375,17 @@ class BerkasController extends Controller
         }
     }
 
+    public function cetak_x03_st_verifikasi_tuk_pdf($id)
+    {
+        $x03_st_verifikasi_tuk = X03STVerifikasiTUK::with(['relasi_nama_tuk', 'relasi_nama_jabatan'])->find($id);
+        // dd($x03_st_verifikasi_tuk);
+        // return view('admin.berkas.x03_st_verifikasi_tuk.pdf', [
+        //     'x03_st_verifikasi_tuk' => $x03_st_verifikasi_tuk,
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.x03_st_verifikasi_tuk.pdf', compact('x03_st_verifikasi_tuk'));
+        return $pdf->download('X03 ST Verifikasi TUK.pdf');
+    }
+
     public function show_x04_berita_acara($id)
     {
         $x04_berita_acara = X04BeritaAcara::with(['relasi_skema_sertifikasi.relasi_jurusan'])->find($id);
@@ -337,6 +408,17 @@ class BerkasController extends Controller
                 'msg' => 'Berhasil Menghapus'
             ]);
         }
+    }
+
+    public function cetak_x04_berita_acara_pdf($id)
+    {
+        $x04_berita_acara = X04BeritaAcara::with(['relasi_skema_sertifikasi.relasi_jurusan'])->find($id);
+        // dd($x04_berita_acara);
+        // return view('admin.berkas.x04_berita_acara.pdf', [
+        //     'x04_berita_acara' => $x04_berita_acara,
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.x04_berita_acara.pdf', compact('x04_berita_acara'));
+        return $pdf->download('X04 Berita Acara.pdf');
     }
 
     public function show_z_ba_pecah_rp($id)

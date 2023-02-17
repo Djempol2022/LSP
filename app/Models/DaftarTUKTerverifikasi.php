@@ -11,6 +11,7 @@ class DaftarTUKTerverifikasi extends Model
 
     protected $table = 'df_tuk_terverifikasi';
     protected $guarded = ['id'];
+    protected $dates = ['tanggal_ditetapkan'];
 
     public function relasi_daftar_tuk_terverifikasi_child()
     {

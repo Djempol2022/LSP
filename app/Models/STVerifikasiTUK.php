@@ -11,6 +11,7 @@ class STVerifikasiTUK extends Model
 
     protected $table = 'st_verifikasi_tuk';
     protected $guarded = ['id'];
+    protected $dates = ['tanggal_dilaksanakan', 'tanggal_ditetapkan'];
 
     public function relasi_skema_sertifikasi()
     {

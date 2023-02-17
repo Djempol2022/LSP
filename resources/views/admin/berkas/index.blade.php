@@ -39,6 +39,14 @@
 
         <div class="card-body table-responsive">
           <table class="table table-striped" id="table-surat">
+            <thead>
+              <tr>
+                <th style="width: 5%">No</th>
+                <th style="width: 38%%">Nama Berkas</th>
+                <th style="width: 30%">Tanggal Pembuatan</th>
+                <th style="width: 27%">Aksi</th>
+              </tr>
+            </thead>
           </table>
         </div>
       </div>

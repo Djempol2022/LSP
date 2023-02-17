@@ -105,19 +105,6 @@
           url: "{{ route('admin.SuratSKPenetapan') }}",
           type: "POST",
         },
-        'columns': [{
-            title: 'Nomor SK'
-          },
-          {
-            title: 'Tempat Ditetapkan'
-          },
-          {
-            title: 'Tanggal Ditetapkan'
-          },
-          {
-            title: 'Aksi'
-          },
-        ],
         columnDefs: [{
             targets: '_all',
             visible: true
@@ -126,16 +113,14 @@
             "targets": 0,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_sk_penetapan[row.id] = row;
-              return row.no_sk;
+              return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
           {
             "targets": 1,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_sk_penetapan[row.id] = row;
-              return row.tempat_ditetapkan;
+              return 'SK Penetapan TUK Terverifikasi';
             }
           },
           {
@@ -143,7 +128,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_sk_penetapan[row.id] = row;
-              const date = new Date(row.tanggal_ditetapkan);
+              const date = new Date(row.created_at);
               let tanggal = new Intl.DateTimeFormat('id', {
                 year: "numeric",
                 month: "long",
@@ -187,19 +172,6 @@
           url: "{{ route('admin.SuratDaftarTUK') }}",
           type: "POST",
         },
-        'columns': [{
-            title: 'Nama Surat',
-          },
-          {
-            title: 'Tempat Ditetapkan'
-          },
-          {
-            title: 'Tanggal Ditetapkan'
-          },
-          {
-            title: 'Aksi'
-          },
-        ],
         columnDefs: [{
             targets: '_all',
             visible: true
@@ -208,16 +180,14 @@
             "targets": 0,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_daftar_tuk[row.id] = row;
-              return 'Surat Daftar TUK Terverifikasi';
+              return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
           {
             "targets": 1,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_daftar_tuk[row.id] = row;
-              return row.tempat_ditetapkan;
+              return 'Daftar TUK Terverifikasi';
             }
           },
           {
@@ -225,7 +195,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_daftar_tuk[row.id] = row;
-              const date = new Date(row.tanggal_ditetapkan);
+              const date = new Date(row.created_at);
               let tanggal = new Intl.DateTimeFormat('id', {
                 year: "numeric",
                 month: "long",
@@ -269,19 +239,6 @@
           url: "{{ route('admin.SuratHasilVerifikasiTUK') }}",
           type: "POST",
         },
-        'columns': [{
-            title: 'Nama Surat',
-          },
-          {
-            title: 'Tempat Ditetapkan'
-          },
-          {
-            title: 'Tanggal Ditetapkan'
-          },
-          {
-            title: 'Aksi'
-          },
-        ],
         columnDefs: [{
             targets: '_all',
             visible: true
@@ -290,16 +247,14 @@
             "targets": 0,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_hasil_verifikasi_tuk[row.id] = row;
-              return 'Surat Hasil Verifikasi TUK';
+              return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
           {
             "targets": 1,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_hasil_verifikasi_tuk[row.id] = row;
-              return row.tempat_ditetapkan;
+              return 'Hasil Verifikasi TUK';
             }
           },
           {
@@ -307,7 +262,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_hasil_verifikasi_tuk[row.id] = row;
-              const date = new Date(row.tanggal_ditetapkan);
+              const date = new Date(row.created_at);
               let tanggal = new Intl.DateTimeFormat('id', {
                 year: "numeric",
                 month: "long",
@@ -351,19 +306,6 @@
           url: "{{ route('admin.SuratSTVerifikasiTUK') }}",
           type: "POST",
         },
-        'columns': [{
-            title: 'Nomor Surat'
-          },
-          {
-            title: 'Tempat Ditetapkan'
-          },
-          {
-            title: 'Tanggal Ditetapkan'
-          },
-          {
-            title: 'Aksi'
-          },
-        ],
         columnDefs: [{
             targets: '_all',
             visible: true
@@ -372,16 +314,14 @@
             "targets": 0,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_st_verifikasi_tuk[row.id] = row;
-              return row.no_surat;
+              return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
           {
             "targets": 1,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_st_verifikasi_tuk[row.id] = row;
-              return row.tempat_ditetapkan;
+              return 'ST Verifikasi TUK';
             }
           },
           {
@@ -389,7 +329,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_st_verifikasi_tuk[row.id] = row;
-              const date = new Date(row.tanggal_ditetapkan);
+              const date = new Date(row.created_at);
               let tanggal = new Intl.DateTimeFormat('id', {
                 year: "numeric",
                 month: "long",
@@ -433,19 +373,6 @@
           url: "{{ route('admin.SuratX03STVerifikasiTUK') }}",
           type: "POST",
         },
-        'columns': [{
-            title: 'Nomor Surat'
-          },
-          {
-            title: 'Tempat Ditetapkan'
-          },
-          {
-            title: 'Tanggal Ditetapkan'
-          },
-          {
-            title: 'Aksi'
-          },
-        ],
         columnDefs: [{
             targets: '_all',
             visible: true
@@ -454,16 +381,14 @@
             "targets": 0,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_x03_st_verifikasi_tuk[row.id] = row;
-              return row.no_surat;
+              return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
           {
             "targets": 1,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_x03_st_verifikasi_tuk[row.id] = row;
-              return row.tempat_ditetapkan;
+              return 'X03 ST Verifikasi TUK';
             }
           },
           {
@@ -471,7 +396,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_x03_st_verifikasi_tuk[row.id] = row;
-              const date = new Date(row.tanggal_ditetapkan);
+              const date = new Date(row.created_at);
               let tanggal = new Intl.DateTimeFormat('id', {
                 year: "numeric",
                 month: "long",
@@ -515,19 +440,6 @@
           url: "{{ route('admin.SuratX04BeritaAcara') }}",
           type: "POST",
         },
-        'columns': [{
-            title: 'Nama Surat'
-          },
-          {
-            title: 'Tempat Ditetapkan'
-          },
-          {
-            title: 'Tanggal Ditetapkan'
-          },
-          {
-            title: 'Aksi'
-          },
-        ],
         columnDefs: [{
             targets: '_all',
             visible: true
@@ -536,16 +448,14 @@
             "targets": 0,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_x04_berita_acara[row.id] = row;
-              return 'Surat X 04 Berita Acara';
+              return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
           {
             "targets": 1,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_x04_berita_acara[row.id] = row;
-              return 'Surat X 04 Berita Acara';
+              return 'X04 Berita Acara';
             }
           },
           {
@@ -553,7 +463,13 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_x04_berita_acara[row.id] = row;
-              return 'Surat X 04 Berita Acara';
+              const date = new Date(row.created_at);
+              let tanggal = new Intl.DateTimeFormat('id', {
+                year: "numeric",
+                month: "long",
+                day: "2-digit"
+              }).format(date).split(" ").join(" ");
+              return tanggal;
             }
           },
           {
@@ -591,19 +507,6 @@
           url: "{{ route('admin.SuratZBAPecahRP') }}",
           type: "POST",
         },
-        'columns': [{
-            title: 'Nama Surat'
-          },
-          {
-            title: 'Tempat Ditetapkan'
-          },
-          {
-            title: 'Tanggal Ditetapkan'
-          },
-          {
-            title: 'Aksi'
-          },
-        ],
         columnDefs: [{
             targets: '_all',
             visible: true
@@ -612,16 +515,14 @@
             "targets": 0,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_z_ba_pecah_rp[row.id] = row;
-              return 'Surat Z Berita Acara Pecah Rapat Pleno';
+              return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
           {
             "targets": 1,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_z_ba_pecah_rp[row.id] = row;
-              return 'Surat Z Berita Acara Pecah Rapat Pleno';
+              return 'Z Berita Acara Pecah Rapat Pleno';
             }
           },
           {
@@ -629,7 +530,13 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_z_ba_pecah_rp[row.id] = row;
-              return 'Surat Z Berita Acara Pecah Rapat Pleno';
+              const date = new Date(row.created_at);
+              let tanggal = new Intl.DateTimeFormat('id', {
+                year: "numeric",
+                month: "long",
+                day: "2-digit"
+              }).format(date).split(" ").join(" ");
+              return tanggal;
             }
           },
           {
@@ -667,19 +574,6 @@
           url: "{{ route('admin.SuratZBARP') }}",
           type: "POST",
         },
-        'columns': [{
-            title: 'Nama Surat'
-          },
-          {
-            title: 'Tempat Ditetapkan'
-          },
-          {
-            title: 'Tanggal Ditetapkan'
-          },
-          {
-            title: 'Aksi'
-          },
-        ],
         columnDefs: [{
             targets: '_all',
             visible: true
@@ -688,16 +582,14 @@
             "targets": 0,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_z_ba_rp[row.id] = row;
-              return 'Surat Z Berita Acara  Rapat Pleno';
+              return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
           {
             "targets": 1,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_z_ba_rp[row.id] = row;
-              return 'Surat Z Berita Acara  Rapat Pleno';
+              return 'Z Berita Acara Rapat Pleno';
             }
           },
           {
@@ -705,7 +597,13 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_z_ba_rp[row.id] = row;
-              return 'Surat Z Berita Acara  Rapat Pleno';
+              const date = new Date(row.created_at);
+              let tanggal = new Intl.DateTimeFormat('id', {
+                year: "numeric",
+                month: "long",
+                day: "2-digit"
+              }).format(date).split(" ").join(" ");
+              return tanggal;
             }
           },
           {
@@ -743,19 +641,6 @@
           url: "{{ route('admin.SuratDFHadirAsesorPleno') }}",
           type: "POST",
         },
-        'columns': [{
-            title: 'Nama Surat'
-          },
-          {
-            title: 'Tempat Ditetapkan'
-          },
-          {
-            title: 'Tanggal Ditetapkan'
-          },
-          {
-            title: 'Aksi'
-          },
-        ],
         columnDefs: [{
             targets: '_all',
             visible: true
@@ -764,16 +649,14 @@
             "targets": 0,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_df_hadir_asesor_pleno[row.id] = row;
-              return 'Surat Daftar Hadir Asesor Pleno';
+              return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
           {
             "targets": 1,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_df_hadir_asesor_pleno[row.id] = row;
-              return 'Surat Daftar Hadir Asesor Pleno';
+              return 'Daftar Hadir Asesor Pleno';
             }
           },
           {
@@ -781,7 +664,13 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_df_hadir_asesor_pleno[row.id] = row;
-              return 'Surat Daftar Hadir Asesor Pleno';
+              const date = new Date(row.created_at);
+              let tanggal = new Intl.DateTimeFormat('id', {
+                year: "numeric",
+                month: "long",
+                day: "2-digit"
+              }).format(date).split(" ").join(" ");
+              return tanggal;
             }
           },
           {
@@ -819,19 +708,6 @@
           url: "{{ route('admin.SuratDFHadirAsesor') }}",
           type: "POST",
         },
-        'columns': [{
-            title: 'Nama Surat'
-          },
-          {
-            title: 'Tempat Ditetapkan'
-          },
-          {
-            title: 'Tanggal Ditetapkan'
-          },
-          {
-            title: 'Aksi'
-          },
-        ],
         columnDefs: [{
             targets: '_all',
             visible: true
@@ -840,16 +716,14 @@
             "targets": 0,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_df_hadir_asesor[row.id] = row;
-              return 'Surat Daftar Hadir Asesor ';
+              return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
           {
             "targets": 1,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              list_df_hadir_asesor[row.id] = row;
-              return 'Surat Daftar Hadir Asesor ';
+              return 'Daftar Hadir Asesor';
             }
           },
           {
@@ -857,7 +731,13 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_df_hadir_asesor[row.id] = row;
-              return 'Surat Daftar Hadir Asesor ';
+              const date = new Date(row.created_at);
+              let tanggal = new Intl.DateTimeFormat('id', {
+                year: "numeric",
+                month: "long",
+                day: "2-digit"
+              }).format(date).split(" ").join(" ");
+              return tanggal;
             }
           },
           {
@@ -928,6 +808,8 @@
       $('#jabatan_bttd_df_tuk_terverifikasi').text(data.jabatan_bttd);
       $('#nama_bttd_df_tuk_terverifikasi').text(data.nama_bttd);
       $('#ttd_df_tuk_terverifikasi').attr('src', data.ttd);
+
+      $("#pdfDaftarTUKTerverifikasi").attr('href', 'cetak-daftar-tuk-terverifikasi/' + data.id);
     })
   }
 
@@ -1065,6 +947,8 @@
       $('#jabatan_bttd_st_verifikasi_tuk').text(data.jabatan_bttd);
       $('#ttd_st_verifikasi_tuk').attr('src', data.ttd);
       $('#nama_bttd_st_verifikasi_tuk').text(data.nama_bttd);
+
+      $("#pdfSTVerifikasiTUK").attr('href', 'cetak-st-verifikasi-tuk/' + data.id);
     })
   }
 
@@ -1115,13 +999,14 @@
       $('#ttd_x03_st_verifikasi_tuk').attr('src', data.ttd);
       $('#nama_bttd_x03_st_verifikasi_tuk').text(data.nama_bttd);
       $('#no_met_bttd_x03_st_verifikasi_tuk').text('MET.' + data.no_met_bttd);
+
+      $("#pdfX03STVerifikasiTUK").attr('href', 'cetak-x03-st-verifikasi-tuk/' + data.id);
     })
   }
 
   function detailX04BeritaAcara(id) {
     let url = "table-surat-x04-berita-acara/" + id;
     $.get(url, function(data) {
-      console.log(data);
       $('#modalDetailX04BeritaAcara').modal('show');
       $('#jurusan_x04_berita_acara').text(data.relasi_skema_sertifikasi.relasi_jurusan.jurusan);
       $('#skema_sertifikasi_x04_berita_acara').text(data.relasi_skema_sertifikasi.judul_skema_sertifikasi);
@@ -1130,6 +1015,8 @@
       $('#ttd_x04_berita_acara').attr('src', data.ttd);
       $('#nama_bttd_x04_berita_acara').text(data.nama_bttd);
       $('#nip_bttd_x04_berita_acara').text(data.nip_bttd);
+
+      $("#pdfX04BeritaAcara").attr('href', 'cetak-x04-berita-acara/' + data.id);
     })
   }
 

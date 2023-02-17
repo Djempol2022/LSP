@@ -157,7 +157,8 @@
                         <div>
                           <span>{{ $sk_penetapan_tuk->jabatan_bttd }}</span>
                         </div>
-                        <div style="height: 70px"><img src="{{ $sk_penetapan_tuk->ttd }}" alt="ttd" width="180px">
+                        <div style="height: 90px"><img src="{{ $sk_penetapan_tuk->ttd }}" alt="ttd"
+                            style="width: 140px; margin-left: -10px; margin-top: -2px">
                         </div>
                         <div>
                           <span>{{ $sk_penetapan_tuk->nama_bttd }}</span>
@@ -251,29 +252,41 @@
           @endforeach
         </tbody>
       </table>
-      <table style="font-size: 13px; margin-left: 387px; margin-top: 10px">
-        <tr style="text-align: right">
-          <td>Ditetapkan di</td>
-          <td style="width: 5%">:</td>
-          <td style="width: 30%; text-align: left;">{{ $sk_penetapan_tuk->tempat_ditetapkan }}
-          </td>
-        </tr>
-        <tr style="text-align: right">
-          <td>Pada tanggal</td>
-          <td style="width: 5%">:</td>
-          <td style="width: 30%; text-align: left;">{{ $sk_penetapan_tuk->tanggal_ditetapkan->format('d F Y') }}</td>
-        </tr>
+      <table style="font-size: 13px; margin-top: 10px; width: 100%">
         <tr>
-          <td colspan="3" style="text-align: left;">
-            <div style="margin-left: 5px">
-              <div>
-                <span>{{ $sk_penetapan_tuk->jabatan_bttd }}</span>
-              </div>
-              <div style="height: 70px"><img src="{{ $sk_penetapan_tuk->ttd }}" alt="ttd" width="180px">
-              </div>
-              <div>
-                <span>{{ $sk_penetapan_tuk->nama_bttd }}</span>
-              </div>
+          <td style="width: 65px"></td>
+          <td style="width: 65px"></td>
+          <td>
+            <div style="text-align: right; margin-right: 50px">
+              <table style="width: 100%">
+                <tr style="text-align: right">
+                  <td>Ditetapkan di</td>
+                  <td style="width: 5%">:</td>
+                  <td style="width: 30%; text-align: left;">{{ $sk_penetapan_tuk->tempat_ditetapkan }}
+                  </td>
+                </tr>
+                <tr style="text-align: right">
+                  <td>Pada tanggal</td>
+                  <td style="width: 5%">:</td>
+                  <td style="width: 30%; text-align: left;">
+                    {{ $sk_penetapan_tuk->tanggal_ditetapkan->format('d F Y') }}</td>
+                </tr>
+                <tr>
+                  <td colspan="3" style="text-align: left;">
+                    <div style="margin-left: 248px">
+                      <div>
+                        <span>{{ $sk_penetapan_tuk->jabatan_bttd }}</span>
+                      </div>
+                      <div style="height: 90px"><img src="{{ $sk_penetapan_tuk->ttd }}" alt="ttd"
+                          style="width: 140px; margin-left: -10px; margin-top: -2px">
+                      </div>
+                      <div>
+                        <span>{{ $sk_penetapan_tuk->nama_bttd }}</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
             </div>
           </td>
         </tr>

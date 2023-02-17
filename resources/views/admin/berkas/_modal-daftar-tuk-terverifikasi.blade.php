@@ -40,7 +40,7 @@
                   <span id="jabatan_bttd_df_tuk_terverifikasi"></span>
                 </div>
                 <div>
-                  <img src="" id="ttd_df_tuk_terverifikasi" width="90px">
+                  <img src="" id="ttd_df_tuk_terverifikasi" width="180px">
                 </div>
                 <div>
                   <span id="nama_bttd_df_tuk_terverifikasi"></span>
@@ -53,7 +53,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Close</button>
-        <a id='pdfSKPenetapan' href="#" class="btn btn-primary">Save as PDF</a>
+        <a id='pdfDaftarTUKTerverifikasi' href="#" class="btn btn-primary">Save as
+          PDF</a>
       </div>
     </div>
   </div>

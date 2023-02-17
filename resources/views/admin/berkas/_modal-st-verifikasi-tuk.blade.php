@@ -75,7 +75,7 @@
                 </tr>
                 <tr>
                   <td style="height: 30px; text-align: center;"><img src="" id="ttd_st_verifikasi_tuk"
-                      width="90px"></td>
+                      width="180px"></td>
                 </tr>
                 <tr>
                   <td style="text-align: center; text-decoration: underline; font-weight: bold"
@@ -102,7 +102,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Close</button>
-        <a id='pdfSKPenetapan' href="#" class="btn btn-primary">Save as PDF</a>
+        <a id='pdfSTVerifikasiTUK' href="#" class="btn btn-primary">Save as PDF</a>
       </div>
     </div>
   </div>

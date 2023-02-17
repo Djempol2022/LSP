@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card pt-5 px-5">
           @include('layout.header-bnsp-berkas')
           <div class="text-center d-flex flex-column">
             <h6 class="mb-0 text-decoration-underline font-extrabold">SURAT TUGAS</h6>
@@ -148,7 +148,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Close</button>
-        <a id='pdfSKPenetapan' href="#" class="btn btn-primary">Save as PDF</a>
+        <a id='pdfX03STVerifikasiTUK' href="#" class="btn btn-primary">Save as PDF</a>
       </div>
     </div>
   </div>

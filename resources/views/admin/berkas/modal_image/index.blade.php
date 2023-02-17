@@ -1,5 +1,5 @@
 <!-- Trigger the Modal -->
-<img id="myImgLightbulb" src="{{ asset('images/lightbulb.png') }}" alt="lightbulb" style="width:100%;max-width:30px">
+<img id="myImgLightbulb" src="{{ asset('images/view.png') }}" alt="view" style="width:100%;max-width:30px">
 
 <!-- The Modal -->
 <div id="myModalLightbulb" class="modal-lightbulb">
