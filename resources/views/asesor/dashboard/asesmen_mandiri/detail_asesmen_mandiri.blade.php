@@ -164,8 +164,12 @@
                         </div>
                         
                         <div id="signature-clear">
-                            <button type="button" class="button button-primary tombol-primary-small mb-4" id="clear">Clear</button>
-                            <button type="submit" class="btn btn-primary tombol-primary-small" id="simpan">Simpan</button>
+                          <div class="col" id="signature-clear">
+                            <button type="button" class="btn-sm btn btn-danger mb-2"
+                                id="clear"><i class="fa fa-eraser"></i>
+                            </button>
+                          </div>
+                          <button type="submit" class="btn btn-primary tombol-primary-small" id="simpan">Simpan</button>
                         </div>
                     </form>
                   </div>

@@ -1,4 +1,4 @@
-@extends('layout.main-layout', ['title' => 'Assesment'])
+@extends('layout.main-layout', ['title' => 'Pengerjaan Soal'])
 @section('soal-section')
     <div class="container-fluid" style="margin-top: 20px;">
         <div id="demo"> </div>

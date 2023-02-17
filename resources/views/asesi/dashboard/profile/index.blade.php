@@ -17,13 +17,22 @@
         Ujian Sertifikasi!
       </div>
       <h5 class="text-black my-4">Permohonan Sertifikasi Kompetensi</h5>
-      @isset ($data->relasi_user_detail->foto)
-        <img src="{{ asset('storage/' . $data->relasi_user_detail->foto) }}" width="180px" class="rounded-circle"
-          alt="image">
-      @else
-        <img src="/images/logo/favicon_lsp.png" width="180px" class="rounded-circle" alt="image">
-      @endisset
-
+      <div>
+        <div class="col profil-section" style="margin-bottom:0% !important">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="col-lg-6 col-md-4 col-xs-6 thumb">
+                @isset ($data->relasi_user_detail->foto)
+                  <img src="{{ asset('storage/'.$data->relasi_user_detail->foto) }}" class="img-thumbnail rounded-circle mb-3"
+                    alt="image">
+                @else
+                  <img src="/images/logo/favicon_lsp.png" class="img-thumbnail rounded-circle" alt="image">
+                @endisset
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       {{-- RINCIAN DATA PEMOHON SERTIFIKASI --}}
       <div class="mb-5 pb-5" style="margin-bottom: 0% !important">
         <div class="col profil-section-title">
@@ -202,31 +211,56 @@
         <div class="col profil-section" style="margin-bottom:0% !important">
           <div class="col pb-45">
             <p class="fw-bold">Judul Skema Sertifikasi</p>
-            @isset($data->relasi_sertifikasi->judul_skema_sertifikasi)
-              <span>{{ $data->relasi_sertifikasi->judul_skema_sertifikasi }}</span>
+            @isset($data_skema_sertifikasi->judul_skema_sertifikasi)
+              <span>{{ $data_skema_sertifikasi->judul_skema_sertifikasi }}</span>
             @else
               <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
             @endisset
           </div>
           <div class="col pb-45">
             <p class="fw-bold">Nomor Skema Sertifikasi</p>
-            @isset($data->relasi_sertifikasi->nomor_skema_sertifikasi)
-              <span>{{ $data->relasi_sertifikasi->nomor_skema_sertifikasi }}</span>
+            @isset($data_skema_sertifikasi->nomor_skema_sertifikasi)
+              <span>{{ $data_skema_sertifikasi->nomor_skema_sertifikasi }}</span>
             @else
               <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
             @endisset
           </div>
           <div class="col pb-45">
             <p class="fw-bold">Tujuan Asesmen</p>
-            @isset($data->relasi_sertifikasi->tujuan_asesmen)
-              <span class="text-capitalize">{{ $data->relasi_sertifikasi->tujuan_asesmen }}</span>
+            @isset($tujuan_sertifikasi->tujuan_asesi)
+              <span class="text-capitalize">{{ $tujuan_sertifikasi->tujuan_asesi }}</span>
             @else
               <span class="text-danger fw-semibold text-capitalize">Data Belum Lengkap!</span>
             @endisset
           </div>
           <div class="col pb-45">
             <p class="fw-bold">Daftar Unit Kompetensi Sesuai Kemasan</p>
-            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
+            @if (!empty($unit_kompetensi))
+            <div class="table-responsive text-center text-wrap">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Kode Unit</th>
+                  <th>Judul Unit</th>
+                  <th>Jenis Standar (Standar Khusus/Standar Internasional/SKKNI)</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($unit_kompetensi as $no => $data_unit_kompetensi)
+                <tr>
+                  <th>{{$no+1}}</th>
+                  <td>{{$data_unit_kompetensi->kode_unit}}</td>
+                  <td>{{$data_unit_kompetensi->judul_unit}}</td>
+                  <td>{{$data_unit_kompetensi->jenis_standar}}</td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+            </div>
+            @else
+              <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
+            @endif
           </div>
         </div>
       </div>

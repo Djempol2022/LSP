@@ -261,7 +261,7 @@
                     </div>
 
                     {{-- ---------------DATA PERSETUJUAN/TANDA TANGAN ADMIN LSP --}}
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="detail-permohonan-sertifikasi">
                         <h5 class="pb-4">Admin LSP :</h5>
                         <div class="col pb-4">
                             <p class="fw-bold">Nama Lengkap</p>
@@ -325,137 +325,137 @@
             </div>
         </div>
     </div>
-</div>
 
+    {{-- MODAL PERSETUJUAN/TANDA TANGAN ADMIN --}}
+    <div class="modal fade text-left" id="modalPersetujuanAdmin" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Persetujuan Admin</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <form action="{{ route('admin.TambahOrUbahPersetujuanAdmin') }}" id="formPersetujuanAdmin" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
 
-{{-- MODAL PERSETUJUAN/TANDA TANGAN ADMIN --}}
-<div class="modal fade text-left" id="modalPersetujuanAdmin" tabindex="-1" role="dialog"
-    aria-labelledby="myModalLabel33" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33">Persetujuan Admin</h4>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
-            <form action="{{ route('admin.TambahOrUbahPersetujuanAdmin') }}" id="formPersetujuanAdmin" method="POST"
-                enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
+                        <div class="mb-3">
+                            <input type="hidden" name="sertifikasi_id"
+                                value="{{ $data_permohonan_user_sertifikasi->relasi_sertifikasi->id }}" hidden>
 
-                    <div class="mb-3">
-                        <input type="hidden" name="sertifikasi_id"
-                            value="{{ $data_permohonan_user_sertifikasi->relasi_sertifikasi->id }}" hidden>
-
-                        <label>Nama Admin</label>
-                        <input value="{{Auth::user()->nama_lengkap}}" class="form-control rounded-4" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label>Nomor Reg</label>
-                        <input type="text" name="no_reg" placeholder="Nomor Reg" class="form-control rounded-4">
-                        <div class="input-group has-validation">
-                            <label class="text-danger error-text no_reg_error"></label>
+                            <label>Nama Admin</label>
+                            <input value="{{Auth::user()->nama_lengkap}}" class="form-control rounded-4" readonly>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label>Status</label>
-                        <select name="status" class="form-control rounded-4">
-                            @isset($data_permohonan_user_sertifikasi->relasi_sertifikasi->relasi_tanda_tangan_admin->status)
-                                @if($data_permohonan_user_sertifikasi->relasi_sertifikasi->relasi_tanda_tangan_admin->status == 0)
-                                    <option value="0" selected>Ditolak</option>
-                                    <option value="1">Diterima</option>
-                                @elseif($data_permohonan_user_sertifikasi->relasi_sertifikasi->relasi_tanda_tangan_admin->status == 1)
+                        <div class="mb-3">
+                            <label>Nomor Reg</label>
+                            <input type="text" name="no_reg" placeholder="Nomor Reg" class="form-control rounded-4">
+                            <div class="input-group has-validation">
+                                <label class="text-danger error-text no_reg_error"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Status</label>
+                            <select name="status" class="form-control rounded-4">
+                                @isset($data_permohonan_user_sertifikasi->relasi_sertifikasi->relasi_tanda_tangan_admin->status)
+                                    @if($data_permohonan_user_sertifikasi->relasi_sertifikasi->relasi_tanda_tangan_admin->status == 0)
+                                        <option value="0" selected>Ditolak</option>
+                                        <option value="1">Diterima</option>
+                                    @elseif($data_permohonan_user_sertifikasi->relasi_sertifikasi->relasi_tanda_tangan_admin->status == 1)
+                                        <option value="0">Ditolak</option>
+                                        <option value="1" selected>Diterima</option>
+                                    @endif
+                                @else
+                                    <option value="" selected disabled>-- Pilih Status Peserta --</option>
                                     <option value="0">Ditolak</option>
-                                    <option value="1" selected>Diterima</option>
-                                @endif
-                            @else
-                                <option value="" selected disabled>-- Pilih Status Peserta --</option>
-                                <option value="0">Ditolak</option>
-                                <option value="1">Diterima</option>
-                            @endisset
-                        </select>
-                        <div class="input-group has-validation">
-                            <label class="text-danger error-text catatatn_error"></label>
+                                    <option value="1">Diterima</option>
+                                @endisset
+                            </select>
+                            <div class="input-group has-validation">
+                                <label class="text-danger error-text catatatn_error"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Catatan</label>
+                            <textarea type="text" name="catatan" placeholder="Catatan"
+                                class="form-control rounded-4"></textarea>
+                            <div class="input-group has-validation">
+                                <label class="text-danger error-text catatatn_error"></label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
+                            <div class="col edit-profil mb-2 signature-pad" id="signature-pad">
+                                <canvas id="sig" class="rounded-4"></canvas>
+                                <input type="hidden" name="ttd_admin" id="ttd_admin">
+                            </div>
+                            <div class="col" id="signature-clear">
+                                <button type="button" class="btn-sm btn btn-danger mb-2"
+                                    id="clear"><i class="fa fa-eraser"></i>
+                                </button>
+                            </div>
+                            <div class="input-group has-validation">
+                                <label class="text-danger error-text ttd_admin_error"></label>
+                            </div>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label>Catatan</label>
-                        <textarea type="text" name="catatan" placeholder="Catatan"
-                            class="form-control rounded-4"></textarea>
-                        <div class="input-group has-validation">
-                            <label class="text-danger error-text catatatn_error"></label>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Batal</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary ml-1">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block" id="simpan">Simpan</span>
+                        </button>
                     </div>
-                    <div class="mb-3">
-                        <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
-                        <div class="col edit-profil mb-2 signature-pad" id="signature-pad">
-                            <canvas id="sig" class="rounded-4"></canvas>
-                            <input type="hidden" name="ttd_admin" id="ttd_admin">
-                        </div>
-                        <div class="col" id="signature-clear">
-                            <button type="button" class="btn-sm btn btn-danger mb-2"
-                                id="clear"><i class="fa fa-eraser"></i>
-                            </button>
-                        </div>
-                        <div class="input-group has-validation">
-                            <label class="text-danger error-text ttd_admin_error"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Batal</span>
-                    </button>
-                    <button type="submit" class="btn btn-primary ml-1">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block" id="simpan">Simpan</span>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-{{-- MODAL INPUT NOMOR URUT ASESI --}}
-<div class="modal fade text-left" id="modalNomorUrutAsesi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel33">Persetujuan Admin</h4>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
+                </form>
             </div>
-            <form action="{{ route('admin.TambahOrUbahNomorUrutAsesi') }}" id="formNomorUrutAsesi" method="POST"
-                enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-
-                    <input type="text" name="sertifikasi_id"
-                        value="{{ $data_permohonan_user_sertifikasi->relasi_sertifikasi->id }}">
-                    <div class="mb-3">
-                        <label>Nomor Urut Asesi</label>
-                        <input type="text" name="nomor_urut" placeholder="Masukkan Nomor Urut Asesi"
-                            class="form-control rounded-4">
-                        <div class="input-group has-validation">
-                            <label class="text-danger error-text nomor_urut_error"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Batal</span>
-                    </button>
-                    <button id="simpan" type="submit" class="btn btn-primary ml-1">Simpan</button>
-                </div>
-            </form>
         </div>
     </div>
+
+
+    {{-- MODAL INPUT NOMOR URUT ASESI --}}
+    <div class="modal fade text-left" id="modalNomorUrutAsesi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Persetujuan Admin</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <form action="{{ route('admin.TambahOrUbahNomorUrutAsesi') }}" id="formNomorUrutAsesi" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+
+                        <input type="text" name="sertifikasi_id"
+                            value="{{ $data_permohonan_user_sertifikasi->relasi_sertifikasi->id }}">
+                        <div class="mb-3">
+                            <label>Nomor Urut Asesi</label>
+                            <input type="text" name="nomor_urut" placeholder="Masukkan Nomor Urut Asesi"
+                                class="form-control rounded-4">
+                            <div class="input-group has-validation">
+                                <label class="text-danger error-text nomor_urut_error"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Batal</span>
+                        </button>
+                        <button id="simpan" type="submit" class="btn btn-primary ml-1">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection
 
@@ -519,40 +519,6 @@
         //         .relasi_tanda_tangan_admin.catatan)
             
         // })
-
-        $('#formPersetujuanAdmin').on('submit', function (e) {
-            e.preventDefault();
-            $.ajax({
-                url: $(this).attr('action'),
-                method: $(this).attr('method'),
-                data: new FormData(this),
-                processData: false,
-                dataType: 'json',
-                contentType: false,
-                beforeSend: function () {
-                    $(document).find('label.error-text').text('');
-                },
-                success: function (data) {
-                    if (data.status == 0) {
-                        $.each(data.error, function (prefix, val) {
-                            $('label.' + prefix + '_error').text(val[0]);
-                            // $('span.'+prefix+'_error').text(val[0]);
-                        });
-                    } else if (data.status == 1) {
-                        swal({
-                                title: "Berhasil",
-                                text: `${data.msg}`,
-                                icon: "success",
-                                buttons: true,
-                                successMode: true,
-                            }),
-                            $("#modalPersetujuanAdmin").modal('hide')
-                            setTimeout(function() {location.reload()}, 800);
-                            return false;
-                    }
-                }
-            });
-        });
 
     // TAMBAH/UBAH NOMOR URUT ASESI
     $("#ubahOrTambahNomorUrutAsesi").on('click', function () {
@@ -640,6 +606,42 @@
             },
         ]
     });
+
+    $('#formPersetujuanAdmin').on('submit', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: new FormData(this),
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                beforeSend: function () {
+                    $(document).find('label.error-text').text('');
+                },
+                success: function (data) {
+                    if (data.status == 0) {
+                        $.each(data.error, function (prefix, val) {
+                            $('label.' + prefix + '_error').text(val[0]);
+                            // $('span.'+prefix+'_error').text(val[0]);
+                        });
+                    } else if (data.status == 1) {
+                        swal({
+                                title: "Berhasil",
+                                text: `${data.msg}`,
+                                icon: "success",
+                                buttons: true,
+                                successMode: true,
+                            }),
+                            table_data_unit_kompetensi.ajax.reload()
+                            $("#modalPersetujuanAdmin").modal('hide')
+                            $("#detail-permohonan-sertifikasi").load(location.href + " #detail-permohonan-sertifikasi>*", "");
+                            // setTimeout(function() {location.reload()}, 800);
+                            // return false;
+                    }
+                }
+            });
+        });
 
     // TANDA TANGAN ADMIN
     let canvas;

@@ -15,4 +15,8 @@ class PelaksanaanUjian extends Model
     {
         return $this->belongsTo(JadwalUjiKompetensi::class, 'jadwal_uji_kompetensi_id', 'id');
     }
+
+    public function relasi_tuk(){
+        return $this->belongsTo(NamaTempatUjiKompetensi::class, 'tuk_id', 'id');
+    }
 }

@@ -11,6 +11,7 @@ use App\Models\AsesiUjiKompetensi;
 use App\Models\AsesorUjiKompetensi;
 use App\Models\DetailJadwalUjiKompetensi;
 use App\Models\DetailUjiKompetensi;
+use App\Models\NamaTempatUjiKompetensi;
 use App\Models\PeninjauUjiKompetensi;
 use Illuminate\Support\Facades\Validator;
 

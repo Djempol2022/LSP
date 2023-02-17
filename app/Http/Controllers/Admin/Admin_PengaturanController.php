@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\KualifikasiPendidikan;
 use App\Models\SkemaSertifikasi;
+use App\Models\TempatUjiKompetensi;
 use Illuminate\Support\Facades\Validator;
 use Str;
 
@@ -21,20 +22,12 @@ class Admin_PengaturanController extends Controller
         return view('admin.pengaturan.pengaturan');
     }
 
-    // public function jurusan_get(Request $request){
-    //     $html = '';
-    //     $cities = City::where('country_id', $request->country_id)->get();
-    //     foreach ($cities as $city) {
-    //         $html .= '<option value="'.$city->id.'">'.$city->name.'</option>';
-    //     }
-    //     return response()->json(['html' => $html]);
-    // }
-
     public function jurusan_id($id){
         $jurusan = MateriUjiKompetensi::where('jurusan_id', $id)->pluck('muk', 'id');
         return response()->json($jurusan);
     }
 
+    // UBAH PASSWORD
     public function ubah_password(Request $request){
         $validator = Validator::make($request->all(), [
             'passwordlama' =>[
@@ -201,7 +194,7 @@ class Admin_PengaturanController extends Controller
         }
     }
     
-    // INSTANSI
+    // INSTITUSI
     public function daftar_data_institusi(){
         return view('admin.pengaturan.institusi.data_institusi');
     }
@@ -290,7 +283,7 @@ class Admin_PengaturanController extends Controller
                 'error'=>$validator->errors()->toArray()
             ]);
         }else{
-            $tambah_institusi = Institusi::where('id', $request->id)->update([
+            $ubah_institusi = Institusi::where('id', $request->id)->update([
                 'nama_institusi' => $request->nama_institusi,
                 'alamat_institusi' => $request->alamat_institusi,
                 'nomor_hp_institusi' => $request->nomor_hp_institusi,
@@ -298,7 +291,7 @@ class Admin_PengaturanController extends Controller
                 'kode_pos' => $request->kode_pos
             ]);
             
-            if(!$tambah_institusi){
+            if(!$ubah_institusi){
                 return response()->json([
                     'status'=>0,
                     'msg'=>'Terjadi kesalahan, Gagal Mengubah Institusi'
@@ -423,6 +416,110 @@ class Admin_PengaturanController extends Controller
             return response()->json([
                 'status'=>1,
                 'msg'=>'Berhasil Menghapus Kualifikasi Pendidikan'
+            ]);
+        }
+    }
+
+    // TEMPAT UJI KOMPETENSI
+    public function halaman_nama_tuk(){
+        return view('admin.pengaturan.tuk.data_tuk');
+    }
+
+    public function daftar_data_nama_tuk(Request $request){
+        $data = TempatUjiKompetensi::select([
+            'nama_tuk.*'
+        ]);
+
+        $rekamFilter = $data->get()->count();
+        if($request->input('length')!=-1) 
+            $data = $data->skip($request->input('start'))->take($request->input('length'));
+            $rekamTotal = $data->count();
+            $data = $data->get();
+        return response()->json([
+            'draw'=>$request->input('draw'),
+            'data'=>$data,
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter
+        ]);
+    }
+
+    public function tambah_nama_tuk(Request $request){
+        $validator = Validator::make($request->all(), [
+                'nama_tuk.*'=>'required'
+            ],[
+                'nama_tuk.*.required'=> 'Wajib diisi'
+            ]);
+            
+            if(!$validator->passes()){
+                return response()->json([
+                    'status'=>0,
+                    'error'=>$validator->errors()->toArray()
+                ]);
+            }else{
+                $tuk =  $request->input('nama_tuk', []);
+                $input_tuk = [];
+                foreach ($tuk as $index => $tuks) {
+                    $input_tuk[] = [
+                        'nama_tuk' => $tuk[$index],
+                    ];
+                }
+                $tambah_tuk_tuk = TempatUjiKompetensi::insert($input_tuk);
+
+                if(!$tambah_tuk_tuk){
+                    return response()->json([
+                        'status'=>0,
+                        'msg'=>'Terjadi kesalahan, Gagal menambah Tempat Uji Kompetensi'
+                    ]);
+                }else{
+                    return response()->json([
+                        'status'=>1,
+                        'msg'=>'Berhasil menambahkan Tempat Uji Kompetensi'
+                    ]);
+                }
+            }
+    }
+    public function ubah_nama_tuk(Request $request){
+        $validator = Validator::make($request->all(), [
+            'nama_tuk'=>'required',
+        ],[
+            'nama_tuk.required'=> 'Wajib diisi',
+        ]);
+
+        if(!$validator->passes()){
+            return response()->json([
+                'status'=>0,
+                'error'=>$validator->errors()->toArray()
+            ]);
+        }else{
+            $ubah_tuk = TempatUjiKompetensi::where('id', $request->id)->update([
+                'nama_tuk' => $request->nama_tuk,
+            ]);
+            
+            if(!$ubah_tuk){
+                return response()->json([
+                    'status'=>0,
+                    'msg'=>'Terjadi kesalahan, Gagal Mengubah Tempat Uji Kompetensi'
+                ]);
+            }else{
+                return response()->json([
+                    'status'=>1,
+                    'msg'=>'Berhasil Mengubah Tempat Uji Kompetensi'
+                ]);
+            }
+        }
+    }
+
+    public function hapus_nama_tuk($id){
+        $hapus_tuk = TempatUjiKompetensi::find($id)->delete();
+        if(!$hapus_tuk){
+            return response()->json([
+                'status'=>0,
+                'msg'=>'Terjadi kesalahan, Gagal Menghapus Tempat Uji Kompetensi'
+            ]);
+        }else{
+            return response()->json([
+                'status'=>1,
+                'msg'=>'Berhasil Menghapus Komponen Tempat Uji Kompetensi'
             ]);
         }
     }

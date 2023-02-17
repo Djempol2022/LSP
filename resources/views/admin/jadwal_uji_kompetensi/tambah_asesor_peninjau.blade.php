@@ -43,6 +43,7 @@
                                                 <th>Materi Uji Kompetensi</th>
                                                 <th>Asesor</th>
                                                 <th>Peninjau</th>
+                                                <th>Jenis Tes</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -55,7 +56,7 @@
 
                 {{-- MODAL TAMBAH MUK ASESOR PENINJAU--}}
                 <div class="modal fade text-left" id="modalTambahMukAsesorPeninjau" tabindex="-1" role="dialog"
-                    aria-labelledby="myModalLabel33" aria-hidden="true">
+                    data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -125,26 +126,24 @@
 
                  {{-- MODAL TAMBAH MUK ASESOR PENINJAU--}}
                  <div class="modal fade text-left" id="modalEditMukAsesorPeninjau" tabindex="-1" role="dialog"
-                    aria-labelledby="myModalLabel33" aria-hidden="true">
+                    data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel33">Tambah Data</h4>
+                                <h4 class="modal-title" id="myModalLabel33">Ubah Data</h4>
                                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                     <i data-feather="x"></i>
                                 </button>
                             </div>
-                            <form action="{{ route('admin.TambahMukAsesorPeninjau') }}" id="formEditMukAsesorPeninjau"
+                            <form action="{{ route('admin.UbahMukAsesorPeninjau') }}" id="formEditMukAsesorPeninjau"
                                 method="POST">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label>Materi Uji Kompetensi</label>
-                                        <select class="form-control" name="muk_id" aria-hidden="true">
-                                            <option value="" selected disabled>-- Pilih Materi Uji Kompetensi --</option>
-                                            {{-- @foreach ($muk as $data_muk)
-                                            <option value="{{ $data_muk['id'] }}">{{ $data_muk['muk'] }}</option>
-                                            @endforeach --}}
+                                        <input type="hidden" name="jadwal_uji_kompetensi_id" hidden>
+                                        <select class="form-control" name="muk_id" id="muk_id" aria-hidden="true">
+                                            
                                         </select>
                                         <div class="input-group has-validation">
                                             <label class="text-danger error-text muk_id_error"></label>
@@ -152,12 +151,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Nama Asesor</label>
-                                        <select class="form-control" name="user_asesor_id" aria-hidden="true">
-                                            <option value="" selected disabled>-- Pilih Asesor --</option>
-                                            @foreach ($user_asesor as $data_user_asesor)
-                                            <option value="{{ $data_user_asesor['id'] }}">{{ $data_user_asesor['nama_lengkap'] }}
-                                            </option>
-                                            @endforeach
+                                        <select class="form-control" name="user_asesor_id" id="user_asesor_id" aria-hidden="true">
+                                           
                                         </select>
                                         <div class="input-group has-validation">
                                             <label class="text-danger error-text user_asesor_id_error"></label>
@@ -165,12 +160,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Nama Peninjau</label>
-                                        <select class="form-control" name="user_peninjau_id" aria-hidden="true">
-                                            <option value="" selected disabled>-- Pilih Peninjau --</option>
-                                            @foreach ($user_peninjau as $data_user_peninjau)
-                                            <option value="{{ $data_user_peninjau['id'] }}">
-                                                {{ $data_user_peninjau['nama_lengkap'] }}</option>
-                                            @endforeach
+                                        <select class="form-control" name="user_peninjau_id" id="user_peninjau_id" aria-hidden="true">
+                                           
                                         </select>
                                         <div class="input-group has-validation">
                                             <label class="text-danger error-text user_peninjau_id_error"></label>
@@ -178,7 +169,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                    <button type="button" class="btn btn-light-secondary close" data-bs-dismiss="modal">
                                         <i class="bx bx-x d-block d-sm-none"></i>
                                         <span class="d-none d-sm-block">Batal</span>
                                     </button>
@@ -211,8 +202,7 @@
     let data_muk = @json($muk);
     let data_asesor = @json($user_asesor);
     let data_peninjau = @json($user_peninjau);
-    let data_ukom = @json($data_jadwal_uji_kompetensi);
-    let list_jurusan = [];
+    let list_muk_asesor_peninjau = [];
     let list_muk = [];
 
     function isset(accessor) {
@@ -257,7 +247,7 @@
                 "targets": 0,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
-                    list_jurusan[row.id] = row;
+                    list_muk_asesor_peninjau[row.id] = row;
                     return row.relasi_muk.muk;
                 }
             },
@@ -265,7 +255,7 @@
                 "targets": 1,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
-                    list_jurusan[row.id] = row;
+                    list_muk_asesor_peninjau[row.id] = row;
                     return row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
                 }
             },
@@ -273,7 +263,7 @@
                 "targets": 2,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
-                    list_jurusan[row.id] = row;
+                    list_muk_asesor_peninjau[row.id] = row;
                     return row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
                 }
             },
@@ -281,21 +271,42 @@
                 "targets": 3,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
+                    list_muk_asesor_peninjau[row.id] = row;
+                    let jenis_tes;
+                    if(row.relasi_pelaksanaan_ujian == null || row.relasi_pelaksanaan_ujian.jenis_tes == null){
+                        jenis_tes = `<p class="text-danger">Jenis soal belum ditentukan</p>`
+                    }
+                    else if(row.relasi_pelaksanaan_ujian.jenis_tes == 1){
+                        jenis_tes = `<p>Pilihan Ganda</p>`
+                    }
+                    else if(row.relasi_pelaksanaan_ujian.jenis_tes == 2){
+                        jenis_tes = `<p>Essay</p>`
+                    }
+                    else if(row.relasi_pelaksanaan_ujian.jenis_tes == 3){
+                        jenis_tes = `<p>Wawancara</p>`
+                    }
+                    return jenis_tes;
+                }
+            },
+            {
+                "targets": 4,
+                "class": "text-nowrap",
+                "render": function (data, type, row, meta) {
                     let tampilan;
                     if(row.relasi_pelaksanaan_ujian == null || row.relasi_pelaksanaan_ujian.acc == 0){
                         tampilan = `<span onclick="clickEditMukAsesorPeninjau(${row.id})" class="badge bg-warning rounded-pill">
-                                        <a class="text-white" href="#">Ubah</a>
+                                        <a class="text-white" href="#!">Ubah</a>
                                     </span>
-                                    <span onclick="detailJadwalUjiKompetensi(${row.id})" class="badge bg-danger rounded-pill">
-                                        <a class="text-white" href="#">Hapus</a>
+                                    <span id-jadwal-ukom="${row.id}" class="badge bg-danger rounded-pill hapus_jadwal_ukom">
+                                        <a class="text-white" href="#!">Hapus</a>
                                     </span>`
                     }
                     else if(row.relasi_pelaksanaan_ujian.acc == 1){
                         tampilan = `<span onclick="clickEditMukAsesorPeninjau(${row.id})" class="badge bg-warning rounded-pill">
-                                        <a class="text-white" href="#">Ubah</a>
+                                        <a class="text-white" href="#!">Ubah</a>
                                     </span>
-                                    <span onclick="detailJadwalUjiKompetensi(${row.id})" class="badge bg-danger rounded-pill">
-                                        <a class="text-white" href="#">Hapus</a>
+                                    <span id-jadwal-ukom="${row.id}" class="badge bg-danger rounded-pill hapus_jadwal_ukom">
+                                        <a class="text-white" href="#!">Hapus</a>
                                     </span>
                                     <span class="badge bg-info rounded-pill">
                                     <a class="text-white" href="/admin/detail-jadwal-uji-kompetensi-acc/${row.id}/${row.relasi_muk.jurusan_id}">Detail</a>
@@ -343,18 +354,33 @@
         });
     });
 
+    $('.close').on('click', function(){
+        $("#muk_id").empty().append('');
+        $("#user_asesor_id").empty().append('');
+        $("#user_peninjau_id").empty().append('');
+    })
+
     function clickEditMukAsesorPeninjau(id){
-            const data_jurusan = list_jurusan[id]
+            const muk_asesor_peninjau = list_muk_asesor_peninjau[id]
             $("#modalEditMukAsesorPeninjau").modal('show');
 
-            $("#formEditMukAsesorPeninjau [name='muk_id']").append(data_muk.map(function(d) {
-                return $(
-                `<option value='${d.id}' ${d.id === data_ukom.muk_id ? 'selected' : ''}>${d.muk}</option>`
-                )
-            }))
+            $("#formEditMukAsesorPeninjau [name='jadwal_uji_kompetensi_id']").val(id);
+
+            $.each(data_muk, function(key, value) {
+                $('#muk_id')
+                .append(`<option value="${value.id}" ${value.id == muk_asesor_peninjau.muk_id ? 'selected' : ''}>${value.muk}</option>`)
+            });
+            $.each(data_asesor, function(key, value) {
+                $('#user_asesor_id')
+                .append(`<option value="${value.id}" ${value.id == muk_asesor_peninjau.relasi_user_asesor.user_asesor_id ? 'selected' : ''}>${value.nama_lengkap}</option>`)
+            });
+            $.each(data_peninjau, function(key, value) {
+                $('#user_peninjau_id')
+                .append(`<option value="${value.id}" ${value.id == muk_asesor_peninjau.relasi_user_asesor.user_peninjau_id ? 'selected' : ''}>${value.nama_lengkap}</option>`)
+            });
 
             $("#formEditMukAsesorPeninjau [name='id']").val(id)
-            $("#formEditMukAsesorPeninjau .jurusan").val(data_jurusan.jurusan)
+            $("#formEditMukAsesorPeninjau .jurusan").val(muk_asesor_peninjau.jurusan)
 
             $('#formEditMukAsesorPeninjau').on('submit', function (e) {
             e.preventDefault();
@@ -391,34 +417,41 @@
         });
     }
 
-    // function hapusMateriUjiKompetensi(id) {
-    //     const table_jadwal_uji_kompetensi = $('#table-jadwal-uji-kompetensi').DataTable();
-    //     swal({
-    //         title: "Yakin ?",
-    //         text: "Menghapus Data ?",
-    //         icon: "warning",
-    //         buttons: true,
-    //         dangerMode: true,
-    //     })
-    //     $.ajax({
-    //         url: "/admin/hapus-jadwal-uji-kompetensi/" + id,
-    //         dataType: 'json',
-    //         success: function (response) {
-    //             if (response.status == 0) {
-    //                 alert("Gagal Hapus")
-    //             } else if (response.status == 1) {
-    //                 swal({
-    //                         title: "Berhasil",
-    //                         text: `${response.msg}`,
-    //                         icon: "success",
-    //                         buttons: true,
-    //                         successMode: true,
-    //                     }),
-    //                     table_jadwal_uji_kompetensi.ajax.reload(null, false)
-    //             }
-    //         }
-    //     });
-    // }
+    $(document).on('click', '.hapus_jadwal_ukom', function (event) {
+        const id = $(event.currentTarget).attr('id-jadwal-ukom');
 
+        swal({
+            title: "Yakin ?",
+            text: "Menghapus Data ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+
+            if (willDelete) {
+                $.ajax({
+            url: "/admin/hapus-jadwal-uji-kompetensi/" + id,
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == 0) {
+                    alert("Gagal Hapus")
+                } else if (response.status == 1) {
+                    swal({
+                            title: "Berhasil",
+                            text: `${response.msg}`,
+                            icon: "success",
+                            buttons: true,
+                            successMode: true,
+                        }),
+                    table_muk_asesor_peninjau.ajax.reload()
+                }
+            }
+        });
+            } else {
+                //alert ('no');
+                return false;
+            }
+        });
+    });
 </script>
 @endsection

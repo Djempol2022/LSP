@@ -476,7 +476,7 @@
 
     $(".filter-role-pengguna").on('change', function(){
         data_role_pengguna = $('#role-id').val();
-        table_pengguna.ajax.reload(null, false);
+        table_pengguna.ajax.reload();
     })
 </script>
 @endsection

@@ -1,32 +1,22 @@
-@extends('layout.main-layout', ['title' => 'Tambah Elemen Unit Kompetensi'])
+@extends('layout.main-layout', ['title' => 'Detail Elemen Unit Kompetensi'])
 @section('main-section')
+<nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+                href="{{ route('admin.Dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Detail Elemen Unit Kompetensi</li>
+    </ol>
+</nav>
 <div class="container mt-5 jalur-file" id="profile-section">
-    {{-- JALUR FOLDER --}}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-                    href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Profil</li>
-        </ol>
-    </nav>
-    {{-- EDIT PROFIL --}}
     <div class="mt-5">
 
         {{-- RINCIAN DATA PEMOHON SERTIFIKASI --}}
         <div class="mb-5 pb-5">
             <div class="col profil-section-title">
-                Bagian 1 : Rincian Data Pemohon Sertifikasi
+                Detail Elemen Unit Kompetensi Jurusan {{Auth::user()->relasi_jurusan->jurusan}}
             </div>
-            <p class="py-3" style="font-size: 18px">Pada bagian ini, cantumkan data pribadi, data pendidikan formal
-                serta
-                data pekerjaan
-                anda saat
-                ini.
-            </p>
-
             {{-- UNIT KOMPETENSI --}}
             <div class="col profil-section" style="margin-bottom:0% !important">
-                <h5>A. Data Unit Kompetensi</h5>
                 <div class="row my-4">
                     <div class="col-md-6">
                         <div class="col pb-4">
@@ -191,9 +181,9 @@
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Batal</span>
                     </button>
-                    <button type="submit" class="btn btn-primary ml-1">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Simpan</span>
+                    <button id="simpan-elemen-btn" type="submit" class="btn btn-primary ml-1">
+                        <i id="search-button"></i>
+                        <span id="text-simpan" class="d-none d-sm-block">Simpan</span>
                     </button>
                 </div>
             </form>
@@ -275,9 +265,9 @@
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Batal</span>
                     </button>
-                    <button type="submit" class="btn btn-primary ml-1">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Simpan</span>
+                    <button id="simpan-isi-elemen-btn" type="submit" class="btn btn-primary ml-1">
+                        <i id="search-button-isi-elemen"></i>
+                        <span id="text-simpan-isi-elemen" class="d-none d-sm-block">Simpan</span>
                     </button>
                 </div>
             </form>
@@ -490,6 +480,7 @@
         url: "{{route('asesor.UbahElemen')}}",
         type: 'text',
     });
+    
 
     // HAPUS ELEMEN
     $('.click-hapus-elemen').on('click', function () {
@@ -518,7 +509,8 @@
                                     successMode: true,
                                 }),
                                 // table_elemen_unit_kompetensi.ajax.reload(null, false)
-                                location.reload();
+                            setTimeout(function() {location.reload()}, 800);
+                            return false;
                         }
                     }
                 });
@@ -531,6 +523,10 @@
     // TAMBAH ELEMEN
     $('#formTambahElemen').on('submit', function (e) {
         e.preventDefault();
+
+        var $search = $("#search-button")
+        // $("#simpan-elemen-btn").attr('disabled','disabled');
+        
         $.ajax({
             url: $(this).attr('action'),
             method: $(this).attr('method'),
@@ -543,21 +539,39 @@
             },
             success: function (data) {
                 if (data.status == 0) {
+                    $("#simpan-elemen-btn").removeAttr('disabled');
                     $.each(data.error, function (prefix, val) {
                         $('label.' + prefix + '_error').text(val[0]);
                         // $('span.'+prefix+'_error').text(val[0]);
                     });
                 } else if (data.status == 1) {
+
                     swal({
-                            title: "Berhasil",
-                            text: `${data.msg}`,
-                            icon: "success",
-                            buttons: true,
-                            successMode: true,
-                        }),
-                        // table_elemen_unit_kompetensi.ajax.reload(null, false)
-                        location.reload();
-                    $("#modalTambahElemen").modal('hide')
+                                title: "Berhasil",
+                                text: `${data.msg}`,
+                                icon: "success",
+                                buttons: true,
+                                successMode: true,
+                            }),
+                            location.reload();
+
+                    // $("#search-button").addClass("fa fa-spinner fa-spin")
+                    //     $("#text-simpan").html('')
+
+                    //     setTimeout(function() {
+                    //         for (var i = 0; i < 10000; i++) {
+                    //             $("#modalTambahElemen").modal('hide')
+                    //             $search.addClass("fa-search").removeClass("fa fa-spinner fa-spin")
+                    //         }
+                    //         swal({
+                    //             title: "Berhasil",
+                    //             text: `${data.msg}`,
+                    //             icon: "success",
+                    //             buttons: true,
+                    //             successMode: true,
+                    //         }),
+                    //         location.reload();
+                    //     }, 2500);
                 }
             }
         });
@@ -567,10 +581,12 @@
     $('.tambah_isi_elemen').click(function () {
 
         var id_elemen = $(this).attr('id-elemen')
+        var $search = $("#search-button")
         $('.elemen_unit_kompetensi_sub_id').val(id_elemen);
 
         $('#formTambahIsiElemenKonten').on('submit', function (e) {
             e.preventDefault();
+            $("#simpan-isi-elemen-btn").attr('disabled','disabled');
             $.ajax({
                 url: $(this).attr('action'),
                 method: $(this).attr('method'),
@@ -583,21 +599,30 @@
                 },
                 success: function (data) {
                     if (data.status == 0) {
+                        $("#simpan-isi-elemen-btn").removeAttr('disabled');
                         $.each(data.error, function (prefix, val) {
                             $('label.' + prefix + '_error').text(val[0]);
                             // $('span.'+prefix+'_error').text(val[0]);
                         });
                     } else if (data.status == 1) {
-                        swal({
+                        
+                        $("#search-button-isi-elemen").addClass("fa fa-spinner fa-spin")
+                        $("#text-simpan-isi-elemen").html('')
+
+                        setTimeout(function() {
+                            for (var i = 0; i < 10000; i++) {
+                                $("#modalTambahIsiElemenKonten").modal('hide')
+                                $search.addClass("fa-search").removeClass("fa fa-spinner fa-spin")
+                            }
+                            swal({
                                 title: "Berhasil",
                                 text: `${data.msg}`,
                                 icon: "success",
                                 buttons: true,
                                 successMode: true,
                             }),
-                            // table_elemen_unit_kompetensi.ajax.reload(null, false)
                             location.reload();
-                        $("#modalTambahElemen").modal('hide')
+                        }, 2500);
                     }
                 }
             });
@@ -642,7 +667,8 @@
                                     successMode: true,
                                 }),
                                 // table_elemen_unit_kompetensi.ajax.reload(null, false)
-                                location.reload();
+                            setTimeout(function() {location.reload()}, 800);
+                            return false;
                         }
                     }
                 });
@@ -651,6 +677,5 @@
             }
         });
     });
-
 </script>
 @endsection

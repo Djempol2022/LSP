@@ -1,26 +1,14 @@
-@extends('layout.main-layout', ['title' => 'Dashboard'])
+@extends('layout.main-layout', ['title' => 'Data Ujian'])
 @section('main-section')
   <div class="container mt-5 jalur-file" id="profile-section">
     {{-- JALUR FOLDER --}}
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-            href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
-        <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Profil</li>
-      </ol>
-    </nav>
 
     <div class="mt-5">
       
       <div class="mb-5 pb-5">
         <div class="col profil-section-title">
-          Jadwal Uji Kompetensi {{Auth::user()->nama_lengkap}}
+          Daftar Nama Asesi Selesai Mengikuti Ujian
         </div>
-        <p class="py-3" style="font-size: 18px">Pada bagian ini, merupakan daftar jadwal Uji Kompetensi berdasarkan 
-            Asesor dan Jurusan sekarang
-        </p>
-
-        {{-- JADWAL UJI KOMPETENSI --}}
         <div class="col profil-section" style="margin-bottom: 0% !important">
           <div class="col pb-45">
             <table class="table table-striped" id="table-peserta-selesai-ujian">
@@ -79,17 +67,19 @@
     let list_peserta_uji_kompetensi = [];
     const table_peserta_selesai_ujian = $('#table-peserta-selesai-ujian').DataTable({
         "destroy": true,
-        "pageLength": 10,
-        "lengthMenu": [
-            [10, 25, 50, 100, -1],
-            [10, 25, 50, 100, 'semua']
-        ],
-        "bLengthChange": true,
+        // "pageLength": 10,
+        // "lengthMenu": [
+        //     [10, 25, 50, 100, -1],
+        //     [10, 25, 50, 100, 'semua']
+        // ],
+        "bLengthChange": false,
         "bFilter": true,
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "searching": false,
+
         ajax: {
             url: "/asesor/data-asesi-telah-selesai-ujian",
             type: "POST",
@@ -116,6 +106,7 @@
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
+                    let tanggal;
                     return row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.tanggal;
                 }
             },
@@ -140,7 +131,7 @@
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
-                    return row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.tempat;
+                    return row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.relasi_tuk.nama_tuk;
                 }
             },
             {
@@ -189,11 +180,11 @@
                     let jenis_tes;
                     if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 1){
                         jenis_tes = `<span class="badge btn-sm bg-info rounded-pill">
-                                        <a class="text-white" href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}">Review Soal</a>
+                                        <a class="text-black" href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}">Review</a>
                                     </span>`
                     }else if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 2){
                         jenis_tes = `<span class="badge btn-sm bg-warning rounded-pill">
-                                        <a href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}" class="text-white">
+                                        <a href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}" class="text-black">
                                             Koreksi
                                         </a>
                                     </span>`

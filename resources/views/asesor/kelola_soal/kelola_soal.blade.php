@@ -112,11 +112,11 @@
                     else if (row.relasi_pelaksanaan_ujian.jadwal_uji_kompetensi_id == row.id ) {
                         if(row.relasi_pelaksanaan_ujian.jenis_tes == null){
                             tampilan = `<span class="badge bg-info rounded-pill">
-                                        <a class="text-white" href="/asesor/review-soal/${row.id}">Review Soal</a>
+                                            <a class="text-white" href="/asesor/review-soal/${row.id}">Review Soal</a>
                                         </span>`
                         }else if(row.relasi_pelaksanaan_ujian.jenis_tes != null){
                             tampilan = `<span class="badge bg-info rounded-pill">
-                                        <a class="text-white" href="/asesor/review-soal/${row.id}/${row.relasi_pelaksanaan_ujian.jenis_tes}">Review Soal</a>
+                                            <a class="text-white" href="/asesor/review-soal/${row.id}/${row.relasi_pelaksanaan_ujian.jenis_tes}">Review Soal</a>
                                         </span>`
                         }
                     }

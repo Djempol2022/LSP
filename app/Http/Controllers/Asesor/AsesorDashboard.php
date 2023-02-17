@@ -7,6 +7,7 @@ use App\Models\UnitKompetensi;
 use App\Models\SkemaSertifikasi;
 use App\Http\Controllers\Controller;
 use App\Models\AsesiUjiKompetensi;
+use App\Models\MateriUjiKompetensi;
 use App\Models\UnitKompetensiIsi;
 use App\Models\UnitKompetensiIsi2;
 use App\Models\UnitKompetensiSub;
@@ -17,15 +18,31 @@ use App\Models\PelaksanaanUjian;
 class AsesorDashboard extends Controller
 {
     public function dashboard(){
-        return view('asesor.dashboard.dashboard');
+        $muk = MateriUjiKompetensi::with('relasi_jurusan')->where('jurusan_id', Auth::user()->jurusan_id)->first();
+        return view('asesor.dashboard.dashboard', ['muk' => $muk]);
     }
 
     // UNIT KOMPETENSI BERDASARKAN JURUSAN ASESOR
-    public function data_unit_kompetensi_perjurusan_asesor(){
-        $data = UnitKompetensi::with('relasi_skema_sertifikasi')
-            ->whereRelation('relasi_skema_sertifikasi', 'jurusan_id', Auth::user()->jurusan_id)->get();
+    public function data_unit_kompetensi_perjurusan_asesor(Request $request){
+        
+        $data = UnitKompetensi::select([
+            'unit_kompetensi.*'
+        ]);
+
+        
+        if($request->input('length')!=-1) 
+        $data = $data->skip($request->input('start'))->take($request->input('length'));
+        $data = $data->with('relasi_skema_sertifikasi')
+        ->whereRelation('relasi_skema_sertifikasi', 'jurusan_id', Auth::user()->jurusan_id)
+        ->get();
+        
+        $rekamFilter = $data->count();
+        $rekamTotal = $data->count();     
         return response()->json([
+            'draw'=>$request->input('draw'),
             'data'=>$data,
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter,
         ]);
     }
 
@@ -46,16 +63,19 @@ class AsesorDashboard extends Controller
         ]);
 
         $data = $data->skip($request->input('start'))->take($request->input('length'));
-        $rekamTotal = $data->count();
+
         $data = $data->with('relasi_jadwal_uji_kompetensi.relasi_muk', 
                         'relasi_jadwal_uji_kompetensi.relasi_user_asesi.relasi_user_asesi', 
-                        'relasi_jadwal_uji_kompetensi.relasi_user_asesor')
+                        'relasi_jadwal_uji_kompetensi.relasi_user_asesor', 'relasi_tuk')
                         ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_user_asesor', 'user_asesor_id', Auth::user()->id)
                         ->get();
-        
+        $rekamFilter = $data->count();
+        $rekamTotal = $data->count();  
         return response()->json([
-        'data'=>$data,
-        'recordsTotal'=>$rekamTotal
+            'draw'=>$request->input('draw'),
+            'data'=>$data,
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter,
         ]);
     }
 
@@ -65,13 +85,14 @@ class AsesorDashboard extends Controller
         ]);
 
         $data = $data->skip($request->input('start'))->take($request->input('length'));
+        $data = $data->with('relasi_user_asesi')->where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->get();
+        $rekamFilter = $data->count();
         $rekamTotal = $data->count();
-        $data = $data->with('relasi_user_asesi')->where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)
-                        ->get();
-        
         return response()->json([
-        'data'=>$data,
-        'recordsTotal'=>$rekamTotal
+            'draw'=>$request->input('draw'),
+            'data'=>$data,
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter,
         ]);
     }
 
@@ -86,10 +107,10 @@ class AsesorDashboard extends Controller
     // FUNGSI TAMBAH ELEMEN UNTI KOMPETENSI
     public function tambah_elemen_unit_kompetensi(Request $request){
         $validator = Validator::make($request->all(), [
-                'judul_unit_kompetensi_sub'=>'required',
+                'judul_unit_kompetensi_sub.*'=>'required',
                 // 'judul_unit_kompetensi_isi.*'=>'required'
             ],[
-                'judul_unit_kompetensi_sub.required'=> 'Wajib diisi',
+                'judul_unit_kompetensi_sub.*.required'=> 'Wajib diisi',
                 // 'judul_unit_kompetensi_isi.*.required'=> 'Wajib diisi'
             ]);
 

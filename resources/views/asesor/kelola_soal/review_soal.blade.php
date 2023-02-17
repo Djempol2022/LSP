@@ -1,5 +1,14 @@
 @extends('layout.main-layout', ['title' => 'Review Soal'])
 @section('main-section')
+
+<nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+            href="{{ route('asesor.KelolaSoal') }}">Kelola Soal</a></li>
+    <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Review Soal</li>
+    </ol>
+</nav>
+
     <div class="container-fluid" style="margin-top: 20px;">
         <div id="demo"> </div>
 

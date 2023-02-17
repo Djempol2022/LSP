@@ -1,7 +1,13 @@
-@extends('layout.main-layout', ['title' => 'Assesment'])
+@extends('layout.main-layout', ['title' => 'Review Jawaban'])
 @section('main-section')
 <div class="container-fluid" style="margin-top: 20px;">
-  <div id="demo"> </div>
+    <nav class="jalur-file mb-5" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+              href="{{ route('asesi.Assesment') }}">Assesment</a></li>
+          <li class="breadcrumb-item active text-primary fw-semibold">Review Jawaban</li>
+        </ol>
+      </nav>
   {{-- JALUR FILE --}}
   {{-- <nav class="jalur-file mb-5" aria-label="breadcrumb">
       <ol class="breadcrumb">

@@ -1,5 +1,15 @@
-@extends('layout.main-layout', ['title' => 'Detail Asesmen Mandiri Asesi'])
+@extends('layout.main-layout', ['title' => 'Detail Asesmen Mandiri'])
 @section('main-section')
+<nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a class="text-black text-decoration-none" href="{{ route('asesor.HalamanPengesahanAsesmemMandiri') }}">
+            Pengajuan Asesmen Mandiri
+        </a>
+      </li>
+      <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Detail Asesmen Mandiri</li>
+  </ol>
+</nav>
 <div class="container-fluid">
     <section class="section">
       <div class="card">
@@ -121,9 +131,9 @@
                     </div>
 
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-lg-6" id="asesorAccAsesmenMandiri">
                     <h5>Mengetahui Asesor</h5>
-                    <form action="{{route('asesor.AsesorAccAsesmenMandiri', $data_asesmen_mandiri->id)}}" method="POST">
+                    <form id="form-AsesorAccAsesmenMandiri" action="{{route('asesor.AsesorAccAsesmenMandiri', $data_asesmen_mandiri->id)}}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="col edit-profil-left">
@@ -153,20 +163,24 @@
                           </div>
                         </div>
                         <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
-                        <div class="col edit-profil mb-2 signature-pad rounded-4" id="signature-pad">
-                        <canvas id="sig"></canvas>
-                        <input type="hidden" name="ttd_asesor" value="" id="ttd_asesi" hidden>
-                        </div>
-                        <div class="mb-2">
                         @isset($data_asesmen_mandiri->ttd_asesor)
+                          <div class="mb-2">
                             <img src="{{ $data_asesmen_mandiri->ttd_asesor }}" alt="ttd_asesi" width="180px">
-                        @endisset
-                        </div>
-                        
-                        <div id="signature-clear">
-                            <button type="button" class="button button-primary tombol-primary-small mb-4" id="clear">Clear</button>
+                          </div>
+                        @else
+                          <div class="col edit-profil mb-2 signature-pad rounded-4" id="signature-pad">
+                            <canvas id="sig"></canvas>
+                            <input type="hidden" name="ttd_asesor" value="" id="ttd_asesi" hidden>
+                          </div>
+                          <div id="signature-clear">
+                            <div class="col" id="signature-clear">
+                              <button type="button" class="btn-sm btn btn-danger mb-2"
+                                  id="clear"><i class="fa fa-eraser"></i>
+                              </button>
+                          </div>
                             <button type="submit" class="btn btn-primary tombol-primary-small" id="simpan">Simpan</button>
-                        </div>
+                          </div>
+                        @endisset
                     </form>
                   </div>
                 </div>
@@ -231,5 +245,39 @@
     document.getElementById('clear').addEventListener("click", clear);
     document.getElementById('simpan').addEventListener("click", sentToController);
     document.addEventListener("DOMContentLoaded", setupSignatureBox);
+
+    $('#form-AsesorAccAsesmenMandiri').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: new FormData(this),
+            processData: false,
+            dataType: 'json',
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('label.error-text').text('');
+            },
+            success: function (data) {
+                if (data.status == 0) {
+                    $.each(data.error, function (prefix, val) {
+                        $('label.' + prefix + '_error').text(val[0]);
+                        // $('span.'+prefix+'_error').text(val[0]);
+                    });
+                } 
+                else if(data.status == 1){
+                    swal({
+                        title: "Berhasil",
+                        text: `${data.msg}`,
+                        icon: "success",
+                        buttons: true,
+                        successMode: true,
+                    }),
+                  $("#asesorAccAsesmenMandiri").load(location.href + " #asesorAccAsesmenMandiri>*", "");
+                }
+            }
+        });
+    });
+
 </script>
 @endsection

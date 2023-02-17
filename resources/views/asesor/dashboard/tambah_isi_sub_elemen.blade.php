@@ -1,12 +1,12 @@
-@extends('layout.main-layout', ['title' => 'Tambah Elemen Unit Kompetensi'])
+@extends('layout.main-layout', ['title' => 'Isi Elemen Unit Kompetensi'])
 @section('main-section')
 <div class="container mt-5 jalur-file" id="profile-section">
     {{-- JALUR FOLDER --}}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-                    href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Profil</li>
+                href="{{ route('asesor.Dashboard') }}">Dashboard</a></li>
+        <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Isi Elemen Unit Kompetensi</li>
         </ol>
     </nav>
     {{-- EDIT PROFIL --}}

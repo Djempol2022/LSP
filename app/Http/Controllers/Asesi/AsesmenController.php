@@ -17,8 +17,10 @@ use App\Models\UnitKompetensiSub;
 use App\Models\AsesiUjiKompetensi;
 use App\Models\MateriUjiKompetensi;
 use App\Http\Controllers\Controller;
+use App\Models\AsesorUjiKompetensi;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StatusUnitKompetensiAsesi;
+use App\Models\UmpanBalikKomponen;
 use SebastianBergmann\CodeCoverage\Report\Xml\Unit;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
@@ -37,6 +39,10 @@ class AsesmenController extends Controller
             ->whereRelation('relasi_user_asesi', 'user_asesi_id', Auth::user()->id)
             ->first();
 
+        $komponen_umpan_balik = UmpanBalikKomponen::get();
+        // $asesi_ujian_selesai = AsesiUjiKompetensi::where('status_ujian_berlangsung', 2)->where('status_umpan_balik', null)->where('user_asesi_id', Auth::user()->id)->first() ?? new AsesiUjiKompetensi();
+        // $asesor_ujian_selesai = AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $asesi_ujian_selesai->jadwal_uji_kompetensi_id)->first() ?? new AsesorUjiKompetensi();
+        // $pelaksanaan_ujian_selesai = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $asesi_ujian_selesai->jadwal_uji_kompetensi_id)->first()?? new PelaksanaanUjian();
         // $data_peserta_ukom = AsesiUjiKompetensi::where('user_asesi_id', Auth::user()->id)->first();
 
         $date = Carbon::now();
@@ -44,8 +50,8 @@ class AsesmenController extends Controller
             'unit_kompetensi'      => $unit_kompetensi,
             'sertifikasi'          => $sertifikasi,
             'data_asesmen_mandiri' => $data_asesmen_mandiri,
-            // 'data_peserta_ukom'    => $data_peserta_ukom,
-            'tanggal'              => $date->format('d F Y')
+            'tanggal'              => $date->format('d F Y'),
+            'komponen_umpan_balik' =>$komponen_umpan_balik
         ]);
     }
 
@@ -104,17 +110,20 @@ class AsesmenController extends Controller
 
         if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
 
-        $rekamTotal = $data->count();
-        $data = $data->with('relasi_jadwal_uji_kompetensi.relasi_user_asesi',
-                            'relasi_jadwal_uji_kompetensi.relasi_user_asesor.relasi_user_asesor_detail',
-                            'relasi_jadwal_uji_kompetensi.relasi_muk',
-                            'relasi_jadwal_uji_kompetensi.relasi_soal',)
-                    ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_user_asesi', 'user_asesi_id', Auth::user()->id)
-                    ->get();
-        
+        $data = $data->with('relasi_jadwal_uji_kompetensi.relasi_user_login_asesi',
+        'relasi_jadwal_uji_kompetensi.relasi_user_asesor.relasi_user_asesor_detail',
+        'relasi_jadwal_uji_kompetensi.relasi_muk',
+        'relasi_jadwal_uji_kompetensi.relasi_soal',
+        'relasi_tuk')
+        ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_user_login_asesi', 'user_asesi_id', Auth::user()->id)
+        ->get();
+
+        $rekamFilter = $data->count();
         return response()->json([
+            'draw'=>$request->input('draw'),
             'data' => $data,
-            'recordsTotal' => $rekamTotal
+            'recordsTotal' => $rekamFilter,
+            'recordsFiltered'=>$rekamFilter
         ]);
     }
 
@@ -151,17 +160,29 @@ class AsesmenController extends Controller
         $jawaban_asesi  = $request->jawaban;
         $soal_id        = $request->soal_id;
         $jadwal_id      = $request->jadwal_id;
+        
+        $data_soal = Soal::where('id', $soal_id)->select('jawaban')->first();
+        $koreksi = $data_soal->jawaban == $jawaban_asesi;
+        
+        if(!$koreksi){
+            $koreksi_jawaban = 1;
+        }else{
+            $koreksi_jawaban = 2;
+        }
+
 
         $data_jawaban_asesi = JawabanAsesi::where('user_asesi_id', $user_asesi_id)->where('soal_id', $soal_id)->first();
         if($data_jawaban_asesi == null){
             JawabanAsesi::create([
-                'user_asesi_id' => $user_asesi_id,
-                'soal_id'       => $soal_id,
-                'jawaban'       => $jawaban_asesi
+                'user_asesi_id'     => $user_asesi_id,
+                'soal_id'           => $soal_id,
+                'jawaban'           => $jawaban_asesi,
+                'koreksi_jawaban'   => $koreksi_jawaban
             ]);
         }else{
             JawabanAsesi::where('user_asesi_id', $user_asesi_id)->where('soal_id', $soal_id)->update([
-                'jawaban'       => $jawaban_asesi
+                'jawaban'       => $jawaban_asesi,
+                'koreksi_jawaban'   => $koreksi_jawaban
             ]);
         }
         $selanjutnya = Soal::where('jadwal_uji_kompetensi_id', $jadwal_id)->where('id', '>', $soal_id)->orderBy('id','asc')->first();

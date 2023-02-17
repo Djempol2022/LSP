@@ -14,6 +14,7 @@ use App\Models\MateriUjiKompetensi;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PeninjauUjiKompetensi;
+use App\Models\NamaTempatUjiKompetensi;
 use Illuminate\Support\Facades\Validator;
 
 class Admin_JadwalUjiKompetensi extends Controller
@@ -44,43 +45,6 @@ class Admin_JadwalUjiKompetensi extends Controller
             compact('muk','data_jurusan','user_asesi', 'user_asesor', 'user_peninjau', 'data_jadwal_uji_kompetensi'));
     }
 
-    public function data_muk_asesor_peninjau(Request $request, $id){
-        // $data = PelaksanaanUjian::select([
-        //     'pelaksanaan_ujian.*'
-        // ]);
-
-        // if($request->input('length')!=-1) 
-        //     $data = $data->skip($request->input('start'))->take($request->input('length'));
-            
-        //     $rekamTotal = $data->count();
-        //     $data = $data->with('relasi_jadwal_uji_kompetensi.relasi_muk', 'relasi_jadwal_uji_kompetensi.relasi_user_asesor.relasi_user_asesor_detail', 
-        //                 'relasi_jadwal_uji_kompetensi.relasi_user_peninjau.relasi_user_peninjau_detail')
-        //                 ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_muk', 'jurusan_id', $id)->get();
-            
-        //     return response()->json([
-        //     'data'=>$data,
-        //     'recordsTotal'=>$rekamTotal
-        // ]);
-        $data = JadwalUjiKompetensi::select([
-            'jadwal_uji_kompetensi.*'
-        ]);
-
-        $rekamFilter = $data->get()->count();
-        if($request->input('length')!=-1) 
-        $data = $data->skip($request->input('start'))->take($request->input('length'));
-        $data = $data->with('relasi_pelaksanaan_ujian','relasi_muk', 'relasi_user_asesor.relasi_user_asesor_detail', 
-        'relasi_user_peninjau.relasi_user_peninjau_detail')
-        ->whereRelation('relasi_muk', 'jurusan_id', $id)->get();
-            $rekamTotal = $data->count();
-            
-            return response()->json([
-                'draw'=>$request->input('draw'),
-                'data'=>$data,
-                'recordsTotal'=>$rekamTotal,
-                'recordsFiltered'=>$rekamFilter,
-            ]);
-        }
-
         // DETAIL JADWAL UJI KOMPETENSI ACC
         public function halaman_detail_jadwal_uji_kompetensi_acc($jadwal_id, $jurusan_id){
             $data_pelaksanaan_ujian = PelaksanaanUjian::where('jadwal_uji_kompetensi_id',$jadwal_id)
@@ -100,11 +64,12 @@ class Admin_JadwalUjiKompetensi extends Controller
                     ->with('relasi_user_asesi.relasi_role', 'relasi_jadwal_uji_kompetensi')
                     ->whereRelation('relasi_user_asesi.relasi_role', 'role', '=', 'asesi')
                     ->get();
-            
+            $tuk = NamaTempatUjiKompetensi::get(['id', 'nama_tuk']);
             return view('admin.jadwal_uji_kompetensi.detail_jadwal_uji_kompetensi_acc',[ 
                     'data_pelaksanaan_ujian' => $data_pelaksanaan_ujian, 
                     'user_asesi' => $user_asesi, 
-                    'user_asesi_kompetensi' => $user_asesi_kompetensi]);
+                    'user_asesi_kompetensi' => $user_asesi_kompetensi,
+                    'tuk' => $tuk]);
         }
 
         // DAFTAR ASESI MENGIKUTI UJI KOMPETENSI
@@ -158,7 +123,7 @@ class Admin_JadwalUjiKompetensi extends Controller
                 AsesiUjiKompetensi::create($input);
 
                 User::where('id', $input['user_asesi_id'])->update([
-                    'status_terlibat_uji_kompetensi' => 0
+                    'status_terlibat_uji_kompetensi' => 1
                 ]);
             }
             return response()->json([
@@ -179,14 +144,14 @@ class Admin_JadwalUjiKompetensi extends Controller
             'waktu_mulai' => 'required',
             'waktu_selesai' => 'required',
             'kelas' => 'required',
-            'tempat' => 'required',
+            'tuk_id' => 'required',
         ],[
             'sesi.required'=> 'Wajib diisi',
             'tanggal.required'=> 'Wajib diisi',
             'waktu_mulai.required'=> 'Wajib diisi',
             'waktu_selesai.required'=> 'Wajib diisi',
             'kelas.required'=> 'Wajib diisi',
-            'tempat.required'=> 'Wajib diisi',
+            'tuk_id.required'=> 'Wajib diisi',
         ]);
 
         if(!$validator->passes()){
@@ -201,7 +166,7 @@ class Admin_JadwalUjiKompetensi extends Controller
                 'waktu_mulai' => $request->tanggal.' '.$request->waktu_mulai,
                 'waktu_selesai' => $request->tanggal.' '.$request->waktu_selesai,
                 'kelas' => $request->kelas,
-                'tempat' => $request->tempat,
+                'tuk_id' => $request->tuk_id,
                 'total_waktu' => $waktu_mulai->diffInMinutes($waktu_selesai)
             ]);
             
@@ -219,51 +184,147 @@ class Admin_JadwalUjiKompetensi extends Controller
         }
         }
 
-        // TAMBAH JADWAL UJI KOMPETENSI
-        public function tambah_muk_asesor_peninjau(Request $request){
-            $validator = Validator::make($request->all(), [
-                'muk_id'=>'required',
-                'user_asesor_id' => 'required',
-                'user_peninjau_id' => 'required',
-            ],[
-                'muk_id.required'=> 'Wajib diisi',
-                'user_asesor_id.required'=> 'Wajib diisi',
-                'user_peninjau_id.required'=> 'Wajib diisi',
+    // DATA MUK ASESOR PENINJAU
+    public function data_muk_asesor_peninjau(Request $request, $id){
+        // $data = PelaksanaanUjian::select([
+        //     'pelaksanaan_ujian.*'
+        // ]);
+
+        // if($request->input('length')!=-1) 
+        //     $data = $data->skip($request->input('start'))->take($request->input('length'));
+            
+        //     $rekamTotal = $data->count();
+        //     $data = $data->with('relasi_jadwal_uji_kompetensi.relasi_muk', 'relasi_jadwal_uji_kompetensi.relasi_user_asesor.relasi_user_asesor_detail', 
+        //                 'relasi_jadwal_uji_kompetensi.relasi_user_peninjau.relasi_user_peninjau_detail')
+        //                 ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_muk', 'jurusan_id', $id)->get();
+            
+        //     return response()->json([
+        //     'data'=>$data,
+        //     'recordsTotal'=>$rekamTotal
+        // ]);
+        $data = JadwalUjiKompetensi::select([
+            'jadwal_uji_kompetensi.*'
+        ]);
+
+        if($request->input('length')!=-1) 
+        $data = $data->skip($request->input('start'))->take($request->input('length'));
+        $data = $data->with('relasi_pelaksanaan_ujian','relasi_muk', 'relasi_user_asesor.relasi_user_asesor_detail', 
+        'relasi_user_peninjau.relasi_user_peninjau_detail')
+        ->whereRelation('relasi_muk', 'jurusan_id', $id)->get();
+        $rekamTotal = $data->count();
+        $rekamFilter = $data->count();
+            
+            return response()->json([
+                'draw'=>$request->input('draw'),
+                'data'=>$data,
+                'recordsTotal'=>$rekamTotal,
+                'recordsFiltered'=>$rekamFilter,
             ]);
-    
-            if(!$validator->passes()){
+    }
+    // TAMBAH MUK ASESOR PENINJAU TERKAIT UJI KOMPETENSI
+    public function tambah_muk_asesor_peninjau(Request $request){
+        $validator = Validator::make($request->all(), [
+            'muk_id'=>'required',
+            'user_asesor_id' => 'required',
+            'user_peninjau_id' => 'required',
+        ],[
+            'muk_id.required'=> 'Wajib diisi',
+            'user_asesor_id.required'=> 'Wajib diisi',
+            'user_peninjau_id.required'=> 'Wajib diisi',
+        ]);
+
+        if(!$validator->passes()){
+            return response()->json([
+                'status'=>0,
+                'error'=>$validator->errors()->toArray()
+            ]);
+        }else{
+            $tambah_muk_asesor_peninjau = JadwalUjiKompetensi::create([
+                'muk_id' => $request->muk_id,
+            ]);
+
+            AsesorUjiKompetensi::create([
+                'jadwal_uji_kompetensi_id' => $tambah_muk_asesor_peninjau->id,
+                'user_asesor_id' => $request->user_asesor_id
+            ]);
+            PeninjauUjiKompetensi::create([
+                'jadwal_uji_kompetensi_id' => $tambah_muk_asesor_peninjau->id,
+                'user_peninjau_id' => $request->user_peninjau_id
+            ]);
+            
+            if(!$tambah_muk_asesor_peninjau){
                 return response()->json([
                     'status'=>0,
-                    'error'=>$validator->errors()->toArray()
+                    'msg'=>'Terjadi kesalahan, Gagal Menambah Jadwal Uji Kompetensi'
                 ]);
             }else{
-                $tambah_muk_asesor_peninjau = JadwalUjiKompetensi::create([
-                    'muk_id' => $request->muk_id,
+                return response()->json([
+                    'status'=>1,
+                    'msg'=>'Berhasil Menambahkan Jadwal Uji Kompetensi'
                 ]);
-
-                AsesorUjiKompetensi::create([
-                    'jadwal_uji_kompetensi_id' => $tambah_muk_asesor_peninjau->id,
-                    'user_asesor_id' => $request->user_asesor_id
-                ]);
-                PeninjauUjiKompetensi::create([
-                    'jadwal_uji_kompetensi_id' => $tambah_muk_asesor_peninjau->id,
-                    'user_peninjau_id' => $request->user_peninjau_id
-                ]);
-                
-                if(!$tambah_muk_asesor_peninjau){
-                    return response()->json([
-                        'status'=>0,
-                        'msg'=>'Terjadi kesalahan, Gagal Menambah Jadwal Uji Kompetensi'
-                    ]);
-                }else{
-                    return response()->json([
-                        'status'=>1,
-                        'msg'=>'Berhasil Menambahkan Jadwal Uji Kompetensi'
-                    ]);
-                }
             }
         }
+    }
 
+    // UBAH MUK ASESOR PENINJAU TERKAIT UJI KOMPETENSI
+    public function ubah_muk_asesor_peninjau(Request $request){
+        $validator = Validator::make($request->all(), [
+            'muk_id'=>'required',
+            'user_asesor_id' => 'required',
+            'user_peninjau_id' => 'required',
+        ],[
+            'muk_id.required'=> 'Wajib diisi',
+            'user_asesor_id.required'=> 'Wajib diisi',
+            'user_peninjau_id.required'=> 'Wajib diisi',
+        ]);
+
+        if(!$validator->passes()){
+            return response()->json([
+                'status'=>0,
+                'error'=>$validator->errors()->toArray()
+            ]);
+        }else{
+            $ubah_muk_asesor_peninjau = JadwalUjiKompetensi::where('id', $request->jadwal_uji_kompetensi_id)->update([
+                'muk_id' => $request->muk_id,
+            ]);
+
+            AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $request->jadwal_uji_kompetensi_id)
+                ->where('user_asesor_id', $request->user_asesor_id)([
+                'user_asesor_id' => $request->user_asesor_id
+            ]);
+            PeninjauUjiKompetensi::where('jadwal_uji_kompetensi_id', $request->jadwal_uji_kompetensi_id)
+                ->where('user_peninjau_id', $request->user_peninjau_id)([
+                'user_peninjau_id' => $request->user_peninjau_id
+            ]);
+            
+            if(!$ubah_muk_asesor_peninjau){
+                return response()->json([
+                    'status'=>0,
+                    'msg'=>'Terjadi kesalahan, Gagal Menambah Jadwal Uji Kompetensi'
+                ]);
+            }else{
+                return response()->json([
+                    'status'=>1,
+                    'msg'=>'Berhasil Menambahkan Jadwal Uji Kompetensi'
+                ]);
+            }
+        }
+    }
+
+    public function hapus_muk_asesor_peninjau($id){
+        $hapus_jadwal_uji_kompetensi = JadwalUjiKompetensi::find($id)->delete();
+        if(!$hapus_jadwal_uji_kompetensi){
+            return response()->json([
+                'status'=>0,
+                'msg'=>'Terjadi kesalahan, Gagal Menghapus Jadwal Uji Kompetensi'
+            ]);
+        }else{
+            return response()->json([
+                'status'=>1,
+                'msg'=>'Berhasil Menghapus Jadwal Uji Kompetensi'
+            ]);
+        }
+    }
 
     // BELUM DIGUNAKAN----------------------------
     // DATA JADWAL UJI KOMPETENSI 

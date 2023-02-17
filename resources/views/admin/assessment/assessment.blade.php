@@ -105,7 +105,7 @@
                     <div class="col-12 col-lg-4">
                         <div class="card">
                             <div class="card-body py-4 px-4">
-                                <a href="{{ route('admin.DaftarJurusan') }}">
+                                <a href="{{ route('admin.HalamanUmpanBalik') }}">
                                     <div class="d-flex align-items-center">
                                         <div class="avatar avatar-xl">
                                             <i class="fa fa-retweet fa-lg"></i>

@@ -77,7 +77,6 @@
             <div class="col profil-section" style="margin-bottom: 0% !important">
               <form action="{{route('admin.UbahJadwalPelaksanaanUjian', $data_pelaksanaan_ujian->id)}}" method="POST" id="form-ubahJadwalPelaksanaanUjian">
                 <div class="row my-4">
-                  
                     @csrf
                     <div class="col-md-6">
                         <div class="col pb-4">
@@ -141,17 +140,18 @@
                       </div>
                       <div class="col pb-4">
                           <label for="tempat" class="form-label fw-semibold">Tempat Uji Kompetensi</label>
-                          <input type="text" id="tempat" class="form-control rounded-4"
-                              placeholder="Masukkan Tempat Uji Kompetensi" name="tempat"
-                              @isset($data_pelaksanaan_ujian->tempat)
-                              value="{{$data_pelaksanaan_ujian->tempat}}"
-                              @endisset>
+                          <select name="tuk_id" class="form-select form-select-sm">
+                              <option value="">-- Pilih Tempat Uji Kompetensi --</option>
+                            @foreach ($tuk  as $data_tuk)
+                              <option value="{{$data_tuk->id}}" @selected($data_tuk->id == $data_pelaksanaan_ujian->tuk_id)>{{$data_tuk->nama_tuk}}</option>
+                            @endforeach
+                          </select>
                           <div class="input-group has-validation">
                               <label class="text-danger error-text tempat_error"></label>
                           </div>
                       </div>
                     </div>
-                    <div class="col pb-12">
+                    <div class="col pb-12" id="tambahAsesiKeUjiKompetensi">
                       <p class="fw-bold">Asesi</p>
                       <span class="btn btn-primary btn-sm btn-rounded text-white"
                         href="#" data-bs-toggle="modal" data-bs-target="#modalTambahAsesiKeJadwalUkom">Tambah Asesi
@@ -185,52 +185,51 @@
                       @endif
                     </div>
                     <button type="submit" class="bg-primary btn-sm btn rounded-3 text-white">Simpan</button>
-                </form>
                 </div>
-            </div>
+                </form>
+                <div class="modal fade" id="modalTambahAsesiKeJadwalUkom" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Pilih Asesi</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <form action="{{route('admin.TambahDataAsesiKeJadwalUkom')}}" method="POST" id="form-tambahDataAsesiKeJadwalUkom">
+                      @csrf
+                      <div class="modal-body">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Pilih</th>
+                              <th scope="col">Nama Asesi</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <input type="hidden" name="jadwal_uji_kompetensi_id" value="{{$data_pelaksanaan_ujian->jadwal_uji_kompetensi_id}}" hidden>
+                              <input type="hidden" name="pelaksanaan_ujian_id" value="{{$data_pelaksanaan_ujian->id}}" hidden>
+                              <input type="hidden" name="jenis_tes" value="{{$data_pelaksanaan_ujian->jenis_tes}}" hidden>              
+                            @foreach ($user_asesi as $data_user_asesi)
+                            <tr>
+                              <th><input type="checkbox" name="user_asesi_id[]" class="cek" value="{{$data_user_asesi->id}}"></th>
+                              <td>{{$data_user_asesi->nama_lengkap}}</td>
+                            </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary button-asesi" disabled>Tambah Asesi</button>
+                      </div>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </div>
     </section>
-</div>
-
-<div class="modal fade" id="modalTambahAsesiKeJadwalUkom" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Pilih Asesi</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="{{route('admin.TambahDataAsesiKeJadwalUkom')}}" method="POST" id="form-tambahDataAsesiKeJadwalUkom">
-      @csrf
-      <div class="modal-body">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Pilih</th>
-              <th scope="col">Nama Asesi</th>
-            </tr>
-          </thead>
-          <tbody>
-              <input type="hidden" name="jadwal_uji_kompetensi_id" value="{{$data_pelaksanaan_ujian->jadwal_uji_kompetensi_id}}" hidden>
-              <input type="hidden" name="pelaksanaan_ujian_id" value="{{$data_pelaksanaan_ujian->id}}" hidden>
-              <input type="hidden" name="jenis_tes" value="{{$data_pelaksanaan_ujian->jenis_tes}}" hidden>              
-            @foreach ($user_asesi as $data_user_asesi)
-            <tr>
-              <th><input type="checkbox" name="user_asesi_id[]" class="cek" value="{{$data_user_asesi->id}}"></th>
-              <td>{{$data_user_asesi->nama_lengkap}}</td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-primary button-asesi" disabled>Tambah Asesi</button>
-      </div>
-    </form>
-    </div>
-  </div>
 </div>
 @endsection
 @section('script')
@@ -305,8 +304,10 @@
               }),
               // table_daftar_asesi.ajax.reload(null, false)
 
-              location.reload();
+              // location.reload();
             $("#modalTambahAsesiKeJadwalUkom").modal('hide')
+            $("#tambahAsesiKeUjiKompetensi").load(location.href + " #tambahAsesiKeUjiKompetensi>*", "");
+            $("#modalTambahAsesiKeJadwalUkom").load(location.href + " #modalTambahAsesiKeJadwalUkom>*", "");
           }
         }
       });

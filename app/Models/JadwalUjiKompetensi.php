@@ -21,6 +21,10 @@ class JadwalUjiKompetensi extends Model
     public function relasi_user_asesor(){
         return $this->belongsTo(AsesorUjiKompetensi::class, 'id', 'jadwal_uji_kompetensi_id');
     }
+
+    public function relasi_user_login_asesor(){
+        return $this->belongsTo(AsesorUjiKompetensi::class, 'id', 'jadwal_uji_kompetensi_id')->where('user_asesor_id', Auth::user()->id);
+    }
     
     public function relasi_user_peninjau(){
         return $this->belongsTo(PeninjauUjiKompetensi::class, 'id', 'jadwal_uji_kompetensi_id');
@@ -28,6 +32,10 @@ class JadwalUjiKompetensi extends Model
 
     public function relasi_user_asesi(){
         return $this->belongsTo(AsesiUjiKompetensi::class, 'id', 'jadwal_uji_kompetensi_id');
+    }
+
+    public function relasi_user_login_asesi(){
+        return $this->belongsTo(AsesiUjiKompetensi::class, 'id', 'jadwal_uji_kompetensi_id')->where('user_asesi_id', Auth::user()->id);
     }
 
     public function relasi_pelaksanaan_ujian(){

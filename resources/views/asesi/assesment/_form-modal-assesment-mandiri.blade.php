@@ -102,9 +102,10 @@
                             <input class="form-check-input me-1" type="radio"
                               name="status-{{ $isi->id }}" value="kompeten"
                               id="kompeten-{{ $isi->id }}"
-                              @if(empty($data_status_kompeten_asesi->status))
-                              @else
+                              @isset($data_status_kompeten_asesi->status)
+                              @disabled(true)
                                 {{ $data_status_kompeten_asesi->status === 'kompeten' ? 'checked' : '' }}>
+                              @else
                               @endif
                             <label class="form-check-label text-success"
                               for="kompeten-{{ $isi->id }}">Kompeten</label>
@@ -113,9 +114,10 @@
                             <input class="form-check-input me-1" type="radio"
                               name="status-{{ $isi->id }}"
                               value="belum kompeten" id="belum_kompeten-{{ $isi->id }}"
-                              @if(empty($data_status_kompeten_asesi->status))
-                              @else
+                              @isset($data_status_kompeten_asesi->status)
+                              @disabled(true)
                                 {{ $data_status_kompeten_asesi->status === 'belum kompeten' ? 'checked' : '' }}>
+                              @else
                               @endif
                             <label class="form-check-label text-danger"
                               for="belum_kompeten-{{ $isi->id }}">Belum Kompeten</label>
@@ -170,29 +172,41 @@
                 </div>
                 {{-- TANDA TANGAN / TTD --}}
                 <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
-                <div class="col edit-profil mb-2 signature-pad" id="signature-pad">
-                  <canvas id="sig"></canvas>
-                  <input type="hidden" name="ttd_asesi" value="" id="ttd" hidden>
-                </div>
+
                 <div class="mb-2">
                   @isset($data_asesmen_mandiri->ttd_asesi)
                     <img src="{{ $data_asesmen_mandiri->ttd_asesi }}" alt="ttd" width="180px">
+                  @else
+                  <div class="col edit-profil mb-2 signature-pad" id="signature-pad">
+                    <canvas id="sig"></canvas>
+                    <input type="hidden" name="ttd_asesi" value="" id="ttd" hidden>
+                  </div>
+                  <div class="col" id="signature-clear">
+                    <button type="button" class="btn-sm btn btn-danger mb-2"
+                        id="clear"><i class="fa fa-eraser"></i>
+                    </button>
+                  </div>
                   @endisset
-                </div>
-                <div id="signature-clear">
-                  <button type="button" class="button button-primary tombol-primary-small mb-4"
-                    id="clear">Clear</button>
                 </div>
               </div>
               <div class="col-lg-6">
                 <h5>Mengetahui Asesor</h5>
                 <div class="col edit-profil-left">
                   <label for="namaAsesi" class="form-label fw-semibold">Nama Asesor</label>
-                  <p>{{$data_asesmen_mandiri->relasi_user_asesor->nama_lengkap ?? ''}}</p>
+                  @isset($data_asesmen_mandiri->relasi_user_asesor->nama_lengkap)
+                    <p>{{$data_asesmen_mandiri->relasi_user_asesor->nama_lengkap}}</p>
+                  @else
+                    <p class="text-danger">Nama Asesor Belum Diketahui</p>
+                  @endisset
                 </div>
                 <div class="col edit-profil-left">
                   <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
-                  <p>{{Carbon\Carbon::parse($data_asesmen_mandiri->tanggal_asesor ?? '')->format('d F Y')}}</p>
+                  @isset($data_asesmen_mandiri->tanggal_asesor)
+                    <p>{{Carbon\Carbon::parse($data_asesmen_mandiri->tanggal_asesor)->format('d F Y')}}</p>
+                  @else
+                    <p class="text-danger">Tanggal Belum ditentukan</p>
+                  @endisset
+                
                 </div>
                 {{-- TANDA TANGAN / TTD --}}
                 <label class="form-label fw-semibold">Tanda Tangan</label>
@@ -206,9 +220,12 @@
           </div>
 
         </div>
+        @isset($data_asesmen_mandiri->ttd_asesi)
+        @else
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary tombol-primary-small" id="simpan">Simpan</button>
         </div>
+        @endisset
       </div>
     </div>
   </form>

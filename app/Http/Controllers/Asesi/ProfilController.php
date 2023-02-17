@@ -16,6 +16,8 @@ use App\Models\KelengkapanPemohon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\KualifikasiPendidikan;
+use App\Models\SkemaSertifikasi;
+use App\Models\UnitKompetensi;
 
 use function PHPUnit\Framework\isNull;
 use Illuminate\Support\Facades\Storage;
@@ -41,7 +43,10 @@ class ProfilController extends Controller
                 'relasi_pekerjaan', 'relasi_sertifikasi.relasi_tanda_tangan_admin', 
                 'relasi_kelengkapan_pemohon')
                 ->find(Auth::user()->id);
-                
+        
+        $skema_sertifikasi = SkemaSertifikasi::where('jurusan_id', Auth::user()->jurusan_id)->first();
+        $tujuan_sertifikasi = Sertifikasi::where('user_id', Auth::user()->id)->first();
+        $unit_kompetensi = UnitKompetensi::where('skema_sertifikasi_id', $skema_sertifikasi->id)->get();
         $institusi = Institusi::get(['id', 'nama_institusi']);
         $jurusan = Jurusan::get(['id', 'jurusan']);
         $kualifikasi_pendidikan = KualifikasiPendidikan::get(['id', 'pendidikan']);
@@ -102,7 +107,10 @@ class ProfilController extends Controller
             'nilai_raport' => $nilai_raport,
             'date' => $date,
             'tanggal' => $date->format('d F Y'),
-            'data_permohonan_user_sertifikasi' => $permohonan_user_sertifikasi
+            'data_permohonan_user_sertifikasi' => $permohonan_user_sertifikasi,
+            'data_skema_sertifikasi' => $skema_sertifikasi,
+            'tujuan_sertifikasi' => $tujuan_sertifikasi,
+            'unit_kompetensi' => $unit_kompetensi
         ]);
     }
 

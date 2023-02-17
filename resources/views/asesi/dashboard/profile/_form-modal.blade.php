@@ -266,6 +266,7 @@
                   {{-- <p class="text-danger mt-2">*Masukkan foto berlatar belakang merah</p> --}}
                   <label class="text-danger error-text pas_foto_error mt-1"></label>
                 </div>
+
                 <div class="col mb-5">
                   <label for="sertifikat_prakerin" class="form-label fw-semibold">Sertifikat Prakerin
                     atau Surat Keterangan Telah Melaksanakan Praktek Kerja Industri</label>
@@ -281,6 +282,8 @@
                   @endisset
                   <label class="text-danger error-text sertifikat_prakerin_error mt-1"></label>
                 </div>
+
+
                 <div class="col mb-5">
                   <label for="nilai_raport" class="form-label fw-semibold">Nilai Raport (Semester 1
                     sd Semester 5)</label>
@@ -318,14 +321,15 @@
                     <canvas id="sig"></canvas>
                     <input type="hidden" name="ttd" value="" id="ttd">
                   </div>
+                  <div class="col" id="signature-clear">
+                    <button type="button" class="btn-sm btn btn-danger mb-2"
+                        id="clear"><i class="fa fa-eraser"></i>
+                    </button>
+                  </div>
                   <div class="mb-2">
                     @isset($data->relasi_user_detail->ttd)
                       <img src="{{ $data->relasi_user_detail->ttd }}" alt="ttd" width="180px">
                     @endisset
-                  </div>
-                  <div id="signature-clear">
-                    <button type="button" class="button button-primary tombol-primary-small mb-4"
-                      id="clear">Clear</button>
                   </div>
                   <div class="col edit-profil-left">
                     <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
@@ -462,14 +466,14 @@
       }
 
       //   sertifikasi
-      if (isset(data.relasi_sertifikasi.tujuan_asesmen)) {} else {
-        if (data.relasi_sertifikasi.tujuan_asesmen === 'Sertifikasi') {
+      if (isset(data.relasi_sertifikasi.tujuan_asesi)) {} else {
+        if (data.relasi_sertifikasi.tujuan_asesi === 'sertifikasi') {
           $("#sertifikasi").prop('checked', true)
-        } else if (data.relasi_sertifikasi.tujuan_asesmen === 'Sertifikasi ulang') {
+        } else if (data.relasi_sertifikasi.tujuan_asesi === 'sertifikasi ulang') {
           $("#sertifikasiUlang").prop('checked', true)
-        } else if (data.relasi_sertifikasi.tujuan_asesmen === 'Pengakuan komptetensi terkini') {
+        } else if (data.relasi_sertifikasi.tujuan_asesi === 'pengakuan komptetensi terkini') {
           $("#pengakuanKompetensiTerkini").prop('checked', true)
-        } else if (data.relasi_sertifikasi.tujuan_asesmen === 'Rekognisi pembelajaran lampau') {
+        } else if (data.relasi_sertifikasi.tujuan_asesi === 'rekognisi pembelajaran lampau') {
           $("#rekognisiPembelajaranLampau").prop('checked', true)
         } else {
           $("#lainnya").prop('checked', true)
@@ -529,7 +533,7 @@
             $("#form-update [name='nilai_raport']").val('');
             $('html, body').animate({
               scrollTop: 0
-            }, 'fast');
+            }, 'fast'); 
           }
         }
       })

@@ -32,14 +32,18 @@ class AsesorPengesahan extends Controller
     }
 
     // DATA DAFTAR ASESMEN MANDIRI
-    public function data_asesmen_mandiri(){
-        
+    public function data_asesmen_mandiri(Request $request){
         $data = AsesmenMandiri::with('relasi_user_asesi', 'relasi_user_asesor')
             ->whereRelation('relasi_user_asesi', 'jurusan_id', Auth::user()->jurusan_id)
             ->get();
         
+            $rekamFilter = $data->count();
+            $rekamTotal = $data->count();     
             return response()->json([
-            'data' => $data
+                'draw'=>$request->input('draw'),
+                'data'=>$data,
+                'recordsTotal'=>$rekamTotal,
+                'recordsFiltered'=>$rekamFilter,
         ]);
     }
 
@@ -54,7 +58,7 @@ class AsesorPengesahan extends Controller
         $data_asesmen_mandiri = AsesmenMandiri::with('relasi_user_asesi', 'relasi_user_asesor')
             ->whereRelation('relasi_user_asesi', 'user_asesi_id', $user_asesi_id)
             ->first();
-            
+        
         return view('asesor.asesmen_mandiri.detail_asesmen_mandiri', [
             'unit_kompetensi' => $unit_kompetensi,
             'sertifikasi'     => $sertifikasi,
@@ -70,6 +74,9 @@ class AsesorPengesahan extends Controller
             'tanggal_asesor' => Carbon::now(),
             'ttd_asesor'     => $request->ttd_asesor
         ]);
-    return redirect()->back();
+        return response()->json([
+            'status'=>1,
+            'msg'=>'Berhasil Acc Asesmen Mandiri'
+        ]);
     }
 }
