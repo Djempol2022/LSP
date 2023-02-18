@@ -1,4 +1,4 @@
-@extends('layout.main-layout', ['title'=>'Login'])
+@extends('layout.main-layout', ['title' => 'Login'])
 @section('login')
     <div class="row login-row">
         {{-- ALERT --}}
@@ -52,6 +52,6 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 @endsection
