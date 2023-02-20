@@ -11,9 +11,11 @@
         "php": "^8.0.2",
         "barryvdh/laravel-dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
+        "itsgoingd/clockwork": "^5.1",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "phpoffice/phpword": "^1.0",
         "realrashid/sweet-alert": "^5.1",
         "vinkla/hashids": "^10.0"
     },

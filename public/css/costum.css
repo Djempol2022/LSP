@@ -456,7 +456,7 @@ hr {
     margin-left: 9%;
 }
 .pernyataan .isi {
-    padding: 30px;
+    padding: 1.0rem;
 }
 .pernyataan p {
     margin-top: 13px;
@@ -477,8 +477,13 @@ hr {
     .teks-tabel {
         font-size: 67%;
     }
+ 
 }
 @media (max-width: 560px) {
+    .login{
+        content-visibility: hidden;
+        overflow: hidden;
+    }
     .notifikasi {
         width: 35px;
     }
