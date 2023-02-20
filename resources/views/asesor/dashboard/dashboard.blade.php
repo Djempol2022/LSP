@@ -86,7 +86,7 @@
 @endsection
 @section('script')
 <script>
-    let list_unit_kompetensi = [];
+    let list_peserta_selesai_ujian = [];
     let list_peserta_uji_kompetensi = [];
     const table_data_unit_kompetensi_jurusan_asesor = $('#table-data-unit-kompetensi-jurusan-asesor').DataTable({
         "destroy": true,
@@ -118,7 +118,7 @@
                 "targets": 0,
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
-                    list_unit_kompetensi[row.id] = row;
+                    list_peserta_selesai_ujian[row.id] = row;
                     return row.kode_unit;
                 }
             },
@@ -126,7 +126,7 @@
                 "targets": 1,
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
-                    list_unit_kompetensi[row.id] = row;
+                    list_peserta_selesai_ujian[row.id] = row;
                     return row.judul_unit;
                 }
             },
@@ -134,7 +134,7 @@
                 "targets": 2,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
-                    list_unit_kompetensi[row.id] = row;
+                    list_peserta_selesai_ujian[row.id] = row;
                     return row.jenis_standar;
                 }
             },
@@ -204,7 +204,7 @@
                     if(row.tanggal == null){
                         data_tanggal = `<p style="color:red">Tanggal Belum ditentukan</p>`
                     }else{
-                        data_tanggal = moment(row.tanggal).format("d MMMM y");
+                        data_tanggal = moment(row.tanggal).format("dddd, D MMMM y");
                     }
                     return data_tanggal;
                 }
@@ -218,7 +218,7 @@
                     if(row.waktu_mulai == null){
                         data_waktu = `<p style="color:red">Waktu Belum ditentukan</p>`
                     }else{
-                        data_waktu = moment(row.waktu_mulai).format("HH:mm:ss") +` - `+ moment(row.waktu_selesai).format("HH:mm:ss");
+                        data_waktu = moment(row.waktu_mulai).format("HH:mm:ss") +` s/d `+ moment(row.waktu_selesai).format("HH:mm:ss");
                     }
                     return data_waktu;
                 }

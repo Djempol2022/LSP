@@ -438,11 +438,10 @@
                       <img src="{{ $data->relasi_sertifikasi->ttd_asesi }}" alt="ttd" width="180px">
                     @endisset
                   </div>
-                  <div class="col" id="signature-clear">
-                    <button type="button" class="btn-sm btn btn-danger mb-2"
-                        id="clear"><i class="fa fa-eraser"></i>
-                    </button>
-                </div>
+                  <div id="signature-clear">
+                    <button type="button" class="button button-primary tombol-primary-small mb-4"
+                      id="clear">Clear</button>
+                  </div>
                   <div class="col edit-profil-left">
                     <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
                     <input type="date" id="tanggal" class="form-control input-text"

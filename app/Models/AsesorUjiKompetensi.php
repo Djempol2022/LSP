@@ -15,7 +15,7 @@ class AsesorUjiKompetensi extends Model
     {
         return $this->belongsTo(JadwalUjiKompetensi::class, 'jadwal_uji_kompetensi_id', 'id');
     }
-    public function relasi_user_asesor_detail()
+    public function relasi_user_asesor()
     {
         return $this->belongsTo(User::class, 'user_asesor_id', 'id');
     }

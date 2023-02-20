@@ -19,7 +19,7 @@
     <nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-                    href="{{ route('admin.Dashboard') }}">Dashboard</a></li>
+                    href="{{ route('asesi.Dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Pengaturan</li>
         </ol>
     </nav>
@@ -91,93 +91,36 @@
             <div class="col-12 col-lg-9">
                 <div class="row">
                     
-                    <div class="col-6 col-lg-4 col-md-6">
+                    <div class="col-6 col-lg-3 col-md-8">
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#ubahPassword">
                                 <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                    <div class="col-md-2 col-xl-4 col-xxl-4">
                                         <div class="stats-icon purple mb-2">
-                                            <i class="fa fa-key fa-lg" style="color: white"></i>
+                                            <i class="iconly-boldShow"></i>
                                         </div>
                                     </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7" style="padding-right: calc(var(--bs-gutter-x) * 0.2)">
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="font-extrabold mb-0">Edit Password</h6>
                                     </div>
                                 </div>
-                                </a>
+                            </a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-6 col-lg-4 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-4 py-4-5">
-                                <a href="{{ route('admin.DaftarJurusan') }}">
-                                    <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                        <div class="stats-icon green mb-2">
-                                            <i class="fa fa-window-restore fa-lg" style="color: white"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7" style="padding-right: calc(var(--bs-gutter-x) * 0.2)">
-                                        <h6 class="font-extrabold mb-0">Jurusan</h6>
-                                    </div>
-                                </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-lg-4 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-4 py-4-5">
-                                <a href="{{ route('admin.DaftarInstitusi') }}">
-                                    <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                        <div class="stats-icon red mb-2">
-                                            <i class="fa fa-building fa-lg" style="color: white"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7" style="padding-right: calc(var(--bs-gutter-x) * 0.2)">
-                                        <h6 class="font-extrabold mb-0">Institusi</h6>
-                                    </div>
-                                </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-lg-4 col-md-6">
-                        <div class="card">
-                            <div class="card-body px-4 py-4-5">
-                                <a href="{{ route('admin.DaftarKualifikasiPendidikan') }}">
-                                    <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                        <div class="stats-icon orange mb-2">
-                                            <i class="fa fa-user-tie fa-lg" style="color: white"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7" style="padding-right: calc(var(--bs-gutter-x) * 0.2)">
-                                        <h6 class="font-extrabold mb-0">Kualifikasi Pendidikan</h6>
-                                    </div>
-                                </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-lg-4 col-md-6">
+                    <div class="col-6 col-lg-3 col-md-8">
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
                                 <a href="{{ route('admin.DaftarMUK') }}">
-                                    <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                <div class="row">
+                                    <div class="col-md-2 col-xl-4 col-xxl-4">
                                         <div class="stats-icon blue mb-2">
-                                            <i class="fa fa-paste fa-lg" style="color: white"></i>
+                                            <i class="iconly-boldProfile"></i>
                                         </div>
                                     </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7" style="padding-right: calc(var(--bs-gutter-x) * 0.2)">
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="font-extrabold mb-0">Materi Uji Kompetensi</h6>
                                     </div>
                                 </div>
@@ -186,18 +129,18 @@
                         </div>
                     </div>
 
-                    <div class="col-6 col-lg-4 col-md-6">
+                    <div class="col-6 col-lg-3 col-md-8">
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
-                                <a href="{{route('admin.HalamanDataNamaTUK')}}">
-                                    <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                        <div class="stats-icon grey mb-2">
-                                            <i class="fa fa-map-marker-alt fa-lg" style="color: white"></i>
+                                <a href="{{ route('admin.DaftarJurusan') }}">
+                                <div class="row">
+                                    <div class="col-md-2 col-xl-4 col-xxl-4">
+                                        <div class="stats-icon blue mb-2">
+                                            <i class="iconly-boldProfile"></i>
                                         </div>
                                     </div>
-                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7" style="padding-right: calc(var(--bs-gutter-x) * 0.2)">
-                                        <h6 class="font-extrabold mb-0">Tempat Uji Kompetensi</h6>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="font-extrabold mb-0">Jurusan</h6>
                                     </div>
                                 </div>
                                 </a>
@@ -205,12 +148,47 @@
                         </div>
                     </div>
 
+                    <div class="col-6 col-lg-3 col-md-8">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <a href="{{ route('admin.DaftarInstitusi') }}">
+                                <div class="row">
+                                    <div class="col-md-2 col-xl-4 col-xxl-4">
+                                        <div class="stats-icon blue mb-2">
+                                            <i class="iconly-boldProfile"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="font-extrabold mb-0">Institusi</h6>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="col-6 col-lg-3 col-md-8">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <a href="{{ route('admin.DaftarKualifikasiPendidikan') }}">
+                                <div class="row">
+                                    <div class="col-md-2 col-xl-4 col-xxl-4">
+                                        <div class="stats-icon blue mb-2">
+                                            <i class="iconly-boldProfile"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="font-extrabold mb-0">Kualifikasi Pendidikan</h6>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
-
 <div class="modal fade" id="ubahPassword" tabindex="-1" aria-labelledby="ubahPasswordLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

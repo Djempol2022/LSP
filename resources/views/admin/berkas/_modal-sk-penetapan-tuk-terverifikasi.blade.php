@@ -211,7 +211,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Close</button>
-        <a id='pdfSKPenetapan' href="#" class="btn btn-primary">Print</a>
+        <a id='pdfSKPenetapan' href="#" class="btn btn-primary">Save as PDF</a>
       </div>
     </div>
   </div>

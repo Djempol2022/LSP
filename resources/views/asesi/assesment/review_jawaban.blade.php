@@ -63,6 +63,14 @@
                                             </div>
                                         </div>
                                       </div>
+                                    @elseif ($jenis_tes->jenis_tes == 3)
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-1">
+                                            <div class="form-group has-icon-left">
+                                                <p class="card-title">Jawaban : {{$data_jawaban_asesi->jawaban}}</p>                                                    
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endif
                                     @endforeach
                               </div>

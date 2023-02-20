@@ -32,12 +32,12 @@
         <a href="{{ route('asesi.Dashboard.Profile') }}">
           <div class="row bg-profile px-4 py-4 align-items-center">
             <div class="col-auto col-foto-profile">
-              @isset ($user->foto)
+              @if ($user->foto)
                 <img src="{{ asset('storage/' . $user->foto) }}" style="width: 85%" class="rounded-circle" alt="image">
               @else
                 <img src="{{ asset('images/logo/favicon.png') }}" style="width: 85%" class="rounded-circle"
                   alt="image">
-              @endisset
+              @endif
             </div>
             <div class="col-9 row p-0">
               <div class="col-auto col-tulisan-profile">
@@ -51,4 +51,5 @@
         </a>
       </div>
     </div>
+  </div>
 @endsection

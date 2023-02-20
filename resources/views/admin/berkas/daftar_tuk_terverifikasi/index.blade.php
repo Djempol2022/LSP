@@ -27,7 +27,7 @@
                   <th>NAMA TUK</th>
                   <th>NAMA SKEMA SERTIFIKASI</th>
                   <th>PENANGGUNG JAWAB TUK</th>
-                  <th></th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody id="bodyTable">
@@ -82,11 +82,10 @@
                     <canvas id="sig"></canvas>
                     <input type="hidden" name="ttd" value="" id="ttd">
                   </div>
-                  <div class="col" id="signature-clear">
-                    <button type="button" class="btn-sm btn btn-danger mb-2"
-                        id="clear"><i class="fa fa-eraser"></i>
-                    </button>
-                </div>
+                  <div id="signature-clear">
+                    <button type="button" class="button button-primary tombol-primary-small mb-2"
+                      id="clear">Clear</button>
+                  </div>
                 </div>
                 <div>
                   <span><input type="text" class="form-control @error('nama_bttd') is-invalid @enderror"

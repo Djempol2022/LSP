@@ -45,11 +45,11 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach ($komponen_umpan_balik as $komponen)
-                 
                 <tr>
                   <td>
-                    <p>{{$komponen->komponen}}</p>
+                    <p>Saya mendapatkan penjelasan yang cukup memadai mengenai proses
+                      asesmen/uji
+                      kompetensi</p>
                   </td>
                   <td>
                     <div class="align-items-start">
@@ -74,8 +74,34 @@
                       placeholder="Masukan Catatan / Komentar Disini. . ."></textarea>
                   </td>
                 </tr>
-                   
-                @endforeach
+                <tr>
+                  <td>
+                    <p>Saya diberikan kesempatan untuk mempelajari standar kompetensi yang akan
+                      diujikan dan menilai diri sendiri terhadap pencapaiannya</p>
+                  </td>
+                  <td>
+                    <div class="align-items-start">
+                      <div class="row col">
+                        <div class="col-lg-6 form-check">
+                          <input class="form-check-input" type="radio" name="hasil2" id="ya1">
+                          <label class="form-check-label text-success" for="ya1">
+                            Iya
+                          </label>
+                        </div>
+                        <div class="col-lg-6 form-check">
+                          <input class="form-check-input" type="radio" name="hasil2" id="tidak1">
+                          <label class="form-check-label text-danger" for="tidak1">
+                            Tidak
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <textarea class="form-control border-tiernary my-4" id="" cols="30" rows="5"
+                      placeholder="Masukan Catatan / Komentar Disini. . ."></textarea>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <div class="col mt-5">

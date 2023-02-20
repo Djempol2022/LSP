@@ -11,10 +11,8 @@ use Illuminate\Support\Facades\Validator;
 class Admin_MUKController extends Controller
 {
     public function daftar_data_muk(){
-        $jurusan = Jurusan::get(['id', 'jurusan']);
-        return view('admin.pengaturan.muk.data_muk', [
-            'jurusan' => $jurusan
-        ]);
+        $jurusan = Jurusan::get();
+        return view('admin.pengaturan.muk.data_muk', compact('jurusan'));
     }
 
     public function data_muk(Request $request){
@@ -22,29 +20,13 @@ class Admin_MUKController extends Controller
             'muk.*'
         ]);
 
-        if($request->input('jurusan_id')!=null){
-            $data = $data->where('jurusan_id', $request->jurusan_id);
-        }
-
-        if($request->input('search.value')!=null){
-            $data = $data->where(function($q)use($request){
-                    $q->whereRaw('LOWER(muk) like ?',['%'.strtolower($request->input('search.value')).'%']);
-            });
-            $data = $data->with('relasi_jurusan')->whereHas('relasi_jurusan', function($q)use($request) {
-                $q->whereRaw('LOWER(jurusan) like ?',['%'.strtolower($request->input('search.value')).'%']);
-            });
-        }
-
-        $rekamFilter = $data->get()->count();
         if($request->input('length')!=-1) 
             $data = $data->skip($request->input('start'))->take($request->input('length'));
             $rekamTotal = $data->count();
             $data = $data->with('relasi_jurusan')->get();
         return response()->json([
-            'draw'=>$request->input('draw'),
             'data'=>$data,
-            'recordsTotal'=>$rekamTotal,
-            'recordsFiltered'=>$rekamFilter
+            'recordsTotal'=>$rekamTotal
         ]);
     }
 
@@ -78,8 +60,8 @@ class Admin_MUKController extends Controller
                         'status'=>1,
                         'msg'=>'Berhasil menambahkan Materi uji Kompetensi'
                     ]);
+                }
             }
-        }
     }
 
     public function ubah_muk(Request $request){
