@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Admin_AssessmentController;
 use App\Http\Controllers\Admin\Admin_DetailJadwalUjiKompetensi;
 use App\Http\Controllers\Admin\Berkas\BerkasController;
 use App\Http\Controllers\Admin\Berkas\Daftar_TUK_Terverifikasi_Controller;
+use App\Http\Controllers\Admin\Berkas\DF_Hadir_Asesi_Controller;
 use App\Http\Controllers\Admin\Berkas\DF_Hadir_Asesor_Controller;
 use App\Http\Controllers\Admin\Berkas\DF_Hadir_Asesor_Pleno_Controller;
 use App\Http\Controllers\Admin\Berkas\SK_Penetapan_TUK_Terverifikasi_Controller;
@@ -186,6 +187,11 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(DF_Hadir_Asesor_Controller::class)->group(function () {
             Route::get('berkas/df-hadir-asesor', 'index')->name('Berkas.DFHadirAsesor');
             Route::post('berkas/df-hadir-asesor', 'store')->name('Berkas.DFHadirAsesor.Add');
+        });
+
+        Route::controller(DF_Hadir_Asesi_Controller::class)->group(function () {
+            Route::get('berkas/df-hadir-asesi', 'index')->name('Berkas.DFHadirAsesi');
+            Route::post('berkas/df-hadir-asesi', 'store')->name('Berkas.DFHadirAsesi.Add');
         });
 
 
