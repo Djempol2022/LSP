@@ -20,8 +20,8 @@ class AsesorUjiKompetensi extends Model
         return $this->belongsTo(User::class, 'user_asesor_id', 'id');
     }
 
-    public function relasi_asesi_uji_kompetensi()
-    {
-        return $this->hasMany(AsesiUjiKompetensi::class, 'jadwal_uji_kompetensi_id', 'jadwal_uji_kompetensi_id');
-    }
+    // public function relasi_asesi_uji_kompetensi()
+    // {
+    //     return $this->hasMany(AsesiUjiKompetensi::class, 'jadwal_uji_kompetensi_id', 'jadwal_uji_kompetensi_id');
+    // }
 }
