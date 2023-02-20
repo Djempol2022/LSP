@@ -121,7 +121,17 @@
                 </td>
               </tr>
               <tr>
-                <td style="height: 70px; padding-left: 5%"></td>
+                <td style="height: 70px; padding-left: 5%; padding-right: 15%">
+                  {{-- TANDA TANGAN / TTD --}}
+                  <div class="mb-2 signature-pad" id="signature-pad-asesor">
+                    <canvas id="sig-asesor"></canvas>
+                    <input type="hidden" name="ttd-asesor" value="" id="ttd-asesor">
+                  </div>
+                  <div id="signature-clear-asesor">
+                    <button type="button" class="button button-primary tombol-primary-small mb-2"
+                      id="clear-asesor">Clear</button>
+                  </div>
+                </td>
                 <td style="height: 70px; padding-left: 20%">
                   {{-- TANDA TANGAN / TTD --}}
                   <div class="mb-2 signature-pad" id="signature-pad">
@@ -135,8 +145,21 @@
                 </td>
               </tr>
               <tr>
-                <td style="padding-left: 5%">(..............................................................)</td>
-                <td style="font-weight: bold; padding-left: 20%" id="nama_bttd">
+                <td style="padding-left: 5%; font-weight: bold; padding-right: 17%">
+                  <select name="nama_asesor" id="nama_asesor"
+                    class="form-select @error('nama_asesor') is-invalid @enderror">
+                    <option value="">-- Pilih Asesor --</option>
+                    @foreach ($nama_asesor as $item)
+                      <option value="{{ $item->id }}">{{ $item->nama_lengkap }}</option>
+                    @endforeach
+                  </select>
+                  @error('nama_asesor')
+                    <div class="text-danger">
+                      {{ $message }}
+                    </div>
+                  @enderror
+                </td>
+                <td style="font-weight: bold; padding-left: 20%">
                   <input type="text" class="form-control @error('nama_bttd') is-invalid @enderror" name="nama_bttd"
                     value="Agus Pramono, ST,M.Pd" id="nama_bttd" />
                   @error('nama_bttd')
@@ -147,16 +170,29 @@
                 </td>
               </tr>
               <tr>
-                <td style="padding-left: 5%">MET.</td>
-                <td class="d-flex align-items-center justify-content-end" style="padding-left: 20%">
-                  MET.<span><input type="text" class="form-control @error('no_met_bttd') is-invalid @enderror"
-                      name="no_met_bttd" value="000.015352.2019" id="no_met_bttd" />
-                    @error('no_met_bttd')
-                      <div class="text-danger">
-                        {{ $message }}
-                      </div>
-                    @enderror
-                  </span>
+                <td style="padding-left: 5%">
+                  <div class="d-flex align-items-center">
+                    MET.<span><input type="text" class="form-control @error('no_met_asesor') is-invalid @enderror"
+                        name="no_met_asesor" value="000.015352.2019" id="no_met_asesor" />
+                      @error('no_met_asesor')
+                        <div class="text-danger">
+                          {{ $message }}
+                        </div>
+                      @enderror
+                    </span>
+                  </div>
+                </td>
+                <td style="padding-left: 20%">
+                  <div class="d-flex align-items-center justify-content-end">
+                    MET.<span><input type="text" class="form-control @error('no_met_bttd') is-invalid @enderror"
+                        name="no_met_bttd" value="000.015352.2019" id="no_met_bttd" />
+                      @error('no_met_bttd')
+                        <div class="text-danger">
+                          {{ $message }}
+                        </div>
+                      @enderror
+                    </span>
+                  </div>
                 </td>
               </tr>
             </table>

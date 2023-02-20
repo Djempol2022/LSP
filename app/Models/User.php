@@ -72,4 +72,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(KelengkapanPemohon::class, 'id', 'user_id');
     }
+
+    public function relasi_asesor_uji_kompetensi()
+    {
+        return $this->hasMany(AsesorUjiKompetensi::class, 'user_asesor_id', 'id');
+    }
 }
