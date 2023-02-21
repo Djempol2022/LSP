@@ -15,9 +15,4 @@ class Jurusan extends Model
     public function relasi_skema_sertifikasi(){
         return $this->belongsTo(SkemaSertifikasi::class, 'id', 'jurusan_id');
     }
-
-    public function relasi_muk()
-    {
-        return $this->hasMany(MateriUjiKompetensi::class, 'jurusan_id', 'id');
-    }
 }
