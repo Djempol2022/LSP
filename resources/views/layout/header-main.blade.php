@@ -105,8 +105,8 @@
                             {{ $notif[1] }}
                         </div>
                     </div>
-                </div>
             </ul>
         </div>
+    </div>
     </div>
 </header>

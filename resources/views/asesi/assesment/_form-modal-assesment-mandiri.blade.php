@@ -221,6 +221,9 @@
 
         </div>
         @isset($data_asesmen_mandiri->ttd_asesi)
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary tombol-primary-small">Kembali</button>
+        </div>
         @else
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary tombol-primary-small" id="simpan">Simpan</button>

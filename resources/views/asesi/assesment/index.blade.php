@@ -63,9 +63,13 @@
     {{-- MODAL DETAIL UJIAN --}}
     @include('asesi.assesment._form-modal-detail-ujian')
 
-    {{-- MODAL UMPAN BALIK --}}
-    @include('asesi.assesment._form-modal-umpan-balik')
+    {{-- MODAL DETAIL UJIAN --}}
+    @include('asesi.assesment._form-modal-detail-ujian')
 
+    {{-- MODAL UMPAN BALIK --}}
+    @if ($jawaban_asesi == 0)
+        @include('asesi.assesment._form-modal-umpan-balik')
+    @endif
 
 
 @section('script')

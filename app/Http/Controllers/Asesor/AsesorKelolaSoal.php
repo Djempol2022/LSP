@@ -197,11 +197,11 @@ class AsesorKelolaSoal extends Controller
         $jenis_tes = 3;
 
         $pertanyaans = $request->input('wawancara_pertanyaan');
-        $jawaban = $request->input('wawancara_jawaban');
+        // $jawaban = $request->input('wawancara_jawaban');
    
         $cek_jadwal = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->count();
-        $cek_jenis_tes_ada = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)
-                    ->where('jenis_tes', 2)->orWhere('jenis_tes', 0)->first();
+        // $cek_jenis_tes_ada = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)
+        //             ->where('jenis_tes', 2)->orWhere('jenis_tes', 0)->first();
         
         if($cek_jadwal <=0 ){
             PelaksanaanUjian::create([
@@ -212,7 +212,7 @@ class AsesorKelolaSoal extends Controller
             for($x = 0; $x < count($pertanyaans); $x++){
                 $pertanyaan = $pertanyaans[$x];
                 $ambil_jawaban = null;
-                $ambil_jawaban = $jawaban[$x];
+                // $ambil_jawaban = $jawaban[$x];
             
                 if(trim($pertanyaan) == "" || is_null($pertanyaan))
                     continue;
@@ -234,7 +234,7 @@ class AsesorKelolaSoal extends Controller
                 for($x = 0; $x < count($pertanyaans); $x++){
                     $pertanyaan = $pertanyaans[$x];
                     $ambil_jawaban = null;
-                    $ambil_jawaban = $jawaban[$x];
+                    // $ambil_jawaban = $jawaban[$x];
                 
                 if(trim($pertanyaan) == "" || is_null($pertanyaan))
                     continue;

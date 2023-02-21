@@ -27,6 +27,7 @@
                             <div class="col row mt-4">
                                 <input type="hidden" name="soal_id" value="{{$soal->id}}" hidden>
                                 <input type="hidden" name="jadwal_id" value="{{$pelaksanaan_ujian->jadwal_uji_kompetensi_id}}" hidden>
+                                <input type="hidden" name="jenis_tes" value="{{$pelaksanaan_ujian->jenis_tes}}" hidden>
 
                                 @php
                                     $jawaban_asesi = \App\Models\JawabanAsesi::where('user_asesi_id', Auth::user()->id)->where('soal_id', $soal->id)->first() ?? new \App\Models\JawabanAsesi();

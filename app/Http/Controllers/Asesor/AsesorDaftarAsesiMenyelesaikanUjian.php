@@ -28,18 +28,27 @@ class AsesorDaftarAsesiMenyelesaikanUjian extends Controller
         //         ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_user_asesor', 'user_asesor_id', Auth::user()->id)
         //         ->get();
         
+        // $data = $data->with(
+        //         'relasi_jadwal_uji_kompetensi.relasi_user_asesor', 
+        //         'relasi_jadwal_uji_kompetensi.relasi_muk', 
+        //         'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian',
+        //         'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.relasi_tuk', 
+        //         'relasi_user_asesi')
+        //         ->where([['status_ujian_berlangsung', '=', 3, 'OR'],  ['status_ujian_berlangsung', '=', 2, 'OR']])
+        //         ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_user_asesor','user_asesor_id', Auth::user()->id)
+        //         ->get();
         $data = $data->with(
-                'relasi_jadwal_uji_kompetensi.relasi_user_asesor', 
-                'relasi_jadwal_uji_kompetensi.relasi_muk', 
-                'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian',
-                'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.relasi_tuk', 
-                'relasi_user_asesi')
-                ->where([['status_ujian_berlangsung', '=', 3, 'OR'],  ['status_ujian_berlangsung', '=', 2, 'OR']])
-                ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_user_asesor','user_asesor_id', Auth::user()->id)
-                ->get();
+            'relasi_jadwal_uji_kompetensi.relasi_user_asesor', 
+            'relasi_jadwal_uji_kompetensi.relasi_muk', 
+            'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian',
+            'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.relasi_tuk', 
+            'relasi_user_asesi')
+            ->where('status_ujian_berlangsung', 2)
+            ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_user_asesor','user_asesor_id', Auth::user()->id)
+            ->get();
 
-                $rekamTotal = $data->count();
-                $rekamFilter = $data->count();
+            $rekamTotal = $data->count();
+            $rekamFilter = $data->count();
         return response()->json([
             'draw'=>$request->input('draw'),
             'data'=>$data,

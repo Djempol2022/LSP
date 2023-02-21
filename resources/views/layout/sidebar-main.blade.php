@@ -224,20 +224,20 @@
                   <span>Dashboard</span>
               </a>
           </li>
-          <li class="sidebar-item {{ request()->routeIs('peninjau.Assesment*') ? 'active' : '' }}">
-              <a href="{{ route('peninjau.Assesment') }}" class='sidebar-link'>
-                  <i class="bi bi-journal-text {{ request()->routeIs('peninjau.Assesment*') ? 'warna-white' : '' }} warna-secondary"
-                      style="{{ request()->routeIs('peninjau.Assesment*') ? 'font-weight: 1000' : '' }}"></i>
-                  <span>Assesment</span>
+          <li class="sidebar-item {{ request()->routeIs('peninjau.PengesahanMuk*') ? 'active' : '' }}">
+              <a href="{{ route('peninjau.PengesahanMuk') }}" class='sidebar-link'>
+                  <i class="bi bi-journal-text {{ request()->routeIs('peninjau.PengesahanMuk*') ? 'warna-white' : '' }} warna-secondary"
+                      style="{{ request()->routeIs('peninjau.PengesahanMuk*') ? 'font-weight: 1000' : '' }}"></i>
+                  <span>Pengesahan MUK</span>
               </a>
           </li>
-          <li class="sidebar-item {{ request()->routeIs('peninjau.Pengaturan*') ? 'active' : '' }}">
+          {{-- <li class="sidebar-item {{ request()->routeIs('peninjau.Pengaturan*') ? 'active' : '' }}">
               <a href="{{ route('peninjau.Pengaturan') }}" class='sidebar-link'>
                   <i
                       class="bi bi-gear{{ request()->routeIs('peninjau.Pengaturan*') ? '-fill warna-white' : '' }} warna-secondary"></i>
                   <span>Pengaturan</span>
               </a>
-          </li>
+          </li> --}}
 
 
 

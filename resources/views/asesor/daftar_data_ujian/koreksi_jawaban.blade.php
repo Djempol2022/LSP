@@ -5,7 +5,7 @@
   <nav class="jalur-file mb-5" aria-label="breadcrumb">
       <ol class="breadcrumb">
           <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-                  href="{{ route('asesor.KelolaSoal') }}">Data Ujian</a></li>
+                  href="{{ route('asesor.DaftarDataUjian') }}">Data Ujian</a></li>
           <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Koreksi Soal</li>
       </ol>
   </nav>
@@ -27,10 +27,15 @@
     @endphp
     @foreach ($jawaban_asesi as $data_jawaban_asesi)
     @php
-        $total_jawaban_benar = $data_jawaban_asesi->with('relasi_soal.relasi_jadwal_uji_kompetensi')
+        $total_jawaban_benar = $data_jawaban_asesi->where('user_asesi_id', $asesi_id)->with('relasi_soal.relasi_jadwal_uji_kompetensi')
               ->whereRelation('relasi_soal.relasi_jadwal_uji_kompetensi', 'jadwal_uji_kompetensi_id', $jadwal_id)->where('koreksi_jawaban', 2)->count();
-        $total_jawaban_salah = $data_jawaban_asesi->with('relasi_soal.relasi_jadwal_uji_kompetensi')
+        $total_jawaban_salah = $data_jawaban_asesi->where('user_asesi_id', $asesi_id)->with('relasi_soal.relasi_jadwal_uji_kompetensi')
               ->whereRelation('relasi_soal.relasi_jadwal_uji_kompetensi', 'jadwal_uji_kompetensi_id', $jadwal_id)->where('koreksi_jawaban', 1)->count();
+
+        // $total_jawaban_benar = $data_jawaban_asesi->with('relasi_soal.relasi_jadwal_uji_kompetensi')
+        //       ->whereRelation('relasi_soal.relasi_jadwal_uji_kompetensi', 'jadwal_uji_kompetensi_id', $jadwal_id)->where('koreksi_jawaban', 2)->count();
+        // $total_jawaban_salah = $data_jawaban_asesi->with('relasi_soal.relasi_jadwal_uji_kompetensi')
+        //       ->whereRelation('relasi_soal.relasi_jadwal_uji_kompetensi', 'jadwal_uji_kompetensi_id', $jadwal_id)->where('koreksi_jawaban', 1)->count();
     @endphp
         @if ($jenis_tes->jenis_tes == 1)
         <div class="col-md-12 px-0">
@@ -73,41 +78,76 @@
           </div>
         </div>
         @elseif ($jenis_tes->jenis_tes == 2)
-        @foreach ($jawaban_asesi as $data_jawaban_asesi)
-        @if($data_jawaban_asesi->koreksi_jawaban == null)
-          <div class="card">
-            <div class="card-header">
-              <div class="buttons" style="display: flex;">
-                  <button soal-id = {{$data_jawaban_asesi->id}} class="btn btn-sm icon btn-danger jawaban_salah"><i class="fa fa-times"></i></button>
-                  <button soal-id = {{$data_jawaban_asesi->id}} class="btn btn-sm icon btn-success jawaban_benar"><i class="fa fa-check"></i></button>
+          @foreach ($jawaban_asesi as $data_jawaban_asesi)
+            @if($data_jawaban_asesi->koreksi_jawaban == null)
+              <div class="card">
+                <div class="card-header">
+                  <div class="buttons" style="display: flex;">
+                      <button soal-id = {{$data_jawaban_asesi->id}} class="btn btn-sm icon btn-danger jawaban_salah"><i class="fa fa-times"></i></button>
+                      <button soal-id = {{$data_jawaban_asesi->id}} class="btn btn-sm icon btn-success jawaban_benar"><i class="fa fa-check"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
+                  <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
+                </div>
               </div>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
-              <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
-            </div>
-          </div>
-          @elseif($data_jawaban_asesi->koreksi_jawaban == 1)
-          <div class="card" style="outline-style: solid; outline-color: rgba(201, 76, 76, 0.3);">
-            <div class="card-body">
-              <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
-              <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
-            </div>
-          </div>
-          @elseif($data_jawaban_asesi->koreksi_jawaban == 2)
-          <div class="card" style="outline-style: solid; outline-color: rgba(120, 212, 77, 0.58);">
-            <div class="card-body">
-              <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
-              <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
-            </div>
-          </div>
-        @endif
-        @endforeach
-        <div class="card" style="margin-top: -4.0rem;">
-          <div class="card-body">
-            Kunci Jawaban : {{$data_soal->jawaban}}
-          </div>
+              @elseif($data_jawaban_asesi->koreksi_jawaban == 1)
+              <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(201, 76, 76, 0.3);">
+                <div class="card-body">
+                  <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
+                  <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
+                </div>
+              </div>
+              @elseif($data_jawaban_asesi->koreksi_jawaban == 2)
+              <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(120, 212, 77, 0.58);">
+                <div class="card-body">
+                  <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
+                  <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
+                </div>
+              </div>
+            @endif
+          @endforeach
+          @elseif ($jenis_tes->jenis_tes == 3)
+          @foreach ($jawaban_asesi as $data_jawaban_asesi)
+            @if($data_jawaban_asesi->koreksi_jawaban == null)
+              <div class="card">
+                <div class="card-header">
+                  <div class="buttons" style="display: flex;">
+                      <button soal-id = {{$data_jawaban_asesi->id}} class="btn btn-sm icon btn-danger jawaban_salah"><i class="fa fa-times"></i></button>
+                      <button soal-id = {{$data_jawaban_asesi->id}} class="btn btn-sm icon btn-success jawaban_benar"><i class="fa fa-check"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
+                  <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
+                </div>
+              </div>
+              @elseif($data_jawaban_asesi->koreksi_jawaban == 1)
+              <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(201, 76, 76, 0.3);">
+                <div class="card-body">
+                  <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
+                  <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
+                </div>
+              </div>
+              @elseif($data_jawaban_asesi->koreksi_jawaban == 2)
+              <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(120, 212, 77, 0.58);">
+                <div class="card-body">
+                  <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
+                  <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
+                </div>
+              </div>
+            @endif
+          @endforeach
+      @if ($jenis_tes->jenis_tes == 3)
+      @else
+      <div class="card" style="margin-top: -4.0rem;">
+        <div class="card-body">
+          Kunci Jawaban : {{$data_soal->jawaban}}
         </div>
+      </div>
+      @endif
+
         @endif
         @endforeach
     @endforeach
@@ -115,16 +155,16 @@
       <div class="col-12 pernyataan">
         <div class="col isi">
           <div class="row">
-            <div class="col-4 col-md-2"><h5>Total Soal </h5></div>
-            <div class="col-2 col-md-2"><h5>: {{$hitung_total_soal}}</h5></div>
+            <div class="col-4 col-md-2"><h6>Total Soal </h6></div>
+            <div class="col-2 col-md-2"><h6>: {{$hitung_total_soal}}</h6></div>
           </div>
           <div class="row">
-            <div class="col-4 col-md-2"><h6 style="color:blue;">Jawaban Benar</h6></div>
-            <div class="col-2 col-md-2"><h6 style="color:blue;"> : {{$total_jawaban_benar}}</h6></div>
+            <div class="col-4 col-md-2"><h6 style="color:green;">Jawaban Benar</h6></div>
+            <div class="col-2 col-md-2"><h6 style="color:green;"> : {{$total_jawaban_benar}}</h6></div>
           </div>
           <div class="row">
-            <div class="col-4 col-md-2"><h6 style="color:rgb(255, 81, 12);">Jawaban Salah</h6></div>
-            <div class="col-2 col-md-2"><h6 style="color:rgb(255, 81, 12);"> : {{$total_jawaban_salah}} </h6></div>
+            <div class="col-4 col-md-2"><h6 style="color:red;">Jawaban Salah</h6></div>
+            <div class="col-2 col-md-2"><h6 style="color:red;"> : {{$total_jawaban_salah}} </h6></div>
           </div>
         </div>
       </div>
