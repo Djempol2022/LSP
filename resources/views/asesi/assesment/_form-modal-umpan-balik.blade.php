@@ -1,6 +1,7 @@
 <div class="modal fade" id="umpanBalik" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-labelledby="umpanBalikLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    @isset($asesi_ujian_selesai)
     <form action="{{route('asesi.SimpanUmpanBalikAsesi')}}" method="POST">
       @csrf
       <input type="hidden" name="jadwal_uji_kompetensi_id" value="{{$asesi_ujian_selesai->jadwal_uji_kompetensi_id}}" hidden>
@@ -94,5 +95,6 @@
         </div>
       </div>
     </form>
+    @endisset
   </div>
 </div>

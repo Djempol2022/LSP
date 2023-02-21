@@ -10,6 +10,8 @@
 <script src="/extensions/fontawesome/js/all.min.js"></script>
 <script src="/js/jquery.form.min.js"></script>
 <script src="/js/jquery.dataTables.min.js"></script>
+
+<script src="/js/jquery.rowspanizer.js"></script>
 {{-- <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.js"></script> --}}
 <script src="/js/dataTables.bootstrap4.min.js"></script>
 <script src="/js/select2.full.min.js"></script>

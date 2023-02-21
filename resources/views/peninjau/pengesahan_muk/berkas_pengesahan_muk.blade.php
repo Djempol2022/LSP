@@ -240,9 +240,6 @@
                 </thead>
             </table>
             @foreach ($unit_kompetensi as $data_unit_kompetensi)
-            @php
-                $unit_kompetensi_elemen = \App\Models\UnitKompetensiSub::where('unit_kompetensi_id', $data_unit_kompetensi->id)->get();
-            @endphp
             <table class="table table-bordered text-wrap">
               <thead>
                 <tr>
@@ -325,47 +322,60 @@
                     </tr>
                   </tr>
                 </thead>
+                @php
+                    $elemen = \App\Models\UnitKompetensiSub::where('unit_kompetensi_id', $data_unit_kompetensi->id)->get();
+                @endphp
                 @foreach ($elemen as $index => $data_unit_kompetensi_elemen_get)
-                @if ($data_unit_kompetensi_elemen_get->unit_kompetensi_id == $data_unit_kompetensi->id)
+                {{-- @if ($data_unit_kompetensi_elemen_get->unit_kompetensi_id == $data_unit_kompetensi->id) --}}
                 <tbody>
                     <td colspan="11">Elemen {{$index+1}}. {{$data_unit_kompetensi_elemen_get->judul_unit_kompetensi_sub}}</td>
+                    @php
+                        $elemen_isi = \App\Models\UnitKompetensiIsi::where('unit_kompetensi_sub_id', $data_unit_kompetensi_elemen_get->id)->get();
+                    @endphp
                     @foreach ($elemen_isi as $index => $data_elemen_isi)
-                    @if ($data_elemen_isi->unit_kompetensi_sub_id == $data_unit_kompetensi_elemen_get->id)
+                    {{-- @if ($data_elemen_isi->unit_kompetensi_sub_id == $data_unit_kompetensi_elemen_get->id) --}}
                     <tr>
-
                         @php
-                            
+                            $elemen_isi_isi = \App\Models\UnitKompetensiIsi2::where('unit_kompetensi_isi_id', $data_elemen_isi->id)->get();
+                            $dd = \App\Models\UnitKompetensiIsi2::where('unit_kompetensi_isi_id', $data_elemen_isi->id)->count();
+                            $isi_count = \App\Models\UnitKompetensiIsi2::with('relasi_unit_kompetensi_isi')->whereRelation('relasi_unit_kompetensi_isi', 'unit_kompetensi_isi_id', $data_elemen_isi->id)->count();
                         @endphp
-                        
-                        <th rowspan="5">{{$index+1}}.{{$data_elemen_isi->judul_unit_kompetensi_isi}}</th>
+                        {{$isi_count}}
+                        @if ($isi_count > 3)
+                            <p>Tambah 1</p>
+                        @elseif($isi_count < 3)
+                            <p>Kurang 1</p>
+                        @endif
                         @foreach ($elemen_isi_isi as $data_elemen_isi_isi)
+                        <td rowspan="2">{{$data_elemen_isi->judul_unit_kompetensi_isi}}
+                        </td>
                         
-                            @if ($data_elemen_isi_isi->unit_kompetensi_isi_id == $data_elemen_isi->id)
+                            {{-- @if ($data_elemen_isi_isi->unit_kompetensi_isi_id == $data_elemen_isi->id) --}}
                             @php
                                 $data = \App\Models\UnitKompetensiIsi2::where('unit_kompetensi_isi_id', $data_elemen_isi->id)->count();
                             @endphp
                             {{$data}}
-                                <th rowspan="2">
+                                <td rowspan="2">
                                     {{$data_elemen_isi_isi->judul_unit_kompetensi_isi_2}}
-                                </th>
+                                </td>
                                 <tr>
-                                    <td height="200">L</td>
-                                    <td height="200">TL</td>
-                                    <td height="200">L</td>
-                                    <td height="200">L</td>
-                                    <td height="200">TL</td>
-                                    <td height="200">L</td>
-                                    <td height="200">L</td>
-                                    <td height="200">TL</td>
-                                    <td height="200">L</td>
+                                    <th height="200">L</th>
+                                    <th height="200">TL</th>
+                                    <th height="200">L</th>
+                                    <th height="200">L</th>
+                                    <th height="200">TL</th>
+                                    <th height="200">L</th>
+                                    <th height="200">L</th>
+                                    <th height="200">TL</th>
+                                    <th height="200">L</th>
                                 </tr>
-                            @endif
+                            {{-- @endif --}}
                         @endforeach
                       </tr>
-                      @endif
+                      {{-- @endif --}}
                     @endforeach
                 </tbody>
-                @endif
+                {{-- @endif --}}
                 @endforeach
             </table>
 
@@ -379,6 +389,9 @@
 
 @endsection
 @section('script')
+<script>
+      $("#berkas-pengesahan-muk").rowspanizer({vertical_align: 'middle'});
+</script>
 {{-- <script>
       // DATATABLE MUK ASESOR PENINJAU
       list_tampil_muk_asesor_peninjau = []
