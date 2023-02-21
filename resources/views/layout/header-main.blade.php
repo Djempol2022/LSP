@@ -18,19 +18,16 @@
                 } elseif ($type_asesi_2->status == 1) {
                     $notif[0] = 'Akun Sudah Diverifikasi';
                     $notif[1] = 'Silahkan lanjut ke menu Assesment / Assesment Mandiri !';
+                    if (!is_null($type_asesi_3) && is_null($condition)) {
+                        $notif[0] = 'Verifikasi asesor';
+                        $notif[1] = 'Silahkan tunggu verifikasi data oleh asesor !';
+                    } else {
+                        $notif[0] = 'Notifikasi';
+                        $notif[1] = 'Tidak ada notifikasi';
+                    }
                 } elseif ($type_asesi_2->status != 1) {
                     $notif[0] = 'Akun Anda Tidak Memenuhi Syarat';
                     $notif[1] = 'Silahkan lengkapi data-data anda atau hubungi admin !';
-                } else {
-                    $notif[0] = 'Notifikasi';
-                    $notif[1] = 'Tidak ada notifikasi';
-                }
-                if (!is_null($type_asesi_3) && is_null($condition)) {
-                    $notif[0] = 'Verifikasi asesor';
-                    $notif[1] = 'Silahkan tunggu verifikasi data oleh asesor !';
-                } else {
-                    $notif[0] = 'Notifikasi';
-                    $notif[1] = 'Tidak ada notifikasi';
                 }
                 break;
             case 'admin':
@@ -45,9 +42,6 @@
                 if ($type_admin_1) {
                     $notif[0] = 'Permohonan verifikasi';
                     $notif[1] = 'Ada permohonan verifikasi sertifikasi !';
-                } else {
-                    $notif[0] = 'Notifikasi';
-                    $notif[1] = 'Tidak ada notifikasi';
                 }
                 break;
             case 'asesor':
@@ -100,13 +94,14 @@
                     <div class="col-auto" style="width: 16.5%"><img src="/images/notif.png" style="width: 100%">
                     </div>
                     <div class="d-flex row col-9 p-0">
-                        <div class="col-auto fw-bold">{{ $notif[0] }}</div>
+                        <div class="col-auto fw-bold">
+                            {{ $notif[0] }}
+                        </div>
                         <div class="col-lg-12" style="font-size: 14px">
                             {{ $notif[1] }}
                         </div>
                     </div>
             </ul>
         </div>
-    </div>
     </div>
 </header>
