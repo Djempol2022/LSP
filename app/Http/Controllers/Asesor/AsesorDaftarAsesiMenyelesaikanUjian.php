@@ -9,6 +9,7 @@ use App\Models\UnitKompetensi;
 use App\Models\PelaksanaanUjian;
 use App\Models\AsesiUjiKompetensi;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -41,8 +42,9 @@ class AsesorDaftarAsesiMenyelesaikanUjian extends Controller
             'relasi_jadwal_uji_kompetensi.relasi_user_asesor', 
             'relasi_jadwal_uji_kompetensi.relasi_muk', 
             'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian',
-            'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.relasi_tuk', 
-            'relasi_user_asesi')
+            'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.relasi_tuk',
+            'relasi_user_asesi',
+            'relasi_jadwal_uji_kompetensi.relasi_status_koreksi')
             ->where('status_ujian_berlangsung', 2)
             ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_user_asesor','user_asesor_id', Auth::user()->id)
             ->get();
@@ -59,9 +61,14 @@ class AsesorDaftarAsesiMenyelesaikanUjian extends Controller
 
     public function halaman_koreksi_jawaban($jadwal_id, $asesi_id){
         $soal = Soal::where('jadwal_uji_kompetensi_id', $jadwal_id)->with('relasi_jawaban_asesi')->get();
-        $jenis_tes = PelaksanaanUjian::select('jenis_tes')->where('jadwal_uji_kompetensi_id', $jadwal_id)->first();
+        $jenis_tes = PelaksanaanUjian::with('relasi_jadwal_uji_kompetensi.relasi_muk')->where('jadwal_uji_kompetensi_id', $jadwal_id)->first();
         $data_hasil_koreksi = KoreksiJawaban::where('jadwal_uji_kompetensi_id', $jadwal_id)->where('user_asesi_id', $asesi_id)->first();
-        return view('asesor.daftar_data_ujian.koreksi_jawaban', compact('soal', 'jadwal_id', 'jenis_tes', 'asesi_id', 'data_hasil_koreksi'));
+        $asesi = User::where('id', $asesi_id)->first();
+        return view('asesor.daftar_data_ujian.koreksi_jawaban', compact(
+            'soal', 'jadwal_id', 'jenis_tes', 
+            'asesi_id', 'data_hasil_koreksi',
+            'asesi'
+        ));
     }
 
     public function hasil_koreksi_jawaban(Request $request, $jadwal_id, $asesi_id){

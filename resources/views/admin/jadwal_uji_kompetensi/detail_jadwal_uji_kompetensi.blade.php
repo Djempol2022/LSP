@@ -106,7 +106,9 @@
       "bInfo": true,
       "processing": true,
       "bServerSide": true,
-      "responsive": true,
+      "responsive": false,
+      "sScrollX": '100%',
+      "sScrollXInner": "100%",
       ajax: {
         url: "{{ route('admin.DataJurusan') }}",
         type: "POST",

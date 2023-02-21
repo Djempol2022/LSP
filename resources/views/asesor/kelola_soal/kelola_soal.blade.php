@@ -5,16 +5,16 @@
         <div class="card">
             <div class="card-header">
             </div>
-
             <div class="card-body">
-                <table class="table table-striped" id="table-kelola-soal">
+                <table class="table table-striped text-center" id="table-kelola-soal">
                     <thead>
                         <tr>
-                            <th>Materi Uji Kompetensi</th>
-                            <th>Asesor</th>
-                            <th>Peninjau</th>
-                            <th>Jenis Soal</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No</th>
+                            <th class="text-center">Materi Uji Kompetensi</th>
+                            <th class="text-center">Asesor</th>
+                            <th class="text-center">Peninjau</th>
+                            <th class="text-center">Jenis Soal</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                 </table>
@@ -37,6 +37,8 @@
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "{{ route('asesor.DataKelolaSoal') }}",
             type: "POST",
@@ -52,11 +54,11 @@
             },
             {
                 "targets": 0,
-                "class": "text-nowrap",
-                "render": function (data, type, row, meta) 
-                {
-					list_kelola_soal[row.id] = row;
-                    return row.relasi_muk.muk;
+                "class": "text-nowrap text-center",
+                "render": function (data, type, row, meta) {
+                    let i = 1;
+                    list_kelola_soal[row.id] = row;
+                    return meta.row + 1;
                 }
             },
             {
@@ -65,7 +67,7 @@
                 "render": function (data, type, row, meta) 
                 {
 					list_kelola_soal[row.id] = row;
-                    return row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
+                    return row.relasi_muk.muk;
                 }
             },
             {
@@ -74,11 +76,20 @@
                 "render": function (data, type, row, meta) 
                 {
 					list_kelola_soal[row.id] = row;
-                    return row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
+                    return row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
                 }
             },
             {
                 "targets": 3,
+                "class": "text-nowrap",
+                "render": function (data, type, row, meta) 
+                {
+					list_kelola_soal[row.id] = row;
+                    return row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
+                }
+            },
+            {
+                "targets": 4,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) 
                 {
@@ -99,8 +110,8 @@
                 }
             },
             {
-                "targets": 4,
-                "class": "text-nowrap",
+                "targets": 5,
+                "class": "text-wrap",
                 "render": function (data, type, row, meta) 
                 {
 					let tampilan;
@@ -120,9 +131,9 @@
                                         </span>`
                         }
                     }
-                        tampilan += `<span onclick="hapusMUK(${row.id})" class="badge bg-danger rounded-pill">
+                        tampilan += `<div class="buttons"><span onclick="hapusMUK(${row.id})" class="badge bg-danger rounded-pill">
                                         <a class="text-white" href="#">Hapus</a>
-                                    </span>`
+                                    </span></div>`
                     return tampilan;
                 }
             },

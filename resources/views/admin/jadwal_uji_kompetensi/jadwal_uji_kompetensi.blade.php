@@ -161,6 +161,7 @@
                 <table class="table table-striped" id="table-jurusan-jadwal-ukom">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Jurusan</th>
                             <th>Aksi</th>
                         </tr>
@@ -189,6 +190,8 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "{{ route('admin.DataJurusan') }}",
             type: "POST",
@@ -204,6 +207,15 @@
             },
             {
                 "targets": 0,
+                "class": "text-nowrap text-center",
+                "render": function (data, type, row, meta) {
+                    let i = 1;
+                    list_jurusan[row.id] = row;
+                    return meta.row + 1;
+                }
+            },
+            {
+                "targets": 1,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_jurusan[row.id] = row;
@@ -211,7 +223,7 @@
                 }
             },
             {
-                "targets": 1,
+                "targets": 2,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     let tampilan;

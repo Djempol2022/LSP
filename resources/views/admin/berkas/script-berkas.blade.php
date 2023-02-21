@@ -101,6 +101,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        
         ajax: {
           url: "{{ route('admin.SuratSKPenetapan') }}",
           type: "POST",

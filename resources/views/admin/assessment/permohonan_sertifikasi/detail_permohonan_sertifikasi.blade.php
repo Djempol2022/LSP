@@ -11,6 +11,7 @@
             <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Detail Permohonan Sertifikasi Kompetensi</li>
         </ol>
     </nav>
+</div>
     {{-- EDIT PROFIL --}}
     <div class="mt-5">
         <h5 class="text-black my-4">Permohonan Sertifikasi Kompetensi</h5>
@@ -162,6 +163,7 @@
                                 style="table-layout: fixed;">
                                 <thead>
                                     <tr class="text-center">
+                                        <th>No</th>
                                         <th>Kode unit</th>
                                         <th>Judul Unit</th>
                                         <th style="word-wrap: break-word;">Jenis Standar(Standar khusus/Standar
@@ -455,8 +457,6 @@
             </div>
         </div>
     </div>
-
-</div>
 @endsection
 
 @section('script')
@@ -582,22 +582,31 @@
             },
             {
                 "targets": 0,
-                "class": "text-nowrap text-center",
+                "class": "text-wrap text-center",
+                "render": function (data, type, row, meta) {
+                    let i = 1;
+                    list_unit_kompetensi[row.id] = row;
+                    return meta.row + 1;
+                }
+            },
+            {
+                "targets": 1,
+                "class": "text-nwrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
                     return row.kode_unit;
                 }
             },
             {
-                "targets": 1,
-                "class": "text-nowrap text-center",
+                "targets": 2,
+                "class": "text-nwrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
                     return row.judul_unit;
                 }
             },
             {
-                "targets": 2,
+                "targets": 3,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;

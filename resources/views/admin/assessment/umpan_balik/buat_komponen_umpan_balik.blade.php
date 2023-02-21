@@ -86,6 +86,7 @@
           <table class="table table-striped" id="table-komponen-umpan-balik">
             <thead>
               <tr>
+                <th>No</th>
                 <th>Komponen</th>
                 <th>Aksi</th>
               </tr>
@@ -179,7 +180,16 @@
           visible: true
         },
         {
-          "targets": 0,
+            "targets": 0,
+            "class": "text-wrap text-center",
+            "render": function (data, type, row, meta) {
+                let i = 1;
+                list_umpan_balik_komponen[row.id] = row;
+                return meta.row + 1;
+            }
+          },
+        {
+          "targets": 1,
           "class": "text-wrap",
           "render": function(data, type, row, meta) {
             list_umpan_balik_komponen[row.id] = row;
@@ -187,7 +197,7 @@
           }
         },
         {
-          "targets": 1,
+          "targets": 2,
           "class": "text-nowrap",
           "render": function(data, type, row, meta) {
             let tampilan;

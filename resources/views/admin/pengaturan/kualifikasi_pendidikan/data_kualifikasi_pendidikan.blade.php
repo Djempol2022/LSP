@@ -136,6 +136,8 @@
         "processing": true,
         "bServerSide": true,
         "searching": false,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "{{ route('admin.DataKualifikasiPendidikan') }}",
             type: "POST",

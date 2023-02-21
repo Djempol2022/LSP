@@ -1,56 +1,62 @@
 @extends('layout.main-layout', ['title' => 'Dashboard'])
 @section('main-section')
-  <div class="container mt-5 jalur-file" id="profile-section">
+<div class="page-content" id="profile-section">
     <div class="mt-5">
       
-      <div class="mb-5">
-        <div class="col profil-section-title">
-          Jadwal Materi Uji Kompetensi {{$muk->muk}}
-        </div>
-        {{-- JADWAL UJI KOMPETENSI --}}
-        <div class="col profil-section" style="margin-bottom: 0% !important">
-          <div class="col pb-45">
-            <table class="table table-striped" id="table-peserta-pelaksanaan-uji-kompetensi">
-              <thead>
-                  <tr>
-                      <th>Nama Asesi</th>
-                      <th>Tanggal</th>
-                      <th>Waktu</th>
-                      <th>MUK</th>
-                      <th>TUK</th>
-                      <th>Jenis Tes</th>
-                      <th>Kelas</th>
-                      <th>Sesi</th>
-                      <th>Status Soal</th>
-                      <th>Aksi</th>
-                  </tr>
-              </thead>
-          </table>
-          </div>
-        </div>
-      </div>
+        <div class="page-content">
+            <div class="col profil-section-title">
+                Jadwal Materi Uji Kompetensi {{$muk->muk}}
+              </div>
+            <section class="section">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped" id="table-peserta-pelaksanaan-uji-kompetensi">
+                            <thead>
+                                <tr>
+                                  <th>No</th>
+                                  <th>Nama Asesi</th>
+                                  <th>Tanggal</th>
+                                  <th>Waktu</th>
+                                  <th>MUK</th>
+                                  <th>TUK</th>
+                                  <th>Jenis Tes</th>
+                                  <th>Kelas</th>
+                                  <th>Sesi</th>
+                                  <th>Status Soal</th>
+                                  <th>Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+              </div>
+            </section>
 
-      {{-- DAFTAR UNIT KOMPETENSI --}}
-      <div class="mb-5">
-        <div class="col profil-section-title">
-          Unit Kompetensi Jurusan {{$muk->relasi_jurusan->jurusan}}
-        </div>
-        <div class="col profil-section">
-          <div class="col pb-45">
-            <table class="table table-striped" id="table-data-unit-kompetensi-jurusan-asesor">
-              <thead>
-                  <tr>
-                      <th>Kode Unit</th>
-                      <th>Judul Unit</th>
-                      <th style="word-wrap: break-word;">Jenis Standar(Standar Khusus/Standar
-                        Internasional/SKKNI)</th>
-                      <th>Aksi</th>
-                  </tr>
-              </thead>
-          </table>
+            <div class="col profil-section-title">
+                Unit Kompetensi {{$muk->muk}}
+              </div>
+            <section class="section">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped" id="table-data-unit-kompetensi-jurusan-asesor">
+                            <thead>
+                                <tr>
+                                  <th>No</th>
+                                  <th>Kode Unit</th>
+                                  <th>Judul Unit</th>
+                                  <th style="word-wrap: break-word;">Jenis Standar(Standar Khusus/Standar
+                                      Internasional/SKKNI)</th>
+                                  <th>Aksi</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+              </div>
+            </section>
           </div>
-        </div>
-      </div>
+    
+      {{-- DAFTAR UNIT KOMPETENSI --}}
     </div>
   </div>
 
@@ -69,6 +75,7 @@
                 <table class="table table-striped" id="table-data-asesi-peserta-uji-kompetensi">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Nama Asesi</th>
                             <th>Status</th>
                         </tr>
@@ -101,6 +108,8 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "/asesor/data-unit-kompetensi-jurusan-asesor",
             type: "POST",
@@ -118,8 +127,9 @@
                 "targets": 0,
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
+                    let i = 1;
                     list_unit_kompetensi[row.id] = row;
-                    return row.kode_unit;
+                    return meta.row + 1;
                 }
             },
             {
@@ -127,11 +137,19 @@
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
-                    return row.judul_unit;
+                    return row.kode_unit;
                 }
             },
             {
                 "targets": 2,
+                "class": "text-nowrap text-center",
+                "render": function (data, type, row, meta) {
+                    list_unit_kompetensi[row.id] = row;
+                    return row.judul_unit;
+                }
+            },
+            {
+                "targets": 3,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
@@ -139,7 +157,7 @@
                 }
             },
             {
-                "targets": 3,
+                "targets": 4,
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
                     let tampilan;
@@ -167,14 +185,11 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "/asesor/data-peserta-pelaksanaan-uji-kompetensi",
             type: "POST",
-            // data:function(d){
-            //     d.data_kabupaten = data_kabupaten;
-            //     d.data_status_id = data_status_id;
-            //     return d
-            // }
         },
         columnDefs: [{
                 targets: '_all',
@@ -182,6 +197,15 @@
             },
             {
                 "targets": 0,
+                "class": "text-nowrap text-center",
+                "render": function (data, type, row, meta) {
+                    let i = 1;
+                    list_unit_kompetensi[row.id] = row;
+                    return meta.row + 1;
+                }
+            },
+            {
+                "targets": 1,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
@@ -196,7 +220,7 @@
                 }
             },
             {
-                "targets": 1,
+                "targets": 2,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
@@ -210,7 +234,7 @@
                 }
             },
             {
-                "targets": 2,
+                "targets": 3,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
@@ -224,7 +248,7 @@
                 }
             },
             {
-                "targets": 3,
+                "targets": 4,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
@@ -232,7 +256,7 @@
                 }
             },
             {
-                "targets": 4,
+                "targets": 5,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
@@ -245,7 +269,7 @@
                 }
             },
             {
-                "targets": 5,
+                "targets": 6,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
@@ -262,7 +286,7 @@
                 }
             },
             {
-                "targets": 6,
+                "targets": 7,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
@@ -275,7 +299,7 @@
                 }
             },
             {
-                "targets": 7,
+                "targets": 8,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
@@ -288,7 +312,7 @@
                 }
             },
             {
-                "targets": 8,
+                "targets": 9,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_peserta_uji_kompetensi[row.id] = row;
@@ -301,7 +325,7 @@
                 }
             },
             {
-                "targets": 9,
+                "targets": 10,
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
                     let tampilan;
@@ -333,7 +357,9 @@
             "bInfo": true,
             "processing": true,
             "bServerSide": true,
-            "responsive": true,
+            "responsive": false,
+            "sScrollX": '100%',
+            "sScrollXInner": "100%",
             ajax: {
                 url: "/asesor/data-list-asesi-peserta-uji-kompetensi/"+id,
                 type: "POST",
@@ -346,12 +372,21 @@
                     "targets": 0,
                     "class": "text-nowrap text-center",
                     "render": function (data, type, row, meta) {
+                        let i = 1;
+                        list_asesi_peserta_uji_kompetensi[row.id] = row;
+                        return meta.row + 1;
+                    }
+                },
+                {
+                    "targets": 1,
+                    "class": "text-nowrap text-center",
+                    "render": function (data, type, row, meta) {
                         list_asesi_peserta_uji_kompetensi[row.id] = row;
                         return row.relasi_user_asesi.nama_lengkap;
                     }
                 },
                 {
-                    "targets": 1,
+                    "targets": 2,
                     "class": "text-nowrap text-center",
                     "render": function (data, type, row, meta) {
                         list_asesi_peserta_uji_kompetensi[row.id] = row;

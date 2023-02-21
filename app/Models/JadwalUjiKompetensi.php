@@ -45,4 +45,8 @@ class JadwalUjiKompetensi extends Model
     public function relasi_soal(){
         return $this->belongsTo(Soal::class, 'id', 'jadwal_uji_kompetensi_id')->orderBy('id', 'desc');
     }
+
+    public function relasi_status_koreksi(){
+        return $this->hasOne(KoreksiJawaban::class, 'jadwal_uji_kompetensi_id', 'id');
+    }
 }

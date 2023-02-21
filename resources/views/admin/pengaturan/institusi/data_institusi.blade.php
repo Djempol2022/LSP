@@ -96,6 +96,7 @@
                 <table class="table table-striped" id="table-institusi">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Nama</th>
                             <th>Alamat</th>
                             <th>Kode Pos</th>
@@ -196,6 +197,8 @@
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "{{ route('admin.DataInstitusi') }}",
             type: "POST",
@@ -211,11 +214,11 @@
             },
             {
                 "targets": 0,
-                "class": "text-nowrap",
-                "render": function (data, type, row, meta) 
-                {
-					list_institusi[row.id] = row;
-                    return row.nama_institusi;
+                "class": "text-nowrap text-center",
+                "render": function (data, type, row, meta) {
+                    let i = 1;
+                    list_unit_kompetensi[row.id] = row;
+                    return meta.row + 1;
                 }
             },
             {
@@ -224,7 +227,7 @@
                 "render": function (data, type, row, meta) 
                 {
 					list_institusi[row.id] = row;
-                    return row.alamat_institusi;
+                    return row.nama_institusi;
                 }
             },
             {
@@ -233,7 +236,7 @@
                 "render": function (data, type, row, meta) 
                 {
 					list_institusi[row.id] = row;
-                    return row.kode_pos;
+                    return row.alamat_institusi;
                 }
             },
             {
@@ -242,7 +245,7 @@
                 "render": function (data, type, row, meta) 
                 {
 					list_institusi[row.id] = row;
-                    return row.nomor_hp_institusi;
+                    return row.kode_pos;
                 }
             },
             {
@@ -251,11 +254,20 @@
                 "render": function (data, type, row, meta) 
                 {
 					list_institusi[row.id] = row;
-                    return row.email_institusi;
+                    return row.nomor_hp_institusi;
                 }
             },
             {
                 "targets": 5,
+                "class": "text-nowrap",
+                "render": function (data, type, row, meta) 
+                {
+					list_institusi[row.id] = row;
+                    return row.email_institusi;
+                }
+            },
+            {
+                "targets": 6,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) 
                 {

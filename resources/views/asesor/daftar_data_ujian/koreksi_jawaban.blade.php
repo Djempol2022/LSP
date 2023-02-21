@@ -9,6 +9,67 @@
           <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Koreksi Soal</li>
       </ol>
   </nav>
+
+  <section id="basic-horizontal-layouts">
+    <div class="row match-height">
+        <div class="col-md-12 col-12">
+            <div class="card">
+                <div class="card-header">
+                  <div class="col profil-section-title">
+                    Detail Jadwal Ujian
+                  </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form form-horizontal">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Nama Asesi</label>
+                                    </div>
+                                    <div class="col-md-8 form-group">
+                                        <input class="form-control" value="{{$asesi->nama_lengkap}}" readonly>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Tanggal Ujian</label>
+                                    </div>
+                                    <div class="col-md-8 form-group">
+                                        <input class="form-control" value="{{ Carbon\Carbon::parse($jenis_tes->tanggal)->format('d F Y') }}" readonly>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Waktu Ujian</label>
+                                    </div>
+                                    <div class="col-md-8 form-group">
+                                      <input class="form-control" value="Pukul {{ Carbon\Carbon::parse($jenis_tes->waktu_mulai)->format('H:m') }} s/d {{ Carbon\Carbon::parse($jenis_tes->waktu_selesai)->format('H:m') }} WIB">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Materi Uji Kompetensi</label>
+                                    </div>
+                                    <div class="col-md-8 form-group">
+                                      <input class="form-control" value="{{$jenis_tes->relasi_jadwal_uji_kompetensi->relasi_muk->muk}}" readonly>
+                                    </div>
+                                    <div class="col-md-3">
+                                      <label>Kelas</label>
+                                    </div>
+                                    <div class="col-md-8 form-group">
+                                      <input class="form-control" value="{{$jenis_tes->kelas}}" readonly>
+                                    </div>
+                                    <div class="col-md-3">
+                                      <label>Sesi</label>
+                                    </div>
+                                    <div class="col-md-8 form-group">
+                                      <input class="form-control" value="{{$jenis_tes->sesi}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
   <div class="row col gap-5 ms-0 mb-2" id="koreksiSoal">
     @foreach ($soal as $data_soal)
     @php
@@ -151,29 +212,38 @@
         @endif
         @endforeach
     @endforeach
-    <div class="col-md-12 px-0">
-      <div class="col-12 pernyataan">
-        <div class="col isi">
-          <div class="row">
-            <div class="col-4 col-md-2"><h6>Total Soal </h6></div>
-            <div class="col-2 col-md-2"><h6>: {{$hitung_total_soal}}</h6></div>
-          </div>
-          <div class="row">
-            <div class="col-4 col-md-2"><h6 style="color:green;">Jawaban Benar</h6></div>
-            <div class="col-2 col-md-2"><h6 style="color:green;"> : {{$total_jawaban_benar}}</h6></div>
-          </div>
-          <div class="row">
-            <div class="col-4 col-md-2"><h6 style="color:red;">Jawaban Salah</h6></div>
-            <div class="col-2 col-md-2"><h6 style="color:red;"> : {{$total_jawaban_salah}} </h6></div>
+    @if ($jenis_tes->jenis_tes != 3)
+      <div class="col-md-12 px-0">
+        <div class="col-12 pernyataan">
+          <div class="col isi">
+            <div class="row">
+              <div class="col-4 col-md-2"><h6>Total Soal </h6></div>
+              <div class="col-2 col-md-2"><h6>: {{$hitung_total_soal}} Soal</h6></div>
+            </div>
+            <div class="row">
+              <div class="col-4 col-md-2"><h6 style="color:green;">Jawaban Benar</h6></div>
+              <div class="col-2 col-md-2"><h6 style="color:green;"> : {{$total_jawaban_benar}} Soal</h6></div>
+            </div>
+            <div class="row">
+              <div class="col-4 col-md-2"><h6 style="color:red;">Jawaban Salah</h6></div>
+              <div class="col-2 col-md-2"><h6 style="color:red;"> : {{$total_jawaban_salah}} Soal</h6></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+    @endif
+
 
   <div class="col-md-12 px-0">
     <div class="col-12 pernyataan">
         <div class="col isi">
+          @if ($jenis_tes->jenis_tes == 3)
+          <div class="row">
+            <div class="col-2 col-md-2"><h6>Total Soal </h6></div>
+            <div class="col-2 col-md-2"><h6>: {{$hitung_total_soal}}</h6></div>
+          </div>
+          @endif
             <form action="{{route('asesor.HasilKoreksiJawaban', ['jadwal_id'=>$jadwal_id, 'asesi_id'=>$asesi_id])}}" method="POST" id="form-hasilKoreksiJawaban">
                 <div class="row my-4">
                     @csrf

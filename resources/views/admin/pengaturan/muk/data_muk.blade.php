@@ -94,6 +94,7 @@
           <table class="table table-striped" id="table-muk">
             <thead>
               <tr>
+                <th>No</th>
                 <th>Materi Uji Kompetensi</th>
                 <th>Jurusan</th>
                 <th>Aksi</th>
@@ -176,6 +177,8 @@
       "processing": true,
       "bServerSide": true,
       "searching": false,
+      "sScrollX": '100%',
+      "sScrollXInner": "100%",
       ajax: {
         url: "{{ route('admin.DataMUK') }}",
         type: "POST",
@@ -189,7 +192,16 @@
           visible: true
         },
         {
-          "targets": 0,
+            "targets": 0,
+            "class": "text-nowrap text-center",
+            "render": function (data, type, row, meta) {
+                let i = 1;
+                list_unit_kompetensi[row.id] = row;
+                return meta.row + 1;
+            }
+        },
+        {
+          "targets": 1,
           "class": "text-nowrap",
           "render": function(data, type, row, meta) {
             list_muk[row.id] = row;
@@ -197,7 +209,7 @@
           }
         },
         {
-          "targets": 1,
+          "targets": 2,
           "class": "text-nowrap",
           "render": function(data, type, row, meta) {
             list_muk[row.id] = row;
@@ -205,7 +217,7 @@
           }
         },
         {
-          "targets": 2,
+          "targets": 3,
           "class": "text-nowrap",
           "render": function(data, type, row, meta) {
             let tampilan;
