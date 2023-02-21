@@ -63,7 +63,7 @@
                 <td>Skema</td>
                 <td>:</td>
                 <td class="d-flex align-items-center">
-                  <select name="skema_sertifikasi"
+                  <select name="skema_sertifikasi" id="skema_sertifikasi"
                     class="form-control w-40 @error('skema_sertifikasi') is-invalid @enderror" required>
                     <option value="">-- Pilih Skema Sertifikasi --</option>
                     @foreach ($skema_sertifikasi as $item)
@@ -214,5 +214,6 @@
 
 @section('script')
   @include('admin.berkas.df_hadir_asesi.script-berkas-df-hadir-asesi')
+  @include('admin.berkas.df_hadir_asesi.script-berkas-df-hadir-asesi-2')
 @endsection
 @endsection

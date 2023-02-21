@@ -15,8 +15,8 @@ class DF_Hadir_Asesi_Controller extends Controller
         $skema_sertifikasi = SkemaSertifikasi::get();
         $nama_asesi = User::where('role_id', 4)->get(['id', 'nama_lengkap', 'institusi_id']);
         $nama_asesor = User::where('role_id', 3)->get(['id', 'nama_lengkap']);
-        $b = User::with('relasi_asesor_uji_kompetensi.relasi_asesi_uji_kompetensi')->where('role_id', 3)->get();
-        dd($b);
+        // $b = User::with('relasi_asesor_uji_kompetensi.relasi_asesi_uji_kompetensi')->where('role_id', 3)->get();
+        // dd($b);
         return view('admin.berkas.df_hadir_asesi.index', [
             'skema_sertifikasi' => $skema_sertifikasi,
             'nama_asesi' => $nama_asesi,
