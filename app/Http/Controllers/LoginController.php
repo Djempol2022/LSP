@@ -41,7 +41,12 @@ class LoginController extends Controller
                 ]);
                 // return redirect()->route('asesor.Dashboard');
             } elseif (auth()->user()->relasi_role->role == 'peninjau') {
-                return "Peninjau";
+                return response()->json([
+                    'status' => 1,
+                    'msg' => 'Berhasil login sebagai Peninjau !',
+                    'route' => route('peninjau.Dashboard')
+                ]);
+                // return "Peninjau";
                 // return redirect()->route('dealer.Dashboard');
             }
         } else {
