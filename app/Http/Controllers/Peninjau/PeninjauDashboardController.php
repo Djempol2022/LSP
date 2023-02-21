@@ -50,11 +50,7 @@ class PeninjauDashboardController extends Controller
     public function pengesahan_muk(){
         $skema_sertifikasi = SkemaSertifikasi::where('jurusan_id', Auth::user()->jurusan_id)->first();
         $unit_kompetensi = UnitKompetensi::whereIn('skema_sertifikasi_id', $skema_sertifikasi)->get();
-        
-        $elemen = UnitKompetensiSub::get();
-        $elemen_isi = UnitKompetensiIsi::get();
-        $elemen_isi_isi = UnitKompetensiIsi2::get();
 
-        return view('peninjau.pengesahan_muk.berkas_pengesahan_muk', compact('skema_sertifikasi', 'unit_kompetensi', 'elemen', 'elemen_isi', 'elemen_isi_isi'));
+        return view('peninjau.pengesahan_muk.berkas_pengesahan_muk', compact('skema_sertifikasi', 'unit_kompetensi'));
     }
 }

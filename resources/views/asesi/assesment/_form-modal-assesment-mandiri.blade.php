@@ -54,7 +54,7 @@
                 @endphp
 
                 <li class="list-group-item d-flex justify-content-between align-items-start border-0 fw-semibold">
-                  <div class="ms-2 me-auto ">
+                  <div class="col-md-12 ms-2 me-auto ">
                     Elemen: {{ $data_unit_kompetensi_sub->judul_unit_kompetensi_sub }}
                     <div class="py-1">Kriteria Kerja:</div>
                     <div class="row col mx-3">
