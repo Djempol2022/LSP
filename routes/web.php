@@ -30,23 +30,13 @@ use App\Http\Controllers\Asesi\AsesmenController;
 
 use App\Http\Controllers\Asesor\AsesorKelolaSoal;
 use App\Http\Controllers\Asesor\AsesorPengesahan;
-use App\Http\Controllers\Admin\Admin_MUKController;
 use App\Http\Controllers\Asesi\DashboardController;
 
 use App\Http\Controllers\Asesi\PengaturanController;
 use App\Http\Controllers\Asesi\UmpanBalikController;
 use App\Http\Controllers\Asesor\AsesorSesiWawancara;
-use App\Http\Controllers\Admin\Berkas\BerkasController;
-use App\Http\Controllers\Admin\Admin_PenggunaController;
-use App\Http\Controllers\Admin\Admin_DashboardController;
-use App\Http\Controllers\Admin\Admin_JadwalUjiKompetensi;
-use App\Http\Controllers\Admin\Admin_AssessmentController;
-use App\Http\Controllers\Admin\Admin_PengaturanController;
 
-use App\Http\Controllers\Admin\Admin_DetailJadwalUjiKompetensi;
 use App\Http\Controllers\Asesor\AsesorDaftarAsesiMenyelesaikanUjian;
-use App\Http\Controllers\Admin\Berkas\Daftar_TUK_Terverifikasi_Controller;
-use App\Http\Controllers\Admin\Berkas\SK_Penetapan_TUK_Terverifikasi_Controller;
 use App\Http\Controllers\Peninjau\PeninjauDashboardController;
 
 /*
@@ -309,17 +299,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('cetak-z-ba-pecah-rp/{id}', 'cetak_z_ba_pecah_rp_pdf')->name('CetakZBAPecahRPPDF');
             Route::get('cetak-df-hadir-asesor-pleno/{id}', 'cetak_df_hadir_asesor_pleno_pdf')->name('CetakDFHadirAsesorPlenoPDF');
             Route::get('cetak-df-hadir-asesor/{id}', 'cetak_df_hadir_asesor_pdf')->name('CetakDFHadirAsesorPDF');
-        });
-
-        // Berkas
-        Route::controller(SK_Penetapan_TUK_Terverifikasi_Controller::class)->group(function () {
-            Route::get('berkas/sk-penetapan-tuk-terverifikasi', 'index')->name('Berkas.SKPenetapanTUKTerverifikasi');
-            Route::post('berkas/sk-penetapan-tuk-terverifikasi', 'store')->name('Berkas.SKPenetapanTUKTerverifikasi.Add');
-        });
-
-        Route::controller(Daftar_TUK_Terverifikasi_Controller::class)->group(function () {
-            Route::get('berkas/daftar-tuk-terverifikasi', 'index')->name('Berkas.DaftarTUKTerverifikasi');
-            Route::post('berkas/daftar-tuk-terverifikasi', 'store')->name('Berkas.DaftarTUKTerverifikasi.Add');
         });
     });
 

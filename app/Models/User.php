@@ -83,8 +83,8 @@ class User extends Authenticatable
         return $this->hasMany(AsesiUjiKompetensi::class, 'id', 'user_asesi_id');
     }
 
-    public function relasi_asesor_uji_kompetensi()
-    {
-        return $this->hasMany(AsesorUjiKompetensi::class, 'user_asesor_id', 'id');
-    }
+    // public function relasi_asesor_uji_kompetensi()
+    // {
+    //     return $this->hasMany(AsesorUjiKompetensi::class, 'user_asesor_id', 'id');
+    // }
 }
