@@ -29,21 +29,27 @@ class ProfilController extends Controller
     public function index()
     {
         $permohonan_user_sertifikasi = User::with(
-            'relasi_institusi', 
-            'relasi_user_detail.relasi_kebangsaan', 
+            'relasi_institusi',
+            'relasi_user_detail.relasi_kebangsaan',
             'relasi_user_detail.relasi_kualifikasi_pendidikan',
-            'relasi_jurusan.relasi_skema_sertifikasi', 
+            'relasi_jurusan.relasi_skema_sertifikasi',
             'relasi_pekerjaan',
             'relasi_sertifikasi.relasi_tanda_tangan_admin',
-            'relasi_kelengkapan_pemohon')
+            'relasi_kelengkapan_pemohon'
+        )
             ->where('id', Auth::user()->id)->first();
 
-        $user = User::with('relasi_pekerjaan', 'relasi_user_detail.relasi_kebangsaan', 
-                'relasi_user_detail.relasi_kualifikasi_pendidikan', 'relasi_jurusan', 
-                'relasi_pekerjaan', 'relasi_sertifikasi.relasi_tanda_tangan_admin', 
-                'relasi_kelengkapan_pemohon')
-                ->find(Auth::user()->id);
-        
+        $user = User::with(
+            'relasi_pekerjaan',
+            'relasi_user_detail.relasi_kebangsaan',
+            'relasi_user_detail.relasi_kualifikasi_pendidikan',
+            'relasi_jurusan',
+            'relasi_pekerjaan',
+            'relasi_sertifikasi.relasi_tanda_tangan_admin',
+            'relasi_kelengkapan_pemohon'
+        )
+            ->find(Auth::user()->id);
+
         $skema_sertifikasi = SkemaSertifikasi::where('jurusan_id', Auth::user()->jurusan_id)->first();
         $tujuan_sertifikasi = Sertifikasi::where('user_id', Auth::user()->id)->first();
         $unit_kompetensi = UnitKompetensi::where('skema_sertifikasi_id', $skema_sertifikasi->id)->get();

@@ -27,7 +27,7 @@
                     <p class="text-login">Login untuk masuk ke dalam aplikasi.</p>
                 </div>
                 <div>
-                    <form action="{{ route('Auth') }}" method="POST">
+                    <form action="{{ route('Auth') }}" method="POST" id="formLogin">
                         @csrf
                         <div class="mb-3">
                             <label for="email_user" class="login-label">Email</label>
@@ -52,6 +52,40 @@
                 </div>
             </div>
         </div>
-
     </div>
+@endsection
+@section('script')
+    <script>
+        $('#formLogin').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: new FormData(this),
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function(data) {
+                    if (data.status == 0) {
+                        swal({
+                            title: "Login gagal !",
+                            text: `${data.msg}`,
+                            icon: "error",
+                            successMode: true
+                        });
+                    } else if (data.status == 1) {
+                        swal({
+                                title: "Login berhasil !",
+                                text: `${data.msg}`,
+                                icon: "success",
+                                successMode: true,
+                            }),
+                            setTimeout(function() {
+                                window.location.href = `${data.route}`;
+                            }, 1000); // 1 second
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
