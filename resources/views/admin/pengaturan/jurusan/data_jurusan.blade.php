@@ -1,5 +1,18 @@
 @extends('layout.main-layout', ['title'=>"Jurusan"])
 @section('main-section')
+<nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+                href="{{ route('admin.Dashboard') }}">Dashboard</a></li>
+
+        <li class="breadcrumb-item" aria-current="page">
+            <a class="text-black text-decoration-none"
+                href="{{ route('admin.Pengaturan') }}">Pengaturan
+            </a>
+        </li>
+        <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Jurusan</li>
+    </ol>
+</nav>
 <div class="page-content">
     <section class="section">
         <div class="card">
@@ -22,7 +35,7 @@
                                 <i data-feather="x"></i>
                             </button>
                         </div>
-                        <form action="{{ route('admin.TambahJurusan') }}" id="isi-jurusan" method="POST">
+                        <form action="{{ route('admin.TambahJurusan') }}" id="formJurusan" method="POST">
                             @csrf
                             <div class="modal-body">
                                 <label>Nama Jurusan</label>
@@ -155,13 +168,47 @@
                     tampilan =  `<span id-jurusan = "${row.id}" onclick="editJurusan(${row.id})" class="badge bg-warning rounded-pill">
                                     <a class="text-white" href="#">Edit</a>
                                 </span>
-                                <span id-jurusan = "${row.id}" onclick="hapusJurusan(${row.id})" class="badge bg-danger rounded-pill">
+                                <span id-jurusan = "${row.id}" class="badge bg-danger rounded-pill hapus_jurusan">
                                     <a class="text-white" href="#">Hapus</a>
                                 </span>`
                     return tampilan;
                 }
             },
         ]
+    });
+
+    $('#formJurusan').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: new FormData(this),
+            processData: false,
+            dataType: 'json',
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('label.error-text').text('');
+            },
+            success: function (data) {
+                if (data.status == 0) {
+                    $.each(data.error, function (prefix, val) {
+                        $('label.' + prefix + '_error').text(val[0]);
+                        // $('span.'+prefix+'_error').text(val[0]);
+                    });
+                } 
+                else if(data.status == 1){
+                    swal({
+                        title: "Berhasil",
+                        text: `${data.msg}`,
+                        icon: "success",
+                        buttons: true,
+                        successMode: true,
+                    }),
+                    table_jurusan.ajax.reload(null,false)
+                    $("#tambahJurusan").modal('hide')
+                }
+            }
+        });
     });
 
     function editJurusan(id){
@@ -205,15 +252,19 @@
         });
     }
 
-    function hapusJurusan(id){
+    $(document).on('click', '.hapus_jurusan', function (event) {
+        const id = $(event.currentTarget).attr('id-jurusan');
+
         swal({
             title: "Yakin ?",
             text: "Menghapus Data ?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
-        })
-        $.ajax({
+        }).then((willDelete) => {
+
+            if (willDelete) {
+                $.ajax({
             url: "/admin/hapus-jurusan/" + id,
             dataType: 'json',
             success: function (response) {
@@ -231,39 +282,9 @@
                 }
             }
         });
-    }
-
-
-    $('#isi-jurusan').on('submit', function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: $(this).attr('action'),
-            method: $(this).attr('method'),
-            data: new FormData(this),
-            processData: false,
-            dataType: 'json',
-            contentType: false,
-            beforeSend: function () {
-                $(document).find('label.error-text').text('');
-            },
-            success: function (data) {
-                if (data.status == 0) {
-                    $.each(data.error, function (prefix, val) {
-                        $('label.' + prefix + '_error').text(val[0]);
-                        // $('span.'+prefix+'_error').text(val[0]);
-                    });
-                } 
-                else if(data.status == 1){
-                    swal({
-                        title: "Berhasil",
-                        text: `${data.msg}`,
-                        icon: "success",
-                        buttons: true,
-                        successMode: true,
-                    }),
-                    table_jurusan.ajax.reload(null,false)
-                    $("#tambahJurusan").modal('hide')
-                }
+            } else {
+                //alert ('no');
+                return false;
             }
         });
     });

@@ -10,12 +10,13 @@
         {{-- JADWAL UJI KOMPETENSI --}}
         <div class="col profil-section" style="margin-bottom: 0% !important">
           <div class="col pb-45">
-            <table class="table table-striped" id="table-peserta-pelaksanaan-uji-kompetensi">
+            <table class="table table-striped" id="table-tampil-muk-asesor-peninjau">
               <thead>
                   <tr>
                       <th>MUK</th>
                       <th>Nama Asesor</th>
                       <th>Nama Peninjau</th>
+                      <th>Jenis Tes</th>
                       <th>Aksi</th>
                   </tr>
               </thead>
@@ -30,7 +31,8 @@
 @section('script')
 <script>
       // DATATABLE MUK ASESOR PENINJAU
-      const table_muk_asesor_peninjau = $('#table-muk-asesor-peninjau').DataTable({
+      list_tampil_muk_asesor_peninjau = []
+      const table_tampil_muk_asesor_peninjau = $('#table-tampil-muk-asesor-peninjau').DataTable({
         "pageLength": 10,
         "lengthMenu": [
             [10, 25, 50, 100, -1],
@@ -43,8 +45,12 @@
         "bServerSide": true,
         "responsive": true,
         ajax: {
-            url: "/peninjau/data-muk-asesor-peninjau/" + id_jurusan.id,
+            url: "/peninjau/tampil-data-muk-asesor-peninjau/",
             type: "POST",
+            headers: 
+                    {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
         },
         columnDefs: [{
                 targets: '_all',
@@ -54,7 +60,7 @@
                 "targets": 0,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
-                    list_muk_asesor_peninjau[row.id] = row;
+                    list_tampil_muk_asesor_peninjau[row.id] = row;
                     return row.relasi_muk.muk;
                 }
             },
@@ -62,7 +68,7 @@
                 "targets": 1,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
-                    list_muk_asesor_peninjau[row.id] = row;
+                    list_tampil_muk_asesor_peninjau[row.id] = row;
                     return row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
                 }
             },
@@ -70,7 +76,7 @@
                 "targets": 2,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
-                    list_muk_asesor_peninjau[row.id] = row;
+                    list_tampil_muk_asesor_peninjau[row.id] = row;
                     return row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
                 }
             },
@@ -78,7 +84,7 @@
                 "targets": 3,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
-                    list_muk_asesor_peninjau[row.id] = row;
+                    list_tampil_muk_asesor_peninjau[row.id] = row;
                     let jenis_tes;
                     if(row.relasi_pelaksanaan_ujian == null || row.relasi_pelaksanaan_ujian.jenis_tes == null){
                         jenis_tes = `<p class="text-danger">Jenis soal belum ditentukan</p>`
@@ -100,12 +106,10 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     let tampilan;
-                    tampilan = `<span onclick="clickEditMukAsesorPeninjau(${row.id})" class="badge bg-warning rounded-pill">
-                                        <a class="text-white" href="#!">Ubah</a>
-                                    </span>
-                                    <span id-jadwal-ukom="${row.id}" class="badge bg-danger rounded-pill hapus_jadwal_ukom">
-                                        <a class="text-white" href="#!">Hapus</a>
-                                    </span>`
+                    tampilan = `<span class="badge bg-info rounded-pill">
+                                    <a class="text-white" href="/peninjau/peninjau-review-soal/${row.id}/${row.relasi_pelaksanaan_ujian.jenis_tes}">Review Soal</a>
+                                </span>`
+                    return tampilan;
                 }
             },
         ]

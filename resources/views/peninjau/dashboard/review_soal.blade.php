@@ -4,7 +4,7 @@
 <nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a class="text-black text-decoration-none"
-            href="{{ route('asesor.KelolaSoal') }}">Kelola Soal</a></li>
+            href="{{ route('peninjau.Dashboard') }}">Dashboard</a></li>
     <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Review Soal</li>
     </ol>
 </nav>
@@ -106,63 +106,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="row">
-                                                    <div class="form-group d-flex justify-content-md-end">
-                                                        <span class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$data_soal->id}}"><i class="fa fa-pen"></i></span>
-                                                        <span class="btn btn-sm btn-danger" onclick="hapusSoal({{$data_soal->id}})"><i class="fa fa-trash"></i></span>
-                                                    </div>
-                                                </div>
-                                           
-                                                <div class="modal fade" id="exampleModal-{{$data_soal->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <form action="{{route('asesor.UbahSoal', $data_soal->id)}}" method="POST">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                                                      <div class="modal-content">
-                                                        <div class="modal-header">
-                                                          <h5 class="modal-title" id="exampleModalLabel">Ubah Soal</h5>
-                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group shadow-textarea">
-                                                                        <input type="hidden" name="soal_id" value="{{$data_soal->id}}" hidden>
-                                                                        <h6>Pertanyaan/Soal</h6>
-                                                                        <textarea cols="30" rows="5" name="pertanyaan" class="form-control input-text rounded-3">{{$data_soal->pertanyaan}}</textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <h6>Pilihan</h6>
-                                                                @foreach ($pilihan as $pilihan_tersedia)
-                                                                    <div class="col-lg-12">
-                                                                        <div class="input-group mb-3 shadow-textarea">
-                                                                            <span class="input-group-text">{{$alfabet_modal++}}</span>
-                                                                            <textarea name="pilihan[]" class="form-control rounded-3">{{$pilihan_tersedia}}</textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                @endforeach
-                                                                <div class="col-md-6 mb-4">
-                                                                    <h6>Jawaban</h6>
-                                                                    <div class="form-group shadow-textarea">
-                                                                        <select class="choices form-select input-text" name="jawaban">
-                                                                            <option value="1" @selected($data_soal->jawaban == '1')>A</option>
-                                                                            <option value="2" @selected($data_soal->jawaban == '2')>B</option>
-                                                                            <option value="3" @selected($data_soal->jawaban == '3')>C</option>
-                                                                            <option value="4" @selected($data_soal->jawaban == '4')>D</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                          <button type="submit" class="btn btn-primary">Simpan</button>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                </form>
-                                                </div>
                                                   
                                             @elseif ($pelaksanaan_ujian->jenis_tes == 2)
                                             <div class="row">
@@ -172,99 +115,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="form-group d-flex justify-content-md-end">
-                                                    <span class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$data_soal->id}}"><i class="fa fa-pen"></i></span>
-                                                    <span class="btn btn-sm btn-danger" onclick="hapusSoal({{$data_soal->id}})"><i class="fa fa-trash"></i></span>
-                                                </div>
-                                            </div>
-                                       
-                                            <div class="modal fade" id="exampleModal-{{$data_soal->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <form action="{{route('asesor.UbahSoalEssay', $data_soal->id)}}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-dialog modal-lg modal-dialog-centered">
-                                                  <div class="modal-content">
-                                                    <div class="modal-header">
-                                                      <h5 class="modal-title" id="exampleModalLabel">Ubah Soal</h5>
-                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="form-group shadow-textarea">
-                                                                    <input type="hidden" name="soal_id" value="{{$data_soal->id}}" hidden>
-                                                                    <h6>Pertanyaan/Soal</h6>
-                                                                    <textarea cols="30" rows="5" name="pertanyaan" class="form-control input-text rounded-3">{{$data_soal->pertanyaan}}</textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <h6>Jawaban</h6>
-                                                                <div class="form-group shadow-textarea">
-                                                                    <textarea cols="30" rows="5" name="jawaban" class="form-control input-text rounded-3">{{$data_soal->jawaban}}</textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                      <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                            </form>
-                                            </div>
 
                                             @elseif ($pelaksanaan_ujian->jenis_tes == 3)
-                                            {{-- <div class="row">
-                                                <div class="col-lg-12 mb-1">
-                                                    <div class="form-group has-icon-left">
-                                                        <p class="card-title">Jawaban : {{$data_soal->jawaban}}</p>                                                    
-                                                    </div>
-                                                </div>
-                                            </div> --}}
-                                            <div class="row">
-                                                <div class="form-group d-flex justify-content-md-end">
-                                                    <span class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$data_soal->id}}"><i class="fa fa-pen"></i></span>
-                                                    <span class="btn btn-sm btn-danger" onclick="hapusSoal({{$data_soal->id}})"><i class="fa fa-trash"></i></span>
-                                                </div>
-                                            </div>
-                                       
-                                            <div class="modal fade" id="exampleModal-{{$data_soal->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <form action="{{route('asesor.UbahSoalEssay', $data_soal->id)}}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-dialog modal-lg modal-dialog-centered">
-                                                  <div class="modal-content">
-                                                    <div class="modal-header">
-                                                      <h5 class="modal-title" id="exampleModalLabel">Ubah Soal</h5>
-                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="form-group shadow-textarea">
-                                                                    <input type="hidden" name="soal_id" value="{{$data_soal->id}}" hidden>
-                                                                    <h6>Pertanyaan/Soal</h6>
-                                                                    <textarea cols="30" rows="5" name="pertanyaan" class="form-control input-text rounded-3">{{$data_soal->pertanyaan}}</textarea>
-                                                                </div>
-                                                            </div>
-                                                            {{-- <div class="col-md-12">
-                                                                <h6>Jawaban</h6>
-                                                                <div class="form-group shadow-textarea">
-                                                                    <textarea cols="30" rows="5" name="jawaban" class="form-control input-text rounded-3">{{$data_soal->jawaban}}</textarea>
-                                                                </div>
-                                                            </div> --}}
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                      <button type="submit" class="btn btn-primary">Simpan</button>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                            </form>
-                                            </div>
                                             @endif
                                         </div>
                                       </div>

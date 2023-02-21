@@ -218,14 +218,14 @@
                                                 placeholder="Masukkan Soal/Pertanyaan"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    {{-- <div class="col-md-12">
                                         <label for="basicInput">Jawaban</label>
                                         <div class="form-group">
                                             <textarea type="text" cols="30" rows="5" name="wawancara_jawaban[0]" id="wawancara_jawaban[0]"
                                                 class="form-control"
                                                 placeholder="Masukkan Soal/Pertanyaan"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 <div id="divPertanyaanWawancara"></div>
@@ -411,16 +411,6 @@ var wawancara = jQuery.validator.format(`
                     placeholder="Masukkan Soal/Pertanyaan"></textarea>
             </div>
         </div>
-    <div class="col-md-12">
-        <label for="basicInput">Jawaban</label>
-        <div class="form-group">
-            <div class="form-group">
-                <textarea type="text" cols="30" rows="5" name="wawancara_jawaban[{0}]" id="wawancara_jawaban[{0}]"
-                    class="form-control rounded-3"
-                    placeholder="Masukkan Soal/Pertanyaan"></textarea>
-                </div>
-        </div>
-    </div>
     </div>
     </div>
 `);

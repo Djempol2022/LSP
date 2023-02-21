@@ -60,8 +60,6 @@
                                                 <span class="d-none d-sm-block">Simpan</span>
                                             </button>
                                         </div>
-                                        <input type="number" name="id_jadwal"
-                                            value="{{ $jadwal_uji_kompetensi['id'] }}">
                                     </form>
                                 </div>
                             </div>
@@ -73,9 +71,8 @@
                         <table class="table table-striped display" id="table-asesor">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
+                                    <th>Nama Asesor</th>
                                     <th>Aksi</th>
-                                    <p class="jadwal_id" hidden>{{ $jadwal_uji_kompetensi['id'] }}</p>
                                 </tr>
                             </thead>
                         </table>
@@ -125,15 +122,7 @@
                         </div>
                     </div>
                 </div>
-
             </section>
         </div>
-
-
-
-
-
-
-
     </div>
 </div>

@@ -41,12 +41,12 @@ class AsesmenController extends Controller
 
         $komponen_umpan_balik = UmpanBalikKomponen::get();
         $asesi_ujian_selesai = AsesiUjiKompetensi::where('status_ujian_berlangsung', 2)
-                ->where('status_umpan_balik', null)
-                ->where('user_asesi_id', Auth::user()->id)
-                ->with('relasi_user_asesi',
-                        'relasi_jadwal_uji_kompetensi.relasi_user_asesor.relasi_user_asesor_detail',
-                        'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian')
-                ->first();
+        ->where('status_umpan_balik', null)
+        ->where('user_asesi_id', Auth::user()->id)
+        ->with('relasi_user_asesi',
+                'relasi_jadwal_uji_kompetensi.relasi_user_asesor.relasi_user_asesor_detail',
+                'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian')
+        ->first();
         // $asesor_ujian_selesai = AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $asesi_ujian_selesai->jadwal_uji_kompetensi_id)->first() ?? new AsesorUjiKompetensi();
         // $pelaksanaan_ujian_selesai = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $asesi_ujian_selesai->jadwal_uji_kompetensi_id)->first()?? new PelaksanaanUjian();
         // $data_peserta_ukom = AsesiUjiKompetensi::where('user_asesi_id', Auth::user()->id)->first();
@@ -167,16 +167,20 @@ class AsesmenController extends Controller
         $jawaban_asesi  = $request->jawaban;
         $soal_id        = $request->soal_id;
         $jadwal_id      = $request->jadwal_id;
+        $jenis_tes      = $request->jenis_tes;
         
         $data_soal = Soal::where('id', $soal_id)->select('jawaban')->first();
         $koreksi = $data_soal->jawaban == $jawaban_asesi;
         
-        
-        if(!$koreksi){
-            $koreksi_jawaban = 1;
-        }else{
-            $koreksi_jawaban = 2;
-        }
+        if($jenis_tes == 1){
+            if(!$koreksi){
+                $koreksi_jawaban = 1;
+            }else{
+                $koreksi_jawaban = 2;
+            }
+        }elseif($jenis_tes == 2 || $jenis_tes == 3){
+            $koreksi_jawaban = null;
+        };
 
         $data_jawaban_asesi = JawabanAsesi::where('user_asesi_id', $user_asesi_id)->where('soal_id', $soal_id)->first();
         if($data_jawaban_asesi == null){

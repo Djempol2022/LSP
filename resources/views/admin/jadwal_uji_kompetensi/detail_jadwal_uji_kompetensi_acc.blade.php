@@ -209,8 +209,7 @@
                           <tbody>
                               <input type="hidden" name="jadwal_uji_kompetensi_id" value="{{$data_pelaksanaan_ujian->jadwal_uji_kompetensi_id}}" hidden>
                               <input type="hidden" name="pelaksanaan_ujian_id" value="{{$data_pelaksanaan_ujian->id}}" hidden>
-                              <input type="hidden" name="jenis_tes" value="{{$data_pelaksanaan_ujian->jenis_tes}}" hidden>  
-                            
+                              <input type="hidden" name="jenis_tes" value="{{$data_pelaksanaan_ujian->jenis_tes}}" hidden>              
                             @foreach ($user_asesi as $data_user_asesi)
                             <tr>
                               <th><input type="checkbox" name="user_asesi_id[]" class="cek" value="{{$data_user_asesi->id}}"></th>

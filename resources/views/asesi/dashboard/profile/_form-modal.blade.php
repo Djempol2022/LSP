@@ -135,10 +135,10 @@
                   <h5>B. Data Pekerjaan Sekarang</h5>
                   <div class="col-lg-6">
                     <div class="col edit-profil-left">
-                      <label for="nama_institusi_pekerjaan" class="form-label fw-semibold">Nama Institusi /
+                      <label for="nama_pekerjaan" class="form-label fw-semibold">Nama Institusi /
                         Perusahaan</label>
-                      <input type="text" id="nama_institusi_pekerjaan" class="form-control input-text"
-                        placeholder="Masukkan Nama Institusi / Perusahaan" name="nama_institusi_pekerjaan">
+                      <input type="text" id="nama_pekerjaan" class="form-control input-text"
+                        placeholder="Masukkan Nama Institusi / Perusahaan" name="nama_pekerjaan">
                     </div>
                     <div class="col edit-profil-left">
                       <label for="jabatan" class="form-label fw-semibold">Jabatan</label>
@@ -263,9 +263,10 @@
                   <input type="file" class="form-control form-control-lg input-file-col"
                     accept=".png, .jpg, .jpeg" name="pas_foto" id="pas_foto" onchange=ValidateFileUploadFoto()>
                   <input type="hidden" name="pas_foto_old" value="{{ $data->relasi_user_detail->foto }}">
-                  <p class="text-danger mt-2">*Masukkan foto berlatar belakang merah</p>
+                  {{-- <p class="text-danger mt-2">*Masukkan foto berlatar belakang merah</p> --}}
                   <label class="text-danger error-text pas_foto_error mt-1"></label>
                 </div>
+
                 <div class="col mb-5">
                   <label for="sertifikat_prakerin" class="form-label fw-semibold">Sertifikat Prakerin
                     atau Surat Keterangan Telah Melaksanakan Praktek Kerja Industri</label>
@@ -281,6 +282,8 @@
                   @endisset
                   <label class="text-danger error-text sertifikat_prakerin_error mt-1"></label>
                 </div>
+
+
                 <div class="col mb-5">
                   <label for="nilai_raport" class="form-label fw-semibold">Nilai Raport (Semester 1
                     sd Semester 5)</label>
@@ -318,14 +321,15 @@
                     <canvas id="sig"></canvas>
                     <input type="hidden" name="ttd" value="" id="ttd">
                   </div>
+                  <div class="col" id="signature-clear">
+                    <button type="button" class="btn-sm btn btn-danger mb-2"
+                        id="clear"><i class="fa fa-eraser"></i>
+                    </button>
+                  </div>
                   <div class="mb-2">
                     @isset($data->relasi_user_detail->ttd)
                       <img src="{{ $data->relasi_user_detail->ttd }}" alt="ttd" width="180px">
                     @endisset
-                  </div>
-                  <div id="signature-clear">
-                    <button type="button" class="button button-primary tombol-primary-small mb-4"
-                      id="clear">Clear</button>
                   </div>
                   <div class="col edit-profil-left">
                     <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
@@ -408,7 +412,7 @@
 
       $("#form-update [name='alamat_rumah']").val(data.relasi_user_detail.alamat_rumah)
 
-      $("#form-update [name='kode_pos']").val(data.relasi_institusi.kode_pos)
+      $("#form-update [name='kode_pos']").val(data.relasi_user_detail.kode_pos)
 
       $("#form-update [name='nomor_hp']").val(data.relasi_user_detail.nomor_hp)
 
@@ -425,10 +429,10 @@
         }
       }))
 
-      if (isset(data.relasi_pekerjaan.nama_institusi)) {
-        $("#form-update [name='nama_institusi_pekerjaan']").val('')
+      if (isset(data.relasi_pekerjaan.nama_pekerjaan)) {
+        $("#form-update [name='nama_pekerjaan']").val('')
       } else {
-        $("#form-update [name='nama_institusi_pekerjaan']").val(data.relasi_pekerjaan.nama_institusi)
+        $("#form-update [name='nama_pekerjaan']").val(data.relasi_pekerjaan.nama_pekerjaan)
       }
 
       if (isset(data.relasi_pekerjaan.jabatan)) {
@@ -437,10 +441,10 @@
         $("#form-update [name='jabatan']").val(data.relasi_pekerjaan.jabatan)
       }
 
-      if (isset(data.relasi_pekerjaan.alamat_institusi)) {
+      if (isset(data.relasi_pekerjaan.alamat_pekerjaan)) {
         $("#form-update [name='alamat_kantor_pekerjaan']").val('')
       } else {
-        $("#form-update [name='alamat_kantor_pekerjaan']").val(data.relasi_pekerjaan.alamat_institusi)
+        $("#form-update [name='alamat_kantor_pekerjaan']").val(data.relasi_pekerjaan.alamat_pekerjaan)
       }
 
       if (isset(data.relasi_pekerjaan.kode_pos)) {
@@ -449,27 +453,27 @@
         $("#form-update [name='kode_pos_pekerjaan']").val(data.relasi_pekerjaan.kode_pos)
       }
 
-      if (isset(data.relasi_pekerjaan.nomor_hp_institusi)) {
+      if (isset(data.relasi_pekerjaan.nomor_hp_pekerjaan)) {
         $("#form-update [name='nomor_hp_institusi_pekerjaan']").val('')
       } else {
-        $("#form-update [name='nomor_hp_institusi_pekerjaan']").val(data.relasi_pekerjaan.nomor_hp_institusi)
+        $("#form-update [name='nomor_hp_institusi_pekerjaan']").val(data.relasi_pekerjaan.nomor_hp_pekerjaan)
       }
 
-      if (isset(data.relasi_pekerjaan.email_institusi)) {
+      if (isset(data.relasi_pekerjaan.email_pekerjaan)) {
         $("#form-update [name='email_institusi_pekerjaan']").val('')
       } else {
-        $("#form-update [name='email_institusi_pekerjaan']").val(data.relasi_pekerjaan.email_institusi)
+        $("#form-update [name='email_institusi_pekerjaan']").val(data.relasi_pekerjaan.email_pekerjaan)
       }
 
       //   sertifikasi
-      if (isset(data.relasi_sertifikasi.tujuan_asesmen)) {} else {
-        if (data.relasi_sertifikasi.tujuan_asesmen === 'sertifikasi') {
+      if (isset(data.relasi_sertifikasi.tujuan_asesi)) {} else {
+        if (data.relasi_sertifikasi.tujuan_asesi === 'sertifikasi') {
           $("#sertifikasi").prop('checked', true)
-        } else if (data.relasi_sertifikasi.tujuan_asesmen === 'sertifikasi ulang') {
+        } else if (data.relasi_sertifikasi.tujuan_asesi === 'sertifikasi ulang') {
           $("#sertifikasiUlang").prop('checked', true)
-        } else if (data.relasi_sertifikasi.tujuan_asesmen === 'pengakuan komptetensi terkini') {
+        } else if (data.relasi_sertifikasi.tujuan_asesi === 'pengakuan komptetensi terkini') {
           $("#pengakuanKompetensiTerkini").prop('checked', true)
-        } else if (data.relasi_sertifikasi.tujuan_asesmen === 'rekognisi pembelajaran lampau') {
+        } else if (data.relasi_sertifikasi.tujuan_asesi === 'rekognisi pembelajaran lampau') {
           $("#rekognisiPembelajaranLampau").prop('checked', true)
         } else {
           $("#lainnya").prop('checked', true)
@@ -529,7 +533,7 @@
             $("#form-update [name='nilai_raport']").val('');
             $('html, body').animate({
               scrollTop: 0
-            }, 'fast');
+            }, 'fast'); 
           }
         }
       })

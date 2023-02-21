@@ -1,5 +1,18 @@
 @extends('layout.main-layout', ['title'=>"Insitusi"])
 @section('main-section')
+<nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+                href="{{ route('admin.Dashboard') }}">Dashboard</a></li>
+
+        <li class="breadcrumb-item" aria-current="page">
+            <a class="text-black text-decoration-none"
+                href="{{ route('admin.Pengaturan') }}">Pengaturan
+            </a>
+        </li>
+        <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Institusi</li>
+    </ol>
+</nav>
 <div class="page-content">
     <section class="section">
         <div class="card">
@@ -250,7 +263,7 @@
                     tampilan =  `<span id-jurusan = "${row.id}" onclick="clickEditInstitusi(${row.id})" class="badge bg-warning rounded-pill">
                                     <a class="text-white" href="#">Edit</a>
                                 </span>
-                                <span id-jurusan = "${row.id}" onclick="clickHapusInstitusi(${row.id})" class="badge bg-danger rounded-pill">
+                                <span id-institusi = "${row.id}" class="badge bg-danger rounded-pill hapus_institusi">
                                     <a class="text-white" href="#">Hapus</a>
                                 </span>`
                     return tampilan;
@@ -304,15 +317,19 @@
         });
     }
 
-    function clickHapusInstitusi(id){
+    $(document).on('click', '.hapus_institusi', function (event) {
+        const id = $(event.currentTarget).attr('id-institusi');
+
         swal({
             title: "Yakin ?",
             text: "Menghapus Data ?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
-        })
-        $.ajax({
+        }).then((willDelete) => {
+
+            if (willDelete) {
+                $.ajax({
             url: "/admin/hapus-institusi/" + id,
             dataType: 'json',
             success: function (response) {
@@ -330,8 +347,12 @@
                 }
             }
         });
-    }
-
+            } else {
+                //alert ('no');
+                return false;
+            }
+        });
+    });
 
     $('#formInstitusi').on('submit', function (e) {
         e.preventDefault();

@@ -14,7 +14,6 @@ use App\Models\UnitKompetensiSub;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PelaksanaanUjian;
-use App\Models\User;
 
 class AsesorDashboard extends Controller
 {
@@ -23,12 +22,6 @@ class AsesorDashboard extends Controller
         return view('asesor.dashboard.dashboard', ['muk' => $muk]);
     }
 
-    public function menjadi_peninjau(){
-        User::where('id', Auth::user()->id)->update([
-            'role_id' => 2
-        ]);
-        return view('peninjau.dashboard.dashboard');
-    }
     // UNIT KOMPETENSI BERDASARKAN JURUSAN ASESOR
     public function data_unit_kompetensi_perjurusan_asesor(Request $request){
         

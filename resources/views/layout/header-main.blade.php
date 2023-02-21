@@ -10,24 +10,20 @@
         <h3 class="col-auto m-0">{{ $title }}</h3>
         {{-- NOTIFIKASI --}}
         <div class="col d-flex justify-content-end">
-            <button type="button" class="notifikasi col-auto " data-bs-toggle="dropdown"><img src="/images/notif.png">
-                <span class="position-absolute translate-middle badge rounded-pill bg-success">
-                    <small>9</small>
-                </span>
-            </button>
-            {{-- NOTIFIKASI ALERT --}}
-            <ul class="dropdown-menu shadow-sm">
-                <div class="row notifikasi-alert">
-                    <div class="col-auto" style="width: 16.5%"><img src="/images/notif.png" style="width: 100%"></div>
-                    <div class="d-flex row col-9 p-0">
-                        <div class="col-auto fw-bold">Notifikasi</div>
-                        <div class="col-auto" style="font-size: 14px">Lengkapi formulir permohonan sertifikasi
-                            kompetensi anda pada
-                            menu
-                            profil! </div>
+
+            <div class="buttons">
+                <button type="button" id="dropdownMenuButton3" class="notifikasi col-auto" data-bs-toggle="dropdown"><img src="/images/notif.png"></button>
+                <ul class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuButton3">
+                    <div class="row notifikasi-alert" aria-labelledby="dropdownMenuButton3">
+                        <div class="col-auto" style="width: 16.5%"><img src="/images/notif.png" style="width: 100%"></div>
+                        <div class="d-flex row col-9 p-0">
+                            <div class="col-auto fw-bold"><a href="{{route('peninjau.Dashboard')}}">Menjadi Peninjau</a></div>
+                            <div class="col-auto" style="font-size: 14px">
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </ul>
+                </ul>
+            </div>
         </div>
     </div>
 </header>

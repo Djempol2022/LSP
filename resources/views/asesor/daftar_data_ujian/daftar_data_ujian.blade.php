@@ -14,15 +14,16 @@
             <table class="table table-striped" id="table-peserta-selesai-ujian">
               <thead>
                   <tr>
-                      <th>Nama Asesi</th>
-                      <th>Tanggal</th>
-                      <th>Waktu</th>
-                      <th>MUK</th>
-                      <th>TUK</th>
-                      <th>Jenis Tes</th>
-                      <th>Kelas</th>
-                      <th>Sesi</th>
-                      <th>Aksi</th>
+                    <th>No.</th>
+                    <th>Nama Asesi</th>
+                    <th>Tanggal</th>
+                    <th>Waktu</th>
+                    <th>MUK</th>
+                    <th>TUK</th>
+                    <th>Jenis Tes</th>
+                    <th>Kelas</th>
+                    <th>Sesi</th>
+                    <th>Aksi</th>
                   </tr>
               </thead>
           </table>
@@ -116,12 +117,21 @@
                 "targets": 0,
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
+                    let i = 1;
+                    list_unit_kompetensi[row.id] = row;
+                    return meta.row + 1;
+                }
+            },
+            {
+                "targets": 1,
+                "class": "text-nowrap text-center",
+                "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
                     return row.relasi_user_asesi.nama_lengkap;
                 }
             },
             {
-                "targets": 1,
+                "targets": 2,
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
@@ -130,7 +140,7 @@
                 }
             },
             {
-                "targets": 2,
+                "targets": 3,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
@@ -138,7 +148,7 @@
                 }
             },
             {
-                "targets": 3,
+                "targets": 4,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
@@ -146,7 +156,7 @@
                 }
             },
             {
-                "targets": 4,
+                "targets": 5,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
@@ -154,7 +164,7 @@
                 }
             },
             {
-                "targets": 5,
+                "targets": 6,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
@@ -176,7 +186,7 @@
                 }
             },
             {
-                "targets": 6,
+                "targets": 7,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
@@ -184,7 +194,7 @@
                 }
             },
             {
-                "targets": 7,
+                "targets": 8,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
@@ -192,7 +202,7 @@
                 }
             },
             {
-                "targets": 8,
+                "targets": 9,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;

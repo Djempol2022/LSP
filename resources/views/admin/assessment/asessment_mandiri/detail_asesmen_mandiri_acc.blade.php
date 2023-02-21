@@ -59,7 +59,7 @@
                     @endphp
     
                     <li class="list-group-item d-flex justify-content-between align-items-start border-0 fw-semibold">
-                      <div class="col-md-12 ms-2 me-auto">
+                      <div class="ms-2 me-auto ">
                         Elemen: {{ $data_unit_kompetensi_sub->judul_unit_kompetensi_sub }}
                         <div class="py-1">Kriteria Kerja:</div>
                         <div class="row col mx-3">
@@ -78,15 +78,11 @@
                               <input type="hidden" name="unit_kompetensi_isi[]" value="{{$isi->id}}" hidden> --}}
     
                               <div class="col-auto kriteria-kompeten">
-                                @isset($data_status_kompeten_asesi->status)
                                 @if($data_status_kompeten_asesi->status === 'kompeten')
                                     <label class="form-check-label text-success" for="kompeten-{{ $isi->id }}">Kompeten</label>
                                 @else
                                     <label class="form-check-label text-danger" for="kompeten-{{ $isi->id }}">Belum Kompeten</label>
                                 @endif
-                                @else
-                                <label class="form-check-label text-warning" for="kompeten-{{ $isi->id }}">?</label>
-                                @endisset
                               </div>
 
                             </div>

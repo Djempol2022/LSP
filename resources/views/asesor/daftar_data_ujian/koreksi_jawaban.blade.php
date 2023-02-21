@@ -93,14 +93,14 @@
                 </div>
               </div>
               @elseif($data_jawaban_asesi->koreksi_jawaban == 1)
-              <div class="card" style="outline-style: solid; outline-color: rgba(201, 76, 76, 0.3);">
+              <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(201, 76, 76, 0.3);">
                 <div class="card-body">
                   <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
                   <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
                 </div>
               </div>
               @elseif($data_jawaban_asesi->koreksi_jawaban == 2)
-              <div class="card" style="outline-style: solid; outline-color: rgba(120, 212, 77, 0.58);">
+              <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(120, 212, 77, 0.58);">
                 <div class="card-body">
                   <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
                   <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
@@ -124,14 +124,14 @@
                 </div>
               </div>
               @elseif($data_jawaban_asesi->koreksi_jawaban == 1)
-              <div class="card" style="outline-style: solid; outline-color: rgba(201, 76, 76, 0.3);">
+              <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(201, 76, 76, 0.3);">
                 <div class="card-body">
                   <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
                   <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
                 </div>
               </div>
               @elseif($data_jawaban_asesi->koreksi_jawaban == 2)
-              <div class="card" style="outline-style: solid; outline-color: rgba(120, 212, 77, 0.58);">
+              <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(120, 212, 77, 0.58);">
                 <div class="card-body">
                   <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
                   <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
@@ -139,11 +139,14 @@
               </div>
             @endif
           @endforeach
-        <div class="card" style="margin-top: -4.0rem;">
-          <div class="card-body">
-            Kunci Jawaban : {{$data_soal->jawaban}}
-          </div>
+      @if ($jenis_tes->jenis_tes == 3)
+      @else
+      <div class="card" style="margin-top: -4.0rem;">
+        <div class="card-body">
+          Kunci Jawaban : {{$data_soal->jawaban}}
         </div>
+      </div>
+      @endif
 
         @endif
         @endforeach
@@ -152,16 +155,16 @@
       <div class="col-12 pernyataan">
         <div class="col isi">
           <div class="row">
-            <div class="col-4 col-md-2"><h5>Total Soal </h5></div>
-            <div class="col-2 col-md-2"><h5>: {{$hitung_total_soal}}</h5></div>
+            <div class="col-4 col-md-2"><h6>Total Soal </h6></div>
+            <div class="col-2 col-md-2"><h6>: {{$hitung_total_soal}}</h6></div>
           </div>
           <div class="row">
-            <div class="col-4 col-md-2"><h6 style="color:blue;">Jawaban Benar</h6></div>
-            <div class="col-2 col-md-2"><h6 style="color:blue;"> : {{$total_jawaban_benar}}</h6></div>
+            <div class="col-4 col-md-2"><h6 style="color:green;">Jawaban Benar</h6></div>
+            <div class="col-2 col-md-2"><h6 style="color:green;"> : {{$total_jawaban_benar}}</h6></div>
           </div>
           <div class="row">
-            <div class="col-4 col-md-2"><h6 style="color:rgb(255, 81, 12);">Jawaban Salah</h6></div>
-            <div class="col-2 col-md-2"><h6 style="color:rgb(255, 81, 12);"> : {{$total_jawaban_salah}} </h6></div>
+            <div class="col-4 col-md-2"><h6 style="color:red;">Jawaban Salah</h6></div>
+            <div class="col-2 col-md-2"><h6 style="color:red;"> : {{$total_jawaban_salah}} </h6></div>
           </div>
         </div>
       </div>
