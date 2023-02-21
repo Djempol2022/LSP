@@ -329,63 +329,113 @@
     function removeRow(rowMain) {
       //   console.log(document.querySelectorAll('.rowMain' + rowMain));
       document.querySelectorAll('.rowMain' + rowMain).forEach((e, i, arr) => {
-        arr[i].remove();
+        // arr[i].remove();
       });
 
       //   reset main input after remove
       let table = document.getElementById('tableHasilVerifikasiTUK');
 
       arrayRowMain = [];
-      let rowSubTemp = false;
       let rowCount = table.rows.length - 1;
-      for (let i = 2; i < rowCount; i++) {
+      let i = 2;
+      for (i; i < rowCount; i++) {
         let row = table.rows[i];
 
         arrayRowMain.push('rowMain' + i);
 
-        console.log(table.rows);
-        console.log(row);
+        if (table.rows[i + 1].className === 'rowSub' + i + ' ' + 'rowMain' + i) {
+          let j = i;
+          do {
+            let rowSub = table.rows[j + 1];
+            console.log(rowSub);
+            rowSub.className = 'rowSub' + i + ' ' + 'rowMain' + i;
+            // rowSub.cells[6].childNodes[0].id = 'button' + j;
+            // rowSub.cells[0].innerHTML = j - 1 + '.';
+            // $('#button' + j).prop('onclick', null);
+            // rowSub.cells[6].onclick = function() {
+            //   removeRow(j)
+            // };
+            j++;
+          } while (table.rows[j + 1].className !== 'rowSub' + i + ' ' + 'rowMain' + i);
+          i = j + 1;
+        } else {
+          row.className = 'rowMain' + i;
+          row.cells[6].childNodes[0].id = 'button' + i;
+          row.cells[0].innerHTML = i - 1 + '.';
+          $('#button' + i).prop('onclick', null);
+          row.cells[6].onclick = function() {
+            removeRow(i)
+          };
+        }
 
-        // if (rowSubTemp) {
-        //   console.log('rowSubTemptext');
-        //   row.className = 'rowSub' + i + ' ' + 'rowMain' + i;
-        // } else {
-        //   console.log('rowmaintext');
-        //   row.className = 'rowMain' + i;
-        //   row.cells[6].childNodes[0].id = 'button' + i;
-        //   row.cells[0].innerHTML = i - 1 + '.';
-        //   $('#button' + i).prop('onclick', null);
-        //   row.cells[6].onclick = function() {
-        //     removeRow(i)
-        //   };
-        // }
-        // console.log('rowSub' + i + ' ' + row.className);
-
-        // if (table.row[i + 1].className === 'rowSub' + i + ' ' + row.className) {
-        //   console.log('rowsubtem true');
-        //   rowSubTemp = true;
-        // } else {
-        //   console.log('rowsubtem false');
-        //   rowSubTemp = false;
-        // }
-
-        // if (table.rows[i + 1].className === row.className) {
-        //   for (let j = i + 1; j < rowCount; j++) {
-        //     if (table.rows[j].className === row.className) {
-        //       table.rows[j].className = 'rowSub' + i + ' ' + 'rowMain' + i;
-        //       //   table.rows[j].cells[0].innerHTML = i - 1 + '.';
-        //     }
-        //   }
-        // }
-
-        row.className = 'rowMain' + i;
-        row.cells[6].childNodes[0].id = 'button' + i;
-        row.cells[0].innerHTML = i - 1 + '.';
-        $('#button' + i).prop('onclick', null);
-        row.cells[6].onclick = function() {
-          removeRow(i)
-        };
       }
+
+
+      //   //   reset main input after remove
+      //   let table = document.getElementById('tableHasilVerifikasiTUK');
+
+      //   arrayRowMain = [];
+      //   let rowSubTemp = false;
+      //   let rowMain_rowSub_text = '';
+      //   let rowMain_text = '';
+      //   let is_rowMain_active = true;
+      //   let rowCount = table.rows.length - 1;
+      //   for (let i = 2; i < rowCount; i++) {
+      //     let row = table.rows[i];
+
+      //     arrayRowMain.push('rowMain' + i);
+
+      //     console.log(table.rows);
+      //     console.log(row);
+
+      //     if (rowSubTemp) {
+      //       console.log('rowSubTemptext');
+      //       row.className = rowMain_rowSub_text;
+      //     } else {
+      //       console.log('rowmaintext');
+      //       if (is_rowMain_active) {
+      //         row.className = 'rowMain' + i;
+      //       } else {
+      //         row.className = rowMain_text;
+      //       }
+      //       row.cells[6].childNodes[0].id = 'button' + i;
+      //       row.cells[0].innerHTML = i - 1 + '.';
+      //       $('#button' + i).prop('onclick', null);
+      //       row.cells[6].onclick = function() {
+      //         removeRow(i)
+      //       };
+      //     }
+      //     console.log(i);
+      //     if (table.rows[i + 1].className === 'rowSub' + i + ' ' + 'rowMain' + i) {
+      //       console.log('rowsubtem true');
+      //       rowSubTemp = true;
+      //       rowMain_rowSub_text = 'rowSub' + i + ' ' + 'rowMain' + i;
+      //       is_rowMain_active = false;
+      //       rowMain_text = 'rowMain' + i;
+      //     } else {
+      //       console.log('rowsubtem false');
+      //       rowSubTemp = false;
+      //     }
+
+      //     // if (table.rows[i + 1].className === row.className) {
+      //     //   for (let j = i + 1; j < rowCount; j++) {
+      //     //     if (table.rows[j].className === row.className) {
+      //     //       table.rows[j].className = 'rowSub' + i + ' ' + 'rowMain' + i;
+      //     //       //   table.rows[j].cells[0].innerHTML = i - 1 + '.';
+      //     //     }
+      //     //   }
+      //     // }
+
+      //     // first
+      //     // row.className = 'rowMain' + i;
+      //     // row.cells[6].childNodes[0].id = 'button' + i;
+      //     // row.cells[0].innerHTML = i - 1 + '.';
+      //     // $('#button' + i).prop('onclick', null);
+      //     // row.cells[6].onclick = function() {
+      //     //   removeRow(i)
+      //     // };
+      //     // end first
+      //   }
       //   end reset main input after remove
 
     }
