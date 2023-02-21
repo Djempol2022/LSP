@@ -188,7 +188,7 @@
       element6.type = "button";
       element6.id = 'button' + rowCount;
       element6.onclick = function() {
-        removeRow(rowCount);
+        removeRow("rowMain" + rowCount);
       };
       cell7.appendChild(element6);
 
@@ -327,66 +327,30 @@
     }
 
     function removeRow(rowMain) {
-      //   console.log(document.querySelectorAll('.rowMain' + rowMain));
-      document.querySelectorAll('.rowMain' + rowMain).forEach((e, i, arr) => {
-        arr[i].remove();
+      console.log(document.querySelectorAll('.' + rowMain));
+      document.querySelectorAll('.' + rowMain).forEach(e => {
+        e.remove();
+
+        // reset main input after remove
+        let table = document.getElementById('tableHasilVerifikasiTUK');
+
+        arrayRowMain = [];
+        let rowCount = table.rows.length - 1;
+        for (let i = 2; i < rowCount; i++) {
+          let row = table.rows[i];
+
+          arrayRowMain.push('rowMain' + i);
+
+          row.className = 'rowMain' + i;
+          row.cells[6].childNodes[0].id = 'button' + i;
+          row.cells[0].innerHTML = i - 1 + '.';
+          $('#button' + i).prop('onclick', null);
+          row.cells[6].onclick = function() {
+            removeRow("rowMain" + i)
+          };
+        }
+        // end reset main input after remove
       });
-
-      //   reset main input after remove
-      let table = document.getElementById('tableHasilVerifikasiTUK');
-
-      arrayRowMain = [];
-      let rowSubTemp = false;
-      let rowCount = table.rows.length - 1;
-      for (let i = 2; i < rowCount; i++) {
-        let row = table.rows[i];
-
-        arrayRowMain.push('rowMain' + i);
-
-        console.log(table.rows);
-        console.log(row);
-
-        // if (rowSubTemp) {
-        //   console.log('rowSubTemptext');
-        //   row.className = 'rowSub' + i + ' ' + 'rowMain' + i;
-        // } else {
-        //   console.log('rowmaintext');
-        //   row.className = 'rowMain' + i;
-        //   row.cells[6].childNodes[0].id = 'button' + i;
-        //   row.cells[0].innerHTML = i - 1 + '.';
-        //   $('#button' + i).prop('onclick', null);
-        //   row.cells[6].onclick = function() {
-        //     removeRow(i)
-        //   };
-        // }
-        // console.log('rowSub' + i + ' ' + row.className);
-
-        // if (table.row[i + 1].className === 'rowSub' + i + ' ' + row.className) {
-        //   console.log('rowsubtem true');
-        //   rowSubTemp = true;
-        // } else {
-        //   console.log('rowsubtem false');
-        //   rowSubTemp = false;
-        // }
-
-        // if (table.rows[i + 1].className === row.className) {
-        //   for (let j = i + 1; j < rowCount; j++) {
-        //     if (table.rows[j].className === row.className) {
-        //       table.rows[j].className = 'rowSub' + i + ' ' + 'rowMain' + i;
-        //       //   table.rows[j].cells[0].innerHTML = i - 1 + '.';
-        //     }
-        //   }
-        // }
-
-        row.className = 'rowMain' + i;
-        row.cells[6].childNodes[0].id = 'button' + i;
-        row.cells[0].innerHTML = i - 1 + '.';
-        $('#button' + i).prop('onclick', null);
-        row.cells[6].onclick = function() {
-          removeRow(i)
-        };
-      }
-      //   end reset main input after remove
 
     }
 
