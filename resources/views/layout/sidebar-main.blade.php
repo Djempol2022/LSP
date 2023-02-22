@@ -180,14 +180,14 @@
                             class="sidebar-item {{ request()->routeIs('admin.TampilanJadwalUjiKompetensi*') ? 'active' : '' }}">
                             <a href="{{ route('admin.TampilanJadwalUjiKompetensi') }}" class='sidebar-link'>
                                 <i
-                                    class="bi bi-gear{{ request()->routeIs('admin.TampilanJadwalUjiKompetensi*') ? '-fill warna-white' : '' }} warna-secondary"></i>
+                                    class="bi bi-calendar-check{{ request()->routeIs('admin.TampilanJadwalUjiKompetensi*') ? 'bi bi-calendar-check warna-white' : '' }} warna-secondary"></i>
                                 <span>Jadwal Assessment</span>
                             </a>
                         </li>
                         <li class="sidebar-item {{ request()->routeIs('admin.Berkas*') ? 'active' : '' }}">
                             <a href="{{ route('admin.Berkas') }}" class='sidebar-link'>
                                 <i
-                                    class="bi bi-gear{{ request()->routeIs('admin.Berkas*') ? '-fill warna-white' : '' }} warna-secondary"></i>
+                                    class="bi bi-file-pdf{{ request()->routeIs('admin.Berkas*') ? '-fill warna-white' : '' }} warna-secondary"></i>
                                 <span>Berkas</span>
                             </a>
                         </li>
@@ -195,7 +195,7 @@
                         <li class="sidebar-item {{ request()->routeIs('admin.DaftarPengguna*') ? 'active' : '' }}">
                             <a href="{{ route('admin.DaftarPengguna') }}" class='sidebar-link'>
                                 <i
-                                    class="bi bi-gear{{ request()->routeIs('admin.DaftarPengguna*') ? '-fill warna-white' : '' }} warna-secondary"></i>
+                                    class="bi bi-people{{ request()->routeIs('admin.DaftarPengguna*') ? '-fill warna-white' : '' }} warna-secondary"></i>
                                 <span>Pengguna</span>
                             </a>
                         </li>
@@ -250,8 +250,6 @@
 
 
 
-
-
                         {{-- ASESOR AUTH --}}
                     @elseif(Auth::user()->relasi_role->role == 'asesor')
                         <li class="sidebar-item {{ request()->routeIs('asesor.Dashboard*') ? 'active' : '' }} ">
@@ -266,7 +264,7 @@
                             class="sidebar-item {{ request()->routeIs('asesor.HalamanPengesahanAsesmemMandiri*') ? 'active' : '' }} ">
                             <a href="{{ route('asesor.HalamanPengesahanAsesmemMandiri') }}" class='sidebar-link'>
                                 <i
-                                    class="bi bi-grid{{ request()->routeIs('asesor.HalamanPengesahanAsesmemMandiri*') ? '-fill warna-white' : '' }} 
+                                    class="bi bi-file-earmark-medical{{ request()->routeIs('asesor.HalamanPengesahanAsesmemMandiri*') ? '-fill warna-white' : '' }} 
                       warna-secondary"></i>
                                 <span>Pengesahan</span>
                             </a>
@@ -274,7 +272,7 @@
                         <li class="sidebar-item {{ request()->routeIs('asesor.KelolaSoal*') ? 'active' : '' }} ">
                             <a href="{{ route('asesor.KelolaSoal') }}" class='sidebar-link'>
                                 <i
-                                    class="bi bi-grid{{ request()->routeIs('asesor.KelolaSoal*') ? '-fill warna-white' : '' }} 
+                                    class="bi bi-journal{{ request()->routeIs('asesor.KelolaSoal*') ? '-check warna-white' : '' }} 
                       warna-secondary"></i>
                                 <span>Kelola Soal</span>
                             </a>
@@ -282,18 +280,17 @@
                         <li class="sidebar-item {{ request()->routeIs('asesor.DaftarDataUjian*') ? 'active' : '' }} ">
                             <a href="{{ route('asesor.DaftarDataUjian') }}" class='sidebar-link'>
                                 <i
-                                    class="bi bi-grid{{ request()->routeIs('asesor.DaftarDataUjian*') ? '-fill warna-white' : '' }} 
+                                    class="bi bi-file-earmark-spreadsheet{{ request()->routeIs('asesor.DaftarDataUjian*') ? '-fill warna-white' : '' }} 
                     warna-secondary"></i>
                                 <span>Data Ujian</span>
                             </a>
                         </li>
-                        <li class="sidebar-item ">
+                        <li class="sidebar-item">
                             <a href="{{ route('Switch', [2, 'peninjau']) }}" class='sidebar-link'>
                                 <i class="bi bi-box-arrow-left warna-secondary"></i>
                                 <span>Pindah Ke Peninjau</span>
                             </a>
                         </li>
-
 
                         {{-- ASESI AUTH --}}
                     @elseif(Auth::user()->relasi_role->role == 'asesi')

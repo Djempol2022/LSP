@@ -163,9 +163,9 @@
                       </div>
                     </div>
                     <div class="col pb-12" id="tambahAsesiKeUjiKompetensi">
-                      <p class="fw-bold">Asesi</p>
+                      <p class="fw-bold" style="margin-top: 1rem;">Asesi</p>
                       <span class="btn btn-primary btn-sm btn-rounded text-white"
-                        href="#" data-bs-toggle="modal" data-bs-target="#modalTambahAsesiKeJadwalUkom">Tambah Asesi
+                        href="#" data-bs-toggle="modal" data-bs-target="#modalTambahAsesiKeJadwalUkom">+ Tambah Asesi
                       </span>
                       <br>
                       {{-- @isset($relasi_jadwal_uji_kompetensi->relasi_user_asesi) --}}
@@ -195,7 +195,7 @@
                         <span class="text-danger fw-semibold">Asesi Belum di tentukan</span>
                       @endif
                     </div>
-                    <button type="submit" class="bg-primary btn-sm btn rounded-3 text-white">Simpan</button>
+                    <button type="submit" class="bg-primary btn rounded-3 text-white">Simpan</button>
                 </div>
                 </form>
                 <div class="modal fade" id="modalTambahAsesiKeJadwalUkom" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

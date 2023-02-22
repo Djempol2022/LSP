@@ -62,8 +62,10 @@ class Admin_JadwalUjiKompetensi extends Controller
             
             $user_asesi_kompetensi = AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_id)
                     ->with('relasi_user_asesi.relasi_role', 'relasi_jadwal_uji_kompetensi')
+                    ->where('status_ujian_berlangsung', 0)
                     ->whereRelation('relasi_user_asesi.relasi_role', 'role', '=', 'asesi')
                     ->get();
+
             $tuk = NamaTempatUjiKompetensi::get(['id', 'nama_tuk']);
             return view('admin.jadwal_uji_kompetensi.detail_jadwal_uji_kompetensi_acc',[ 
                     'data_pelaksanaan_ujian' => $data_pelaksanaan_ujian, 
@@ -90,7 +92,9 @@ class Admin_JadwalUjiKompetensi extends Controller
                 'status_terlibat_uji_kompetensi' => 0
             ]);
 
-            $hapus_asesi_uji_kompetensi = AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_id)->where('user_asesi_id', $asesi_id)->delete();
+            $hapus_asesi_uji_kompetensi = AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_id)
+                ->where('user_asesi_id', $asesi_id)
+                ->where('status_ujian_berlangsung', 0)->delete();
             
             if(!$hapus_asesi_uji_kompetensi){
                 return response()->json([

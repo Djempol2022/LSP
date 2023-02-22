@@ -408,8 +408,8 @@ hr {
     width: 45px;
 }
 .notifikasi span {
-    top: 5px;
-    right: -20px;
+    top: 4px;
+    right: -16px;
 }
 .notifikasi-alert {
     justify-content: center;
@@ -456,7 +456,7 @@ hr {
     margin-left: 9%;
 }
 .pernyataan .isi {
-    padding: 1.0rem;
+    padding: 1rem;
 }
 .pernyataan p {
     margin-top: 13px;
@@ -477,10 +477,9 @@ hr {
     .teks-tabel {
         font-size: 67%;
     }
- 
 }
 @media (max-width: 560px) {
-    .login{
+    .login {
         content-visibility: hidden;
         overflow: hidden;
     }

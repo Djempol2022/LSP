@@ -191,59 +191,6 @@ Route::middleware(['auth'])->group(function () {
             Route::post('ubah-pengguna', 'ubah_pengguna')->name('UbahPengguna');
         });
 
-        Route::controller(BerkasController::class)->group(function () {
-            Route::get('berkas', 'index')->name('Berkas');
-
-            Route::any('table-surat-sk-penetapan', 'table_surat_sk_penetapan')->name('SuratSKPenetapan');
-            Route::get('table-surat-sk-penetapan/{id}', 'show_sk_penetapan')->name('SuratSKPenetapan.Show');
-            Route::get('hapus-sk-penetapan-tuk-terverifikasi/{id}', 'hapus_sk_penetapan');
-
-            Route::any('table-surat-daftar-tuk', 'table_surat_daftar_tuk')->name('SuratDaftarTUK');
-            Route::get('table-surat-daftar-tuk/{id}', 'show_daftar_tuk')->name('SuratDaftarTUK.Show');
-            Route::get('hapus-daftar-tuk-terverifikasi/{id}', 'hapus_daftar_tuk');
-
-            Route::any('table-surat-hasil-verifikasi-tuk', 'table_surat_hasil_verifikasi_tuk')->name('SuratHasilVerifikasiTUK');
-            Route::get('table-hasil-verifikasi-tuk/{id}', 'show_hasil_verifikasi_tuk')->name('SuratHasilVerifikasiTUK.Show');
-            Route::get('hapus-hasil-verifikasi-tuk/{id}', 'hapus_hasil_verifikasi_tuk');
-
-            Route::any('table-surat-st-verifikasi-tuk', 'table_surat_st_verifikasi_tuk')->name('SuratSTVerifikasiTUK');
-            Route::get('table-surat-st-verifikasi-tuk/{id}', 'show_st_verifikasi_tuk')->name('SuratSTVerifikasiTUK.Show');
-            Route::get('hapus-st-verifikasi-tuk/{id}', 'hapus_st_verifikasi_tuk');
-
-            Route::any('table-surat-x03-st-verifikasi-tuk', 'table_surat_x03_st_verifikasi_tuk')->name('SuratX03STVerifikasiTUK');
-            Route::get('table-surat-x03-st-verifikasi-tuk/{id}', 'show_x03_st_verifikasi_tuk')->name('SuratX03STVerifikasiTUK.Show');
-            Route::get('hapus-x03-st-verifikasi-tuk/{id}', 'hapus_x03_st_verifikasi_tuk');
-
-            Route::any('table-surat-x04-berita-acara', 'table_surat_x04_berita_acara')->name('SuratX04BeritaAcara');
-            Route::get('table-surat-x04-berita-acara/{id}', 'show_x04_berita_acara')->name('SuratX04BeritaAcara.Show');
-            Route::get('hapus-x04-berita-acara/{id}', 'hapus_x04_berita_acara');
-
-            Route::any('table-surat-z-ba-pecah-rp', 'table_surat_z_ba_pecah_rp')->name('SuratZBAPecahRP');
-            Route::get('table-surat-z-ba-pecah-rp/{id}', 'show_z_ba_pecah_rp')->name('SuratZBAPecahRP.Show');
-            Route::get('hapus-z-ba-pecah-rp/{id}', 'hapus_z_ba_pecah_rp');
-
-            Route::any('table-surat-z-ba-rp', 'table_surat_z_ba_rp')->name('SuratZBARP');
-            Route::get('table-surat-z-ba-rp/{id}', 'show_z_ba_rp')->name('SuratZBARP.Show');
-
-            Route::any('table-surat-df-hadir-asesor-pleno', 'table_surat_df_hadir_asesor_pleno')->name('SuratDFHadirAsesorPleno');
-            Route::get('table-surat-df-hadir-asesor-pleno/{id}', 'show_df_hadir_asesor_pleno')->name('SuratDFHadirAsesorPleno.Show');
-            Route::get('hapus-df-hadir-asesor-pleno/{id}', 'hapus_df_hadir_asesor_pleno');
-
-            Route::any('table-surat-df-hadir-asesor', 'table_surat_df_hadir_asesor')->name('SuratDFHadirAsesor');
-            Route::get('table-surat-df-hadir-asesor/{id}', 'show_df_hadir_asesor')->name('SuratDFHadirAsesor.Show');
-
-
-            // PDF
-            Route::get('cetak-sk-penetapan-tuk/{id}', 'cetak_sk_penetapan_pdf')->name('CetakSKPentapanTUKPDF');
-            Route::get('cetak-daftar-tuk-terverifikasi/{id}', 'cetak_daftar_tuk_terverifikasi_pdf')->name('CetakDaftarTUKTerverifikasiPDF');
-            Route::get('cetak-st-verifikasi-tuk/{id}', 'cetak_st_verifikasi_tuk_pdf')->name('CetakSTVerifikasiTUKPDF');
-            Route::get('cetak-x03-st-verifikasi-tuk/{id}', 'cetak_x03_st_verifikasi_tuk_pdf')->name('CetakX03STVerifikasiTUKPDF');
-            Route::get('cetak-x04-berita-acara/{id}', 'cetak_x04_berita_acara_pdf')->name('CetakX04BeritaAcaraPDF');
-            Route::get('cetak-z-ba-pecah-rp/{id}', 'cetak_z_ba_pecah_rp_pdf')->name('CetakZBAPecahRPPDF');
-            Route::get('cetak-df-hadir-asesor-pleno/{id}', 'cetak_df_hadir_asesor_pleno_pdf')->name('CetakDFHadirAsesorPlenoPDF');
-            Route::get('cetak-df-hadir-asesor/{id}', 'cetak_df_hadir_asesor_pdf')->name('CetakDFHadirAsesorPDF');
-        });
-
         // Berkas
         Route::controller(SK_Penetapan_TUK_Terverifikasi_Controller::class)->group(function () {
             Route::get('berkas/sk-penetapan-tuk-terverifikasi', 'index')->name('Berkas.SKPenetapanTUKTerverifikasi');
@@ -295,14 +242,63 @@ Route::middleware(['auth'])->group(function () {
             Route::post('berkas/df-hadir-asesor', 'store')->name('Berkas.DFHadirAsesor.Add');
         });
 
-        Route::controller(SK_Penetapan_TUK_Terverifikasi_Controller::class)->group(function () {
-            Route::get('berkas/sk-penetapan-tuk-terverifikasi', 'index')->name('Berkas.SKPenetapanTUKTerverifikasi');
-            Route::post('berkas/sk-penetapan-tuk-terverifikasi', 'store')->name('Berkas.SKPenetapanTUKTerverifikasi.Add');
+        Route::controller(DF_Hadir_Asesi_Controller::class)->group(function () {
+            Route::get('berkas/df-hadir-asesi', 'index')->name('Berkas.DFHadirAsesi');
+            Route::post('berkas/df-hadir-asesi', 'store')->name('Berkas.DFHadirAsesi.Add');
         });
 
-        Route::controller(Daftar_TUK_Terverifikasi_Controller::class)->group(function () {
-            Route::get('berkas/daftar-tuk-terverifikasi', 'index')->name('Berkas.DaftarTUKTerverifikasi');
-            Route::post('berkas/daftar-tuk-terverifikasi', 'store')->name('Berkas.DaftarTUKTerverifikasi.Add');
+
+        Route::controller(BerkasController::class)->group(function () {
+            Route::get('berkas', 'index')->name('Berkas');
+
+            Route::any('table-surat-sk-penetapan', 'table_surat_sk_penetapan')->name('SuratSKPenetapan');
+            Route::get('table-surat-sk-penetapan/{id}', 'show_sk_penetapan')->name('SuratSKPenetapan.Show');
+            Route::get('hapus-sk-penetapan-tuk-terverifikasi/{id}', 'hapus_sk_penetapan');
+
+            Route::any('table-surat-daftar-tuk', 'table_surat_daftar_tuk')->name('SuratDaftarTUK');
+            Route::get('table-surat-daftar-tuk/{id}', 'show_daftar_tuk')->name('SuratDaftarTUK.Show');
+            Route::get('hapus-daftar-tuk-terverifikasi/{id}', 'hapus_daftar_tuk');
+
+            Route::any('table-surat-hasil-verifikasi-tuk', 'table_surat_hasil_verifikasi_tuk')->name('SuratHasilVerifikasiTUK');
+            Route::get('table-hasil-verifikasi-tuk/{id}', 'show_hasil_verifikasi_tuk')->name('SuratHasilVerifikasiTUK.Show');
+            Route::get('hapus-hasil-verifikasi-tuk/{id}', 'hapus_hasil_verifikasi_tuk');
+
+            Route::any('table-surat-st-verifikasi-tuk', 'table_surat_st_verifikasi_tuk')->name('SuratSTVerifikasiTUK');
+            Route::get('table-surat-st-verifikasi-tuk/{id}', 'show_st_verifikasi_tuk')->name('SuratSTVerifikasiTUK.Show');
+            Route::get('hapus-st-verifikasi-tuk/{id}', 'hapus_st_verifikasi_tuk');
+
+            Route::any('table-surat-x03-st-verifikasi-tuk', 'table_surat_x03_st_verifikasi_tuk')->name('SuratX03STVerifikasiTUK');
+            Route::get('table-surat-x03-st-verifikasi-tuk/{id}', 'show_x03_st_verifikasi_tuk')->name('SuratX03STVerifikasiTUK.Show');
+            Route::get('hapus-x03-st-verifikasi-tuk/{id}', 'hapus_x03_st_verifikasi_tuk');
+
+            Route::any('table-surat-x04-berita-acara', 'table_surat_x04_berita_acara')->name('SuratX04BeritaAcara');
+            Route::get('table-surat-x04-berita-acara/{id}', 'show_x04_berita_acara')->name('SuratX04BeritaAcara.Show');
+            Route::get('hapus-x04-berita-acara/{id}', 'hapus_x04_berita_acara');
+
+            Route::any('table-surat-z-ba-pecah-rp', 'table_surat_z_ba_pecah_rp')->name('SuratZBAPecahRP');
+            Route::get('table-surat-z-ba-pecah-rp/{id}', 'show_z_ba_pecah_rp')->name('SuratZBAPecahRP.Show');
+            Route::get('hapus-z-ba-pecah-rp/{id}', 'hapus_z_ba_pecah_rp');
+
+            Route::any('table-surat-z-ba-rp', 'table_surat_z_ba_rp')->name('SuratZBARP');
+            Route::get('table-surat-z-ba-rp/{id}', 'show_z_ba_rp')->name('SuratZBARP.Show');
+
+            Route::any('table-surat-df-hadir-asesor-pleno', 'table_surat_df_hadir_asesor_pleno')->name('SuratDFHadirAsesorPleno');
+            Route::get('table-surat-df-hadir-asesor-pleno/{id}', 'show_df_hadir_asesor_pleno')->name('SuratDFHadirAsesorPleno.Show');
+            Route::get('hapus-df-hadir-asesor-pleno/{id}', 'hapus_df_hadir_asesor_pleno');
+
+            Route::any('table-surat-df-hadir-asesor', 'table_surat_df_hadir_asesor')->name('SuratDFHadirAsesor');
+            Route::get('table-surat-df-hadir-asesor/{id}', 'show_df_hadir_asesor')->name('SuratDFHadirAsesor.Show');
+
+
+            // PDF
+            Route::get('cetak-sk-penetapan-tuk/{id}', 'cetak_sk_penetapan_pdf')->name('CetakSKPentapanTUKPDF');
+            Route::get('cetak-daftar-tuk-terverifikasi/{id}', 'cetak_daftar_tuk_terverifikasi_pdf')->name('CetakDaftarTUKTerverifikasiPDF');
+            Route::get('cetak-st-verifikasi-tuk/{id}', 'cetak_st_verifikasi_tuk_pdf')->name('CetakSTVerifikasiTUKPDF');
+            Route::get('cetak-x03-st-verifikasi-tuk/{id}', 'cetak_x03_st_verifikasi_tuk_pdf')->name('CetakX03STVerifikasiTUKPDF');
+            Route::get('cetak-x04-berita-acara/{id}', 'cetak_x04_berita_acara_pdf')->name('CetakX04BeritaAcaraPDF');
+            Route::get('cetak-z-ba-pecah-rp/{id}', 'cetak_z_ba_pecah_rp_pdf')->name('CetakZBAPecahRPPDF');
+            Route::get('cetak-df-hadir-asesor-pleno/{id}', 'cetak_df_hadir_asesor_pleno_pdf')->name('CetakDFHadirAsesorPlenoPDF');
+            Route::get('cetak-df-hadir-asesor/{id}', 'cetak_df_hadir_asesor_pdf')->name('CetakDFHadirAsesorPDF');
         });
     });
 
@@ -395,6 +391,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('soal/{jadwal_id}/{soal_id}', 'pengerjaan_soal')->name('PengerjaanSoal');
             Route::post('simpan-jawaban-asesi', 'simpan_jawaban_asesi')->name('SimpanJawabanAsesi');
             Route::post('selesai-mengerjakan-soal/{jadwal_id}', 'selesai_mengerjakan_soal');
+            Route::get('waktu-ujian-habis/{jadwal_id}', 'waktu_ujian_habis');
             Route::get('review-jawaban/{jadwal_id}', 'review_jawaban')->name('Assesment.ReviewJawaban');
         });
 
