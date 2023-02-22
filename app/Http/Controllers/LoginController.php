@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -60,5 +61,11 @@ class LoginController extends Controller
         request()->session()->invalidate();
         request()->session()->regenerateToken();
         return redirect()->route('Login');
+    }
+
+    public function switch($role, $nama_role)
+    {
+        User::find(auth()->user()->id)->update(['role_id' => $role]);
+        return redirect()->route($nama_role . '.Dashboard');
     }
 }

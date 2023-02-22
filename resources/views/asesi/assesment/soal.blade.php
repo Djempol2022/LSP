@@ -1,7 +1,6 @@
 @extends('layout.main-layout', ['title' => 'Pengerjaan Soal'])
 @section('soal-section')
-    <div class="container-fluid" style="margin-top: 20px;">
-        <div id="demo"> </div>
+    <div class="container-fluid" style="margin-top: 20px;" id="halaman-ujian">
         {{-- JALUR FILE --}}
         {{-- <nav class="jalur-file mb-5" aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -14,6 +13,7 @@
             </ol>
         </nav> --}}
         <h5>Materi Uji Kompetensi {{$pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_muk->muk}}</h5>
+        <div id="demo"> </div>
         {{-- <h3 class="mt-5" id="timer"></h3> --}}
         <div class="row col gap-5 ms-0 mt-2">
             
@@ -57,6 +57,7 @@
                                             </div>
                                         </div>
                                     @endforeach
+
                                 @elseif ($pelaksanaan_ujian->jenis_tes == 2)
                                     <div class="col-lg-12">
                                         <div class="col-lg-12 mb-4">
@@ -145,13 +146,20 @@
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
     // Display the result in the element with id="demo"
-    document.getElementById("demo").innerHTML = hours + " Jam " + minutes + " Menit " + seconds + " Detik ";
-    
+    document.getElementById("demo").innerHTML = "<h6><b>" + hours + " Jam " + minutes + " Menit " + seconds + " Detik </b></h4>";
+        
+        let jadwal_id = @json($pelaksanaan_ujian);
     // If the count down is finished, write some text
         if (distance < 0) {
-            // location.reload();
+            swal({
+                title: "Waktu Pengerjaan Soal Habis",
+                icon: "info",
+            }),
             clearInterval(x);
-            document.getElementById("demo").innerHTML = "EXPIRED";
+            document.getElementById("demo").innerHTML = "Waktu Ujian Selesai";
+            document.getElementById("halaman-ujian").innerHTML = "";
+            setTimeout(function() {window.location.href = "/asesi/waktu-ujian-habis/"+ jadwal_id.jadwal_uji_kompetensi_id}, 2000);
+            return false;
         }
     });
     

@@ -8,6 +8,73 @@
           <li class="breadcrumb-item active text-primary fw-semibold">Review Jawaban</li>
         </ol>
       </nav>
+
+      <section id="basic-horizontal-layouts">
+        <div class="row match-height">
+            <div class="col-md-12 col-12">
+                <div class="card">
+                    <div class="card-header">
+                      <div class="col profil-section-title">
+                        Detail Jadwal Ujian
+                      </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form class="form form-horizontal">
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Nama Asesi</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <input class="form-control" value="{{Auth::user()->nama_lengkap}}" readonly>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Tanggal Ujian</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <input class="form-control" value="{{ Carbon\Carbon::parse($jenis_tes->tanggal)->format('d F Y') }}" readonly>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Waktu Ujian</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                          <input class="form-control" value="Pukul {{ Carbon\Carbon::parse($jenis_tes->waktu_mulai)->format('H:m') }} s/d {{ Carbon\Carbon::parse($jenis_tes->waktu_selesai)->format('H:m') }} WIB">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Materi Uji Kompetensi</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                          <input class="form-control" value="{{$jenis_tes->relasi_jadwal_uji_kompetensi->relasi_muk->muk}}" readonly>
+                                        </div>
+                                        <div class="col-md-3">
+                                          <label>Kelas</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                          <input class="form-control" value="{{$jenis_tes->kelas}}" readonly>
+                                        </div>
+                                        <div class="col-md-3">
+                                          <label>Sesi</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                          <input class="form-control" value="{{$jenis_tes->sesi}}" readonly>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Jenis Tes</label>
+                                          </div>
+                                        <div class="col-md-8 form-group">
+                                            <input class="form-control" value="@if($jenis_tes->jenis_tes == 1) Pilihan Ganda @elseif($jenis_tes->jenis_tes == 2) Essay @endif" readonly>
+                                          </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+      
   {{-- JALUR FILE --}}
   {{-- <nav class="jalur-file mb-5" aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -26,11 +93,11 @@
           $jawaban_asesi = \App\Models\JawabanAsesi::where('soal_id', $data_soal->id)->where('user_asesi_id', Auth::user()->id)->get();
           $pelaksanaan_ujian = \App\Models\PelaksanaanUjian::where('jadwal')
       @endphp
-          <div class="col-lg-auto soal px-0">
-              <div class="col-12 pernyataan">
+          <div class="col-md-12 px-0">
+              <div class="col-md-12 pernyataan">
                   <div class="col isi">
                       <p class="text-black fw-semibold">{{$data_soal->pertanyaan}}</p>
-                      <div class="col row mt-4">
+                      <div class="col-md-12 row mt-4">
                           <div class="col-lg-12">
                               <div class="col-lg-12 mb-4">
                                     @php
@@ -116,6 +183,6 @@
       </div> --}}
 
   </div>
-</div>
+
 @endsection
  

@@ -222,10 +222,23 @@ class AsesmenController extends Controller
         ]);
     }
 
+    public function waktu_ujian_habis($jadwal_id)
+    {
+        User::where('id', Auth::user()->id)->update([
+            'status_terlibat_uji_kompetensi' => 0
+        ]);
+
+        AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_id)->where('user_asesi_id', Auth::user()->id)->update([
+            'status_ujian_berlangsung' => 2
+        ]);
+
+        return \Redirect::route('asesi.Assesment');
+    }
+
     public function review_jawaban($jadwal_id)
     {
         $soal = Soal::where('jadwal_uji_kompetensi_id', $jadwal_id)->with('relasi_jawaban_asesi')->get();
-        $jenis_tes = PelaksanaanUjian::select('jenis_tes')->where('jadwal_uji_kompetensi_id', $jadwal_id)->first();
+        $jenis_tes = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $jadwal_id)->first();
         return view('asesi.assesment.review_jawaban', compact('soal', 'jenis_tes'));
     }
 }

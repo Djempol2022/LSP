@@ -32,7 +32,7 @@
             <p>Daftar Materi Uji Kompetensi LSP {{ Auth::user()->relasi_jurusan->jurusan }}</p>
             <table class="table"
                 @if ($asesmen_mandiri === 1) id="table-pelaksanaan-ujian">
-      @elseif($asesmen_mandiri === 0) @endif
+                @elseif($asesmen_mandiri === 0) @endif
                 <thead>
                 <tr>
                     <th>Materi Uji Kompetensi</th>
@@ -48,7 +48,7 @@
         <div class="col-auto card-assesment my-5">
             <h5>Formulir Umpan Balik</h5>
             <p>Isi formulir umpan balik dengan menekan tombol di bawah, untuk memberi ulasan mengenai assesment </p>
-            @if ($jawaban_asesi == 0)
+            @if ($asesi_ujian_selesai == null)
                 <button type="button" class="btn btn-primary tombol-primary-small" disabled>Umpan Balik</button>
             @else
                 <button type="button" class="btn btn-primary tombol-primary-small" data-bs-toggle="modal"
@@ -67,7 +67,7 @@
     @include('asesi.assesment._form-modal-detail-ujian')
 
     {{-- MODAL UMPAN BALIK --}}
-    @if ($jawaban_asesi == 0)
+    @if ($asesi_ujian_selesai != null)
         @include('asesi.assesment._form-modal-umpan-balik')
     @endif
 

@@ -194,35 +194,28 @@
 
     }
 
-    let arrayRowSub = [];
     let renderRowSub = (lengthRowMain) => {
       let rowMainString = lengthRowMain.split('_');
       let rowMainCount = parseInt(rowMainString[1]);
 
       let table = document.getElementById('tableHasilVerifikasiTUK');
-      console.log(table.rows);
-      console.log($('tr.rowMain' + rowMainCount).last()[0].className);
+
       let index_table_array = 0;
       let filtered_table_array = Array.from(table.rows);
+      let text_rowSub_rowMain = 'rowSub' + rowMainCount + ' ' + 'rowMain' + rowMainCount;
       filtered_table_array.forEach(function(row, i, arr) {
         if (row.className === 'rowMain' + rowMainCount) {
           index_table_array = i;
         }
+        if (row.className === text_rowSub_rowMain) {
+          index_table_array = i;
+        }
       });
-
 
       let rowCount = index_table_array + 1;
 
-      // let is_exists = arrayRowSub.includes('rowMain' + rowMainCount);
-      // if (is_exists) {
-      // arrayRowSub.push('rowMain' + rowMainCount);
-      arrayRowSub.push('rowMain' + rowMainCount);
-      // }
-
-      console.log(arrayRowSub);
-
       let row = table.insertRow(rowCount);
-      row.className = 'rowSub' + (arrayRowSub.length) + ' rowMain' + rowMainCount;
+      row.className = 'rowSub' + rowMainCount + ' rowMain' + rowMainCount;
 
       let cell1 = row.insertCell(0);
       let noMain = $('tr.rowMain' + rowMainCount)[0].firstChild.innerHTML;

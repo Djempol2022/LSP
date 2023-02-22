@@ -274,8 +274,7 @@
               </tbody>
             </table>
             
-            
-            <table class="table table-bordered text-wrap" id="berkas-pengesahan-muk">
+            <table class="table table-bordered text-wrap">
                 <thead>
                   <tr>
                     <th rowspan="2"><b>Kriteria Unjuk Kerja</b></th>
@@ -326,10 +325,10 @@
                 @php
                     $elemen = \App\Models\UnitKompetensiSub::where('unit_kompetensi_id', $data_unit_kompetensi->id)->get();
                 @endphp
-                {{-- @if ($data_unit_kompetensi_elemen_get->unit_kompetensi_id == $data_unit_kompetensi->id) --}}
                 @foreach ($elemen as $index => $data_unit_kompetensi_elemen_get)
+                {{-- @if ($data_unit_kompetensi_elemen_get->unit_kompetensi_id == $data_unit_kompetensi->id) --}}
                 <tbody>
-                    <td colspan="11"><b><h6>{{$index+1}}. {{$data_unit_kompetensi_elemen_get->judul_unit_kompetensi_sub}}</h6></b></td>
+                    <td colspan="11">Elemen {{$index+1}}. {{$data_unit_kompetensi_elemen_get->judul_unit_kompetensi_sub}}</td>
                     @php
                         $elemen_isi = \App\Models\UnitKompetensiIsi::where('unit_kompetensi_sub_id', $data_unit_kompetensi_elemen_get->id)->get();
                     @endphp
@@ -341,36 +340,38 @@
                             $dd = \App\Models\UnitKompetensiIsi2::where('unit_kompetensi_isi_id', $data_elemen_isi->id)->count();
                             $isi_count = \App\Models\UnitKompetensiIsi2::with('relasi_unit_kompetensi_isi')->whereRelation('relasi_unit_kompetensi_isi', 'unit_kompetensi_isi_id', $data_elemen_isi->id)->count();
                         @endphp
-                        <td rowspan="{{$dd+1}}">{{$data_elemen_isi->judul_unit_kompetensi_isi}}</td>
-                    </tr>
+                        {{$isi_count}}
+                        @if ($isi_count > 3)
+                            <p>Tambah 1</p>
+                        @elseif($isi_count < 3)
+                            <p>Kurang 1</p>
+                        @endif
                         @foreach ($elemen_isi_isi as $data_elemen_isi_isi)
-
-                        Kode Unit Kompetensi = {{$data_unit_kompetensi->id}}<br>
-                        Elemen               = {{$data_unit_kompetensi_elemen_get->id}}<br>
-                        Elemen Isi           = {{$data_elemen_isi->id}}<br>
-                        Elemen Isi 2         = {{$data_elemen_isi_isi->id}}<br><br><br>
+                        <td rowspan="2">{{$data_elemen_isi->judul_unit_kompetensi_isi}}
+                        </td>
                         
-                            {{-- @if ($data_elemen_isi_isi->unit_kompetensi_isi_id == $data_elemen_isi->id) --}}   
-                            <tr>
-                                <td>
+                            {{-- @if ($data_elemen_isi_isi->unit_kompetensi_isi_id == $data_elemen_isi->id) --}}
+                            @php
+                                $data = \App\Models\UnitKompetensiIsi2::where('unit_kompetensi_isi_id', $data_elemen_isi->id)->count();
+                            @endphp
+                            {{$data}}
+                                <td rowspan="2">
                                     {{$data_elemen_isi_isi->judul_unit_kompetensi_isi_2}}
                                 </td>
-                           
-                                <td height="200">
-                                   
-                                </td>
-                                <td height="200">TL</td>
-                                <td height="200">L</td>
-                                <td height="200">L</td>
-                                <td height="200">TL</td>
-                                <td height="200">L</td>
-                                <td height="200">L</td>
-                                <td height="200">TL</td>
-                                <td height="200">L</td>
-                            </tr>
+                                <tr>
+                                    <th height="200">L</th>
+                                    <th height="200">TL</th>
+                                    <th height="200">L</th>
+                                    <th height="200">L</th>
+                                    <th height="200">TL</th>
+                                    <th height="200">L</th>
+                                    <th height="200">L</th>
+                                    <th height="200">TL</th>
+                                    <th height="200">L</th>
+                                </tr>
                             {{-- @endif --}}
                         @endforeach
-                    
+                      </tr>
                       {{-- @endif --}}
                     @endforeach
                 </tbody>
@@ -389,39 +390,7 @@
 @endsection
 @section('script')
 <script>
-    //   $("#berkas-pengesahan-muk").rowspanizer({vertical_align: 'middle'});
-
-    $(function() {  
-        function groupTable($rows, startIndex, total){
-            if (total === 0){
-            return;
-        }
-        var i , currentIndex = startIndex, count=1, lst=[];
-        var tds = $rows.find('td:eq('+ currentIndex +')');
-        var ctrl = $(tds[0]);
-        lst.push($rows[0]);
-        for (i=1;i<=tds.length;i++){
-            if (ctrl.text() ==  $(tds[i]).text()){
-                count++;
-                $(tds[i]).addClass('deleted');
-                lst.push($rows[i]);
-        }else{
-            if (count>1){
-                ctrl.attr('rowspan',count);
-                groupTable($(lst),startIndex+1,total-1)
-            }
-                count=1;
-                lst = [];
-                ctrl=$(tds[i]);
-                lst.push($rows[i]);
-            }
-        }
-    }
-    var totalColumns = $("#myTable tr:first-child").children().length;
-        groupTable($('#berkas-pengesahan-muk tr:has(td)'),0,totalColumns);
-        $('#berkas-pengesahan-muk .deleted').remove();
-    });
-
+      $("#berkas-pengesahan-muk").rowspanizer({vertical_align: 'middle'});
 </script>
 {{-- <script>
       // DATATABLE MUK ASESOR PENINJAU

@@ -567,10 +567,13 @@
         "lengthMenu": false,
         "bLengthChange": false,
         "bFilter": false,
+        "bPaginate": false,
         "bInfo": false,
         "processing": true,
         "bServerSide": true,
-        "responsive": true,
+        "responsive": false,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "/admin/data-unit-kompetensi/" + id_skema_sertifikasi,
             type: "POST",
@@ -591,7 +594,7 @@
             },
             {
                 "targets": 1,
-                "class": "text-nwrap text-center",
+                "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
                     return row.kode_unit;
@@ -599,7 +602,7 @@
             },
             {
                 "targets": 2,
-                "class": "text-nwrap text-center",
+                "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
                     return row.judul_unit;

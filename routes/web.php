@@ -72,6 +72,7 @@ Route::middleware(['auth'])->group(function () {
 
     // LOGOUT
     Route::get('logout', [LoginController::class, 'logout'])->name('Logout');
+    Route::get('switch/{role}/{nama_role}', [LoginController::class, 'switch'])->name('Switch');
     Route::post('ubah-password', [Admin_PengaturanController::class, 'ubah_password'])->name('UbahPassword');
 
     //ADMIN
@@ -190,6 +191,63 @@ Route::middleware(['auth'])->group(function () {
             Route::post('ubah-pengguna', 'ubah_pengguna')->name('UbahPengguna');
         });
 
+        // Berkas
+        Route::controller(SK_Penetapan_TUK_Terverifikasi_Controller::class)->group(function () {
+            Route::get('berkas/sk-penetapan-tuk-terverifikasi', 'index')->name('Berkas.SKPenetapanTUKTerverifikasi');
+            Route::post('berkas/sk-penetapan-tuk-terverifikasi', 'store')->name('Berkas.SKPenetapanTUKTerverifikasi.Add');
+        });
+
+        Route::controller(Daftar_TUK_Terverifikasi_Controller::class)->group(function () {
+            Route::get('berkas/daftar-tuk-terverifikasi', 'index')->name('Berkas.DaftarTUKTerverifikasi');
+            Route::post('berkas/daftar-tuk-terverifikasi', 'store')->name('Berkas.DaftarTUKTerverifikasi.Add');
+        });
+
+        Route::controller(Hasil_Verifikasi_TUK_Controller::class)->group(function () {
+            Route::get('berkas/hasil-verifikasi-tuk', 'index')->name('Berkas.HasilVerifikasiTUK');
+            Route::post('berkas/hasil-verifikasi-tuk', 'store')->name('Berkas.HasilVerifikasiTUK.Add');
+        });
+
+        Route::controller(ST_Verifikasi_TUK_Controller::class)->group(function () {
+            Route::get('berkas/st-verifikasi-tuk', 'index')->name('Berkas.STVerifikasiTUK');
+            Route::post('berkas/st-verifikasi-tuk', 'store')->name('Berkas.STVerifikasiTUK.Add');
+        });
+
+        Route::controller(X03_ST_verifikasi_TUK_controller::class)->group(function () {
+            Route::get('berkas/x03-st-verifikasi-tuk', 'index')->name('Berkas.X03STVerifikasiTUK');
+            Route::post('berkas/x03-st-verifikasi-tuk', 'store')->name('Berkas.X03STVerifikasiTUK.Add');
+        });
+
+        Route::controller(X04_Berita_Acara_Controller::class)->group(function () {
+            Route::get('berkas/x04-berita-acara', 'index')->name('Berkas.X04BeritaAcara');
+            Route::post('berkas/x04-berita-acara', 'store')->name('Berkas.X04BeritaAcara.Add');
+        });
+
+        Route::controller(Z_BA_Pecah_RP_Controller::class)->group(function () {
+            Route::get('berkas/z-ba-pecah-rp', 'index')->name('Berkas.ZBAPecahRP');
+            Route::post('berkas/z-ba-pecah-rp', 'store')->name('Berkas.ZBAPecahRP.Add');
+        });
+
+        Route::controller(Z_BA_RP_Controller::class)->group(function () {
+            Route::get('berkas/z-ba-rp', 'index')->name('Berkas.ZBARP');
+            Route::post('berkas/z-ba-rp', 'store')->name('Berkas.ZBARP.Add');
+        });
+
+        Route::controller(DF_Hadir_Asesor_Pleno_Controller::class)->group(function () {
+            Route::get('berkas/df-hadir-asesor-pleno', 'index')->name('Berkas.DFHadirAsesorPleno');
+            Route::post('berkas/df-hadir-asesor-pleno', 'store')->name('Berkas.DFHadirAsesorPleno.Add');
+        });
+
+        Route::controller(DF_Hadir_Asesor_Controller::class)->group(function () {
+            Route::get('berkas/df-hadir-asesor', 'index')->name('Berkas.DFHadirAsesor');
+            Route::post('berkas/df-hadir-asesor', 'store')->name('Berkas.DFHadirAsesor.Add');
+        });
+
+        Route::controller(DF_Hadir_Asesi_Controller::class)->group(function () {
+            Route::get('berkas/df-hadir-asesi', 'index')->name('Berkas.DFHadirAsesi');
+            Route::post('berkas/df-hadir-asesi', 'store')->name('Berkas.DFHadirAsesi.Add');
+        });
+
+
         Route::controller(BerkasController::class)->group(function () {
             Route::get('berkas', 'index')->name('Berkas');
 
@@ -242,68 +300,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('cetak-df-hadir-asesor-pleno/{id}', 'cetak_df_hadir_asesor_pleno_pdf')->name('CetakDFHadirAsesorPlenoPDF');
             Route::get('cetak-df-hadir-asesor/{id}', 'cetak_df_hadir_asesor_pdf')->name('CetakDFHadirAsesorPDF');
         });
-
-        // Berkas
-        Route::controller(SK_Penetapan_TUK_Terverifikasi_Controller::class)->group(function () {
-            Route::get('berkas/sk-penetapan-tuk-terverifikasi', 'index')->name('Berkas.SKPenetapanTUKTerverifikasi');
-            Route::post('berkas/sk-penetapan-tuk-terverifikasi', 'store')->name('Berkas.SKPenetapanTUKTerverifikasi.Add');
-        });
-
-        Route::controller(Daftar_TUK_Terverifikasi_Controller::class)->group(function () {
-            Route::get('berkas/daftar-tuk-terverifikasi', 'index')->name('Berkas.DaftarTUKTerverifikasi');
-            Route::post('berkas/daftar-tuk-terverifikasi', 'store')->name('Berkas.DaftarTUKTerverifikasi.Add');
-        });
-
-        Route::controller(Hasil_Verifikasi_TUK_Controller::class)->group(function () {
-            Route::get('berkas/hasil-verifikasi-tuk', 'index')->name('Berkas.HasilVerifikasiTUK');
-            Route::post('berkas/hasil-verifikasi-tuk', 'store')->name('Berkas.HasilVerifikasiTUK.Add');
-        });
-
-        Route::controller(ST_Verifikasi_TUK_Controller::class)->group(function () {
-            Route::get('berkas/st-verifikasi-tuk', 'index')->name('Berkas.STVerifikasiTUK');
-            Route::post('berkas/st-verifikasi-tuk', 'store')->name('Berkas.STVerifikasiTUK.Add');
-        });
-
-        Route::controller(X03_ST_verifikasi_TUK_controller::class)->group(function () {
-            Route::get('berkas/x03-st-verifikasi-tuk', 'index')->name('Berkas.X03STVerifikasiTUK');
-            Route::post('berkas/x03-st-verifikasi-tuk', 'store')->name('Berkas.X03STVerifikasiTUK.Add');
-        });
-
-        Route::controller(X04_Berita_Acara_Controller::class)->group(function () {
-            Route::get('berkas/x04-berita-acara', 'index')->name('Berkas.X04BeritaAcara');
-            Route::post('berkas/x04-berita-acara', 'store')->name('Berkas.X04BeritaAcara.Add');
-        });
-
-        Route::controller(Z_BA_Pecah_RP_Controller::class)->group(function () {
-            Route::get('berkas/z-ba-pecah-rp', 'index')->name('Berkas.ZBAPecahRP');
-            Route::post('berkas/z-ba-pecah-rp', 'store')->name('Berkas.ZBAPecahRP.Add');
-        });
-
-        Route::controller(Z_BA_RP_Controller::class)->group(function () {
-            Route::get('berkas/z-ba-rp', 'index')->name('Berkas.ZBARP');
-            Route::post('berkas/z-ba-rp', 'store')->name('Berkas.ZBARP.Add');
-        });
-
-        Route::controller(DF_Hadir_Asesor_Pleno_Controller::class)->group(function () {
-            Route::get('berkas/df-hadir-asesor-pleno', 'index')->name('Berkas.DFHadirAsesorPleno');
-            Route::post('berkas/df-hadir-asesor-pleno', 'store')->name('Berkas.DFHadirAsesorPleno.Add');
-        });
-
-        Route::controller(DF_Hadir_Asesor_Controller::class)->group(function () {
-            Route::get('berkas/df-hadir-asesor', 'index')->name('Berkas.DFHadirAsesor');
-            Route::post('berkas/df-hadir-asesor', 'store')->name('Berkas.DFHadirAsesor.Add');
-        });
-
-        Route::controller(SK_Penetapan_TUK_Terverifikasi_Controller::class)->group(function () {
-            Route::get('berkas/sk-penetapan-tuk-terverifikasi', 'index')->name('Berkas.SKPenetapanTUKTerverifikasi');
-            Route::post('berkas/sk-penetapan-tuk-terverifikasi', 'store')->name('Berkas.SKPenetapanTUKTerverifikasi.Add');
-        });
-
-        Route::controller(Daftar_TUK_Terverifikasi_Controller::class)->group(function () {
-            Route::get('berkas/daftar-tuk-terverifikasi', 'index')->name('Berkas.DaftarTUKTerverifikasi');
-            Route::post('berkas/daftar-tuk-terverifikasi', 'store')->name('Berkas.DaftarTUKTerverifikasi.Add');
-        });
-
     });
 
     // ASESOR
@@ -394,7 +390,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('assesment', 'store')->name('Assesment.Store');
             Route::get('soal/{jadwal_id}/{soal_id}', 'pengerjaan_soal')->name('PengerjaanSoal');
             Route::post('simpan-jawaban-asesi', 'simpan_jawaban_asesi')->name('SimpanJawabanAsesi');         
-            Route::post('selesai-mengerjakan-soal/{jadwal_id}', 'selesai_mengerjakan_soal');
+            Route::post('selesai-mengerjakan-soal/{jadwal_id}', 'selesai_mengerjakan_soal');         
+            Route::get('waktu-ujian-habis/{jadwal_id}', 'waktu_ujian_habis');
             Route::get('review-jawaban/{jadwal_id}', 'review_jawaban')->name('Assesment.ReviewJawaban');
         });
 
