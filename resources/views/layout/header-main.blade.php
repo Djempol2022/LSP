@@ -18,16 +18,19 @@
                 } elseif ($type_asesi_2->status == 1) {
                     $notif[0] = 'Akun Sudah Diverifikasi';
                     $notif[1] = 'Silahkan lanjut ke menu Assesment / Assesment Mandiri !';
-                    if (!is_null($type_asesi_3) && is_null($condition)) {
+                    if (!is_null($type_asesi_3) && is_null($condition->user_asesor_id)) {
                         $notif[0] = 'Verifikasi asesor';
                         $notif[1] = 'Silahkan tunggu verifikasi data oleh asesor !';
-                    } else {
+                    } elseif (!is_null($type_asesi_3) && !is_null($condition->user_asesor_id)) {
                         $notif[0] = 'Notifikasi';
                         $notif[1] = 'Tidak ada notifikasi';
                     }
                 } elseif ($type_asesi_2->status != 1) {
                     $notif[0] = 'Akun Anda Tidak Memenuhi Syarat';
                     $notif[1] = 'Silahkan lengkapi data-data anda atau hubungi admin !';
+                } else {
+                    $notif[0] = 'Notifikasi';
+                    $notif[1] = 'Tidak ada notifikasi';
                 }
                 break;
             case 'admin':
