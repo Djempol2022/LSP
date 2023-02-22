@@ -94,7 +94,7 @@ class AsesorKelolaSoal extends Controller
             AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
                 'ttd_asesor' => $request->ttd_asesor
             ]);
-            return redirect()->route('asesor.ReviewSoal', 
+            return redirect()->route('asesor.KelolaSoal.ReviewSoal', 
                 ['jadwal_id'=>$jadwal_uji_kompetensi_id, 
                 'jenis_tes'=>$jenis_tes]);
         }
@@ -123,7 +123,7 @@ class AsesorKelolaSoal extends Controller
             AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
                 'ttd_asesor' => $request->ttd_asesor
             ]);
-            return redirect()->route('asesor.ReviewSoal', 
+            return redirect()->route('asesor.KelolaSoal.ReviewSoal', 
             ['jadwal_id'=>$jadwal_uji_kompetensi_id, 
             'jenis_tes'=>$jenis_tes]);
         }
@@ -164,7 +164,7 @@ class AsesorKelolaSoal extends Controller
             AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
                 'ttd_asesor' => $request->ttd_asesor
             ]);
-            return redirect()->route('asesor.ReviewSoal', 
+            return redirect()->route('asesor.KelolaSoal.ReviewSoal', 
                 ['jadwal_id'=>$jadwal_uji_kompetensi_id, 
                 'jenis_tes'=>$jenis_tes]);
         }
@@ -186,7 +186,7 @@ class AsesorKelolaSoal extends Controller
             AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
                 'ttd_asesor' => $request->ttd_asesor
             ]);
-            return redirect()->route('asesor.ReviewSoal', 
+            return redirect()->route('asesor.KelolaSoal.ReviewSoal', 
                 ['jadwal_id'=>$jadwal_uji_kompetensi_id, 
                 'jenis_tes'=>$jenis_tes]);
         }
@@ -225,7 +225,7 @@ class AsesorKelolaSoal extends Controller
             AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
                 'ttd_asesor' => $request->ttd_asesor
             ]);
-            return redirect()->route('asesor.ReviewSoal', 
+            return redirect()->route('asesor.KelolaSoal.ReviewSoal', 
                 ['jadwal_id'=>$jadwal_uji_kompetensi_id, 
                 'jenis_tes'=>$jenis_tes]);
         }
@@ -248,7 +248,7 @@ class AsesorKelolaSoal extends Controller
             AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
                 'ttd_asesor' => $request->ttd_asesor
             ]);
-            return redirect()->route('asesor.ReviewSoal', 
+            return redirect()->route('asesor.KelolaSoal.ReviewSoal', 
                 ['jadwal_id'=>$jadwal_uji_kompetensi_id, 
                 'jenis_tes'=>$jenis_tes]);
         }

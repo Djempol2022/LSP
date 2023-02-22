@@ -179,12 +179,12 @@
             "class": "text-nowrap text-center",
             "render": function (data, type, row, meta) {
                 let i = 1;
-                list_unit_kompetensi[row.id] = row;
+                list_nama_tuk[row.id] = row;
                 return meta.row + 1;
             }
         },
         {
-          "targets": 0,
+          "targets": 1,
           "class": "text-wrap",
           "render": function(data, type, row, meta) {
             list_nama_tuk[row.id] = row;
@@ -192,7 +192,7 @@
           }
         },
         {
-          "targets": 1,
+          "targets": 2,
           "class": "text-nowrap",
           "render": function(data, type, row, meta) {
             let tampilan;

@@ -62,7 +62,7 @@ class Admin_JadwalUjiKompetensi extends Controller
             
             $user_asesi_kompetensi = AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_id)
                     ->with('relasi_user_asesi.relasi_role', 'relasi_jadwal_uji_kompetensi')
-                    ->where('status_ujian_berlangsung', 0)
+                    ->where([['status_ujian_berlangsung', '=', 0, 'OR'],  ['status_ujian_berlangsung', '=', 3, 'OR']])
                     ->whereRelation('relasi_user_asesi.relasi_role', 'role', '=', 'asesi')
                     ->get();
 

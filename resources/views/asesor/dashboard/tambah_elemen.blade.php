@@ -99,7 +99,7 @@
                                                     <div class="col-auto">
                                                         <span class="badge bg-warning rounded-pill">
                                                             <a class="text-white fw-semibold tambah_isi_elemen"
-                                                                id-elemen="{{ $data_sub_elemen->id }}" href="{{route('asesor.IsiSubElemen', $data_isi_sub_elemen->id)}}">Detail
+                                                                id-elemen="{{ $data_sub_elemen->id }}" href="{{route('asesor.Dashboard.IsiSubElemen', $data_isi_sub_elemen->id)}}">Detail
                                                             </a>
                                                         </span>
                                                         <span id-elemen="{{ $data_sub_elemen->id }}"
