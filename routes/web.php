@@ -81,11 +81,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('dashboard', [Admin_DashboardController::class, 'dashboard'])->name('Dashboard');
         Route::controller(Admin_AssessmentController::class)->group(function () {
             Route::get('assessment', 'assessment')->name('Assessment');
-            Route::get('permohonan-sertifikasi', 'permohonan_sertifikasi_kompetensi')->name('PermohonanSertifikasi');
+            Route::get('permohonan-sertifikasi', 'permohonan_sertifikasi_kompetensi')->name('Assessment.PermohonanSertifikasi');
             Route::any('data-permohonan-sertifikasi-kompetensi', 'data_permohonan_sertifikasi_kompetensi')->name('DataPermohonanSertifikasiKompetensi');
-            Route::get('detail-permohonan-sertifikasi-kompetensi/{id}', 'detail_permohonan_sertifikasi_kompetensi')->name('DetailPermohonanSertifikasiKompetensi');
+            Route::get('detail-permohonan-sertifikasi-kompetensi/{id}', 'detail_permohonan_sertifikasi_kompetensi')->name('Assessment.DetailPermohonanSertifikasiKompetensi');
             Route::get('detail-data-permohonan-sertifikasi-kompetensi/{id}', 'detail_data_permohonan_sertifikasi_kompetensi');
-            Route::get('data-sertifikasi-jurusan/{id}', 'data_sertifikasi_jurusan');
+            Route::get('data-sertifikasi-jurusan/{id}', 'data_sertifikasi_jurusan')->name('Assessment.DataSertifikasiJurusan');
 
             Route::post('update-judul-sertifikasi', 'update_judul_sertifikasi')->name('UpdateJudulSertifikasi');
             Route::post('update-nomor-sertifikasi', 'update_nomor_sertifikasi')->name('UpdateNomorSertifikasi');
@@ -95,38 +95,38 @@ Route::middleware(['auth'])->group(function () {
             Route::get('hapus-unit-kompetensi/{id}', 'hapus_unit_kompetensi');
             Route::post('persetujuan-admin', 'tambah_ubah_persetujuan_admin')->name('TambahOrUbahPersetujuanAdmin');
             Route::post('nomor-urut', 'tambah_ubah_nomor_urut')->name('TambahOrUbahNomorUrutAsesi');
-            Route::any('data-asesi-asessment-mandiri', 'data_asesi_asessment_mandiri')->name('DataAsesiAsessmentMandiri');            
-            Route::any('data-daftar-permohonan-sertifikasi-acc', 'data_permohonan_sertifikasi_kompetensi_acc')->name('DataPermohonanSertifikasiKompetensiAcc');            
+            Route::any('data-asesi-asessment-mandiri', 'data_asesi_asessment_mandiri')->name('Assessment.DataAsesiAsessmentMandiri');
+            Route::any('data-daftar-permohonan-sertifikasi-acc', 'data_permohonan_sertifikasi_kompetensi_acc')->name('DataPermohonanSertifikasiKompetensiAcc');
             Route::any('data-pengajuan-asesmen-mandiri-acc', 'data_pengajuan_asesmen_mandiri_acc')->name('DataPengajuanAsesmenMandiri');
-            Route::get('detail-data-pengajuan-asesmen-mandiri-acc/{id}/{jurusan_id}', 'detail_pengesahan_asesmen_mandiri_acc');
+            Route::get('detail-data-pengajuan-asesmen-mandiri-acc/{id}/{jurusan_id}', 'detail_pengesahan_asesmen_mandiri_acc')->name('Assessment.DetailPengesahahAssessmentMandiri');
         });
 
         Route::controller(Admin_UmpanBalik::class)->group(function () {
             Route::any('data-umpan-balik-asesi', 'data_umpan_balik_asesi')->name('DataUmpanBalikAsesi');
-            Route::get('umpan-balik', 'umpan_balik')->name('HalamanUmpanBalik');
+            Route::get('umpan-balik', 'umpan_balik')->name('Assessment.HalamanUmpanBalik');
             Route::any('daftar-data-umpan-balik', 'daftar_data_umpan_balik')->name('DaftarKomponenUmpanBalik');
-            Route::get('buat-umpan-balik', 'halaman_buat_umpan_balik')->name('HalamanBuatKomponenUmpanBalik');
+            Route::get('buat-umpan-balik', 'halaman_buat_umpan_balik')->name('Assessment.HalamanBuatKomponenUmpanBalik');
             Route::post('tambah-umpan-balik', 'tambah_umpan_balik')->name('TambahKomponenUmpanBalik');
             Route::get('hapus-umpan-balik/{id}', 'hapus_umpan_balik');
             Route::post('ubah-umpan-balik', 'ubah_umpan_balik')->name('UbahKomponenUmpanBalik');
-        });        
+        });
 
         Route::controller(Admin_PengaturanController::class)->group(function () {
             Route::get('pengaturan', 'pengaturan')->name('Pengaturan');
-            Route::get('jurusan', 'daftar_data_jurusan')->name('DaftarJurusan');
+            Route::get('jurusan', 'daftar_data_jurusan')->name('Pengaturan.DaftarJurusan');
             Route::post('tambah-jurusan', 'tambah_jurusan')->name('TambahJurusan');
             Route::get('hapus-jurusan/{id}', 'hapus_jurusan');
             Route::post('ubah-jurusan', 'ubah_jurusan')->name('UbahJurusan');
             Route::any('data-jurusan', 'data_jurusan')->name('DataJurusan');
             Route::get('jurusan-id/{id}', 'jurusan_id');
 
-            Route::get('institusi', 'daftar_data_institusi')->name('DaftarInstitusi');
+            Route::get('institusi', 'daftar_data_institusi')->name('Pengaturan.DaftarInstitusi');
             Route::post('tambah-institusi', 'tambah_institusi')->name('TambahInstitusi');
             Route::get('hapus-institusi/{id}', 'hapus_institusi');
             Route::post('ubah-institusi', 'ubah_institusi')->name('UbahInstitusi');
             Route::any('data-institusi', 'data_institusi')->name('DataInstitusi');
 
-            Route::get('kualifikasi-pendidikan', 'daftar_data_kualifikasi_pendidikan')->name('DaftarKualifikasiPendidikan');
+            Route::get('kualifikasi-pendidikan', 'daftar_data_kualifikasi_pendidikan')->name('Pengaturan.DaftarKualifikasiPendidikan');
             Route::post('tambah-kualifikasi-pendidikan', 'tambah_kualifikasi_pendidikan')->name('TambahKualifikasiPendidikan');
             Route::get('hapus-kualifikasi-pendidikan/{id}', 'hapus_kualifikasi_pendidikan');
             Route::post('ubah-kualifikasi-pendidikan', 'ubah_kualifikasi_pendidikan')->name('UbahKualifikasiPendidikan');
@@ -141,7 +141,7 @@ Route::middleware(['auth'])->group(function () {
         });
         Route::controller(Admin_MUKController::class)->group(function () {
             Route::any('data-muk', 'data_muk')->name('DataMUK');
-            Route::get('muk', 'daftar_data_muk')->name('DaftarMUK');
+            Route::get('muk', 'daftar_data_muk')->name('Pengaturan.DaftarMUK');
             Route::post('tambah-muk', 'tambah_muk')->name('TambahMUK');
             Route::get('hapus-muk/{id}', 'hapus_muk');
             Route::post('ubah-muk', 'ubah_muk')->name('UbahMUK');
@@ -153,12 +153,12 @@ Route::middleware(['auth'])->group(function () {
             Route::any('data-jadwal-uji-kompetensi', 'data_jadwal_uji_kompetensi')->name('DataJadwalUjiKompetensi');
             Route::post('ubah-jadwal-uji-kompetensi', 'ubah_jadwal_uji_kompetensi')->name('UbahJadwalUjiKompetensi');
 
-            Route::get('tambah-asesor-peninjau/{id}', 'halaman_tambah_data_asesor_peninjau');
+            Route::get('tambah-asesor-peninjau/{id}', 'halaman_tambah_data_asesor_peninjau')->name('TampilanJadwalUjiKompetensi.TambahDataAsesorPeninjau');
             Route::any('data-muk-asesor-peninjau/{id}', 'data_muk_asesor_peninjau');
             Route::post('tambah-muk-asesor-peninjau', 'tambah_muk_asesor_peninjau')->name('TambahMukAsesorPeninjau');
             Route::post('ubah-muk-asesor-peninjau', 'ubah_muk_asesor_peninjau')->name('UbahMukAsesorPeninjau');
 
-            Route::get('detail-jadwal-uji-kompetensi-acc/{jadwal_id}/{jurusan_id}', 'halaman_detail_jadwal_uji_kompetensi_acc');
+            Route::get('detail-jadwal-uji-kompetensi-acc/{jadwal_id}/{jurusan_id}', 'halaman_detail_jadwal_uji_kompetensi_acc')->name('TampilanJadwalUjiKompetensi.DetailJadwalUjiKompetensi');
             Route::post('ubah-jadwal-pelaksanaan-ujian/{id}', 'ubah_jadwal_pelaksanaan_ujian')->name('UbahJadwalPelaksanaanUjian');
             Route::post('tambah-asesi-ukom', 'tambah_asesi_ke_ukom')->name('TambahDataAsesiKeJadwalUkom');
             Route::any('data-asesi-uji-kompetensi/{id}', 'data_asesi_uji_kompetensi');
@@ -340,7 +340,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(AsesorKelolaSoal::class)->group(function () {
             // HALAMAN KELOLA SOAL
-            Route::get('kelola-soal', 'kelola_soal')->name('KelolaSoal');            
+            Route::get('kelola-soal', 'kelola_soal')->name('KelolaSoal');
             Route::any('data-kelola-soal', 'data_kelola_soal')->name('DataKelolaSoal');
             Route::get('jenis-soal/{id}', 'pilih_jenis_soal')->name('PilihJenisSoal');
             Route::get('buat-soal/{id}/{jenis_soal_id}', 'buat_soal')->name('BuatSoal');
@@ -356,8 +356,8 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::controller(AsesorDaftarAsesiMenyelesaikanUjian::class)->group(function () {
-            Route::get('daftar-data-soal', 'halaman_daftar_ujian_asesi')->name('DaftarDataUjian');   
-            Route::any('data-asesi-telah-selesai-ujian', 'data_asesi_telah_selesai_ujian');         
+            Route::get('daftar-data-soal', 'halaman_daftar_ujian_asesi')->name('DaftarDataUjian');
+            Route::any('data-asesi-telah-selesai-ujian', 'data_asesi_telah_selesai_ujian');
             Route::get('koreksi-jawaban/{jadwal_id}/{asesi_id}', 'halaman_koreksi_jawaban');
             Route::post('hasil-koreksi-jawaban/{jadwal_id}/{asesi_id}', 'hasil_koreksi_jawaban')->name('HasilKoreksiJawaban');
         });
@@ -365,8 +365,8 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(AsesorSesiWawancara::class)->group(function () {
             Route::any('data-asesi-ujian-wawancara', 'data_asesi_ujian_wawancara');
             Route::get('soal-wawancara/{jadwal_id}/{soal_id}/{asesi_id}', 'proses_wawancara_asesi')->name('ProsesWawancaraAsesi');
-            Route::post('simpan-jawaban-asesi-wawancara', 'simpan_jawaban_asesi_wawancara')->name('SimpanJawabanAsesiWawancara');           
-            Route::post('selesai-wawancara-ujian/{jadwal_id}/{asesi_id}', 'selesai_wawancara_ujian');  
+            Route::post('simpan-jawaban-asesi-wawancara', 'simpan_jawaban_asesi_wawancara')->name('SimpanJawabanAsesiWawancara');
+            Route::post('selesai-wawancara-ujian/{jadwal_id}/{asesi_id}', 'selesai_wawancara_ujian');
         });
     });
 
@@ -389,8 +389,8 @@ Route::middleware(['auth'])->group(function () {
             Route::any('asesi-materi-uji-kompetensi', 'materi_uji_kompetensi')->name('AsesiMateriUjiKompetensi');
             Route::post('assesment', 'store')->name('Assesment.Store');
             Route::get('soal/{jadwal_id}/{soal_id}', 'pengerjaan_soal')->name('PengerjaanSoal');
-            Route::post('simpan-jawaban-asesi', 'simpan_jawaban_asesi')->name('SimpanJawabanAsesi');         
-            Route::post('selesai-mengerjakan-soal/{jadwal_id}', 'selesai_mengerjakan_soal');         
+            Route::post('simpan-jawaban-asesi', 'simpan_jawaban_asesi')->name('SimpanJawabanAsesi');
+            Route::post('selesai-mengerjakan-soal/{jadwal_id}', 'selesai_mengerjakan_soal');
             Route::get('waktu-ujian-habis/{jadwal_id}', 'waktu_ujian_habis');
             Route::get('review-jawaban/{jadwal_id}', 'review_jawaban')->name('Assesment.ReviewJawaban');
         });

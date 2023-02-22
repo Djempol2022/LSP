@@ -47,6 +47,8 @@ class LoginController extends Controller
                     'msg' => 'Berhasil login sebagai Peninjau !',
                     'route' => route('peninjau.Dashboard')
                 ]);
+                // return "Peninjau";
+                // return redirect()->route('dealer.Dashboard');
             }
         } else {
             return response()->json([
@@ -62,7 +64,6 @@ class LoginController extends Controller
         request()->session()->regenerateToken();
         return redirect()->route('Login');
     }
-
     public function switch($role, $nama_role)
     {
         User::find(auth()->user()->id)->update(['role_id' => $role]);
