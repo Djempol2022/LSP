@@ -343,7 +343,7 @@
                         @endphp
                         <td rowspan="{{$dd+1}}">{{$data_elemen_isi->judul_unit_kompetensi_isi}}</td>
                     </tr>
-                        @foreach ($elemen_isi_isi as $data_elemen_isi_isi)
+                        @foreach ($elemen_isi_isi as $index => $data_elemen_isi_isi)
 
                         Kode Unit Kompetensi = {{$data_unit_kompetensi->id}}<br>
                         Elemen               = {{$data_unit_kompetensi_elemen_get->id}}<br>
@@ -357,16 +357,33 @@
                                 </td>
                            
                                 <td height="200">
-                                   
+                                    <input class="form-check-input" value="l" type="radio" name="L-{{$data_elemen_isi_isi->id}}-{{$index+1}}" id="L-{{$data_elemen_isi_isi->id}}-{{$index+1}}"
+                                    value="option1">
+                                    <label class="form-check-label" for="L-{{$data_elemen_isi_isi->id}}-{{$index+1}}">
+                                        L
+                                    </label>
                                 </td>
-                                <td height="200">TL</td>
-                                <td height="200">L</td>
-                                <td height="200">L</td>
-                                <td height="200">TL</td>
-                                <td height="200">L</td>
-                                <td height="200">L</td>
-                                <td height="200">TL</td>
-                                <td height="200">L</td>
+                                <td height="200">
+                                    <input class="form-check-input" value="tl" type="radio" name="TL-{{$data_elemen_isi_isi->id}}-{{$index+1}}" id="TL-{{$data_elemen_isi_isi->id}}-{{$index+1}}" 
+                                    value="option1">
+                                    <label class="form-check-label" for="TL-{{$data_elemen_isi_isi->id}}-{{$index+1}}">
+                                        TL
+                                    </label>
+                                </td>
+                                <td height="200">
+                                    <input class="form-check-input" value="t" type="radio" name="T-{{$data_elemen_isi_isi->id}}-{{$index+1}}" id="T-{{$data_elemen_isi_isi->id}}-{{$index+1}}" 
+                                    value="option1">
+                                    <label class="form-check-label" for="T-{{$data_elemen_isi_isi->id}}-{{$index+1}}">
+                                        T
+                                    </label>
+                                </td>
+
+                                <td height="200">CL</td>
+                                <td height="200">DIT</td>
+                                <td height="200">DPL</td>
+                                <td height="200">DPT</td>
+                                <td height="200">VP</td>
+                                <td height="200">CUP</td>
                             </tr>
                             {{-- @endif --}}
                         @endforeach

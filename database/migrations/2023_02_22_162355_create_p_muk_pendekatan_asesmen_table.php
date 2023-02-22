@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('selesai_uji_kompetensi', function (Blueprint $table) {
+        Schema::create('p_muk_pendekatan_asesmen_1', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jadwal_uji_kompetensi_id')->constrained('jadwal_uji_kompetensi')->onUpddate('cascade')->onDelete('cascade');
-            $table->foreignId('user_asesi_id')->constrained('users')->onUpddate('cascade')->onDelete('cascade');
+            $table->foreignId('skema_sertifikasi_id')->constrained('skema_sertfikasi')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('pendekatan1')->nullable();
+            $table->integer('pilihan')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('selesai_uji_kompetensi');
+        Schema::dropIfExists('p_muk_pendekatan_asesmen');
     }
 };
