@@ -35,6 +35,7 @@
                 <table class="table table-striped" id="table-sertifikasi">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Jurusan</th>
                             <th>Nama Asesi</th>
                             <th>Asal Sekolah/Institusi</th>
@@ -67,7 +68,9 @@
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
-        "responsive": true,
+        "responsive": false,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "{{ route('admin.DataPermohonanSertifikasiKompetensi') }}",
             type: "POST",
@@ -82,10 +85,11 @@
             },
             {
                 "targets": 0,
-                "class": "text-nowrap",
+                "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
+                    let i = 1;
                     list_sertifikasi[row.id] = row;
-                    return row.relasi_user.relasi_jurusan.jurusan;
+                    return meta.row + 1;
                 }
             },
             {
@@ -93,7 +97,7 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_sertifikasi[row.id] = row;
-                    return row.relasi_user.nama_lengkap;
+                    return row.relasi_user.relasi_jurusan.jurusan;
                 }
             },
             {
@@ -101,11 +105,19 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_sertifikasi[row.id] = row;
-                    return row.relasi_user.relasi_institusi.nama_institusi;
+                    return row.relasi_user.nama_lengkap;
                 }
             },
             {
                 "targets": 3,
+                "class": "text-nowrap",
+                "render": function (data, type, row, meta) {
+                    list_sertifikasi[row.id] = row;
+                    return row.relasi_user.relasi_institusi.nama_institusi;
+                }
+            },
+            {
+                "targets": 4,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_sertifikasi[row.id] = row;
@@ -120,7 +132,7 @@
                 }
             },
             {
-                "targets": 4,
+                "targets": 5,
                 "class": "none",
                 "render": function (data, type, row, meta) {
                     let tampilan;

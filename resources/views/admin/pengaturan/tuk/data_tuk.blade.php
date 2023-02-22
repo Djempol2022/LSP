@@ -79,6 +79,7 @@
           <table class="table table-striped" id="table-nama-tuk">
             <thead>
               <tr>
+                <th>No</th>
                 <th>Komponen</th>
                 <th>Aksi</th>
               </tr>
@@ -162,6 +163,8 @@
       "processing": true,
       "bServerSide": true,
       "searching": false,
+      "sScrollX": '100%',
+      "sScrollXInner": "100%",
       ajax: {
         url: "{{ route('admin.DaftarDataNamaTUK') }}",
         type: "POST",
@@ -170,6 +173,15 @@
       columnDefs: [{
           targets: '_all',
           visible: true
+        },
+        {
+            "targets": 0,
+            "class": "text-nowrap text-center",
+            "render": function (data, type, row, meta) {
+                let i = 1;
+                list_unit_kompetensi[row.id] = row;
+                return meta.row + 1;
+            }
         },
         {
           "targets": 0,

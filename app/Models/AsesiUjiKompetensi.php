@@ -20,4 +20,5 @@ class AsesiUjiKompetensi extends Model
     {
         return $this->belongsTo(User::class, 'user_asesi_id', 'id');
     }
+
 }

@@ -141,6 +141,7 @@
                 <table class="table table-striped" id="table-pengguna">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Nama Lengkap</th>
                             <th>Email</th>
                             <th>Institusi</th>
@@ -272,8 +273,9 @@
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
-        "responsive": true,
-        
+        "responsive": false,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "{{ route('admin.DataPengguna') }}",
             type: "POST",
@@ -288,11 +290,11 @@
             },
             {
                 "targets": 0,
-                "class": "text-wrap",
-                "render": function (data, type, row, meta) 
-                {
-					list_pengguna[row.id] = row;
-                    return row.nama_lengkap;
+                "class": "text-nowrap text-center",
+                "render": function (data, type, row, meta) {
+                    let i = 1;
+                    list_pengguna[row.id] = row;
+                    return meta.row + 1;
                 }
             },
             {
@@ -301,11 +303,20 @@
                 "render": function (data, type, row, meta) 
                 {
 					list_pengguna[row.id] = row;
-                    return row.email;
+                    return row.nama_lengkap;
                 }
             },
             {
                 "targets": 2,
+                "class": "text-wrap",
+                "render": function (data, type, row, meta) 
+                {
+					list_pengguna[row.id] = row;
+                    return row.email;
+                }
+            },
+            {
+                "targets": 3,
                 "class": "text-wrap",
                 "render": function (data, type, row, meta) 
                 {
@@ -320,7 +331,7 @@
                 }
             },
             {
-                "targets": 3,
+                "targets": 4,
                 "class": "text-wrap",
                 "render": function (data, type, row, meta) 
                 {
@@ -329,7 +340,7 @@
                 }
             },
             {
-                "targets": 4,
+                "targets": 5,
                 "class": "text-wrap",
                 "render": function (data, type, row, meta) 
                 {
@@ -338,7 +349,7 @@
                 }
             },
             {
-                "targets": 5,
+                "targets": 6,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) 
                 {

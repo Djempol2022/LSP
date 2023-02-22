@@ -29,13 +29,19 @@
                   </li>
               </ol>
             </nav>
+        </div>
             {{-- EDIT PROFIL --}}
             <div class="mt-5">
 
-                {{-- JADWAL --}}
-                <div class="col profil-section-title">
+              <div class="card">
+                <div class="card-header">
+                  <div class="col profil-section-title">
                     Uji Kompetensi
+                  </div>
                 </div>
+                <div class="card-body">
+                {{-- JADWAL --}}
+                
                 <div class="col profil-section" style="margin-bottom: 0% !important">
                     <div class="row my-4">
                         <div class="col-md-6">
@@ -68,12 +74,17 @@
                         </div>
                     </div>
                 </div>
+              </div>
+            </div>
             </div>
 
-            <div class="col profil-section-title">
-                Detail Jadwal Uji Kompetensi
-            </div>
-
+            <div class="card">
+              <div class="card-header">
+                <div class="col profil-section-title">
+                  Detail Jadwal Uji Kompetensi
+                </div>
+              </div>
+              <div class="card-body">
             <div class="col profil-section" style="margin-bottom: 0% !important">
               <form action="{{route('admin.UbahJadwalPelaksanaanUjian', $data_pelaksanaan_ujian->id)}}" method="POST" id="form-ubahJadwalPelaksanaanUjian">
                 <div class="row my-4">
@@ -228,8 +239,8 @@
                   </div>
                 </div>
               </div>
-        </div>
-    </section>
+            </div>
+            </section>
 </div>
 @endsection
 @section('script')

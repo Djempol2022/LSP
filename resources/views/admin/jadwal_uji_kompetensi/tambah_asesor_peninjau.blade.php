@@ -40,6 +40,7 @@
                                     <table class="table table-striped" id="table-muk-asesor-peninjau">
                                         <thead>
                                             <tr>
+                                                <th>No</th>
                                                 <th>Materi Uji Kompetensi</th>
                                                 <th>Asesor</th>
                                                 <th>Peninjau</th>
@@ -229,7 +230,9 @@
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
-        "responsive": true,
+        "responsive": false,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "/admin/data-muk-asesor-peninjau/" + id_jurusan.id,
             type: "POST",
@@ -245,10 +248,11 @@
             },
             {
                 "targets": 0,
-                "class": "text-nowrap",
+                "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
+                    let i = 1;
                     list_muk_asesor_peninjau[row.id] = row;
-                    return row.relasi_muk.muk;
+                    return meta.row + 1;
                 }
             },
             {
@@ -256,7 +260,7 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_muk_asesor_peninjau[row.id] = row;
-                    return row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
+                    return row.relasi_muk.muk;
                 }
             },
             {
@@ -264,11 +268,19 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_muk_asesor_peninjau[row.id] = row;
-                    return row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
+                    return row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
                 }
             },
             {
                 "targets": 3,
+                "class": "text-nowrap",
+                "render": function (data, type, row, meta) {
+                    list_muk_asesor_peninjau[row.id] = row;
+                    return row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
+                }
+            },
+            {
+                "targets": 4,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_muk_asesor_peninjau[row.id] = row;
@@ -289,7 +301,7 @@
                 }
             },
             {
-                "targets": 4,
+                "targets": 5,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     let tampilan;

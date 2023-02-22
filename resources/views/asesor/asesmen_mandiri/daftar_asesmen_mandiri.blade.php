@@ -8,6 +8,7 @@
           <table class="table table-striped" id="table-asesmen-mandiri">
             <thead>
               <tr>
+                <th>No</th>
                 <th>Nama Asesi</th>
                 <th>Status</th>
                 <th>Aksi</th>
@@ -33,6 +34,8 @@
       "bInfo": true,
       "processing": true,
       "bServerSide": true,
+      "sScrollX": '100%',
+      "sScrollXInner": "100%",
       ajax: {
         url: "{{ route('asesor.DataAsesmenMandiri') }}",
         type: "POST",
@@ -47,7 +50,16 @@
           visible: true
         },
         {
-          "targets": 0,
+            "targets": 0,
+            "class": "text-nowrap text-center",
+            "render": function (data, type, row, meta) {
+                let i = 1;
+                list_asesmen_mandiri[row.id] = row;
+                return meta.row + 1;
+            }
+        },
+        {
+          "targets": 1,
           "class": "text-nowrap",
           "render": function(data, type, row, meta) {
             list_asesmen_mandiri[row.id] = row;
@@ -55,7 +67,7 @@
           }
         },
         {
-          "targets": 1,
+          "targets": 2,
           "class": "text-nowrap",
           "render": function(data, type, row, meta) {
             list_asesmen_mandiri[row.id] = row;
@@ -69,7 +81,7 @@
           }
         },
         {
-          "targets": 2,
+          "targets": 3,
           "class": "text-nowrap",
           "render": function(data, type, row, meta) {
             let tampilan;
