@@ -1,4 +1,4 @@
-@extends('layout.main-layout', ['title'=>'Asessment'])
+@extends('layout.main-layout', ['title' => 'Asessment'])
 @section('main-section')
     {{-- JALUR FILE --}}
     <nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
@@ -11,7 +11,7 @@
     <div class="page-content">
         <section class="row">
             <div class="col-12 col-lg-12">
-                <div class="row">   
+                <div class="row">
                     {{-- <div class="col-6 col-lg-3 col-md-8">
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
@@ -71,7 +71,7 @@
                     <div class="col-12 col-lg-4">
                         <div class="card">
                             <div class="card-body py-4 px-4">
-                                <a href="{{ route('admin.PermohonanSertifikasi') }}">
+                                <a href="{{ route('admin.Assessment.PermohonanSertifikasi') }}">
                                     <div class="d-flex align-items-center">
                                         <div class="avatar avatar-xl">
                                             <i class="fa fa-scroll fa-lg"></i>
@@ -84,11 +84,11 @@
                             </div>
                         </div>
                     </div>
-                   
+
                     <div class="col-12 col-lg-4">
                         <div class="card">
                             <div class="card-body py-4 px-4">
-                                <a href="{{ route('admin.DataAsesiAsessmentMandiri') }}">
+                                <a href="{{ route('admin.Assessment.DataAsesiAsessmentMandiri') }}">
                                     <div class="d-flex align-items-center">
                                         <div class="avatar avatar-xl">
                                             <i class="fa fa-vote-yea fa-lg"></i>
@@ -105,7 +105,7 @@
                     <div class="col-12 col-lg-4">
                         <div class="card">
                             <div class="card-body py-4 px-4">
-                                <a href="{{ route('admin.HalamanUmpanBalik') }}">
+                                <a href="{{ route('admin.Assessment.HalamanUmpanBalik') }}">
                                     <div class="d-flex align-items-center">
                                         <div class="avatar avatar-xl">
                                             <i class="fa fa-retweet fa-lg"></i>
@@ -122,5 +122,4 @@
             </div>
         </section>
     </div>
-
-    @endsection
+@endsection

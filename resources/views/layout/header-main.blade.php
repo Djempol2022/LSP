@@ -57,7 +57,7 @@
                 }
                 if ($type_asesor_1) {
                     $notif[0] = 'Permohonan verifikasi';
-                    $notif[1] = 'Ada permohonan verifikasi assesmen mandiri !';
+                    $notif[1] = 'Ada permohonan verifikasi assesmen mandiri baru !';
                 } else {
                     $notif[0] = 'Notifikasi';
                     $notif[1] = 'Tidak ada notifikasi';

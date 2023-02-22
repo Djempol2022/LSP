@@ -173,7 +173,7 @@
                             <a href="{{ route('admin.Assessment') }}" class='sidebar-link'>
                                 <i class="bi bi-journal-text {{ request()->routeIs('admin.Assessment*') ? 'warna-white' : '' }} warna-secondary"
                                     style="{{ request()->routeIs('admin.Assessment*') ? 'font-weight: 1000' : '' }}"></i>
-                                <span>Assessment</span>
+                                <span>Assesment</span>
                             </a>
                         </li>
                         <li
@@ -234,7 +234,7 @@
                         </li>
                         <li class="sidebar-item ">
                             <a href="{{ route('Switch', [3, 'asesor']) }}" class='sidebar-link'>
-                                <i class="bi bi-box-arrow-left warna-secondary"></i>
+                                <i class="bi bi-arrow-left-right warna-secondary"></i>
                                 <span>Pindah Ke Asesor</span>
                             </a>
                         </li>
@@ -287,7 +287,7 @@
                         </li>
                         <li class="sidebar-item">
                             <a href="{{ route('Switch', [2, 'peninjau']) }}" class='sidebar-link'>
-                                <i class="bi bi-box-arrow-left warna-secondary"></i>
+                                <i class="bi bi-arrow-left-right warna-secondary"></i>
                                 <span>Pindah Ke Peninjau</span>
                             </a>
                         </li>
