@@ -253,7 +253,8 @@
                         {{-- ASESOR AUTH --}}
                     @elseif(Auth::user()->relasi_role->role == 'asesor')
                         <li class="sidebar-item {{ request()->routeIs('asesor.Dashboard*') ? 'active' : '' }} ">
-                            <a href="{{ route('asesor.Dashboard') }}" class='sidebar-link'>
+                            <a href="#!" onclick="window.location.href=('{{ route('asesor.Dashboard') }}')"
+                                class='sidebar-link'>
                                 <i
                                     class="bi bi-grid{{ request()->routeIs('asesor.Dashboard*') ? '-fill warna-white' : '' }} 
                       warna-secondary"></i>
@@ -262,7 +263,9 @@
                         </li>
                         <li
                             class="sidebar-item {{ request()->routeIs('asesor.HalamanPengesahanAsesmemMandiri*') ? 'active' : '' }} ">
-                            <a href="{{ route('asesor.HalamanPengesahanAsesmemMandiri') }}" class='sidebar-link'>
+                            <a href="#!"
+                                onclick="window.location.href=('{{ route('asesor.HalamanPengesahanAsesmemMandiri') }}')"
+                                class='sidebar-link'>
                                 <i
                                     class="bi bi-file-earmark-medical{{ request()->routeIs('asesor.HalamanPengesahanAsesmemMandiri*') ? '-fill warna-white' : '' }} 
                       warna-secondary"></i>
@@ -283,6 +286,29 @@
                                     class="bi bi-file-earmark-spreadsheet{{ request()->routeIs('asesor.DaftarDataUjian*') ? '-fill warna-white' : '' }} 
                     warna-secondary"></i>
                                 <span>Data Ujian</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item {{ request()->routeIs('asesor.Profil*') ? 'active' : '' }} ">
+                            <a href="{{ route('asesor.Profil') }}" class='sidebar-link'>
+                                @if (is_null(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->ktp_nik_paspor))
+                                    <i class="bi bi-person{{ request()->routeIs('asesor.Profil*') ? '-fill warna-white' : '' }}"
+                                        style="color: rgb(253, 52, 52)">
+                                    </i>
+                                @else
+                                    <i
+                                        class="bi bi-person{{ request()->routeIs('asesor.Profil*') ? '-fill warna-white' : '' }} warna-secondary">
+                                    </i>
+                                @endif
+                                @if (is_null(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->ktp_nik_paspor))
+                                    <span
+                                        class="{{ request()->routeIs('asesor.Profil*') ? 'text-white' : 'text-danger' }}">Profil
+                                    </span><span class="d-flex align-items-center">
+                                        <i
+                                            class="bi bi-exclamation-circle text-center {{ request()->routeIs('asesor.Profil*') ? 'text-white' : 'text-danger' }}"></i>
+                                    </span>
+                                @else
+                                    <span>Profil</span>
+                                @endif
                             </a>
                         </li>
                         <li class="sidebar-item">

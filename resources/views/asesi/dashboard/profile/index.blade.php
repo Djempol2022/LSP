@@ -1,4 +1,4 @@
-@extends('layout.main-layout', ['title' => 'Profile'])
+@extends('layout.main-layout', ['title' => 'Profil'])
 @section('main-section')
     <div class="container mt-5 jalur-file" id="profile-section">
         {{-- JALUR FOLDER --}}
