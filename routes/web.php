@@ -9,6 +9,7 @@ use App\Http\Controllers\Asesi\ProfilController;
 use App\Http\Controllers\Asesor\AsesorDashboard;
 use App\Http\Controllers\Asesi\AsesmenController;
 
+use App\Http\Controllers\Asesor\AsesorProfilController;
 use App\Http\Controllers\Asesor\AsesorKelolaSoal;
 use App\Http\Controllers\Asesor\AsesorPengesahan;
 use App\Http\Controllers\Admin\Admin_MUKController;
@@ -326,6 +327,10 @@ Route::middleware(['auth'])->group(function () {
             Route::post('ubah-isi-2-elemen', 'ubah_isi_2_elemen')->name('UbahIsiElemen2');
             Route::get('hapus-isi-2-elemen/{id}', 'hapus_isi_2_elemen_unit_kompetensi');
             Route::any('data-list-asesi-peserta-uji-kompetensi/{jadwal_id}', 'data_list_asesi_peserta_uji_kompetensi');
+        });
+
+        Route::controller(AsesorProfilController::class)->group(function () {
+            Route::get('profil', 'index')->name('Profil');
         });
 
         Route::controller(AsesorPengesahan::class)->group(function () {
