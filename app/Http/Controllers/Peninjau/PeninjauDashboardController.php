@@ -46,11 +46,4 @@ class PeninjauDashboardController extends Controller
         $soal = Soal::where('jadwal_uji_kompetensi_id', $jadwal_id)->paginate(10);
         return view('peninjau.dashboard.review_soal', compact('soal', 'pelaksanaan_ujian'));
     }
-
-    public function pengesahan_muk(){
-        $skema_sertifikasi = SkemaSertifikasi::where('jurusan_id', Auth::user()->jurusan_id)->first();
-        $unit_kompetensi = UnitKompetensi::whereIn('skema_sertifikasi_id', $skema_sertifikasi)->get();
-
-        return view('peninjau.pengesahan_muk.berkas_pengesahan_muk', compact('skema_sertifikasi', 'unit_kompetensi'));
-    }
 }

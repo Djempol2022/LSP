@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\Berkas\X03_ST_verifikasi_TUK_controller;
 use App\Http\Controllers\Admin\Berkas\X04_Berita_Acara_Controller;
 use App\Http\Controllers\Admin\Berkas\Z_BA_Pecah_RP_Controller;
 use App\Http\Controllers\Admin\Berkas\Z_BA_RP_Controller;
+use App\Http\Controllers\Peninjau\PengesahanMukController;
 use App\Http\Controllers\Peninjau\PeninjauDashboardController;
 
 /*
@@ -413,7 +414,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('dashboard', 'dashboard')->name('Dashboard');
             Route::any('tampil-data-muk-asesor-peninjau', 'tampil_data_muk_asesor_peninjau');
             Route::get('peninjau-review-soal/{jadwal_id}/{jenis_tes}', 'peninjau_review_soal')->name('PeninjauReviewSoal');
+        });
+        Route::controller(PengesahanMukController::class)->group(function () {
             Route::get('peninjau-pengesahan-muk', 'pengesahan_muk')->name('PengesahanMuk');
+            Route::post('muk-disahkan', 'muk_di_sahkan')->name('MukDiSahkan'); 
         });
     });
 });

@@ -1,9 +1,10 @@
 @extends('layout.main-layout', ['title' => 'Pengesahan Materi Uji Kompetensi'])
 @section('main-section')
 <div class="page-content">
-    <section class="row">
-      <form action="{{ route('admin.Berkas.DaftarTUKTerverifikasi.Add') }}" method="POST">
+    <form action="{{route('peninjau.MukDiSahkan')}}" method="POST">
         @csrf
+
+    <section class="row">
         <div class="card p-5">
           @include('layout.header-berkas')
           <div>
@@ -55,179 +56,135 @@
             <table class="table table-bordered text-wrap">
                 <tbody>
                     {{-- KANDIDAT --}}
-                  <tr>
-                    <td>
-                        1.1
-                        <td rowspan="3">Kandidat</td>
-                        <td><input type="checkbox" name="kandidat-1"></td>
+                    <tr>
+                        <th rowspan="21">1.1</th>
+                        <th rowspan="3">Kandidat</th>
+                        <input type="hidden" value="{{$skema_sertifikasi->id}}" name="skema_sertifikasi_id" hidden>
+
+                        <td class="text-center"><input type="radio" value="1" @if($penekatan_asesmen->kandidat == 1) type="checkbox" checked @endif name="kandidat"></td>
                         <td colspan="4"><b>Hasil pelatihan dan / atau pendidikan:</b></td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                        <td><input type="checkbox" name="kandidat-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="2" @if($penekatan_asesmen->kandidat == 2) type="checkbox"  checked @endif name="kandidat"></td>
                         <td colspan="4">Pekerja berpengalaman</td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                        <td><input type="checkbox" name="kandidat-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="3" @if($penekatan_asesmen->kandidat == 3) type="checkbox"  checked @endif name="kandidat"></td>
                         <td colspan="4">Pelatihan / belajar mandiri</td>
-                    </td>
-                  </tr>
+                    </tr>
 
                     {{-- TUJUAN ASESMEN --}}
-                  <tr>
-                    <td>
-                        <td rowspan="5">Tujuan Asesmen</td>
-                        <td><input type="checkbox" name="t_asesmen-1"></td>
+                    <tr>
+                        <th rowspan="5">Tujuan Asesmen</th>
+                        <td class="text-center"><input type="radio" value="1" @if($penekatan_asesmen->tujuan == 1) checked @endif name="tujuan"></td>
                         <td colspan="4"><b>Sertifikasi</b></td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                        <td><input type="checkbox" name="t_asesmen-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="2" @if($penekatan_asesmen->tujuan == 2) checked @endif name="tujuan"></td>
                         <td colspan="4">Sertifikasi Ulang</td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                        <td><input type="checkbox" name="t_asesmen-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="3" @if($penekatan_asesmen->tujuan == 3) checked @endif name="tujuan"></td>
                         <td colspan="4">Pengakuan Kompetensi Terkini(PKT)</td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                        <td><input type="checkbox" name="t_asesmen-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="4" @if($penekatan_asesmen->tujuan == 4) checked @endif name="tujuan"></td>
                         <td colspan="4">Rekognisi Pembelajaran Lampau</td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                        <td><input type="checkbox" name="t_asesmen-1"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="5" @if($penekatan_asesmen->tujuan == 5) checked @endif name="tujuan"></td>
                         <td colspan="4">Lainnya</td>
-                    </td>
-                  </tr>
+                    </tr>
 
-                   {{-- KONTEKS ASESMEN --}}
-                   <tr>
-                    <td>
-                        <td rowspan="8">Konteks Asesmen</td>
+                    {{-- KONTEKS ASESMEN --}}
+                    <tr>
+                        <th rowspan="9">Konteks Asesmen</th>
+                    </tr>
+                    <tr>
                         <td>Lingkungan</td>
-                        <td><input type="checkbox" name="k_a_lingkungan-1"></td>
-                        <td><b>Tempat kerja nyata</b></td>
-                        <td><input type="checkbox" name="k_a_lingkungan-2"></td>
-                        <td><b>Tempat kerja simulais</b></td>
-                    </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <td>Peluang untuk mengumpulkan bukti dalam sejumlah situasi</td>
-                          <td><input type="checkbox" name="k_a_lingkungan-1"></td>
-                          <td><b>Tersedia</b></td>
-                          <td><input type="checkbox" name="k_a_lingkungan-2"></td>
-                          <td><b>Terbatas</b></td>
-                        </td>
+                        <td colspan="1" class="text-center"><input type="radio" value="1" @if($penekatan_asesmen->konteks_asesmen_lingkungan == 1) checked @endif name="konteks_asesmen_lingkungan"></td>
+                        <td>Tempat Kerja nyata</td>
+                        <td  class="text-center"><input type="radio" value="2" @if($penekatan_asesmen->konteks_asesmen_lingkungan == 2) checked @endif name="konteks_asesmen_lingkungan"></td>
+                        <td>Tempat Kerja simulasi</td>
                     </tr>
                     <tr>
-                        <td>
-                            <td rowspan="3">Hubungan antara standar kompetensi dan:</td>
-                            <td><input type="checkbox" name="k_a_lingkungan-1"></td>
-                            <td colspan="4"><b>Bukti untuk mendukung asesmen / RPL:  </b></td>
-                        </td>
-                        <tr>
-                            <td>
-                                <td><input type="checkbox" name="k_a_lingkungan-1"></td>
-                                <td colspan="4"><b>Aktivitas kerja di tempat kerja Asesi: </b></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <td><input type="checkbox" name="k_a_lingkungan-1"></td>
-                                <td colspan="4"><b>Kegiatan Pembelajaran:</b></td>
-                            </td>
-                        </tr>
+                        <td width="40">Peluang untuk mengumpulkan bukti dalam sejumlah situasi</td>
+                        <td class="text-center"><input type="radio" value="1" @if($penekatan_asesmen->konteks_asesmen_peluang == 1) checked @endif name="konteks_asesmen_peluang"></td>
+                        <td>Tersedia</td>
+                        <td class="text-center"><input type="radio" value="2" @if($penekatan_asesmen->konteks_asesmen_peluang == 2) checked @endif name="konteks_asesmen_peluang"></td>
+                        <td>Terbatas</td>
                     </tr>
                     <tr>
-                        <td>
-                            <td rowspan="3">Siapa yang melakukan asesmen / RPL</td>
-                            <td><input type="checkbox" name="k_a_lingkungan-1"></td>
-                            <td colspan="4"><b>Lembaga Sertifikasi  </b></td>
-                        </td>
-                        <tr>
-                            <td>
-                                <td><input type="checkbox" name="k_a_lingkungan-1"></td>
-                                <td colspan="4"><b>Organisasi Pelatihan </b></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <td><input type="checkbox" name="k_a_lingkungan-1"></td>
-                                <td colspan="4"><b>Asesor Perusahaan</b></td>
-                            </td>
-                        </tr>
+                        <td rowspan="3">Hubungan antara standar kompetensi dan:</td>
+                        <td class="text-center"><input type="radio" value="1" @if($penekatan_asesmen->konteks_asesmen_hubungan == 1) checked @endif name="konteks_asesmen_hubungan"></td>
+                        <td colspan="4">Bukti untuk mendukung asesmen / RPL:  </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="2" @if($penekatan_asesmen->konteks_asesmen_hubungan == 2) checked @endif name="konteks_asesmen_hubungan"></td>
+                        <td colspan="4">Aktivitas kerja di tempat kerja Asesi: </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="3" @if($penekatan_asesmen->konteks_asesmen_hubungan == 3) checked @endif name="konteks_asesmen_hubungan"></td>
+                        <td colspan="4">Kegiatan Pembelajaran:</td>
                     </tr>
 
-                    {{-- KONFIRMASI DENGAN ORANG YANG RELEVAN --}}
                     <tr>
-                        <td>
-                            <td rowspan="4">Konfirmasi dengan orang yang relevan</td>
-                            <td><input type="checkbox" name="t_asesmen-1"></td>
-                            <td colspan="4"><b>Manajer sertifikasi LSP</b></td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            <td><input type="checkbox" name="t_asesmen-1"></td>
-                            <td colspan="4">Master Asesor / Master Trainer / Asesor Utama Kompetensi</td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            <td><input type="checkbox" name="t_asesmen-1"></td>
-                            <td colspan="4">Manajer Pelatihan Lembaga Training terakreditasi / Lembaga Training terdaftar</td>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            <td><input type="checkbox" name="t_asesmen-1"></td>
-                            <td colspan="4">Lainnya: Kaprodi …. dan Ketua dan Teknisi TUK …….</td>
-                        </td>
-                      </tr>
-                            
+                        <td rowspan="3">Siapa yang melakukan asesmen / RPL</td>
+                        <td class="text-center"><input type="radio" value="1" @if($penekatan_asesmen->konteks_asesmen_siapa == 1) checked @endif name="konteks_asesmen_siapa"></td>
+                        <td colspan="4">Lembaga Sertifikasi </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="2" @if($penekatan_asesmen->konteks_asesmen_siapa == 2) checked @endif name="konteks_asesmen_siapa"></td>
+                        <td colspan="4">Organisasi Pelatihan </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="3" @if($penekatan_asesmen->konteks_asesmen_siapa == 3) checked @endif name="konteks_asesmen_siapa"></td>
+                        <td colspan="4">Asesor Perusahaan</td>
+                    </tr>
+                    
+
+                     {{-- TUJUAN ASESMEN --}}
+                     <tr>
+                        <th rowspan="4">Konfirmasi dengan orang yang relevan</th>
+                        <td class="text-center"><input type="radio" value="1" @if($penekatan_asesmen->konfirmasi == 1) checked @endif name="konfirmasi"></td>
+                        <td colspan="4"><b>Manajer sertifikasi LSP</b></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="2" @if($penekatan_asesmen->konfirmasi == 2) checked @endif name="konfirmasi"></td>
+                        <td colspan="4">Master Asesor / Master Trainer / Asesor Utama Kompetensi</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="3" @if($penekatan_asesmen->konfirmasi == 3) checked @endif name="konfirmasi"></td>
+                        <td colspan="4">Manajer Pelatihan Lembaga Training terakreditasi / Lembaga Training terdaftar</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="4" @if($penekatan_asesmen->konfirmasi == 4) checked @endif name="konfirmasi"></td>
+                        <td colspan="4">Lainnya: Kaprodi …. dan Ketua dan Teknisi TUK …….</td>
+                    </tr>
+
                       {{-- TOLAK UKUR --}}
-                        <tr>
-                            <td>
-                                1.2
-                                <td rowspan="5">Tolok Ukur Asesmen</td>
-                                <td><input type="checkbox" name="kandidat-1"></td>
-                                <td colspan="4"><b>Standar Kompetensi: SKKNI Nomor</b></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <td><input type="checkbox" name="kandidat-1"></td>
-                                <td colspan="4">Kriteria asesmen dari kurikulum pelatihan</td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <td><input type="checkbox" name="kandidat-1"></td>
-                                <td colspan="4">Spesifikasi kinerja suatu perusahaan atau industri:</td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <td><input type="checkbox" name="kandidat-1"></td>
-                                <td colspan="4">Spesifikasi Produk:</td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <td><input type="checkbox" name="kandidat-1"></td>
-                                <td colspan="4">Pedoman khusus:</td>
-                            </td>
-                        </tr>
+                      <tr>
+                        <th rowspan="21">1.2</th>
+                        <th rowspan="5">Tolok Ukur Asesmen</th>
+                        <td class="text-center"><input type="radio" value="1" @if($penekatan_asesmen->tolok == 1) checked @endif name="tolok"></td>
+                        <td colspan="4"><b>Standar Kompetensi: SKKNI Nomor : KEP.115/MEN/III/2007</b></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="2" @if($penekatan_asesmen->tolok == 2) checked @endif name="tolok"></td>
+                        <td colspan="4">Kriteria asesmen dari kurikulum pelatihan</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="3" @if($penekatan_asesmen->tolok == 3) checked @endif name="tolok"></td>
+                        <td colspan="4">Spesifikasi kinerja suatu perusahaan atau industri:</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="4" @if($penekatan_asesmen->tolok == 4) checked @endif name="tolok"></td>
+                        <td colspan="4">Spesifikasi Produk:</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><input type="radio" value="5" @if($penekatan_asesmen->tolok == 5) checked @endif name="tolok"></td>
+                        <td colspan="4">Pedoman khusus:</td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -239,6 +196,8 @@
                     </tr>
                 </thead>
             </table>
+        
+        
             @foreach ($unit_kompetensi as $data_unit_kompetensi)
             <table class="table table-bordered text-wrap">
               <thead>
@@ -275,7 +234,7 @@
             </table>
             
             
-            <table class="table table-bordered text-wrap" id="berkas-pengesahan-muk">
+            {{-- <table class="table table-bordered text-wrap text-center" id="berkas-pengesahan-muk">
                 <thead>
                   <tr>
                     <th rowspan="2"><b>Kriteria Unjuk Kerja</b></th>
@@ -326,7 +285,6 @@
                 @php
                     $elemen = \App\Models\UnitKompetensiSub::where('unit_kompetensi_id', $data_unit_kompetensi->id)->get();
                 @endphp
-                {{-- @if ($data_unit_kompetensi_elemen_get->unit_kompetensi_id == $data_unit_kompetensi->id) --}}
                 @foreach ($elemen as $index => $data_unit_kompetensi_elemen_get)
                 <tbody>
                     <td colspan="11"><b><h6>{{$index+1}}. {{$data_unit_kompetensi_elemen_get->judul_unit_kompetensi_sub}}</h6></b></td>
@@ -334,7 +292,6 @@
                         $elemen_isi = \App\Models\UnitKompetensiIsi::where('unit_kompetensi_sub_id', $data_unit_kompetensi_elemen_get->id)->get();
                     @endphp
                     @foreach ($elemen_isi as $index => $data_elemen_isi)
-                    {{-- @if ($data_elemen_isi->unit_kompetensi_sub_id == $data_unit_kompetensi_elemen_get->id) --}}
                     <tr>
                         @php
                             $elemen_isi_isi = \App\Models\UnitKompetensiIsi2::where('unit_kompetensi_isi_id', $data_elemen_isi->id)->get();
@@ -344,62 +301,57 @@
                         <td rowspan="{{$dd+1}}">{{$data_elemen_isi->judul_unit_kompetensi_isi}}</td>
                     </tr>
                         @foreach ($elemen_isi_isi as $index => $data_elemen_isi_isi)
-
-                        Kode Unit Kompetensi = {{$data_unit_kompetensi->id}}<br>
-                        Elemen               = {{$data_unit_kompetensi_elemen_get->id}}<br>
-                        Elemen Isi           = {{$data_elemen_isi->id}}<br>
-                        Elemen Isi 2         = {{$data_elemen_isi_isi->id}}<br><br><br>
-                        
-                            {{-- @if ($data_elemen_isi_isi->unit_kompetensi_isi_id == $data_elemen_isi->id) --}}   
+                        <input value="{{$data_elemen_isi_isi->id}}" type="hidden" name="elemen_isi_2_id[]" hidden>                        
                             <tr>
                                 <td>
                                     {{$data_elemen_isi_isi->judul_unit_kompetensi_isi_2}}
                                 </td>
-                           
-                                <td height="200">
-                                    <input class="form-check-input" value="l" type="radio" name="L-{{$data_elemen_isi_isi->id}}-{{$index+1}}" id="L-{{$data_elemen_isi_isi->id}}-{{$index+1}}"
-                                    value="option1">
-                                    <label class="form-check-label" for="L-{{$data_elemen_isi_isi->id}}-{{$index+1}}">
-                                        L
-                                    </label>
-                                </td>
-                                <td height="200">
-                                    <input class="form-check-input" value="tl" type="radio" name="TL-{{$data_elemen_isi_isi->id}}-{{$index+1}}" id="TL-{{$data_elemen_isi_isi->id}}-{{$index+1}}" 
-                                    value="option1">
-                                    <label class="form-check-label" for="TL-{{$data_elemen_isi_isi->id}}-{{$index+1}}">
-                                        TL
-                                    </label>
-                                </td>
-                                <td height="200">
-                                    <input class="form-check-input" value="t" type="radio" name="T-{{$data_elemen_isi_isi->id}}-{{$index+1}}" id="T-{{$data_elemen_isi_isi->id}}-{{$index+1}}" 
-                                    value="option1">
-                                    <label class="form-check-label" for="T-{{$data_elemen_isi_isi->id}}-{{$index+1}}">
-                                        T
-                                    </label>
-                                </td>
 
-                                <td height="200">CL</td>
-                                <td height="200">DIT</td>
-                                <td height="200">DPL</td>
-                                <td height="200">DPT</td>
-                                <td height="200">VP</td>
-                                <td height="200">CUP</td>
+                                @for($i=0;$i<3;$i++)@endfor
+                                    <td height="200">
+                                        <input type="radio" name="jenis_bukti-{{$data_elemen_isi_isi->id}}" value="L" />L<br />
+                                    </td>
+                                    <td height="200">
+                                        <input type="radio" name="jenis_bukti-{{$data_elemen_isi_isi->id}}" value="TL" />TL<br />
+                                    </td>
+                                    <td height="200">
+                                        <input type="radio" name="jenis_bukti-{{$data_elemen_isi_isi->id}}" value="T" />T<br />
+                                    </td>
+
+                              
+                                @for($i=0;$i<6;$i++)@endfor
+                                    <td height="200">
+                                        <input type="radio" name="metode-{{$data_elemen_isi_isi->id}}" value="CL" /><br/>CL
+                                    </td>
+                                    <td height="200">
+                                        <input type="radio" name="metode-{{$data_elemen_isi_isi->id}}" value="DIT" /><br/>DIT
+                                    </td>
+                                    <td height="200">
+                                        <input type="radio" name="metode-{{$data_elemen_isi_isi->id}}" value="DPL" /><br/>DPL
+                                    </td>
+                                    <td height="200">
+                                        <input type="radio" name="metode-{{$data_elemen_isi_isi->id}}" value="DPT" /><br/>DPT
+                                    </td>
+                                    <td height="200">
+                                        <input type="radio" name="metode-{{$data_elemen_isi_isi->id}}" value="VP" /><br/>VP
+                                    </td>
+                                    <td height="200">
+                                        <input type="radio" name="metode-{{$data_elemen_isi_isi->id}}" value="CUP" /><br/>CUP
+                                    </td>
+                                
                             </tr>
-                            {{-- @endif --}}
                         @endforeach
-                    
-                      {{-- @endif --}}
                     @endforeach
                 </tbody>
-                {{-- @endif --}}
                 @endforeach
-            </table>
+            </table> --}}
 
             @endforeach
-
-
+            
+            
         </div>
-      </form>
+        <button type="submit">Simpan</button>
+    </form>
     </section>
   </div>
 
@@ -440,90 +392,4 @@
     });
 
 </script>
-{{-- <script>
-      // DATATABLE MUK ASESOR PENINJAU
-      list_tampil_muk_asesor_peninjau = []
-      const table_tampil_muk_asesor_peninjau = $('#table-tampil-muk-asesor-peninjau').DataTable({
-        "pageLength": 10,
-        "lengthMenu": [
-            [10, 25, 50, 100, -1],
-            [10, 25, 50, 100, 'semua']
-        ],
-        "bLengthChange": true,
-        "bFilter": true,
-        "bInfo": true,
-        "processing": true,
-        "bServerSide": true,
-        "responsive": true,
-        ajax: {
-            url: "/peninjau/tampil-data-muk-asesor-peninjau/",
-            type: "POST",
-            headers: 
-                    {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-        },
-        columnDefs: [{
-                targets: '_all',
-                visible: true
-            },
-            {
-                "targets": 0,
-                "class": "text-nowrap",
-                "render": function (data, type, row, meta) {
-                    list_tampil_muk_asesor_peninjau[row.id] = row;
-                    return row.relasi_muk.muk;
-                }
-            },
-            {
-                "targets": 1,
-                "class": "text-nowrap",
-                "render": function (data, type, row, meta) {
-                    list_tampil_muk_asesor_peninjau[row.id] = row;
-                    return row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
-                }
-            },
-            {
-                "targets": 2,
-                "class": "text-nowrap",
-                "render": function (data, type, row, meta) {
-                    list_tampil_muk_asesor_peninjau[row.id] = row;
-                    return row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
-                }
-            },
-            {
-                "targets": 3,
-                "class": "text-nowrap",
-                "render": function (data, type, row, meta) {
-                    list_tampil_muk_asesor_peninjau[row.id] = row;
-                    let jenis_tes;
-                    if(row.relasi_pelaksanaan_ujian == null || row.relasi_pelaksanaan_ujian.jenis_tes == null){
-                        jenis_tes = `<p class="text-danger">Jenis soal belum ditentukan</p>`
-                    }
-                    else if(row.relasi_pelaksanaan_ujian.jenis_tes == 1){
-                        jenis_tes = `<p>Pilihan Ganda</p>`
-                    }
-                    else if(row.relasi_pelaksanaan_ujian.jenis_tes == 2){
-                        jenis_tes = `<p>Essay</p>`
-                    }
-                    else if(row.relasi_pelaksanaan_ujian.jenis_tes == 3){
-                        jenis_tes = `<p>Wawancara</p>`
-                    }
-                    return jenis_tes;
-                }
-            },
-            {
-                "targets": 4,
-                "class": "text-nowrap",
-                "render": function (data, type, row, meta) {
-                    let tampilan;
-                    tampilan = `<span class="badge bg-info rounded-pill">
-                                    <a class="text-white" href="/peninjau/peninjau-review-soal/${row.id}/${row.relasi_pelaksanaan_ujian.jenis_tes}">Review Soal</a>
-                                </span>`
-                    return tampilan;
-                }
-            },
-        ]
-    });
-</script> --}}
 @endsection
