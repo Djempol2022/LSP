@@ -411,7 +411,13 @@
                 return false
             }
         }
-
+        $('.btn-close').on('click', function() {
+            $("#institusi").empty().append('');
+            $("#jenis_kelamin").empty().append('');
+            $("#kebangsaan").empty().append('');
+            $("#jurusan").empty().append('');
+            $("#kualifikasi_pendidikan").empty().append('');
+        })
         $("#edit-btn").on('click', function() {
             $("#editProfil").modal('show')
 
