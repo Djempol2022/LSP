@@ -125,6 +125,7 @@ class ProfilController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required',
             'institusi' => 'required',
+            'tanggal_lahir' => 'required',
             'jurusan' => 'required',
             'email' => 'required|email',
             'pas_foto' => 'file|image|mimes:png,jpg,jpeg|max:2048',
@@ -134,6 +135,7 @@ class ProfilController extends Controller
             'nilai_raport' => 'file|mimes:pdf|max:2048',
         ], [
             'nama_lengkap.required' => 'Wajib diisi',
+            'tanggal_lahir.required' => 'Wajib diisi',
             'institusi.required' => 'Wajib diisi',
             'jurusan.required' => 'Wajib diisi',
             'email.required' => 'Wajib diisi',

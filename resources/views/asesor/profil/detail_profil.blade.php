@@ -1,18 +1,19 @@
 @extends('layout.main-layout', ['title' => 'Profil'])
 @section('main-section')
-    <div>
+    <div id="detail-profil">
         <div class="col profil-section" style="margin-bottom:0% !important">
             @if (is_null(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->ktp_nik_paspor))
                 <div class="alert fs-6" role="alert" style="background-color: #F8D7DA">
-                    Silahkan lengkapi profil anda untuk menggunakan fitur asesor / peninjau !
+                    Silahkan lengkapi profil anda !
                 </div>
             @endif
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="col-lg-6 col-md-4 col-xs-6 thumb">
-                        <img src="/images/logo/favicon_lsp.png" class="img-thumbnail rounded-circle" alt="image">
-                    </div>
-                </div>
+            <div class="thumb-profil thumb">
+                @isset($data->relasi_user_detail->foto)
+                    <img src="{{ asset('storage/' . $data->relasi_user_detail->foto) }}" class="img-thumbnail rounded-circle mb-3"
+                        alt="image">
+                @else
+                    <img src="/images/logo/favicon.png" class="img-thumbnail rounded-circle" alt="image">
+                @endisset
             </div>
             <div class="col profil-section-title mt-4">
                 Detail lengkap profil pengguna

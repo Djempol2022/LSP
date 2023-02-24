@@ -31,7 +31,7 @@
             <h5>Materi Uji Kompetensi</h5>
             <p>Daftar Materi Uji Kompetensi LSP {{ Auth::user()->relasi_jurusan->jurusan }}</p>
             <table class="table"
-                @isset ($asesmen_mandiri) 
+                @isset($asesmen_mandiri) 
                     id="table-pelaksanaan-ujian">
                 @else
                 @endisset
@@ -285,7 +285,6 @@
                                 title: "Berhasil",
                                 text: `${data.msg}`,
                                 icon: "success",
-                                buttons: true,
                                 successMode: true,
                             }),
                             $("#assesmentMandiri").load(location.href + " #assesmentMandiri>*", "");

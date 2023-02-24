@@ -11,7 +11,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="mx-3">
-
                         <div class="col my-3">
                             {{-- JUDUL --}}
                             <div class="profil-section-title" style="font-size: 20px">
@@ -567,7 +566,6 @@
                             }, 'fast');
                         });
                     } else {
-                        $("#profile-section").load(location.href + " #profile-section>*", "");
                         $("#editProfil").modal('hide')
                         $("#form-update [name='kartu_keluarga']").val('');
                         $("#form-update [name='kartu_pelajar']").val('');
@@ -577,6 +575,13 @@
                         $('html, body').animate({
                             scrollTop: 0
                         }, 'fast');
+                        swal({
+                                title: "Berhasil",
+                                text: `${data.msg}`,
+                                icon: "success",
+                                successMode: true,
+                            }),
+                            $("#profile-section").load(location.href + " #profile-section>*", "");
                     }
                 }
             })

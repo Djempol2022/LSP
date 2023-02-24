@@ -221,6 +221,14 @@ h6 {
 .foto-profile {
     width: 33%;
 }
+.thumb-profil img {
+    min-width: 60px;
+    width: 8%;
+    max-width: 100px;
+    object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/1;
+}
 .bg-profile {
     margin-top: 15px;
     background-color: var(--white-color);
