@@ -353,8 +353,8 @@ class Admin_AssessmentController extends Controller
                     ->whereRelation('relasi_role', 'role', '=', 'asesi')
                     ->get();
         }
-        return view('admin.assessment.asessment_mandiri.data_asessment_mandiri', 
-        compact('data_user_asesi', 'status_kompeten_asesi'));
+        return view('admin.assessment.asessment_mandiri.data_asessment_mandiri', [
+            'status_kompeten_asesi'=>$status_kompeten_asesi]);
     }
 
     // ASESMEN MANDIRI

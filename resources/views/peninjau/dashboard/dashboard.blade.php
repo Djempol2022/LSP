@@ -4,15 +4,12 @@
     <div class="mt-5">
       
       <div class="mb-5">
-        <div class="col profil-section-title">
-            <p>Data 
-        </div>
         {{-- JADWAL UJI KOMPETENSI --}}
         <div class="col profil-section" style="margin-bottom: 0% !important">
           <div class="col pb-45">
             <table class="table table-striped" id="table-tampil-muk-asesor-peninjau">
               <thead>
-                  <tr>
+                  <tr>  
                       <th>MUK</th>
                       <th>Nama Asesor</th>
                       <th>Nama Peninjau</th>
@@ -43,7 +40,9 @@
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
-        "responsive": true,
+        "responsive": false,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "/peninjau/tampil-data-muk-asesor-peninjau/",
             type: "POST",
@@ -54,7 +53,8 @@
         },
         columnDefs: [{
                 targets: '_all',
-                visible: true
+                visible: true,
+                defaultContent: ""
             },
             {
                 "targets": 0,
@@ -86,8 +86,8 @@
                 "render": function (data, type, row, meta) {
                     list_tampil_muk_asesor_peninjau[row.id] = row;
                     let jenis_tes;
-                    if(row.relasi_pelaksanaan_ujian == null || row.relasi_pelaksanaan_ujian.jenis_tes == null){
-                        jenis_tes = `<p class="text-danger">Jenis soal belum ditentukan</p>`
+                    if(row.relasi_pelaksanaan_ujian === null || row.relasi_pelaksanaan_ujian.jenis_tes === null){
+                        return '';
                     }
                     else if(row.relasi_pelaksanaan_ujian.jenis_tes == 1){
                         jenis_tes = `<p>Pilihan Ganda</p>`

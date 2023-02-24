@@ -36,17 +36,17 @@
             case 'admin':
                 $sertifikasi = \App\Models\Sertifikasi::with('relasi_tanda_tangan_admin')->get();
                 $type_admin_1 = false;
-                foreach ($sertifikasi as $key) {
-                    $tmp = \App\Models\TandaTangan::where('sertifikasi_id', $key->id)->first('id');
-                    if (is_null($tmp)) {
-                        $type_admin_1 = true;
-                    }
-                }
-                if ($type_admin_1) {
-                    $notif[0] = 'Permohonan verifikasi';
-                    $notif[1] = 'Ada permohonan verifikasi sertifikasi !';
-                }
-                break;
+                // foreach ($sertifikasi as $key) {
+                //     $tmp = \App\Models\TandaTangan::where('sertifikasi_id', $key->id)->first('id');
+                //     if (is_null($tmp)) {
+                //         $type_admin_1 = true;
+                //     }
+                // }
+                // if ($type_admin_1) {
+                //     $notif[0] = 'Permohonan verifikasi';
+                //     $notif[1] = 'Ada permohonan verifikasi sertifikasi !';
+                // }
+                // break;
             case 'asesor':
                 $assesmen_mandiri = \App\Models\AsesmenMandiri::all();
                 $type_asesor_1 = false;

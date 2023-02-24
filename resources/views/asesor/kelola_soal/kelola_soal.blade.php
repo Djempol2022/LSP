@@ -131,9 +131,9 @@
                                         </span>`
                         }
                     }
-                        tampilan += `<div class="buttons"><span onclick="hapusMUK(${row.id})" class="badge bg-danger rounded-pill">
-                                        <a class="text-white" href="#">Hapus</a>
-                                    </span></div>`
+                        // tampilan += `<div class="buttons"><span onclick="hapusMUK(${row.id})" class="badge bg-danger rounded-pill">
+                        //                 <a class="text-white" href="#">Hapus</a>
+                        //             </span></div>`
                     return tampilan;
                 }
             },

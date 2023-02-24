@@ -68,7 +68,7 @@ class AsesorKelolaSoal extends Controller
             PelaksanaanUjian::create([
                 'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
                 'jenis_tes' => $jenis_tes,
-                'acc' => 0
+                'acc' => 1
             ]);
             for($x = 0; $x < count($pertanyaans); $x++){
                 $pertanyaan = $pertanyaans[$x];
@@ -145,7 +145,7 @@ class AsesorKelolaSoal extends Controller
             PelaksanaanUjian::create([
                 'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
                 'jenis_tes' => $jenis_tes,
-                'acc' => 0
+                'acc' => 1
             ]);
             for($x = 0; $x < count($pertanyaans); $x++){
                 $pertanyaan = $pertanyaans[$x];
@@ -207,7 +207,7 @@ class AsesorKelolaSoal extends Controller
             PelaksanaanUjian::create([
                 'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
                 'jenis_tes' => $jenis_tes,
-                'acc' => 0
+                'acc' => 1
             ]);
             for($x = 0; $x < count($pertanyaans); $x++){
                 $pertanyaan = $pertanyaans[$x];

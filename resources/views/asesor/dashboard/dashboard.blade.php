@@ -22,7 +22,7 @@
                                         <th>Kelas</th>
                                         <th>Sesi</th>
                                         <th>Status Soal</th>
-                                        <th>Aksi</th>
+                                        {{-- <th>Aksi</th> --}}
                                     </tr>
                                 </thead>
                             </table>
@@ -325,19 +325,19 @@
                         return data_status_soal;
                     }
                 },
-                {
-                    "targets": 10,
-                    "class": "text-nowrap text-center",
-                    "render": function(data, type, row, meta) {
-                        let tampilan;
-                        tampilan = `
-                                <span class="badge bg-info rounded-pill">
-                                    <a class="text-white" href="/asesor/tambah-elemen-unit-kompetensi/${row.id}">Detail</a>
-                                </span>
-                                `
-                        return tampilan;
-                    }
-                },
+                // {
+                //     "targets": 10,
+                //     "class": "text-nowrap text-center",
+                //     "render": function(data, type, row, meta) {
+                //         let tampilan;
+                //         tampilan = `
+                //                 <span class="badge bg-info rounded-pill">
+                //                     <a class="text-white" href="/asesor/tambah-elemen-unit-kompetensi/${row.id}">Detail</a>
+                //                 </span>
+                //                 `
+                //         return tampilan;
+                //     }
+                // },
             ]
         });
 

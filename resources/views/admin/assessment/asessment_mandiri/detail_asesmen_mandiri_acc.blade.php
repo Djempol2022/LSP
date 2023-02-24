@@ -19,15 +19,15 @@
               <div class="col">
                 <div class="assesment-mandiri-header">
                   <p class="assesment-mandiri-title">Judul Skema Sertifikasi</p>
-                  <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->judul_skema_sertifikasi }}</p>
+                  <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->judul_skema_sertifikasi ?? ''}}</p>
                 </div>
                 <div class="assesment-mandiri-header">
                   <p class="assesment-mandiri-title">Nomor Skema Sertifikasi</p>
-                  <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->nomor_skema_sertifikasi }}</p>
+                  <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->nomor_skema_sertifikasi ?? '' }}</p>
                 </div>
                 <div class="assesment-mandiri-header">
                   <p class="assesment-mandiri-title">Skema Sertifikasi</p>
-                  <p>{{ $sertifikasi->relasi_unit_kompetensi->jenis_standar }}</p>
+                  <p>{{ $sertifikasi->relasi_unit_kompetensi->jenis_standar ?? ''}}</p>
                 </div>
               </div>
               {{-- TITLE --}}
@@ -78,11 +78,13 @@
                               <input type="hidden" name="unit_kompetensi_isi[]" value="{{$isi->id}}" hidden> --}}
     
                               <div class="col-auto kriteria-kompeten">
+                                @isset($data_status_kompeten_asesi->status)
                                 @if($data_status_kompeten_asesi->status === 'kompeten')
                                     <label class="form-check-label text-success" for="kompeten-{{ $isi->id }}">Kompeten</label>
                                 @else
                                     <label class="form-check-label text-danger" for="kompeten-{{ $isi->id }}">Belum Kompeten</label>
                                 @endif
+                                @endisset
                               </div>
 
                             </div>
@@ -148,6 +150,7 @@
                         <div class="col edit-profil-left">
                           <label for="rekomendasi" class="form-label fw-semibold">Rekomendasi</label>
                           <div class="col-auto kriteria-kompeten" style="width: auto;">
+                          @isset($data_asesmen_mandiri->rekomendasi)
                           @if ($data_asesmen_mandiri->rekomendasi === null)
                           <label class="form-check-label"><a href="{{route('asesor.SetujuiAsesmen', $data_asesmen_mandiri->id)}}" class="text-success">Asesmen dapat dilanjutkan</a>&nbsp;/&nbsp;</label>
                           <label class="form-check-label"><a href="{{route('asesor.BatalkanAsesmen', $data_asesmen_mandiri->id)}}" class="text-danger">tidak dapat dilanjutkan</a></label>
@@ -158,6 +161,8 @@
                           <label class="form-check-label"><a href="#!" class="text-success"><s>Asesmen dapat dilanjutkan/</s></a></label>
                           <label class="form-check-label"><a href="#!" class="text-danger">tidak dapat dilanjutkan</a></label>
                           @endif
+                          @else
+                          @endisset
                           </div>
                         </div>
                         <div class="col edit-profil-left">
