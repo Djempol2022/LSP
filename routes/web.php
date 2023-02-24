@@ -417,7 +417,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('peninjau')->name('peninjau.')->middleware(['isPeninjau'])->group(function () {
         Route::controller(PeninjauDashboardController::class)->group(function () {
             Route::get('dashboard', 'dashboard')->name('Dashboard');
-            Route::any('tampil-data-muk-asesor-peninjau', 'tampil_data_muk_asesor_peninjau');
+            Route::any('tampil-data-muk-asesor-peninjau/{id}', 'tampil_data_muk_asesor_peninjau');
             Route::get('peninjau-review-soal/{jadwal_id}/{jenis_tes}', 'peninjau_review_soal')->name('Dashboard.PeninjauReviewSoal');
         });
         Route::controller(PengesahanMukController::class)->group(function () {

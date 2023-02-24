@@ -29,7 +29,8 @@ class PeninjauDashboardController extends Controller
         $data = $data->skip($request->input('start'))->take($request->input('length'));
         $data = $data->with('relasi_pelaksanaan_ujian','relasi_muk', 'relasi_user_asesor.relasi_user_asesor_detail', 
         'relasi_user_peninjau.relasi_user_peninjau_detail')
-        ->whereRelation('relasi_muk', 'jurusan_id', $id)->get();
+        ->whereRelation('relasi_muk', 'jurusan_id', $id)
+        ->whereRelation('relasi_pelaksanaan_ujian', 'jenis_tes', '>', 0)->get();
         $rekamTotal = $data->count();
         $rekamFilter = $data->count();
             

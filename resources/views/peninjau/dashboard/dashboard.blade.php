@@ -86,6 +86,7 @@
                 "render": function (data, type, row, meta) {
                     list_tampil_muk_asesor_peninjau[row.id] = row;
                     let jenis_tes;
+                    
                     if(row.relasi_pelaksanaan_ujian == null || row.relasi_pelaksanaan_ujian.jenis_tes == null){
                         jenis_tes = `<p class="text-danger">Jenis soal belum ditentukan</p>`
                     }
