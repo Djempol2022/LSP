@@ -4,6 +4,7 @@
     <div class="mt-5">
       
       <div class="mb-5">
+        
         {{-- JADWAL UJI KOMPETENSI --}}
         <div class="col profil-section" style="margin-bottom: 0% !important">
           <div class="col pb-45">
@@ -44,7 +45,7 @@
         "sScrollX": '100%',
         "sScrollXInner": "100%",
         ajax: {
-            url: "/peninjau/tampil-data-muk-asesor-peninjau/",
+            url: "/peninjau/tampil-data-muk-asesor-peninjau/"+{!! json_encode(Auth::user()->jurusan_id) !!},
             type: "POST",
             headers: 
                     {
@@ -53,8 +54,7 @@
         },
         columnDefs: [{
                 targets: '_all',
-                visible: true,
-                defaultContent: ""
+                visible: true
             },
             {
                 "targets": 0,
@@ -86,8 +86,8 @@
                 "render": function (data, type, row, meta) {
                     list_tampil_muk_asesor_peninjau[row.id] = row;
                     let jenis_tes;
-                    if(row.relasi_pelaksanaan_ujian === null || row.relasi_pelaksanaan_ujian.jenis_tes === null){
-                        return '';
+                    if(row.relasi_pelaksanaan_ujian == null || row.relasi_pelaksanaan_ujian.jenis_tes == null){
+                        jenis_tes = `<p class="text-danger">Jenis soal belum ditentukan</p>`
                     }
                     else if(row.relasi_pelaksanaan_ujian.jenis_tes == 1){
                         jenis_tes = `<p>Pilihan Ganda</p>`

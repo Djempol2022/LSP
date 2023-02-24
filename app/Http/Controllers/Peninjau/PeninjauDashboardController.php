@@ -20,7 +20,7 @@ class PeninjauDashboardController extends Controller
         return view('peninjau.dashboard.dashboard');
     }
 
-    public function tampil_data_muk_asesor_peninjau(Request $request){
+    public function tampil_data_muk_asesor_peninjau(Request $request, $id){
         $data = JadwalUjiKompetensi::select([
             'jadwal_uji_kompetensi.*'
         ]);
@@ -29,7 +29,7 @@ class PeninjauDashboardController extends Controller
         $data = $data->skip($request->input('start'))->take($request->input('length'));
         $data = $data->with('relasi_pelaksanaan_ujian','relasi_muk', 'relasi_user_asesor.relasi_user_asesor_detail', 
         'relasi_user_peninjau.relasi_user_peninjau_detail')
-        ->whereRelation('relasi_muk', 'jurusan_id', Auth::user()->jurusan_id)->whereRelation('relasi_pelaksanaan_ujian', 'jenis_tes', '>', 0)->get();
+        ->whereRelation('relasi_muk', 'jurusan_id', $id)->get();
         $rekamTotal = $data->count();
         $rekamFilter = $data->count();
             

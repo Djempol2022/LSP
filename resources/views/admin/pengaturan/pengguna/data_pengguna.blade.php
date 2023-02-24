@@ -156,7 +156,7 @@
 
         {{-- MODAL EDIT --}}
         <div class="modal fade text-left" id="modalEditPengguna" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+            <div class="modal-dialog modal-dialog-centered"
                 role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -370,7 +370,7 @@
         const data_pengguna = list_pengguna[id]
             $("#modalEditPengguna").modal('show');
             $("#formEditPengguna [name='id']").val(id)
-            $("#formEditPengguna .muk").val(data_pengguna.muk);
+            $("#formEditPengguna [name='nama_lengkap']").val(data_pengguna.nama_lengkap);
         
             $('#formEditPengguna').on('submit', function (e) {
             e.preventDefault();
