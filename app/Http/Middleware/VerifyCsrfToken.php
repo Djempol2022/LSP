@@ -27,6 +27,7 @@ class VerifyCsrfToken extends Middleware
         '/admin/table-surat-daftar-tuk',
         '/admin/table-surat-hasil-verifikasi-tuk',
         '/admin/table-surat-st-verifikasi-tuk',
+        '/admin/table-surat-df-hadir-asesi',
         '/admin/table-surat-x03-st-verifikasi-tuk',
         '/admin/table-surat-x04-berita-acara',
         '/admin/table-surat-z-ba-pecah-rp',

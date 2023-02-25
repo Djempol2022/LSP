@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Berkas;
 
 use App\Http\Controllers\Controller;
 use App\Models\DaftarTUKTerverifikasi;
+use App\Models\DFHadirAsesi;
 use App\Models\DFHadirAsesorPleno;
 use App\Models\HasilVerifikasiTUK;
 use App\Models\SKPenetapanTUK;
@@ -87,6 +88,26 @@ class BerkasController extends Controller
     {
         $data = STVerifikasiTUK::select([
             'st_verifikasi_tuk.*'
+        ])->latest();
+
+        $rekamFilter = $data->get()->count();
+
+        if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
+
+        $data = $data->get();
+        $rekamTotal = $data->count();
+
+        return response()->json([
+            'data' => $data,
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
+        ]);
+    }
+
+    public function table_surat_df_hadir_asesi(Request $request)
+    {
+        $data = DFHadirAsesi::select([
+            'df_hadir_asesi.*'
         ])->latest();
 
         $rekamFilter = $data->get()->count();
@@ -349,6 +370,41 @@ class BerkasController extends Controller
         // ]);
         $pdf = PDF::loadview('admin.berkas.st_verifikasi_tuk.pdf', compact('st_verifikasi_tuk'));
         return $pdf->download('ST Verifikasi TUK.pdf');
+    }
+
+    public function show_df_hadir_asesi($id)
+    {
+        $df_hadir_asesi = DFHadirAsesi::with(['relasi_skema_sertifikasi', 'relasi_df_hadir_asesi_child.relasi_institusi'])->find($id);
+
+        return response()->json($df_hadir_asesi);
+    }
+
+    public function hapus_df_hadir_asesi($id)
+    {
+        $delete_berkas = DFHadirAsesi::find($id)->delete();
+
+        if (!$delete_berkas) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Terjadi kesalahan, Gagal Menghapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Berhasil Menghapus'
+            ]);
+        }
+    }
+
+    public function cetak_df_hadir_asesi_pdf($id)
+    {
+        $df_hadir_asesi = DFHadirAsesi::with(['relasi_skema_sertifikasi', 'relasi_df_hadir_asesi_child.relasi_institusi'])->find($id);
+        // dd($df_hadir_asesi);
+        // return view('admin.berkas.df_hadir_asesi.pdf', [
+        //     'df_hadir_asesi' => $df_hadir_asesi,
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.df_hadir_asesi.pdf', compact('df_hadir_asesi'));
+        return $pdf->download('Daftar Hadir Asesi.pdf');
     }
 
     public function show_x03_st_verifikasi_tuk($id)

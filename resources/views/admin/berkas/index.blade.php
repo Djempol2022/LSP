@@ -66,6 +66,9 @@
   {{-- modal st verifikasi tuk --}}
   @include('admin.berkas._modal-st-verifikasi-tuk')
 
+  {{-- modal df hadir asesi --}}
+  @include('admin.berkas._modal-df-hadir-asesi')
+
   {{-- modal x03 st verifikasi tuk --}}
   @include('admin.berkas._modal-x03-st-verifikasi-tuk')
 

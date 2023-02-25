@@ -25,6 +25,8 @@
         hasilVerifikasiTUK();
       } else if (berkasValue === 'st-verifikasi-tuk') {
         stVerifikasiTUK();
+      } else if (berkasValue === 'df-hadir-asesi') {
+        dfHadirAsesi();
       } else if (berkasValue === 'x03-st-verifikasi-tuk') {
         x03STVerifikasiTUK();
       } else if (berkasValue === 'x04-berita-acara') {
@@ -346,6 +348,73 @@
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailSTVerifikasiTUK(${row.id})">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'st-verifikasi-tuk')">Hapus</button>
+                `
+              return tampilan;
+            }
+          },
+        ]
+      });
+    }
+
+    function dfHadirAsesi() {
+      let list_df_hadir_asesi = [];
+      $('#table-surat').DataTable({
+        destroy: true,
+        "pageLength": 5,
+        "lengthMenu": [
+          [5, 10, 25, -1],
+          [5, 10, 25, 'semua']
+        ],
+        "bLengthChange": true,
+        "bFilter": false,
+        "bInfo": true,
+        "processing": true,
+        "bServerSide": true,
+        "responsive": true,
+        ajax: {
+          url: "{{ route('admin.SuratDFHadirAsesi') }}",
+          type: "POST",
+        },
+        columnDefs: [{
+            targets: '_all',
+            visible: true
+          },
+          {
+            "targets": 0,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+            }
+          },
+          {
+            "targets": 1,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              return 'Daftar Hadr Asesi';
+            }
+          },
+          {
+            "targets": 2,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              list_df_hadir_asesi[row.id] = row;
+              const date = new Date(row.created_at);
+              let tanggal = new Intl.DateTimeFormat('id', {
+                year: "numeric",
+                month: "long",
+                day: "2-digit"
+              }).format(date).split(" ").join(" ");
+              return tanggal;
+            }
+          },
+          {
+            "targets": 3,
+            "class": "text-nowrap text-center",
+            "render": function(data, type, row, meta) {
+              let tampilan;
+              tampilan =
+                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailDFHadirAsesi(${row.id})">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesi')">Hapus</button>
                 `
               return tampilan;
             }
@@ -949,6 +1018,60 @@
       $('#nama_bttd_st_verifikasi_tuk').text(data.nama_bttd);
 
       $("#pdfSTVerifikasiTUK").attr('href', 'cetak-st-verifikasi-tuk/' + data.id);
+    })
+  }
+
+  function detailDFHadirAsesi(id) {
+    let url = "table-surat-df-hadir-asesi/" + id;
+    $.get(url, function(data) {
+      console.log(data);
+      $('#modalDFHadirAsesi').modal('show');
+      if (data.tgl) {
+        $('#tgl_df_hadir_asesi').text(date_format(data.tgl));
+      } else {
+        $('#tgl_df_hadir_asesi').text(
+          '..................................................................................................');
+      }
+      if (data.waktu) {
+        $('#wkt_df_hadir_asesi').text(time_format(data.waktu));
+      } else {
+        $('#wkt_df_hadir_asesi').text(
+          '..................................................................................................');
+      }
+      if (data.tempat) {
+        $('#tempat_df_hadir_asesi').text(data.tempat);
+      } else {
+        $('#tempat_df_hadir_asesi').text(
+          '..................................................................................................');
+      }
+      if (data.skema_sertifikasi_id) {
+        $('#skema_sertifikasi_df_hadir_asesi').text(data.relasi_skema_sertifikasi.judul_skema_sertifikasi);
+      } else {
+        $('#skema_sertifikasi_df_hadir_asesi').text(
+          '..................................................................................................');
+      }
+
+      $('#bodyTableDFHadirAsesi').html(data.relasi_df_hadir_asesi_child.map(function(d, i) {
+        return $(
+          `<tr>
+                    <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                    <td>${d.no_peserta}</td>
+                    <td>${d.nama_asesi}</td>
+                    <td>${d.relasi_institusi.nama_institusi}</td>
+                    <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+                </tr>`
+        )
+      }));
+
+      $('#jabatan_bttd_df_hadir_asesi').text(data.jabatan_bttd);
+      $('#nama_bttd_df_hadir_asesi').text(data.nama_bttd);
+      $('#ttd_bttd_df_hadir_asesi').attr('src', data.ttd_bttd);
+      $('#no_met_bttd_df_hadir_asesi').text(data.no_met_bttd);
+      $('#ttd_asesor_df_hadir_asesi').attr('src', data.ttd_asesor);
+      $('#nama_asesor_df_hadir_asesi').text(data.nama_asesor);
+      $('#no_met_asesor_df_hadir_asesi').text(data.no_met_asesor);
+
+      $("#pdfDFHadirAsesi").attr('href', 'cetak-df-hadir-asesi/' + data.id);
     })
   }
 

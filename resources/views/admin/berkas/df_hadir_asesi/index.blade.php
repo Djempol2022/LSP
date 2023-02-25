@@ -125,11 +125,11 @@
                   {{-- TANDA TANGAN / TTD --}}
                   <div class="mb-2 signature-pad" id="signature-pad-asesor">
                     <canvas id="sig-asesor"></canvas>
-                    <input type="hidden" name="ttd-asesor" value="" id="ttd-asesor">
+                    <input type="hidden" name="ttd_asesor" value="" id="ttd_asesor">
                   </div>
                   <div id="signature-clear-asesor">
                     <button type="button" class="button button-primary tombol-primary-small mb-2"
-                      id="clear-asesor">Clear</button>
+                      id="clear_asesor">Clear</button>
                   </div>
                 </td>
                 <td style="height: 70px; padding-left: 20%">

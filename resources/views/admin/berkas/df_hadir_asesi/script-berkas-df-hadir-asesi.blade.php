@@ -82,10 +82,10 @@
 
   function sentToControllerAsesor() {
     let ttdDataAsesor = signaturePad_asesor.toDataURL();
-    document.getElementById('ttd-asesor').value = ttdDataAsesor;
+    document.getElementById('ttd_asesor').value = ttdDataAsesor;
   }
 
-  document.getElementById('clear-asesor').addEventListener("click", clearAsesor);
+  document.getElementById('clear_asesor').addEventListener("click", clearAsesor);
   document.getElementById('simpan').addEventListener("click", sentToControllerAsesor);
   document.addEventListener("DOMContentLoaded", setupSignatureBoxAsesor);
 
@@ -126,6 +126,7 @@
 
     let renderRow = () => {
       let nama_asesi = @json($nama_asesi);
+      let institusi = @json($institusi);
 
       let table = document.getElementById('dfHadirAsesi');
 
@@ -166,9 +167,22 @@
       cell3.appendChild(element2);
 
       let cell4 = row.insertCell(3);
-      let element3 = document.createElement("input");
-      element3.className = 'form-control';
+      let element3 = document.createElement("select");
+      element3.className = 'form-select asal_sekolah';
       element3.name = "asal_sekolah[]";
+
+      let option2 = document.createElement("option");
+      option2.value = '';
+      option2.text = 'Pilih Asal Sekolah';
+      element3.appendChild(option2);
+
+      institusi.forEach((item, index) => {
+        let option2 = document.createElement("option");
+        option2.value = item.id;
+        option2.text = item.nama_institusi;
+        element3.appendChild(option2);
+      });
+
       cell4.appendChild(element3);
 
       let cell5 = row.insertCell(4);
