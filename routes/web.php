@@ -332,6 +332,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::controller(AsesorProfilController::class)->group(function () {
             Route::get('profil', 'index')->name('Profil');
+            Route::post('profil', 'update')->name('Profil.update');
         });
 
         Route::controller(AsesorPengesahan::class)->group(function () {
@@ -422,7 +423,7 @@ Route::middleware(['auth'])->group(function () {
         });
         Route::controller(PengesahanMukController::class)->group(function () {
             Route::get('peninjau-pengesahan-muk', 'pengesahan_muk')->name('PengesahanMuk');
-            Route::post('muk-disahkan', 'muk_di_sahkan')->name('MukDiSahkan'); 
+            Route::post('muk-disahkan', 'muk_di_sahkan')->name('MukDiSahkan');
         });
     });
 });

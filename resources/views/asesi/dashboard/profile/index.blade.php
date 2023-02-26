@@ -21,22 +21,18 @@
             <h5 class="text-black my-4">Permohonan Sertifikasi Kompetensi</h5>
             <div>
                 <div class="col profil-section" style="margin-bottom:0% !important">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="col-lg-6 col-md-4 col-xs-6 thumb">
-                                @isset($data->relasi_user_detail->foto)
-                                    <img src="{{ asset('storage/' . $data->relasi_user_detail->foto) }}"
-                                        class="img-thumbnail rounded-circle mb-3" alt="image">
-                                @else
-                                    <img src="/images/logo/favicon_lsp.png" class="img-thumbnail rounded-circle" alt="image">
-                                @endisset
-                            </div>
-                        </div>
+                    <div class="thumb-profil thumb">
+                        @isset($data->relasi_user_detail->foto)
+                            <img src="{{ asset('storage/' . $data->relasi_user_detail->foto) }}"
+                                class="img-thumbnail rounded-circle mb-3" alt="image">
+                        @else
+                            <img src="/images/logo/favicon.png" class="img-thumbnail rounded-circle" alt="image">
+                        @endisset
                     </div>
                 </div>
             </div>
             {{-- RINCIAN DATA PEMOHON SERTIFIKASI --}}
-            <div class="mb-5 pb-5" style="margin-bottom: 0% !important">
+            <div class="mb-5 mt-3 pb-5" style="margin-bottom: 0% !important">
                 <div class="col profil-section-title">
                     Bagian 1 : Rincian Data Pemohon Sertifikasi
                 </div>

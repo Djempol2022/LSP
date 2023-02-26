@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers\Asesor;
 
+use Validator;
 use App\Models\User;
+use App\Models\Jurusan;
+use App\Models\Institusi;
+use App\Models\Pekerjaan;
+use App\Models\Kebangsaan;
+use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\KualifikasiPendidikan;
+use Illuminate\Support\Facades\Storage;
 
 
 class AsesorProfilController extends Controller
@@ -19,6 +27,111 @@ class AsesorProfilController extends Controller
             'relasi_jurusan',
         )
             ->find(Auth::user()->id);
-        return view('asesor.profil.detail_profil', ['data' => $user]);
+        $institusi = Institusi::get(['id', 'nama_institusi']);
+        $jurusan = Jurusan::get(['id', 'jurusan']);
+        $kualifikasi_pendidikan = KualifikasiPendidikan::get(['id', 'pendidikan']);
+        $kebangsaan = Kebangsaan::get(['id', 'kebangsaan']);
+        // pas_foto
+        if (!empty($user->relasi_user_detail->foto)) {
+            $pas_foto = explode('-', $user->relasi_user_detail->foto, 2);
+            $pas_foto = $pas_foto[1];
+        } else {
+            $pas_foto = null;
+        }
+        return view('asesor.profil.detail_profil', [
+            'data' => $user, 'institusis' => $institusi,
+            'jurusans' => $jurusan,
+            'kualifikasi_pendidikan' => $kualifikasi_pendidikan,
+            'kebangsaan' => $kebangsaan,
+            'pas_foto' => $pas_foto,
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama_lengkap' => 'required',
+            'institusi' => 'required',
+            'tanggal_lahir' => 'required',
+            'jurusan' => 'required',
+            'email' => 'required|email',
+            'pas_foto' => 'file|image|mimes:png,jpg,jpeg|max:2048',
+        ], [
+            'nama_lengkap.required' => 'Wajib diisi',
+            'tanggal_lahir.required' => 'Wajib diisi',
+            'institusi.required' => 'Wajib diisi',
+            'jurusan.required' => 'Wajib diisi',
+            'email.required' => 'Wajib diisi',
+            'email.email' => 'Email tidak sesuai format',
+            'pas_foto.file' => 'Wajib file',
+            'pas_foto.image' => 'Wajib gambar',
+            'pas_foto.mimes' => 'Foto wajib menggunakan format png, jpg, atau jpeg',
+            'pas_foto.max' => 'Ukuran foto maksimal 2mb',
+        ]);
+        if (!$validator->passes()) return response()->json([
+            'status' => 0,
+            'error' => $validator->errors()->toArray()
+        ]);
+
+        // file_foto
+        if ($request->pas_foto) {
+            $custom_file_name = auth()->user()->id . '-' . $request->file('pas_foto')->getClientOriginalName();
+            $image = $request->file('pas_foto')->storeAs('pas_foto', $custom_file_name);
+            if ($request->pas_foto_old) {
+                Storage::delete($request->pas_foto_old);
+            }
+        } else {
+            $image = $request->pas_foto_old;
+        }
+
+        // tambah/edit user detail
+        UserDetail::where('user_id', auth()->user()->id)->update([
+            'ktp_nik_paspor' => $request->ktp_nik_paspor,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'kebangsaan_id' => $request->kebangsaan,
+            'alamat_rumah' => $request->alamat_rumah,
+            'nomor_hp' => $request->nomor_hp,
+            'kualifikasi_pendidikan_id' => $request->kualifikasi_pendidikan,
+            'kode_pos' => $request->kode_pos,
+            'ttd' => $request->ttd,
+            'foto' => $image
+        ]);
+
+        // tambah/edit user
+        User::find(auth()->user()->id)->update([
+            'nama_lengkap' => $request->nama_lengkap,
+            'institusi_id' => $request->institusi,
+            'jurusan_id' => $request->jurusan
+        ]);
+
+        // tambah/edit pekerjaan
+        if (is_null(Pekerjaan::where('user_id', auth()->user()->id)->first())) {
+            // tambah pekerjaan
+            Pekerjaan::create([
+                'user_id' => auth()->user()->id,
+                'nama_pekerjaan' => $request->nama_pekerjaan,
+                'jabatan' => $request->jabatan,
+                'alamat_pekerjaan' => $request->alamat_kantor_pekerjaan,
+                'kode_pos' => $request->kode_pos_pekerjaan,
+                'nomor_hp_pekerjaan' => $request->nomor_hp_institusi_pekerjaan,
+                'email_pekerjaan' => $request->email_institusi_pekerjaan
+            ]);
+        } else {
+            // edit pekerjaan
+            Pekerjaan::where('user_id', auth()->user()->id)->update([
+                'nama_pekerjaan' => $request->nama_pekerjaan,
+                'jabatan' => $request->jabatan,
+                'alamat_pekerjaan' => $request->alamat_kantor_pekerjaan,
+                'kode_pos' => $request->kode_pos_pekerjaan,
+                'nomor_hp_pekerjaan' => $request->nomor_hp_institusi_pekerjaan,
+                'email_pekerjaan' => $request->email_institusi_pekerjaan
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'msg' => 'Berhasil Menambahkan Data Profil'
+        ]);
     }
 }

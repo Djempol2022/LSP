@@ -11,7 +11,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="mx-3">
-
                         <div class="col my-3">
                             {{-- JUDUL --}}
                             <div class="profil-section-title" style="font-size: 20px">
@@ -412,7 +411,13 @@
                 return false
             }
         }
-
+        $('.btn-close').on('click', function() {
+            $("#institusi").empty().append('');
+            $("#jenis_kelamin").empty().append('');
+            $("#kebangsaan").empty().append('');
+            $("#jurusan").empty().append('');
+            $("#kualifikasi_pendidikan").empty().append('');
+        })
         $("#edit-btn").on('click', function() {
             $("#editProfil").modal('show')
 
@@ -567,7 +572,6 @@
                             }, 'fast');
                         });
                     } else {
-                        $("#profile-section").load(location.href + " #profile-section>*", "");
                         $("#editProfil").modal('hide')
                         $("#form-update [name='kartu_keluarga']").val('');
                         $("#form-update [name='kartu_pelajar']").val('');
@@ -577,6 +581,13 @@
                         $('html, body').animate({
                             scrollTop: 0
                         }, 'fast');
+                        swal({
+                                title: "Berhasil",
+                                text: `${data.msg}`,
+                                icon: "success",
+                                successMode: true,
+                            }),
+                            $("#profile-section").load(location.href + " #profile-section>*", "");
                     }
                 }
             })
