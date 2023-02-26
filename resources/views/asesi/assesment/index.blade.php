@@ -243,13 +243,15 @@
             $(".sesi").text('Sesi : ' + data_ujian_asesi.sesi);
             $(".nama_asesor").text('Nama Asesor : ' + data_ujian_asesi.relasi_jadwal_uji_kompetensi.relasi_user_asesor
                 .relasi_user_asesor_detail.nama_lengkap);
-            $(".tanggal").text('Tanggal : ' + data_ujian_asesi.tanggal);
+            $(".tanggal").text('Ujian dibuka : ' + moment(data_ujian_asesi.tanggal).format('dddd, d MMMM Y') +', Pukul '+ moment(data_ujian_asesi.waktu_mulai).format('HH:mm'));
             $(".tuk").text('TUK : ' + data_ujian_asesi.relasi_tuk.nama_tuk);
 
             if (data_ujian_asesi.jenis_tes == 1) {
                 $(".jenis_tes").text('Jenis Tes : Pilihan Ganda');
             } else if (data_ujian_asesi.jenis_tes == 2) {
                 $(".jenis_tes").text('Jenis Tes : Essay');
+            } else if (data_ujian_asesi.jenis_tes == 3) {
+                $(".jenis_tes").text('Jenis Tes : Wawancara');
             }
             var url = "/asesi/soal/";
 

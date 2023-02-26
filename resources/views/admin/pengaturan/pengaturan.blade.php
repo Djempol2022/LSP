@@ -304,6 +304,7 @@
                 success: function(data) {
                     if (data.status == 0) {
                         $.each(data.error, function(prefix, val) {
+                            
                             $('label.' + prefix + '_error').text(val[0]);
                             // $('span.'+prefix+'_error').text(val[0]);
                         });

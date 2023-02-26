@@ -63,7 +63,7 @@
                                             <label>Jenis Tes</label>
                                           </div>
                                         <div class="col-md-8 form-group">
-                                            <input class="form-control" value="@if($jenis_tes->jenis_tes == 1) Pilihan Ganda @elseif($jenis_tes->jenis_tes == 2) Essay @endif" readonly>
+                                            <input class="form-control" value="@if($jenis_tes->jenis_tes == 1) Pilihan Ganda @elseif($jenis_tes->jenis_tes == 2) Essay @elseif($jenis_tes->jenis_tes == 3) Wawancara @endif" readonly>
                                           </div>
                                     </div>
                                 </div>
@@ -123,6 +123,14 @@
                                         </div>
                                         @endforeach
                                     @elseif ($jenis_tes->jenis_tes == 2)
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-1">
+                                            <div class="form-group has-icon-left">
+                                                <p class="card-title">Jawaban : {{$data_jawaban_asesi->jawaban}}</p>                                                    
+                                            </div>
+                                        </div>
+                                      </div>
+                                    @elseif ($jenis_tes->jenis_tes == 3)
                                     <div class="row">
                                         <div class="col-lg-12 mb-1">
                                             <div class="form-group has-icon-left">

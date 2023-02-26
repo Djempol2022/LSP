@@ -15,7 +15,22 @@
     {{-- EDIT PROFIL --}}
     <div class="mt-5">
         <h5 class="text-black my-4">Permohonan Sertifikasi Kompetensi</h5>
-        <img src="/images/logo/favicon_lsp.png" width="180px" class="rounded-circle" alt="">
+        <div>
+            <div class="col profil-section" style="margin-bottom:0% !important">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="col-lg-6 col-md-4 col-xs-6 thumb">
+                            @isset($data_permohonan_user_sertifikasi->relasi_user_detail->foto)
+                                <img src="{{ asset('storage/' . $data_permohonan_user_sertifikasi->relasi_user_detail->foto) }}"
+                                    class="img-thumbnail rounded-circle mb-3" alt="image">
+                            @else
+                                <img src="/images/logo/favicon_lsp.png" class="img-thumbnail rounded-circle" alt="image">
+                            @endisset
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {{-- RINCIAN DATA PEMOHON SERTIFIKASI --}}
         <div class="mb-5 pb-5" style="margin-bottom: 0% !important">
@@ -81,19 +96,15 @@
                             <p class="fw-bold">Kualifikasi Pendidikan</p>
                             <span>{{ $data_permohonan_user_sertifikasi->relasi_user_detail->relasi_kualifikasi_pendidikan->pendidikan ?? ''}}</span>
                         </div>
-                        <div class="col pb-4">
-                            <p class="fw-bold">Kartu Pelajar</p>
-                            @isset ($data_permohonan_user_sertifikasi->relasi_sertifikasi->nomor_urut)
-                            <p>{{ $data_permohonan_user_sertifikasi->relasi_sertifikasi->nomor_urut  ?? '' }}</p>
-                            <button type="button" class="btn btn-primary tombol-primary-medium mt-0"
-                                data-bs-toggle="modal" data-bs-target="#modalUbahOrTambahNomorUrut"
-                                id="ubahOrTambahUbahOrTambahNomorUrut">Edit Nomor Urut
-                            </button>
-                            @else
-                            <a href="#!" class="btn btn-primary tombol-primary-medium mt-0" data-bs-toggle="modal"
-                                data-bs-target="#modalNomorUrutAsesi" id="ubahOrTambahUbahOrTambahNomorUrut">+
-                                Nomor Urut</a>
-                            @endif
+                        <div class="col pb-4" id="nomor_urut">
+                            <p class="fw-bold">Nomor Urut Peserta</p>
+                                @isset ($data_permohonan_user_sertifikasi->relasi_sertifikasi->nomor_urut)
+                                    <p>{{ $data_permohonan_user_sertifikasi->relasi_sertifikasi->nomor_urut  ?? '' }}</p>
+                                @endif
+                            <a href="#!" class="btn btn-sm btn-primary mt-0" data-bs-toggle="modal"
+                                data-bs-target="#modalNomorUrutAsesi" id="ubahOrTambahUbahOrTambahNomorUrut" style="font-size: 60%">
+                                Setting Nomor Urut
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -435,8 +446,8 @@
                     @csrf
                     <div class="modal-body">
 
-                        <input type="text" name="sertifikasi_id"
-                            value="{{ $data_permohonan_user_sertifikasi->relasi_sertifikasi->id }}">
+                        <input type="hidden" name="sertifikasi_id"
+                            value="{{ $data_permohonan_user_sertifikasi->relasi_sertifikasi->id }}" hidden>
                         <div class="mb-3">
                             <label>Nomor Urut Asesi</label>
                             <input type="text" name="nomor_urut" placeholder="Masukkan Nomor Urut Asesi"
@@ -521,11 +532,8 @@
         // })
 
     // TAMBAH/UBAH NOMOR URUT ASESI
-    $("#ubahOrTambahNomorUrutAsesi").on('click', function () {
-        $("#modalNomorUrutAsesi").modal('show')
-
-        $("#formNomorUrutAsesi [name='nomor_urut']").val(data_permohonan_sertifikasi.relasi_sertifikasi
-            .relasi_tanda_tangan_admin.nomor_urut)
+    $("#ubahOrTambahUbahOrTambahNomorUrut").on('click', function () {
+        $("#formNomorUrutAsesi [name='nomor_urut']").val(data_permohonan_sertifikasi.relasi_sertifikasi.nomor_urut)
         $('#formNomorUrutAsesi').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
@@ -553,8 +561,7 @@
                                 successMode: true,
                             }),
                             $("#modalNomorUrutAsesi").modal('hide')
-                            setTimeout(function() {location.reload()}, 800);
-                            return false;
+                            $("#nomor_urut").load(location.href + " #nomor_urut>*", "");
                     }
                 }
             });

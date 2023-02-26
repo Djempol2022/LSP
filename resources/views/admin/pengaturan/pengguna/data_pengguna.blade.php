@@ -24,13 +24,12 @@
                 </span>
             
                 {{-- MODAL TAMBAH --}}
-            <div class="modal fade text-left" id="modalTambahPengguna" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-                    role="document">
+            <div class="modal fade text-left" id="modalTambahPengguna" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">>
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="myModalLabel33">Tambah Pengguna</h4>
-                            <button type="button" class="close" data-bs-dismiss="modal"
+                            <button type="button" class="close batal" data-bs-dismiss="modal"
                                 aria-label="Close">
                                 <i data-feather="x"></i>
                             </button>
@@ -108,14 +107,11 @@
                             </div>
                             
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light-secondary"
-                                    data-bs-dismiss="modal">
-                                    <i class="bx bx-x d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Batal</span>
+                                <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal">
+                                    Batal
                                 </button>
                                 <button type="submit" class="btn btn-primary ml-1">
-                                    <i class="bx bx-check d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Simpan</span>
+                                    Simpan
                                 </button>
                             </div>
                         </form>
@@ -131,6 +127,7 @@
                         <fieldset class="form-group">
                             <select class="form-select filter-role-pengguna" id="role-id">
                                 <option value="" disabled selected>Filter berdasarkan role</option>
+                                <option value="">Semua Pengguna</option>
                                 <option value="2">Peninjau</option>
                                 <option value="3">Asesor</option>
                                 <option value="4">Asesi</option>
@@ -155,13 +152,13 @@
         </div>
 
         {{-- MODAL EDIT --}}
-        <div class="modal fade text-left" id="modalEditPengguna" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal fade text-left" id="modalEditPengguna" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">>
             <div class="modal-dialog modal-dialog-centered"
                 role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel33">Ubah Pengguna</h4>
-                        <button type="button" class="close" data-bs-dismiss="modal"
+                        <button type="button" class="close batal" data-bs-dismiss="modal"
                             aria-label="Close">
                             <i data-feather="x"></i>
                         </button>
@@ -186,11 +183,7 @@
                             </div>
                             <label>Institusi/Perusahaan</label>
                             <div class="form-group">
-                                <select class="js-example-basic-single" name="institusi_id">
-                                    <option value="" selected disabled>Pilih Instansi/Perusahaan</option>
-                                    @foreach ($institusi as $data_institusi)
-                                    <option value="{{ $data_institusi['id'] }}">{{ $data_institusi['nama_institusi'] }}</option>    
-                                    @endforeach
+                                <select class="js-example-basic-single" name="institusi_id" id="institusi">
                                 </select>
                                 <div class="input-group has-validation">
                                     <label class="text-danger error-text institusi_id_error"></label>
@@ -199,11 +192,7 @@
 
                             <label>Jurusan</label>
                             <div class="form-group">
-                                <select class="js-example-basic-single" name="jurusan_id">
-                                    <option value="" selected disabled>Pilih Jurusan</option>
-                                    @foreach ($jurusan as $data_jurusan)
-                                    <option value="{{ $data_jurusan['id'] }}">{{ $data_jurusan['jurusan'] }}</option>    
-                                    @endforeach
+                                <select class="js-example-basic-single" name="jurusan_id" id="jurusan">
                                 </select>
                                 <div class="input-group has-validation">
                                     <label class="text-danger error-text jurusan_id_error"></label>
@@ -213,10 +202,10 @@
                             <label>Password</label>
                             <div class="form-group">
                                 <div class="input-group has-validation">
-                                    <input name="password" type="password" class="form-control" id="password" />
-                                    <span class="input-group-text" onclick="password_show_hide1();">
-                                        <i class="fas fa-eye" id="show_eye"></i>
-                                        <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                                    <input name="password" type="password" class="form-control" id="password_edit" placeholder="Kosongkan jika tidak ingin diubah"/>
+                                    <span class="input-group-text" onclick="password_show_hide2();">
+                                        <i class="fas fa-eye" id="e_show_eye"></i>
+                                        <i class="fas fa-eye-slash d-none" id="e_hide_eye"></i>
                                     </span>
                                     <div class="input-group has-validation">
                                         <label class="text-danger error-text password_error"></label>
@@ -226,12 +215,7 @@
 
                             <label>Role</label>
                             <div class="form-group">
-                                <select class="js-example-basic-single" name="role_id">
-                                    <option value="" selected disabled>Pilih Role</option>
-                                    <option value="1">Admin</option>
-                                    {{-- <option value="2">Peninjau</option> --}}
-                                    <option value="3">Asesor</option>
-                                    <option value="4">Asesi</option>
+                                <select class="js-example-basic-single" name="role_id" id="role">
                                 </select>
                                 <div class="input-group has-validation">
                                     <label class="text-danger error-text role_id_error"></label>
@@ -239,14 +223,12 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-light-secondary"
+                            <button type="button" class="btn btn-light-secondary batal"
                                 data-bs-dismiss="modal">
-                                <i class="bx bx-x d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Batal</span>
+                                Batal
                             </button>
                             <button type="submit" class="btn btn-primary ml-1">
-                                <i class="bx bx-check d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Simpan</span>
+                                Simpan
                             </button>
                         </div>
                     </form>
@@ -355,10 +337,10 @@
                 {
 					let tampilan;
                     tampilan =  `<span onclick="clickEditPengguna(${row.id})" class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="#">Edit</a>
+                                    <a class="text-white" href="#!">Edit</a>
                                 </span>
-                                <span onclick="hapusPengguna(${row.id})" class="badge bg-danger rounded-pill">
-                                    <a class="text-white" href="#">Hapus</a>
+                                <span id-pengguna = "${row.id}" class="badge bg-danger rounded-pill hapus_pengguna">
+                                    <a class="text-white" href="#!">Hapus</a>
                                 </span>`
                     return tampilan;
                 }
@@ -366,12 +348,33 @@
         ]
     });
 
+    let data_institusi = @json($institusi);
+    let data_jurusan   = @json($jurusan);
+    let asesor_value   = 3;
+    let asesi_value   = 4;
     function clickEditPengguna(id){
         const data_pengguna = list_pengguna[id]
             $("#modalEditPengguna").modal('show');
             $("#formEditPengguna [name='id']").val(id)
             $("#formEditPengguna [name='nama_lengkap']").val(data_pengguna.nama_lengkap);
+            $("#formEditPengguna [name='email']").val(data_pengguna.email);
+            $("#formEditPengguna [name='password']").val(data_pengguna.password);
+
+            $.each(data_institusi, function(key, value) {
+                $('#institusi')
+                .append(`<option value="${value.id}" ${value.id == data_pengguna.institusi_id ? 'selected' : ''}>${value.nama_institusi}</option>`)
+            });
+
+            $.each(data_jurusan, function(key, value) {
+                $('#jurusan')
+                .append(`<option value="${value.id}" ${value.id == data_pengguna.jurusan_id ? 'selected' : ''}>${value.jurusan}</option>`)
+            });
+
+
+            $('#role').append(`<option value="${3}" ${asesor_value == data_pengguna.role_id ? 'selected' : ''}>Asesor</option>`)
         
+            $('#role').append(`<option value="${4}" ${asesi_value == data_pengguna.role_id ? 'selected' : ''}>Asesi</option>`)
+
             $('#formEditPengguna').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
@@ -423,33 +426,65 @@
         }
     }
 
-    function hapusPengguna(id){
-        swal({
-            title: "Yakin ?",
-            text: "Menghapus Data ?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        $.ajax({
-            url: "/admin/hapus-pengguna/" + id,
-            dataType: 'json',
-            success: function (response) {
-                if (response.status == 0) {
-                    alert("Gagal Hapus")
-                } else if (response.status == 1) {
-                    swal({
-                            title: "Berhasil",
-                            text: `${response.msg}`,
-                            icon: "success",
-                            buttons: true,
-                            successMode: true,
-                        }),
-                    table_pengguna.ajax.reload(null, false)
-                }
-            }
-        });
+    function password_show_hide2() {
+        var x = document.getElementById("password_edit");
+        var e_show_eye = document.getElementById("e_show_eye");
+        var e_hide_eye = document.getElementById("e_hide_eye");
+        e_hide_eye.classList.remove("d-none");
+        if (x.type === "password") {
+            x.type = "text";
+            e_show_eye.style.display = "none";
+            e_hide_eye.style.display = "block";
+        } else {
+            x.type = "password";
+            e_show_eye.style.display = "block";
+            e_hide_eye.style.display = "none";
+        }
     }
+
+    $(document).on('click', '.hapus_pengguna', function(event) {
+            const id = $(event.currentTarget).attr('id-pengguna');
+
+            swal({
+                title: "Yakin ?",
+                text: "Menghapus Data ?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+
+                if (willDelete) {
+                    $.ajax({
+                        url: "/admin/hapus-pengguna/" + id,
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status == 0) {
+                                alert("Gagal Hapus")
+                            } else if (response.status == 1) {
+                                swal({
+                                        title: "Berhasil",
+                                        text: `${response.msg}`,
+                                        icon: "success",
+                                        buttons: true,
+                                        successMode: true,
+                                    }),
+                                    table_pengguna.ajax.reload()
+                            }
+                        }
+                    });
+                } else {
+                    //alert ('no');
+                    return false;
+                }
+            });
+        });
+
+    $('.batal').on('click', function(){
+        $(document).find('label.error-text').text('');
+        $("#institusi").empty().append('');
+        $("#jurusan").empty().append('');
+        $("#role").empty().append('');
+    })
 
     $('#formTambahPengguna').on('submit', function (e) {
         e.preventDefault();
