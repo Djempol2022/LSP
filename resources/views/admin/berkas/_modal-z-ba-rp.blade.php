@@ -26,9 +26,8 @@
             <div style="margin-top: 40px">
               <ol>
                 <li>Pelaksanaan asesmen dilaksanakan pada tanggal <span id="tgl_tes_tertulis_z_ba_rp"></span>
-                  untuk
-                  tes tertulis dan tanggal
-                  <span id="tgl_tes_praktek_z_ba_rp"></span> untuk tes praktek.
+                  sampai tanggal
+                  <span id="tgl_tes_praktek_z_ba_rp"></span>.
                 </li>
                 <li>
                   Jumlah asesi yang mengikuti uji kompetensi secara keseluruhan berjumlah <span
@@ -58,7 +57,8 @@
               </tr>
               <tr>
                 <td></td>
-                <td style="height: 70px;"></td>
+                <td style="height: 70px;"><img id="ttd_z_ba_rp_1" src="" alt="ttd" width="180px"
+                    class="ttd"></td>
               </tr>
               <tr>
                 <td></td>
@@ -132,10 +132,11 @@
               <table style="width: 100%; table-layout: fixed;" class="table table-bordered" cellspacing=0 cellpadding=5>
                 <thead>
                   <tr style="text-align: center;">
-                    <td style="width: 7%;">No</td>
-                    <td style="width: 41%;">Nama Peserta</td>
-                    <td style="width: 29%;">Jabatan</td>
-                    <td style="width: 23%;">Tanda Tangan</td>
+                    <td style="width: 4%;">No</td>
+                    <td style="width: 34%;">Nama Asesor</td>
+                    <td style="width: 24%;">Jabatan</td>
+                    <td style="width: 19%;">Jumlah Asesi</td>
+                    <td style="width: 19%;">Tanda Tangan</td>
                   </tr>
                 </thead>
                 <tbody id="tbody_z_ba_rp">
@@ -219,7 +220,8 @@
               </tr>
               <tr>
                 <td></td>
-                <td style="height: 70px;"></td>
+                <td style="height: 70px;"><img id="ttd_z_ba_rp_2" src="" alt="ttd" width="180px"
+                    class="ttd"></td>
               </tr>
               <tr>
                 <td style="font-weight: bold;" id="notulis_2_z_ba_rp"></td>
@@ -245,7 +247,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Close</button>
-        <a id='pdfSKPenetapan' href="#" class="btn btn-primary">Save as PDF</a>
+        <a id='pdfZBARP' href="#" class="btn btn-primary">Save as PDF</a>
       </div>
     </div>
   </div>

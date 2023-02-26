@@ -519,6 +519,17 @@ class BerkasController extends Controller
         return response()->json($z_ba_rp);
     }
 
+    public function cetak_z_ba_rp_pdf($id)
+    {
+        $z_ba_rp = ZBAPecahRP::with(['relasi_skema_sertifikasi', 'relasi_institusi', 'relasi_nama_tuk', 'relasi_nama_jabatan', 'relasi_bahasan_diskusi'])->find($id);
+        // dd($z_ba_rp);
+        // return view('admin.berkas.z_ba_rp.pdf', [
+        //     'z_ba_rp' => $z_ba_rp,
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.z_ba_rp.pdf', compact('z_ba_rp'));
+        return $pdf->download('Z Berita Acara Rapat Pleno.pdf');
+    }
+
     public function show_df_hadir_asesor_pleno($id)
     {
         $df_hadir_asesor_pleno = DFHadirAsesorPleno::with(['relasi_nama_jabatan'])->find($id);

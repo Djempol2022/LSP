@@ -51,12 +51,10 @@
                       id="tgl_tes_tertulis_1" onchange="inputAutoTglTesTertulis()"
                       style="border: none; outline-color: skyblue; font-weight: bolder; text-align: center"
                       required></span>
-                  untuk
-                  tes tertulis dan tanggal
+                  sampai tanggal
                   <span><input type="date" name="tgl_tes_praktek" id="tgl_tes_praktek_1"
                       style="border: none; outline-color: skyblue; font-weight: bolder; text-align: center"
-                      onchange="inputAutoTglTesPraktek()" required></span> untuk
-                  tes praktek.
+                      onchange="inputAutoTglTesPraktek()" required></span>
                 </li>
                 <li>
                   Jumlah asesi yang mengikuti uji kompetensi secara keseluruhan berjumlah <span><input type="number"

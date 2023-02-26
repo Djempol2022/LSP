@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('no_reg_met')->nullable();
             $table->integer('nip')->nullable();
             $table->boolean('is_nip')->nullable();
+            $table->integer('jml_asesi')->nullable();
             $table->timestamps();
         });
     }

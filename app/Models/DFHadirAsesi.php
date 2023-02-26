@@ -11,7 +11,10 @@ class DFHadirAsesi extends Model
 
     protected $table = 'df_hadir_asesi';
     protected $guarded = ['id'];
-    protected $dates = ['tgl', 'waktu'];
+    protected $dates = ['tgl'];
+    protected $casts = [
+        'waktu' => 'datetime:H:i',
+    ];
 
     public function relasi_skema_sertifikasi()
     {

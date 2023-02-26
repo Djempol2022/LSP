@@ -1214,16 +1214,17 @@
       $('#topik_z_ba_rp').text(data.topik);
       $('#ketua_rapat_z_ba_rp').text(data.ketua_rapat);
       $('#notulis_z_ba_rp').text(data.notulis);
-      //   $("#tbody_z_ba_rp").html(data.relasi_nama_jabatan.map(function(d, i) {
-      //     return $(
-      //       `<tr>
-      //         <td class="text-center" style="width: 10px;">${i + 1}.</td>
-      //                   <td>${d.nama}</td>
-      //                   <td>${d.jabatan}</td>
-      //                   <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
-      //               </tr>`
-      //     )
-      //   }));
+      $("#tbody_z_ba_rp").html(data.relasi_nama_jabatan.map(function(d, i) {
+        return $(
+          `<tr>
+              <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                        <td>${d.nama}</td>
+                        <td>${d.jabatan}</td>
+                        <td>${d.jml_asesi}</td>
+                        <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+                    </tr>`
+        )
+      }));
       $('#tgl_tes_tertulis_2_z_ba_rp').text(date_format(data.tgl_tes_tertulis, false));
       $('#tgl_tes_praktek_2_z_ba_rp').text(date_format(data.tgl_tes_praktek));
       $("#bahasan_diskusi_z_ba_rp").html(data.relasi_bahasan_diskusi.map(function(d, i) {
@@ -1236,6 +1237,10 @@
       $('#no_met_bttd_2_z_ba_rp').text(data.no_met_bttd);
       $('#notulis_2_z_ba_rp').text(data.notulis);
       $('#no_met_notulis_2_z_ba_rp').text(data.no_met_notulis);
+      $('#ttd_z_ba_rp_1').attr('src', data.ttd);
+      $('#ttd_z_ba_rp_2').attr('src', data.ttd);
+
+      $("#pdfZBARP").attr('href', 'cetak-z-ba-rp/' + data.id);
     })
   }
 
@@ -1301,17 +1306,9 @@
       let hari_df_hadir_asesor = date_hari_df_hadir_asesor.getDay();
       $('#hari_df_hadir_asesor').text(hari(hari_df_hadir_asesor));
       $('#tgl_df_hadir_asesor').text(date_format(data.tgl));
-      const time_wkt_mulai_df_hadir_asesor = new Date(data.wkt_mulai);
-      let wkt_mulai_df_hadir_asesor = ('0' + time_wkt_mulai_df_hadir_asesor.getHours()).substr(-2);
-      let menit_mulai_df_hadir_asesor = time_wkt_mulai_df_hadir_asesor.getMinutes();
 
-      const time_wkt_selesai_df_hadir_asesor = new Date(data.wkt_selesai);
-      let wkt_selesai_df_hadir_asesor = ('0' + time_wkt_selesai_df_hadir_asesor.getHours()).substr(-2);
-      let menit_selesai_df_hadir_asesor = time_wkt_selesai_df_hadir_asesor.getMinutes();
-
-      $('#wkt_mulai_df_hadir_asesor').text('' + wkt_mulai_df_hadir_asesor + ':' + menit_mulai_df_hadir_asesor);
-      $('#wkt_selesai_df_hadir_asesor').text('' + wkt_selesai_df_hadir_asesor + ':' +
-        menit_selesai_df_hadir_asesor);
+      $('#wkt_mulai_df_hadir_asesor').text(time_format(data.wkt_mulai));
+      $('#wkt_selesai_df_hadir_asesor').text(time_format(data.wkt_selesai));
       $('#tempat_df_hadir_asesor').text(data.tempat);
       let nama = data.relasi_nama_jabatan.filter(function(d) {
         return d.is_nip === 0;

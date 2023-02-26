@@ -11,7 +11,12 @@ class ZBAPecahRP extends Model
 
     protected $table = 'z_ba_pecah_rp';
     protected $guarded = ['id'];
-    protected $dates = ['tgl_tes_tertulis', 'tgl_tes_praktek', 'wkt_mulai_uk', 'wkt_selesai_uk'];
+    protected $dates = ['tgl_tes_tertulis', 'tgl_tes_praktek', 'tgl_rapat'];
+    protected $casts = [
+        'wkt_mulai_uk' => 'datetime:H:i',
+        'wkt_selesai_uk' => 'datetime:H:i',
+        'wkt_rapat' => 'datetime:H:i',
+    ];
 
     public function relasi_nama_tuk()
     {
