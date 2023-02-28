@@ -252,6 +252,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('cetak-z-ba-rp/{id}', 'cetak_z_ba_rp_pdf')->name('CetakZBARPPDF');
             Route::get('cetak-df-hadir-asesor-pleno/{id}', 'cetak_df_hadir_asesor_pleno_pdf')->name('CetakDFHadirAsesorPlenoPDF');
             Route::get('cetak-df-hadir-asesor/{id}', 'cetak_df_hadir_asesor_pdf')->name('CetakDFHadirAsesorPDF');
+
+            // EXCEL
+            Route::get('berkas/df-hadir-asesi-bnsp/{years}', 'export_excel')->name('Berkas.DFHadirAsesiBNSP.ExportExcel');
         });
     });
     // Contoh Pemanggilan Route di Blade -> asesor.Dashboard

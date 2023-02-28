@@ -71,23 +71,25 @@
                 Sertifikasi Profesi (LSP) SMK Negeri 1 Sintang menugaskan kepada yang
                 namanya tercantum di bawah ini :
               </p>
-              <table class="table table-bordered" id="tableSTVerifikasiTUK">
-                <thead>
-                  <tr class="text-center">
-                    <th>NO</th>
-                    <th>NAMA</th>
-                    <th>Jabatan</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody id="bodyTable">
-                  <tr>
-                    <td colspan="5" class="text-center font-extrabold h1 m-0 p-0"><button type="button"
-                        class="border-0 bg-transparent text-primary" id="addRow">+</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table class="table table-bordered" id="tableSTVerifikasiTUK">
+                  <thead>
+                    <tr class="text-center">
+                      <th>NO</th>
+                      <th>NAMA</th>
+                      <th>Jabatan</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bodyTable">
+                    <tr>
+                      <td colspan="5" class="text-center font-extrabold h1 m-0 p-0"><button type="button"
+                          class="border-0 bg-transparent text-primary" id="addRow">+</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div>
               <table cellpadding=10>
@@ -111,7 +113,7 @@
             </div>
           </div>
 
-          <div class="d-flex justify-content-end text-black">
+          <div class="d-flex justify-content-center justify-content-sm-end text-black">
             <div class="text-start w-40">
               <div class="mb-2">
                 <input type="text" class="form-control mb-2 @error('tempat_ditetapkan') is-invalid @enderror"
@@ -138,7 +140,7 @@
               </div>
               <div>
                 {{-- TANDA TANGAN / TTD --}}
-                <div class="mb-2 signature-pad" id="signature-pad">
+                <div class="mb-2 signature-pad" id="signature-pad" style="width: 75%">
                   <canvas id="sig"></canvas>
                   <input type="hidden" name="ttd" value="" id="ttd">
                 </div>

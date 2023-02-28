@@ -1,3 +1,11 @@
+/* pdf */
+@font-face {
+    font-family: 'Berlin Sans FB Demi Bold';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../../fonts/vendor/berkas-font/berlin-sans-fb-demi-bold/berlin-sans-fb-demi-bold.ttf') format('truetype');
+  }
+/* end of pdf */
 @font-face {
     font-display: swap;
     font-family: Nunito;

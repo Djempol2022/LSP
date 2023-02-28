@@ -1,75 +1,9 @@
-.d-flex {
-    display: flex !important;
+/* pdf */
+@font-face {
+    font-family: "Berlin Sans FB Demi Bold";
+    font-style: normal;
+    font-weight: bold;
+    src: url("../../fonts/vendor/berkas-font/berlin-sans-fb-demi-bold/berlin-sans-fb-demi-bold.ttf")
+        format("truetype");
 }
-.align-items-center {
-    align-items: center !important;
-}
-.w-25 {
-    width: 25% !important;
-}
-.text-info {
-    --bs-text-opacity: 1;
-    color: rgba(var(--bs-info-rgb), var(--bs-text-opacity)) !important;
-}
-.text-danger {
-    --bs-text-opacity: 1;
-    color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
-}
-.font-extrabold {
-    font-weight: 800;
-}
-
-.text-gray-600 {
-    color: #6c757d !important;
-}
-
-.font-bold {
-    font-weight: 700;
-}
-.text-center {
-    text-align: center !important;
-}
-
-.flex-column {
-    flex-direction: column !important;
-}
-
-.mb-0 {
-    margin-bottom: 0 !important;
-}
-
-.fw-light {
-    font-weight: 300 !important;
-}
-
-.fst-italic {
-    font-style: italic !important;
-}
-.text-black {
-    --bs-text-opacity: 1;
-    color: rgba(var(--bs-black-rgb), var(--bs-text-opacity)) !important;
-}
-.align-text-top {
-    vertical-align: text-top !important;
-}
-.lh-sm {
-    line-height: 1.25 !important;
-}
-.ps-3 {
-    padding-left: 1rem !important;
-}
-.justify-content-end {
-    justify-content: flex-end !important;
-}
-.justify-content-between {
-    justify-content: space-between !important;
-}
-.bi-text-left:before {
-    content: "\f5c7";
-}
-.mb-3 {
-    margin-bottom: 1rem !important;
-}
-.text-start {
-    text-align: left !important;
-}
+/* end of pdf */

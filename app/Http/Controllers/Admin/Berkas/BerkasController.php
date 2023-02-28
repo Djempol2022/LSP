@@ -2,25 +2,33 @@
 
 namespace App\Http\Controllers\Admin\Berkas;
 
+use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
+use App\Models\AsesiUjiKompetensi;
 use App\Models\DaftarTUKTerverifikasi;
 use App\Models\DFHadirAsesi;
 use App\Models\DFHadirAsesorPleno;
 use App\Models\HasilVerifikasiTUK;
 use App\Models\SKPenetapanTUK;
 use App\Models\STVerifikasiTUK;
+use App\Models\User;
 use App\Models\X03STVerifikasiTUK;
 use App\Models\X04BeritaAcara;
 use App\Models\ZBAPecahRP;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class BerkasController extends Controller
 {
     public function index()
     {
+        $year = AsesiUjiKompetensi::selectRaw('YEAR(updated_at) as year')
+            ->groupBy('year')
+            ->get();
         return view('admin.berkas.index', [
-            'where' => 'Berkas'
+            'where' => 'Berkas',
+            'years' => $year
         ]);
     }
 
@@ -581,5 +589,10 @@ class BerkasController extends Controller
         // ]);
         $pdf = PDF::loadview('admin.berkas.df_hadir_asesor.pdf', compact('df_hadir_asesor'));
         return $pdf->download('Daftar Hadir Asesor.pdf');
+    }
+
+    public function export_excel($year)
+    {
+        return Excel::download(new UserExport($year), 'users.xlsx');
     }
 }

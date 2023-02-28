@@ -5,6 +5,8 @@
 
     skPenetapanTUKTerverifikasi();
     $('#tambah').attr('href', '/admin/berkas/sk-penetapan-tuk-terverifikasi');
+    $('#years').hide();
+    $('#export_excel').hide();
 
 
     // value berkas dropdown
@@ -19,29 +21,102 @@
 
       if (berkasValue === 'sk-penetapan-tuk-terverifikasi') {
         skPenetapanTUKTerverifikasi();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
       } else if (berkasValue === 'daftar-tuk-terverifikasi') {
         daftarHasilVerifikasi();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
       } else if (berkasValue === 'hasil-verifikasi-tuk') {
         hasilVerifikasiTUK();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
       } else if (berkasValue === 'st-verifikasi-tuk') {
         stVerifikasiTUK();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
       } else if (berkasValue === 'df-hadir-asesi') {
         dfHadirAsesi();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
       } else if (berkasValue === 'x03-st-verifikasi-tuk') {
         x03STVerifikasiTUK();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
       } else if (berkasValue === 'x04-berita-acara') {
         x04BeritaAcara();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
       } else if (berkasValue === 'z-ba-pecah-rp') {
         zBAPecahRP();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
       } else if (berkasValue === 'z-ba-rp') {
         zBARP();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
       } else if (berkasValue === 'df-hadir-asesor-pleno') {
         dfHadirAsesorPleno();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
       } else if (berkasValue === 'df-hadir-asesor') {
         dfHadirAsesor();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+      } else if (berkasValue === 'df-hadir-asesi-bnsp') {
+        $('#table-surat').DataTable().destroy();
+        $('#tambah').hide();
+        $('#table-surat').hide();
+        $('#years').show();
+        $('#export_excel').show();
+        $('#myImgLightbulb').hide();
       } else {
         $('#table-surat').DataTable();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
       }
+    });
+
+    // export to excel year dropdown
+    $('#years').change(function() {
+      let yearValue = $(this).val();
+      $('#export_excel').attr('href', '/admin/berkas/df-hadir-asesi-bnsp/' + yearValue);
     });
 
     // lightbulb
@@ -825,6 +900,10 @@
       });
     }
 
+    function dfHadirAsesiBNSP() {
+      $('#table-surat').DataTable().destroy();
+    }
+
   })
 
   function detailSKPenetapan(id) {
@@ -865,7 +944,7 @@
         i) {
         return $(
           `<tr>
-                    <td>${i + 1}.</td>
+                    <td style="text-align: center;">${i + 1}.</td>
                     <td>${d.relasi_nama_tuk.nama_tuk}</td>
                     <td>${d.relasi_skema_sertifikasi.judul_skema_sertifikasi}</td>
                     <td>${d.penanggung_jawab}</td>

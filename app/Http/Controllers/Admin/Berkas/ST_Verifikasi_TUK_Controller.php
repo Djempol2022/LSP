@@ -72,6 +72,6 @@ class ST_Verifikasi_TUK_Controller extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->route('admin.Berkas');
     }
 }

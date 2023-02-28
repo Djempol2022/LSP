@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card px-5">
           @include('layout.header-berkas')
           <div class="text-center d-flex flex-column">
             <h6 class="mb-0">SURAT KEPUTUSAN</h6>
@@ -134,7 +134,7 @@
         </div>
 
         {{-- lembar 2 --}}
-        <div class="card p-5">
+        <div class="card px-5">
           @include('layout.header-berkas')
           <div class="text-left d-flex flex-column mb-3">
             <h6 class="mb-0 fw-light">Lampiran SK</h6>

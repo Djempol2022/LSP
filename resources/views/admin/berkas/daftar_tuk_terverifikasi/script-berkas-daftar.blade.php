@@ -65,6 +65,7 @@
             for (let j = 1; j < rowCount; j++) {
               let rowJ = table.rows[j];
               rowJ.cells[0].innerHTML = j + '.';
+              rowJ.cells[4].childNodes[0].name = 'button' + (j + 1);
             }
           }
         }
@@ -83,6 +84,7 @@
       let row = table.insertRow(rowCount);
 
       let cell1 = row.insertCell(0);
+      cell1.className = 'text-center';
       cell1.innerHTML = rowCount + '.';
 
 

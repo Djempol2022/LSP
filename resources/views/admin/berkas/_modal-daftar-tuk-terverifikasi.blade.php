@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="card p-5">
+        <div class="card px-5">
           @include('layout.header-berkas')
           <div>
             <h6 class="line-sp mb-0 text-center">DAFTAR TEMPAT UJI KOMPETENSI (TUK) TERVERIFIKASI</h6>
