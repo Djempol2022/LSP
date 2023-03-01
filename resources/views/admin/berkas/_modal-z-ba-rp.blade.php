@@ -1,13 +1,13 @@
 <div class="modal fade" id="modalDetailZBARP" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
+  <div class="modal-dialog modal-dialog-scrollable" style="max-width: 90vw; overflow-y: auto">
+    <div class="modal-content" style="overflow-x: auto">
       <div class="modal-header">
         <h1 class="modal-title fs-5">Z Berita Acara Rapat Pleno</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto mx-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">BERITA ACARA</h6>
@@ -82,7 +82,7 @@
         </div>
 
         {{-- lembar 2 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto mx-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">NOTULEN RAPAT PLENO PELAKSANAAN UJI KOMPETENSI</h6>
@@ -162,7 +162,7 @@
         </div>
 
         {{-- lembar 3 --}}
-        <div class="card px-5 pt-5">
+        <div class="card px-5 pt-5 overflow-x-auto mx-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div style="color: black;">
             <h6 style="font-weight: bold">Bahasan/Diskusi</h6>

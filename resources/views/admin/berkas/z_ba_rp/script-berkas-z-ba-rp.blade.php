@@ -148,6 +148,7 @@
               rowJ.cells[4].style = '';
             }
             rowJ.cells[4].innerHTML = j;
+            rowJ.cells[5].childNodes[0].name = 'button' + (j + 1);
           }
         }
       }

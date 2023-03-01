@@ -16,18 +16,18 @@
       <form action="{{ route('admin.Berkas.DFHadirAsesi.Add') }}" method="POST">
         @csrf
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">DAFTAR HADIR ASESI</h6>
           </div>
           <div style="margin-top: 20px; margin-left: 30px">
-            <table style="width: 100%">
+            <table style="width: 50%">
               <tr>
                 <td style="width: 12%">Tanggal</td>
                 <td style="width: 3%">:</td>
                 <td style="width: 85%" class="d-flex align-items-center @error('tgl') is-invalid @enderror">
-                  <input type="date" name="tgl" class="form-control w-25" required>
+                  <input type="date" name="tgl" class="form-control" required>
                   @error('tgl')
                     <span class="text-danger">
                       <strong>{{ $message }}</strong>
@@ -39,10 +39,10 @@
                 <td>Waktu</td>
                 <td>:</td>
                 <td class="d-flex align-items-center"><input type="time" name="wkt_mulai"
-                    class="form-control @error('wkt_mulai') is-invalid @enderror" style="width: 15%" required>
+                    class="form-control w-50 @error('wkt_mulai') is-invalid @enderror" required> WIB - selesai
                   @error('wkt_mulai')
                     <span class="text-danger">
-                      <strong>Waktu Mulai {{ $message }}</strong>
+                      <strong>{{ $message }}</strong>
                     </span>
                   @enderror
               </tr>
@@ -50,7 +50,7 @@
                 <td>Tempat</td>
                 <td>:</td>
                 <td class="d-flex align-items-center">
-                  <input type="text" name="tempat" class="form-control w-40 @error('tempat') is-invalid @enderror"
+                  <input type="text" name="tempat" class="form-control @error('tempat') is-invalid @enderror"
                     required>
                   @error('tempat')
                     <span class="text-danger">
@@ -64,7 +64,7 @@
                 <td>:</td>
                 <td class="d-flex align-items-center">
                   <select name="skema_sertifikasi" id="skema_sertifikasi"
-                    class="form-control w-40 @error('skema_sertifikasi') is-invalid @enderror" required>
+                    class="form-control @error('skema_sertifikasi') is-invalid @enderror" required>
                     <option value="">-- Pilih Skema Sertifikasi --</option>
                     @foreach ($skema_sertifikasi as $item)
                       <option value="{{ $item->id }}">{{ $item->judul_skema_sertifikasi }}</option>
@@ -80,7 +80,7 @@
             </table>
           </div>
 
-          <div style="margin-top: 20px;">
+          <div style="margin-top: 20px;" class="table-responsive">
             <table class="table table-bordered" id="dfHadirAsesi">
               <thead>
                 <tr style="text-align: center">

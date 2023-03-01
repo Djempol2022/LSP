@@ -95,6 +95,6 @@ class DF_Hadir_Asesi_Controller extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->route('admin.Berkas');
     }
 }

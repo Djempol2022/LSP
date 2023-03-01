@@ -49,12 +49,7 @@
       </ol>
     </div>
 
-    <div style="text-align: right; margin-top: 1rem;">
-      <p style="font-size: 10px; margin-bottom: -10px; font-style: italic;">Jalan Raya
-        Sintang-Pontianak Km.8 Sintang</p>
-      <p style="font-size: 10px; margin-bottom: 0; font-style: italic;">Telp (0565)21377 e-mail :
-        lspsmkn1stg@gmail.com</p>
-    </div>
+    @include('layout.footer-berkas')
   </footer>
 
   <main>

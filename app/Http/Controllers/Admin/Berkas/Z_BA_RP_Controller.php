@@ -128,6 +128,6 @@ class Z_BA_RP_Controller extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->route('admin.Berkas');
     }
 }

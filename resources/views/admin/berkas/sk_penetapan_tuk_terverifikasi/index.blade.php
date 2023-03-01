@@ -16,7 +16,7 @@
       <form action="{{ route('admin.Berkas.SKPenetapanTUKTerverifikasi.Add') }}" method="POST">
         @csrf
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-berkas')
           <div class="text-center d-flex flex-column">
             <h6 class="mb-0">SURAT KEPUTUSAN</h6>
@@ -186,7 +186,7 @@
         </div>
 
         {{-- lembar 2 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-berkas')
           <div class="text-left d-flex flex-column mb-3">
             <h6 class="mb-0 fw-light">Lampiran SK</h6>
