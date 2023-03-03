@@ -145,6 +145,12 @@
       } else {
         $('#export_excel').attr('href', '/admin/berkas/df-hadir-asesi-bnsp/' + yearValue);
 
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+
         $.ajax({
           type: "GET",
           url: "/admin/table-sertifikat/" + yearValue,
@@ -168,11 +174,11 @@
                     (() => {
                         let i = 1;
                         return response.user.map(data => `
-                        <tr data-id="${data.id}">
+                        <tr>
                             <td>${i++}</td>
                             <td>${data.nama_lengkap}</td>
                             <td>${data.relasi_institusi.nama_institusi}</td>
-                            <td class="text-primary" data-field="no_sertifikat">${data.nama_lengkap}</td>
+                            <td class="text-primary" data-field="no_sertifikat" data-pk="${data.id}">${data.relasi_user_detail.no_sertifikat ?? 'Belum ada nomor sertifikat'}</td>
                             <td>
                             <a href="/admin/print-sertifikat/${data.id}" class="btn btn-primary btn-sm">Print Sertifikat</a>
                             </td>
@@ -188,24 +194,20 @@
             $('#editable-table td[data-field]').editable({
               type: 'text',
               url: '/admin/update-sertifikat',
-              method: 'POST',
-              params: function(params) {
-                // Include the row ID and field name in the data sent to the server
-                var row = $(this).parent('tr');
-                params.id = row.attr('data-id');
-                params.field = $(this).attr('data-field');
-                return params;
-              },
-              success: function(response, newValue) {
-                // Handle success
-                console.log('Update successful');
-                console.log(response);
-                console.log(newValue);
-              },
-              error: function(response) {
-                // Handle error
-                console.log('Update failed');
-              }
+              //   data: {
+              //     id: $(this).parent('tr').attr('data-id'),
+              //     field: $(this).attr('data-field'),
+              //   },
+              //   success: function(response, newValue) {
+              //     // Handle success
+              //     console.log('Update successful');
+              //     console.log(response);
+              //     console.log(newValue);
+              //   },
+              //   error: function(response) {
+              //     // Handle error
+              //     console.log('Update failed');
+              //   }
             });
           },
           error: function(xhr, status, error) {
@@ -228,11 +230,11 @@
     //   }, function(value) {
     //     // handle save
     //     var row = cell.parent('tr');
-    //     var data = {
-    //       id: row.attr('data-id'),
-    //       field: cell.attr('data-field'),
-    //       value: value
-    //     };
+    // var data = {
+    //   id: row.attr('data-id'),
+    //   field: cell.attr('data-field'),
+    //   value: value
+    // };
     //     $.ajax({
     //       method: 'POST',
     //       url: '/admin/update-sertifikat',

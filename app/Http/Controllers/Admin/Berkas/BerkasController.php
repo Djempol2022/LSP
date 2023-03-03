@@ -12,6 +12,7 @@ use App\Models\HasilVerifikasiTUK;
 use App\Models\SKPenetapanTUK;
 use App\Models\STVerifikasiTUK;
 use App\Models\User;
+use App\Models\UserDetail;
 use App\Models\X03STVerifikasiTUK;
 use App\Models\X04BeritaAcara;
 use App\Models\ZBAPecahRP;
@@ -621,8 +622,15 @@ class BerkasController extends Controller
         ]);
     }
 
-    public function update_sertifikat()
+    public function update_sertifikat(Request $request)
     {
-        return response()->json('ok');
+        if ($request->ajax()) {
+            UserDetail::where('user_id', $request->pk)->update([
+                'no_sertifikat' => $request->value,
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+        ]);
     }
 }

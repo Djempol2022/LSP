@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('alamat_rumah')->nullable();
             $table->string('nomor_hp')->nullable();
             $table->string('foto')->nullable();
+            $table->string('no_sertifikat')->nullable();
             $table->text('ttd')->nullable();
             $table->timestamps();
         });
