@@ -423,17 +423,15 @@
 
             $("#nama_lengkap").val(data.nama_lengkap)
 
-            $("#form-update [name='institusi']").append(institusis.map(function(d) {
-                return $(
-                    `<option value='${d.id}' ${d.id === data.institusi_id ? 'selected' : ''}>${d.nama_institusi}</option>`
-                )
-            }))
-
-            $("#form-update [name='jurusan']").append(jurusans.map(function(d) {
-                return $(
-                    `<option value='${d.id}' ${d.id === data.jurusan_id ? 'selected' : ''}>${d.jurusan}</option>`
-                )
-            }))
+            $.each(institusis, function(key, value) {
+                $("#form-update [name='institusi']")
+                .append(`<option value="${value.id}" ${value.id == data.institusi_id ? 'selected' : ''}>${value.nama_institusi}</option>`)
+            });
+            
+            $.each(jurusans, function(key, value) {
+                $("#form-update [name='jurusan']")
+                .append(`<option value="${value.id}" ${value.id == data.jurusan_id ? 'selected' : ''}>${value.jurusan}</option>`)
+            });
 
             $("#form-update [name='ktp_nik_paspor']").val(data.relasi_user_detail.ktp_nik_paspor)
 
@@ -442,20 +440,20 @@
             $("#form-update [name='tanggal_lahir']").val(data.relasi_user_detail.tanggal_lahir)
 
             $("#form-update [name='jenis_kelamin']").append(
-                $(
-                    `<option value='laki-laki' ${'laki-laki' === data.relasi_user_detail.jenis_kelamin ? 'selected' : ''}>Laki-laki</option>
-          <option value='perempuan' ${'perempuan' === data.relasi_user_detail.jenis_kelamin ? 'selected' : ''}>Perempuan</option>`
-                ))
-            $("#form-update [name='kebangsaan']").append(kebangsaan.map(function(d) {
-                if (isset(data.relasi_user_detail.kebangsaan_id)) {
-                    return $(
-                        `<option value='${d.id}'>${d.kebangsaan}</option>`)
-                } else {
-                    return $(
-                        `<option value='${d.id}' ${d.id === data.relasi_user_detail.kebangsaan_id ? 'selected' : ''}>${d.kebangsaan}</option>`
-                    )
+            $(
+                `<option value='laki-laki' ${'laki-laki' === data.relasi_user_detail.jenis_kelamin ? 'selected' : ''}>Laki-laki</option>
+                <option value='perempuan' ${'perempuan' === data.relasi_user_detail.jenis_kelamin ? 'selected' : ''}>Perempuan</option>`
+            ))
+
+            $.each(kebangsaan, function(key, value) {
+                if(isset(data.relasi_user_detail.kebangsaan_id)){
+                    $("#form-update [name='kebangsaan']")
+                    .append(`<option value="${value.id}" >${value.kebangsaan}</option>`)
+                }else{
+                    $("#form-update [name='kebangsaan']")
+                    .append(`<option value="${value.id}" ${value.id == data.relasi_user_detail.kebangsaan_id ? 'selected' : ''}>${value.kebangsaan}</option>`)
                 }
-            }))
+            });
 
             $("#form-update [name='alamat_rumah']").val(data.relasi_user_detail.alamat_rumah)
 
@@ -465,16 +463,15 @@
 
             $("#form-update [name='email']").val(data.email)
 
-            $("#form-update [name='kualifikasi_pendidikan']").append(kualifikasi_pendidikan.map(function(d) {
-                if (isset(data.relasi_user_detail.kualifikasi_pendidikan_id)) {
-                    return $(
-                        `<option value='${d.id}'>${d.pendidikan}</option>`)
-                } else {
-                    return $(
-                        `<option value='${d.id}' ${d.id === data.relasi_user_detail.kualifikasi_pendidikan_id ? 'selected' : ''}>${d.pendidikan}</option>`
-                    )
+            $.each(kualifikasi_pendidikan, function(key, value) {
+                if(isset(data.relasi_user_detail.kualifikasi_pendidikan_id)){
+                    $("#form-update [name='kualifikasi_pendidikan']")
+                    .append(`<option value="${value.id}" >${value.pendidikan}</option>`)
+                }else{
+                    $("#form-update [name='kualifikasi_pendidikan']")
+                    .append(`<option value="${value.id}" ${value.id == data.relasi_user_detail.kualifikasi_pendidikan_id ? 'selected' : ''}>${value.pendidikan}</option>`)
                 }
-            }))
+            });
 
             if (isset(data.relasi_pekerjaan.nama_pekerjaan)) {
                 $("#form-update [name='nama_pekerjaan']").val('')

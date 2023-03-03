@@ -19,8 +19,7 @@ class AsesorDashboard extends Controller
 {
     public function dashboard()
     {
-        $muk = MateriUjiKompetensi::with('relasi_jurusan')->where('jurusan_id', Auth::user()->jurusan_id)->first();
-        return view('asesor.dashboard.dashboard', ['muk' => $muk]);
+        return view('asesor.dashboard.dashboard');
     }
 
     // UNIT KOMPETENSI BERDASARKAN JURUSAN ASESOR

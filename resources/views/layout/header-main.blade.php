@@ -18,7 +18,7 @@
                 } elseif ($type_asesi_2->status == 1) {
                     $notif[0] = 'Akun Sudah Diverifikasi';
                     $notif[1] = 'Silahkan lanjut ke menu Assesment / Assesment Mandiri !';
-                    if (!is_null($type_asesi_3) && is_null($condition->user_asesor_id)) {
+                    if (!is_null($type_asesi_3) && is_null($condition)) {
                         $notif[0] = 'Verifikasi asesor';
                         $notif[1] = 'Silahkan tunggu verifikasi data oleh asesor !';
                     } elseif (!is_null($type_asesi_3) && !is_null($condition->user_asesor_id)) {

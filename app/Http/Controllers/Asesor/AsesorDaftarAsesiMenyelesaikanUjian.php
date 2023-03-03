@@ -20,8 +20,12 @@ class AsesorDaftarAsesiMenyelesaikanUjian extends Controller
     }
 
     public function data_asesi_telah_selesai_ujian(Request $request){
-        $data = AsesiUjiKompetensi::select([
-            'asesi_uji_kompetensi.*'
+        // $data = AsesiUjiKompetensi::select([
+        //     'asesi_uji_kompetensi.*'
+        // ]);
+
+        $data = KoreksiJawaban::select([
+            'koreksi_jawaban.*'
         ]);
 
         // $data = $data->with('relasi_jadwal_uji_kompetensi.relasi_user_asesor', 'relasi_jadwal_uji_kompetensi.relasi_muk', 
@@ -44,8 +48,10 @@ class AsesorDaftarAsesiMenyelesaikanUjian extends Controller
             'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian',
             'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.relasi_tuk',
             'relasi_user_asesi',
-            'relasi_jadwal_uji_kompetensi.relasi_status_koreksi')
-            ->where('status_ujian_berlangsung', 2)
+            // 'relasi_status_koreksi',
+            // 'relasi_jadwal_uji_kompetensi.relasi_status_koreksi'
+            )
+            // ->where('status_ujian_berlangsung', 2)
             ->whereRelation('relasi_jadwal_uji_kompetensi.relasi_user_asesor','user_asesor_id', Auth::user()->id)
             ->get();
 

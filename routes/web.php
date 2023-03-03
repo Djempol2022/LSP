@@ -23,8 +23,9 @@ use App\Http\Controllers\Admin\Admin_DashboardController;
 use App\Http\Controllers\Admin\Admin_JadwalUjiKompetensi;
 use App\Http\Controllers\Admin\Admin_AssessmentController;
 use App\Http\Controllers\Admin\Admin_PengaturanController;
-
 use App\Http\Controllers\Admin\Admin_DetailJadwalUjiKompetensi;
+use App\Http\Controllers\Admin\Admin_ProfilController;
+
 use App\Http\Controllers\Asesor\AsesorDaftarAsesiMenyelesaikanUjian;
 use App\Http\Controllers\Admin\Berkas\BerkasController;
 use App\Http\Controllers\Admin\Berkas\Daftar_TUK_Terverifikasi_Controller;
@@ -52,7 +53,7 @@ use App\Http\Controllers\Peninjau\PeninjauDashboardController;
 */
 
 Route::get('/', function () {
-    return redirect('asesi/dashboard');
+    return view('login');
 });
 // LOGIN CONTROLLER
 Route::middleware('guest')->group(function () {
@@ -101,10 +102,20 @@ Route::middleware(['auth'])->group(function () {
             Route::any('data-daftar-permohonan-sertifikasi-acc', 'data_permohonan_sertifikasi_kompetensi_acc')->name('DataPermohonanSertifikasiKompetensiAcc');
             Route::any('data-pengajuan-asesmen-mandiri-acc', 'data_pengajuan_asesmen_mandiri_acc')->name('DataPengajuanAsesmenMandiri');
             Route::get('detail-data-pengajuan-asesmen-mandiri-acc/{id}/{jurusan_id}', 'detail_pengesahan_asesmen_mandiri_acc')->name('Assessment.DetailPengesahahAssessmentMandiri');
+            
+            Route::any('data-rekapan-berkas', 'data_rekap_berkas')->name('DataRekapanBerkas');
+            Route::get('detail-rekapan-permohonan-sertifikasi/{id}', 'detail_rekapan_permohonan_sertifikasi')->name('Assessment.DetailRekapanPermohonanSertiifikasi');
+            Route::get('cetak-rekapan-permohonan-sertifikasi/{id}', 'cetak_permohonan_sertifikasi')->name('CetakPermohonanSertifikasi');
+            
+            Route::get('detail-rekapan-asesmen-mandiri/{id}/{jurusan_id}', 'detail_rekapan_asesmen_mandiri')->name('Assessment.DetailRekapanAsesmenMandiri');
+            Route::get('cetak-rekapan-asesmen-mandiri/{jurusan_id}/{user_asesi_id}', 'cetak_asesmen_mandiri')->name('CetakAsesmenMandiri');
+
         });
 
         Route::controller(Admin_UmpanBalik::class)->group(function () {
             Route::any('data-umpan-balik-asesi', 'data_umpan_balik_asesi')->name('DataUmpanBalikAsesi');
+            Route::get('daftar-data-umpan-balik-asesi', 'daftar_data_umpan_balik_asesi')->name('Assessment.DaftarKomponenUmpanBalikAsesi');
+
             Route::get('umpan-balik', 'umpan_balik')->name('Assessment.HalamanUmpanBalik');
             Route::any('daftar-data-umpan-balik', 'daftar_data_umpan_balik')->name('DaftarKomponenUmpanBalik');
             Route::get('buat-umpan-balik', 'halaman_buat_umpan_balik')->name('Assessment.HalamanBuatKomponenUmpanBalik');
@@ -191,6 +202,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('hapus-pengguna/{id}', 'hapus_pengguna');
             Route::post('tambah-pengguna', 'tambah_pengguna')->name('TambahPengguna');
             Route::post('ubah-pengguna', 'ubah_pengguna')->name('UbahPengguna');
+        });
+
+        Route::controller(Admin_ProfilController::class)->group(function (){
+            Route::get('profil', 'index')->name('Profil');
+            Route::post('profil', 'update')->name('Profil.update');
         });
 
         // Berkas
@@ -349,8 +365,8 @@ Route::middleware(['auth'])->group(function () {
             // HALAMAN KELOLA SOAL
             Route::get('kelola-soal', 'kelola_soal')->name('KelolaSoal');
             Route::any('data-kelola-soal', 'data_kelola_soal')->name('DataKelolaSoal');
-            Route::get('jenis-soal/{id}', 'pilih_jenis_soal')->name('PilihJenisSoal');
-            Route::get('buat-soal/{id}/{jenis_soal_id}', 'buat_soal')->name('BuatSoal');
+            Route::get('jenis-soal/{id}', 'pilih_jenis_soal')->name('KelolaSoal.PilihJenisSoal');
+            Route::get('buat-soal/{id}/{jenis_soal_id}', 'buat_soal')->name('KelolaSoal.BuatSoal');
             Route::post('tambah-soal-pilihan-ganda', 'tambah_soal_pilihan_ganda')->name('TambahSoalPilihanGanda');
             Route::post('tambah-soal-essay', 'tambah_soal_essay')->name('TambahSoalEssay');
             Route::post('tambah-soal-wawancara', 'tambah_soal_wawancara')->name('TambahSoalWawancara');
@@ -424,6 +440,7 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(PengesahanMukController::class)->group(function () {
             Route::get('peninjau-pengesahan-muk', 'pengesahan_muk')->name('PengesahanMuk');
             Route::post('muk-disahkan', 'muk_di_sahkan')->name('MukDiSahkan');
+            Route::get('cetak-pengesahan-muk', 'cetak_pengesahan_muk_pdf')->name('CetakPengesahanMukPDF');
         });
     });
 });

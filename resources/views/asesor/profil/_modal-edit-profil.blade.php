@@ -24,16 +24,9 @@
                                         <label class="text-danger error-text nama_lengkap_error mt-1"></label>
                                     </div>
                                     <div class="col edit-profil-left">
-                                        <label for="instansi" class="form-label fw-semibold">Nama Sekolah /
-                                            Institusi /
-                                            Perusahaan</label>
-                                        <select class="form-select input-text" id="institusi" name="institusi" required>
-                                            <option value="" selected disabled>Pilih Nama Sekolah /
-                                                Institusi
-                                                /
-                                                Perusahaan</option>
-                                        </select>
-                                        <label class="text-danger error-text institusi_error mt-1"></label>
+                                        <label for="jabatan" class="form-label fw-semibold">Jabatan</label>
+                                        <input type="text" id="jabatan" class="form-control input-text"
+                                            placeholder="Masukkan Jabatan. . ." name="jabatan">
                                     </div>
                                     <div class="col edit-profil-left">
                                         <label for="jurusan" class="form-label fw-semibold">Jurusan</label>
@@ -41,20 +34,6 @@
                                             <option value="" selected disabled>Pilih Jurusan</option>
                                         </select>
                                         <label class="text-danger error-text jurusan_error mt-1"></label>
-                                    </div>
-                                    <div class="col edit-profil-left">
-                                        <label for="ktp_nik_paspor" class="form-label fw-semibold">Nomor
-                                            KTP/NIK/Paspor</label>
-                                        <input type="text" id="ktp_nik_paspor" class="form-control input-text"
-                                            placeholder="Masukkan Nomor KTP/NIK/Paspor. . ." name="ktp_nik_paspor">
-                                        <label class="text-danger error-text ktp_nik_paspor_error mt-1"></label>
-                                    </div>
-                                    <div class="col edit-profil-left">
-                                        <label for="tempat_lahir" class="form-label fw-semibold">Tempat
-                                            Lahir</label>
-                                        <input type="text" id="tempat_lahir" name="tempat_lahir"
-                                            class="form-control input-text" placeholder="Masukkan Tempat Lahir. . .">
-                                        <label class="text-danger error-text tempat_lahir_error mt-1"></label>
                                     </div>
                                     <div class="col edit-profil-left">
                                         <label for="tanggal_lahir" class="form-label fw-semibold">Tanggal
@@ -71,80 +50,6 @@
                                             </option>
                                         </select>
                                         <label class="text-danger error-text jenis_kelamin_error mt-1"></label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="col edit-profil-right">
-                                        <label for="kebangsaan" class="form-label fw-semibold">Kebangsaan</label>
-                                        <select name="kebangsaan" class="form-select input-text" id="kebangsaan">
-                                            <option value="" selected disabled>Pilih Kebangsaan
-                                            </option>
-                                        </select>
-                                        <label class="text-danger error-text kebangsaan_error mt-1"></label>
-                                    </div>
-                                    <div class="col edit-profil-right">
-                                        <label for="alamat_rumah" class="form-label fw-semibold">Alamat
-                                            Rumah</label>
-                                        <input type="text" id="alamat_rumah" class="form-control input-text"
-                                            placeholder="Masukkan Alamat Rumah. . ." name="alamat_rumah">
-                                        <label class="text-danger error-text alamat_rumah_error mt-1"></label>
-                                    </div>
-                                    <div class="col edit-profil-right">
-                                        <label for="kode_pos" class="form-label fw-semibold">Kode Pos</label>
-                                        <input type="text" id="kode_pos" class="form-control input-text"
-                                            placeholder="Masukkan Kode Pos. . ." name="kode_pos">
-                                        <label class="text-danger error-text kode_pos_error mt-1"></label>
-                                    </div>
-                                    <div class="col edit-profil-right">
-                                        <label for="nomor_hp" class="form-label fw-semibold">Nomor
-                                            Telepon</label>
-                                        <input type="number" id="nomor_hp" class="form-control input-text"
-                                            placeholder="Masukkan Nomor Telepon. . ." name="nomor_hp">
-                                        <label class="text-danger error-text nomor_hp_error mt-1"></label>
-                                    </div>
-                                    <div class="col edit-profil-right">
-                                        <label for="email" class="form-label fw-semibold">Email</label>
-                                        <input type="text" id="email" class="form-control input-text"
-                                            placeholder="Masukkan Email. . ." name="email">
-                                        <label class="text-danger error-text email_error mt-1"></label>
-                                    </div>
-                                    <div class="col edit-profil-right">
-                                        <label for="kualifikasi_pendidikan" class="form-label fw-semibold">Kualifikasi
-                                            Pendidikan</label>
-                                        <select class="form-select input-text" id="kualifikasi_pendidikan"
-                                            name="kualifikasi_pendidikan">
-                                            <option value="" selected disabled>Pilih Kualifikasi
-                                                Pendidikan
-                                            </option>
-                                        </select>
-                                        <label
-                                            class="text-danger error-text kualifikasi_pendidikan_error mt-1"></label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- DATA PEKERJAAN SEKARANG --}}
-                            <div class="row" style="margin-top: 65px">
-                                <h5>B. Data Pekerjaan Sekarang</h5>
-                                <div class="col-lg-6">
-                                    <div class="col edit-profil-left">
-                                        <label for="nama_pekerjaan" class="form-label fw-semibold">Nama Institusi
-                                            /
-                                            Perusahaan</label>
-                                        <input type="text" id="nama_pekerjaan" class="form-control input-text"
-                                            placeholder="Masukkan Nama Institusi / Perusahaan" name="nama_pekerjaan">
-                                    </div>
-                                    <div class="col edit-profil-left">
-                                        <label for="jabatan" class="form-label fw-semibold">Jabatan</label>
-                                        <input type="text" id="jabatan" class="form-control input-text"
-                                            placeholder="Masukkan Jabatan. . ." name="jabatan">
-                                    </div>
-                                    <div class="col edit-profil-left">
-                                        <label for="alamat_kantor_pekerjaan" class="form-label fw-semibold">Alamat
-                                            Kantor</label>
-                                        <input type="text" id="alamat_kantor_pekerjaan"
-                                            class="form-control input-text" placeholder="Masukkan Alamat Kantor. . ."
-                                            name="alamat_kantor_pekerjaan">
                                     </div>
                                     <div class="col edit-profil-left">
                                         <label for="pas_foto" class="form-label fw-semibold">Pas Foto</label>
@@ -164,28 +69,24 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="col edit-profil-right">
-                                        <label for="kode_pos_pekerjaan" class="form-label fw-semibold">Kode
-                                            Pos</label>
-                                        <input type="text" id="kode_pos_pekerjaan" class="form-control input-text"
-                                            placeholder="Masukkan Kode Pos. . ." name="kode_pos_pekerjaan">
+                                        <label for="tempat_lahir" class="form-label fw-semibold">Tempat
+                                            Lahir</label>
+                                        <input type="text" id="tempat_lahir" name="tempat_lahir"
+                                            class="form-control input-text" placeholder="Masukkan Tempat Lahir. . .">
+                                        <label class="text-danger error-text tempat_lahir_error mt-1"></label>
                                     </div>
                                     <div class="col edit-profil-right">
-                                        <label for="nomor_hp_institusi_pekerjaan" class="form-label fw-semibold">Nomor
-                                            Telepon Institusi / Perusahaan</label>
-                                        <input type="number" id="nomor_hp_institusi_pekerjaan"
-                                            class="form-control input-text"
-                                            placeholder="Masukkan Nomor Telepon Institusi / Perusahaan. . ."
-                                            name="nomor_hp_institusi_pekerjaan">
+                                        <label for="alamat_rumah" class="form-label fw-semibold">Alamat
+                                            Rumah</label>
+                                        <input type="text" id="alamat_rumah" class="form-control input-text"
+                                            placeholder="Masukkan Alamat Rumah. . ." name="alamat_rumah">
+                                        <label class="text-danger error-text alamat_rumah_error mt-1"></label>
                                     </div>
                                     <div class="col edit-profil-right">
-                                        <label for="email_institusi_pekerjaan" class="form-label fw-semibold">Email
-                                            Institusi
-                                            /
-                                            Perusahaan</label>
-                                        <input type="email" id="email_institusi_pekerjaan"
-                                            class="form-control input-text"
-                                            placeholder="Masukkan Email Institusi / Perusahaan.."
-                                            name="email_institusi_pekerjaan">
+                                        <label for="email" class="form-label fw-semibold">Email</label>
+                                        <input type="text" id="email" class="form-control input-text"
+                                            placeholder="Masukkan Email. . ." name="email">
+                                        <label class="text-danger error-text email_error mt-1"></label>
                                     </div>
                                 </div>
                             </div>
@@ -220,75 +121,31 @@
             }
         }
         $('.btn-close').on('click', function() {
-            $("#institusi").empty().append('');
-            $("#jenis_kelamin").empty().append('');
-            $("#kebangsaan").empty().append('');
             $("#jurusan").empty().append('');
-            $("#kualifikasi_pendidikan").empty().append('');
         })
         $("#edit-btn").on('click', function() {
             $("#editProfil").modal('show')
 
             $("#nama_lengkap").val(data.nama_lengkap)
-
-            $("#form-update [name='institusi']").append(institusis.map(function(d) {
-                return $(
-                    `<option value='${d.id}' ${d.id === data.institusi_id ? 'selected' : ''}>${d.nama_institusi}</option>`
-                )
-            }))
-
-            $("#form-update [name='jurusan']").append(jurusans.map(function(d) {
-                return $(
-                    `<option value='${d.id}' ${d.id === data.jurusan_id ? 'selected' : ''}>${d.jurusan}</option>`
-                )
-            }))
-
-            $("#form-update [name='ktp_nik_paspor']").val(data.relasi_user_detail.ktp_nik_paspor)
+            
+            $.each(jurusans, function(key, value) {
+                $("#form-update [name='jurusan']")
+                .append(`<option value="${value.id}" ${value.id == data.jurusan_id ? 'selected' : ''}>${value.jurusan}</option>`)
+            });
 
             $("#form-update [name='tempat_lahir']").val(data.relasi_user_detail.tempat_lahir)
 
             $("#form-update [name='tanggal_lahir']").val(data.relasi_user_detail.tanggal_lahir)
 
             $("#form-update [name='jenis_kelamin']").append(
-                $(
-                    `<option value='laki-laki' ${'laki-laki' === data.relasi_user_detail.jenis_kelamin ? 'selected' : ''}>Laki-laki</option>
-          <option value='perempuan' ${'perempuan' === data.relasi_user_detail.jenis_kelamin ? 'selected' : ''}>Perempuan</option>`
-                ))
-            $("#form-update [name='kebangsaan']").append(kebangsaan.map(function(d) {
-                if (isset(data.relasi_user_detail.kebangsaan_id)) {
-                    return $(
-                        `<option value='${d.id}'>${d.kebangsaan}</option>`)
-                } else {
-                    return $(
-                        `<option value='${d.id}' ${d.id === data.relasi_user_detail.kebangsaan_id ? 'selected' : ''}>${d.kebangsaan}</option>`
-                    )
-                }
-            }))
+            $(
+                `<option value='laki-laki' ${'laki-laki' === data.relasi_user_detail.jenis_kelamin ? 'selected' : ''}>Laki-laki</option>
+                <option value='perempuan' ${'perempuan' === data.relasi_user_detail.jenis_kelamin ? 'selected' : ''}>Perempuan</option>`
+            ))
 
             $("#form-update [name='alamat_rumah']").val(data.relasi_user_detail.alamat_rumah)
 
-            $("#form-update [name='kode_pos']").val(data.relasi_user_detail.kode_pos)
-
-            $("#form-update [name='nomor_hp']").val(data.relasi_user_detail.nomor_hp)
-
             $("#form-update [name='email']").val(data.email)
-
-            $("#form-update [name='kualifikasi_pendidikan']").append(kualifikasi_pendidikan.map(function(d) {
-                if (isset(data.relasi_user_detail.kualifikasi_pendidikan_id)) {
-                    return $(
-                        `<option value='${d.id}'>${d.pendidikan}</option>`)
-                } else {
-                    return $(
-                        `<option value='${d.id}' ${d.id === data.relasi_user_detail.kualifikasi_pendidikan_id ? 'selected' : ''}>${d.pendidikan}</option>`
-                    )
-                }
-            }))
-
-            if (isset(data.relasi_pekerjaan.nama_pekerjaan)) {
-                $("#form-update [name='nama_pekerjaan']").val('')
-            } else {
-                $("#form-update [name='nama_pekerjaan']").val(data.relasi_pekerjaan.nama_pekerjaan)
-            }
 
             if (isset(data.relasi_pekerjaan.jabatan)) {
                 $("#form-update [name='jabatan']").val('')
@@ -381,4 +238,82 @@
             }
         }
     </script>
+        <script>
+            $('#edit-password-asesor').on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: $(this).attr('method'),
+                    data: new FormData(this),
+                    processData: false,
+                    dataType: 'json',
+                    contentType: false,
+                    beforeSend: function() {
+                        // $(document).find('span.error-text').text('');
+                        $(document).find('label.error-text').text('');
+                    },
+                    success: function(data) {
+                        if (data.status == 0) {
+                            $.each(data.error, function(prefix, val) {
+                                
+                                $('label.' + prefix + '_error').text(val[0]);
+                                // $('span.'+prefix+'_error').text(val[0]);
+                            });
+                        } else {
+                            $('#edit-password-asesor')[0].reset();
+                            // alert(data.msg);
+                            swal("Berhasil!", data.msg, "success");
+                        }
+                    }
+                });
+            });
+    
+            function password_show_hide1() {
+                var x = document.getElementById("passwordlama");
+                var show_eye = document.getElementById("show_eye");
+                var hide_eye = document.getElementById("hide_eye");
+                hide_eye.classList.remove("d-none");
+                if (x.type === "password") {
+                    x.type = "text";
+                    show_eye.style.display = "none";
+                    hide_eye.style.display = "block";
+                } else {
+                    x.type = "password";
+                    show_eye.style.display = "block";
+                    hide_eye.style.display = "none";
+                }
+            }
+    
+            function password_show_hide2() {
+                var x = document.getElementById("password");
+                var show_eye = document.getElementById("show_eye2");
+                var hide_eye = document.getElementById("hide_eye2");
+                hide_eye.classList.remove("d-none");
+                if (x.type === "password") {
+                    x.type = "text";
+                    show_eye.style.display = "none";
+                    hide_eye.style.display = "block";
+                } else {
+                    x.type = "password";
+                    show_eye.style.display = "block";
+                    hide_eye.style.display = "none";
+                }
+            }
+    
+            function password_show_hide3() {
+                var x = document.getElementById("konfirmasipasswordbaru");
+                var show_eye = document.getElementById("show_eye3");
+                var hide_eye = document.getElementById("hide_eye3");
+                hide_eye.classList.remove("d-none");
+                if (x.type === "password") {
+                    x.type = "text";
+                    show_eye.style.display = "none";
+                    hide_eye.style.display = "block";
+                } else {
+                    x.type = "password";
+                    show_eye.style.display = "block";
+                    hide_eye.style.display = "none";
+                }
+            }
+        </script>
 @endsection

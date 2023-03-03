@@ -31,10 +31,10 @@
             <h5>Materi Uji Kompetensi</h5>
             <p>Daftar Materi Uji Kompetensi LSP {{ Auth::user()->relasi_jurusan->jurusan }}</p>
             <table class="table"
-                @isset($asesmen_mandiri) 
+                @if(!empty($asesmen_mandiri))
                     id="table-pelaksanaan-ujian">
                 @else
-                @endisset
+                @endif
                 <thead>
                 <tr>
                     <th>Materi Uji Kompetensi</th>

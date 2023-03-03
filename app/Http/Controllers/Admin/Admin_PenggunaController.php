@@ -8,6 +8,7 @@ use App\Models\Institusi;
 use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Pekerjaan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -77,6 +78,10 @@ class Admin_PenggunaController extends Controller
                 'status_terlibat_uji_kompetensi' => 0
             ]);
             UserDetail::create([
+                'user_id' => $tambah_pengguna->id
+            ]);
+
+            Pekerjaan::create([
                 'user_id' => $tambah_pengguna->id
             ]);
             

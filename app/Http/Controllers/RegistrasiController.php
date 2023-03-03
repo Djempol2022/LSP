@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Jurusan;
 use App\Models\Sekolah;
 use App\Models\Institusi;
+use App\Models\Pekerjaan;
 use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -58,7 +59,9 @@ class RegistrasiController extends Controller
             UserDetail::create([
                 'user_id' => $register_user->id,
             ]);
-            
+            Pekerjaan::create([
+                'user_id' => $register_user->id
+            ]);
             if(!$register_user){
                 return response()->json([
                     'status'=>0,

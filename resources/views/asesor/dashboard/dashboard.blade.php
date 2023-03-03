@@ -4,7 +4,7 @@
         <div class="mt-5">
             <div class="page-content">
                 <div class="col profil-section-title">
-                    Jadwal Materi Uji Kompetensi {{ $muk->muk }}
+                    Jadwal Materi Uji Kompetensi
                 </div>
                 <section class="section">
                     <div class="card">
@@ -32,7 +32,7 @@
             </section>
 
             <div class="col profil-section-title">
-                Unit Kompetensi {{ $muk->muk }}
+                Unit Kompetensi
             </div>
             <section class="section">
                 <div class="card">

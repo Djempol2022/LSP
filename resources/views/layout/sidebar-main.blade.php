@@ -173,7 +173,7 @@
                             <a href="{{ route('admin.Assessment') }}" class='sidebar-link'>
                                 <i class="bi bi-journal-text {{ request()->routeIs('admin.Assessment*') ? 'warna-white' : '' }} warna-secondary"
                                     style="{{ request()->routeIs('admin.Assessment*') ? 'font-weight: 1000' : '' }}"></i>
-                                <span>Assesment</span>
+                                <span>Asesmen</span>
                             </a>
                         </li>
                         <li
@@ -290,7 +290,26 @@
                         </li>
                         <li class="sidebar-item {{ request()->routeIs('asesor.Profil*') ? 'active' : '' }} ">
                             <a href="{{ route('asesor.Profil') }}" class='sidebar-link'>
-                                @if (is_null(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->ktp_nik_paspor))
+
+                              {{-- @isset(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->ktp_nik_paspor)
+                                <i class="bi bi-person{{ request()->routeIs('asesor.Profil*') ? '-fill warna-white' : '' }} warna-secondary"></i>
+                              @else
+                                <i class="bi bi-person{{ request()->routeIs('asesor.Profil*') ? '-fill warna-white' : '' }}"
+                                    style="color: rgb(253, 52, 52)">
+                                </i>
+                              @endisset
+
+                              @isset(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->ktp_nik_paspor)
+                                <span>Profil</span>
+                              @else
+                                <span class="{{ request()->routeIs('asesor.Profil*') ? 'text-white' : 'text-danger' }}">Profil
+                                </span><span class="d-flex align-items-center">
+                                    <i
+                                        class="bi bi-exclamation-circle text-center {{ request()->routeIs('asesor.Profil*') ? 'text-white' : 'text-danger' }}"></i>
+                                </span>
+                              @endif --}}
+
+                                @if (is_null(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->tempat_lahir))
                                     <i class="bi bi-person{{ request()->routeIs('asesor.Profil*') ? '-fill warna-white' : '' }}"
                                         style="color: rgb(253, 52, 52)">
                                     </i>
@@ -299,7 +318,7 @@
                                         class="bi bi-person{{ request()->routeIs('asesor.Profil*') ? '-fill warna-white' : '' }} warna-secondary">
                                     </i>
                                 @endif
-                                @if (is_null(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->ktp_nik_paspor))
+                                @if (is_null(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->tempat_lahir))
                                     <span
                                         class="{{ request()->routeIs('asesor.Profil*') ? 'text-white' : 'text-danger' }}">Profil
                                     </span><span class="d-flex align-items-center">

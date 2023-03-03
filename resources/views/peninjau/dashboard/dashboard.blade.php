@@ -69,7 +69,13 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_tampil_muk_asesor_peninjau[row.id] = row;
-                    return row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
+                    let cek_asesor;
+                    if(row.relasi_user_asesor == null || row.relasi_user_asesor.relasi_user_asesor_detail == null){
+                        cek_asesor = `Asesor belum ditentukan`
+                    }else{
+                        cek_asesor = row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
+                    }
+                    return cek_asesor;
                 }
             },
             {
@@ -77,7 +83,13 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_tampil_muk_asesor_peninjau[row.id] = row;
-                    return row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
+                    let cek_peninjau;
+                    if(row.relasi_user_peninjau == null || row.relasi_user_peninjau.relasi_user_peninjau_detail == null){
+                        cek_peninjau = `Peninjau belum ditentukan`
+                    }else{
+                        cek_peninjau = row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
+                    }
+                    return cek_peninjau;
                 }
             },
             {

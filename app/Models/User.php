@@ -68,6 +68,11 @@ class User extends Authenticatable
         return $this->belongsTo(Sertifikasi::class, 'id', 'user_id');
     }
 
+    public function relasi_asesmen_mandiri()
+    {
+        return $this->belongsTo(AsesmenMandiri::class, 'id', 'user_asesi_id');
+    }
+
     public function relasi_unit_kompetensi(){
         return $this->belongsTo(UnitKompetensi::class, 'id', 'user_id');
     }

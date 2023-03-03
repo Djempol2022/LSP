@@ -51,16 +51,18 @@ class AsesorProfilController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required',
-            'institusi' => 'required',
             'tanggal_lahir' => 'required',
+            'tempat_lahir' => 'required',
             'jurusan' => 'required',
             'email' => 'required|email',
+            'jenis_kelamin' => 'required',
             'pas_foto' => 'file|image|mimes:png,jpg,jpeg|max:2048',
         ], [
             'nama_lengkap.required' => 'Wajib diisi',
             'tanggal_lahir.required' => 'Wajib diisi',
-            'institusi.required' => 'Wajib diisi',
+            'tempat_lahir.required' => 'Wajib diisi',
             'jurusan.required' => 'Wajib diisi',
+            'jenis_kelamin.required' => 'Wajib diisi',
             'email.required' => 'Wajib diisi',
             'email.email' => 'Email tidak sesuai format',
             'pas_foto.file' => 'Wajib file',
@@ -86,23 +88,16 @@ class AsesorProfilController extends Controller
 
         // tambah/edit user detail
         UserDetail::where('user_id', auth()->user()->id)->update([
-            'ktp_nik_paspor' => $request->ktp_nik_paspor,
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
-            'kebangsaan_id' => $request->kebangsaan,
             'alamat_rumah' => $request->alamat_rumah,
-            'nomor_hp' => $request->nomor_hp,
-            'kualifikasi_pendidikan_id' => $request->kualifikasi_pendidikan,
-            'kode_pos' => $request->kode_pos,
-            'ttd' => $request->ttd,
             'foto' => $image
         ]);
 
         // tambah/edit user
         User::find(auth()->user()->id)->update([
             'nama_lengkap' => $request->nama_lengkap,
-            'institusi_id' => $request->institusi,
             'jurusan_id' => $request->jurusan
         ]);
 
@@ -111,22 +106,12 @@ class AsesorProfilController extends Controller
             // tambah pekerjaan
             Pekerjaan::create([
                 'user_id' => auth()->user()->id,
-                'nama_pekerjaan' => $request->nama_pekerjaan,
                 'jabatan' => $request->jabatan,
-                'alamat_pekerjaan' => $request->alamat_kantor_pekerjaan,
-                'kode_pos' => $request->kode_pos_pekerjaan,
-                'nomor_hp_pekerjaan' => $request->nomor_hp_institusi_pekerjaan,
-                'email_pekerjaan' => $request->email_institusi_pekerjaan
             ]);
         } else {
             // edit pekerjaan
             Pekerjaan::where('user_id', auth()->user()->id)->update([
-                'nama_pekerjaan' => $request->nama_pekerjaan,
                 'jabatan' => $request->jabatan,
-                'alamat_pekerjaan' => $request->alamat_kantor_pekerjaan,
-                'kode_pos' => $request->kode_pos_pekerjaan,
-                'nomor_hp_pekerjaan' => $request->nomor_hp_institusi_pekerjaan,
-                'email_pekerjaan' => $request->email_institusi_pekerjaan
             ]);
         }
         return response()->json([

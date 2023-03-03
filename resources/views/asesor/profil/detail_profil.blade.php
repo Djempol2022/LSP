@@ -2,7 +2,7 @@
 @section('main-section')
     <div id="detail-profil">
         <div class="col profil-section" style="margin-bottom:0% !important">
-            @if (is_null(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->ktp_nik_paspor))
+            @if (is_null(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->tanggal_lahir))
                 <div class="alert fs-6" role="alert" style="background-color: #F8D7DA">
                     Silahkan lengkapi profil anda !
                 </div>
@@ -10,7 +10,7 @@
             <div class="thumb-profil thumb">
                 @isset($data->relasi_user_detail->foto)
                     <img src="{{ asset('storage/' . $data->relasi_user_detail->foto) }}" class="img-thumbnail rounded-circle mb-3"
-                        alt="image">
+                        alt="image" style="width: 100px; height: 100px;object-fit: cover;">
                 @else
                     <img src="/images/logo/favicon.png" class="img-thumbnail rounded-circle" alt="image">
                 @endisset
@@ -35,28 +35,18 @@
                         </span>
                     </div>
                     <div class="col pb-4">
-                        <p class="fw-bold">Nama Institusi / Perusahaan</p>
-                        <span class="{{ $data->relasi_institusi->nama_institusi ? '' : 'text-danger fw-semibold' }}">
-                            {{ $data->relasi_institusi->nama_institusi ?? 'Data Belum Lengkap!' }}
-                        </span>
-                    </div>
-                    <div class="col pb-4">
                         <p class="fw-bold">Jurusan</p>
                         <span class="{{ $data->relasi_jurusan->jurusan ? '' : 'text-danger fw-semibold' }}">
                             {{ $data->relasi_jurusan->jurusan ?? 'Data Belum Lengkap!' }}
                         </span>
                     </div>
                     <div class="col pb-4">
-                        <p class="fw-bold">Nomor KTP/NIK/Paspor</p>
-                        <span class="{{ $data->relasi_user_detail->ktp_nik_paspor ? '' : 'text-danger fw-semibold' }}">
-                            {{ $data->relasi_user_detail->ktp_nik_paspor ?? 'Data Belum Lengkap!' }}
-                        </span>
-                    </div>
-                    <div class="col pb-4">
-                        <p class="fw-bold">Tempat Lahir</p>
-                        <span class="{{ $data->relasi_user_detail->tempat_lahir ? '' : 'text-danger fw-semibold' }}">
-                            {{ $data->relasi_user_detail->tempat_lahir ?? 'Data Belum Lengkap!' }}
-                        </span>
+                        <p class="fw-bold">Jabatan</p>
+                        @isset($data->relasi_pekerjaan->jabatan)
+                            <span>{{ $data->relasi_pekerjaan->jabatan }}</span>
+                        @else
+                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
+                        @endisset
                     </div>
                     <div class="col pb-4">
                         <p class="fw-bold">Tanggal Lahir</p>
@@ -74,31 +64,15 @@
                 </div>
                 <div class="col-md-6">
                     <div class="col pb-4">
-                        <p class="fw-bold">Kebangsaan</p>
-                        @isset($data->relasi_user_detail->relasi_kebangsaan->kebangsaan)
-                            <span>
-                                {{ $data->relasi_user_detail->relasi_kebangsaan->kebangsaan }}
-                            </span>
-                        @else
-                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-                        @endisset
+                        <p class="fw-bold">Tempat Lahir</p>
+                        <span class="{{ $data->relasi_user_detail->tempat_lahir ? '' : 'text-danger fw-semibold' }}">
+                            {{ $data->relasi_user_detail->tempat_lahir ?? 'Data Belum Lengkap!' }}
+                        </span>
                     </div>
                     <div class="col pb-4">
                         <p class="fw-bold">Alamat Rumah</p>
                         <span class="{{ $data->relasi_user_detail->alamat_rumah ? '' : 'text-danger fw-semibold' }}">
                             {{ $data->relasi_user_detail->alamat_rumah ?? 'Data Belum Lengkap!' }}
-                        </span>
-                    </div>
-                    <div class="col pb-4">
-                        <p class="fw-bold">Kode Pos</p>
-                        <span class="{{ $data->relasi_user_detail->kode_pos ? '' : 'text-danger fw-semibold' }}">
-                            {{ $data->relasi_user_detail->kode_pos ?? 'Data Belum Lengkap!' }}
-                        </span>
-                    </div>
-                    <div class="col pb-4">
-                        <p class="fw-bold">Nomor Telepon</p>
-                        <span class="{{ $data->relasi_user_detail->nomor_hp ? '' : 'text-danger fw-semibold' }}">
-                            {{ $data->relasi_user_detail->nomor_hp ?? 'Data Belum Lengkap!' }}
                         </span>
                     </div>
                     <div class="col pb-4">
@@ -108,74 +82,84 @@
                         </span>
                     </div>
                     <div class="col pb-4">
-                        <p class="fw-bold">Kualifikasi Pendidikan</p>
-                        @isset($data->relasi_user_detail->relasi_kualifikasi_pendidikan->pendidikan)
-                            <span>{{ $data->relasi_user_detail->relasi_kualifikasi_pendidikan->pendidikan }}
-                            </span>
-                        @else
-                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-                        @endisset
+                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#ubahPassword">Edit Password</button>
                     </div>
                 </div>
             </div>
-            <h5>B. Data Pekerjaan Sekarang</h5>
             <div class="row my-4">
-                <div class="col-md-6">
-                    <div class="col pb-4">
-                        <p class="fw-bold">Nama Institusi / Perusahaan</p>
-                        @isset($data->relasi_pekerjaan->nama_pekerjaan)
-                            <span>{{ $data->relasi_pekerjaan->nama_pekerjaan }}</span>
-                        @else
-                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-                        @endisset
-                    </div>
-                    <div class="col pb-4">
-                        <p class="fw-bold">Jabatan</p>
-                        @isset($data->relasi_pekerjaan->jabatan)
-                            <span>{{ $data->relasi_pekerjaan->jabatan }}</span>
-                        @else
-                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-                        @endisset
-                    </div>
-                    <div class="col pb-4">
-                        <p class="fw-bold">Alamat Kantor</p>
-                        @isset($data->relasi_pekerjaan->alamat_pekerjaan)
-                            <span>{{ $data->relasi_pekerjaan->alamat_pekerjaan }}</span>
-                        @else
-                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-                        @endisset
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="col pb-4">
-                        <p class="fw-bold">Kode Pos</p>
-                        @isset($data->relasi_pekerjaan->kode_pos)
-                            <span>{{ $data->relasi_pekerjaan->kode_pos }}</span>
-                        @else
-                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-                        @endisset
-                    </div>
-                    <div class="col pb-4">
-                        <p class="fw-bold">Nomor Telepon Institusi / Perusahaan</p>
-                        @isset($data->relasi_pekerjaan->nomor_hp_pekerjaan)
-                            <span>{{ $data->relasi_pekerjaan->nomor_hp_pekerjaan }}</span>
-                        @else
-                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-                        @endisset
-                    </div>
-                    <div class="col pb-4">
-                        <p class="fw-bold">Email Institusi / Peerusahaan</p>
-                        @isset($data->relasi_pekerjaan->email_pekerjaan)
-                            <span>{{ $data->relasi_pekerjaan->email_pekerjaan }}</span>
-                        @else
-                            <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
-                        @endisset
-                    </div>
-                </div>
-                <button type="button" class="btn btn-primary tombol-primary-medium mt-5" id="edit-btn"
+                <button type="button" class="btn btn-primary tombol-primary-medium" id="edit-btn"
                     data-bs-toggle="modal" data-bs-target="#editProfil">Edit Profil</button>
             </div>
         </div>
     </div>
-    @include('asesor.profil._modal-edit-profil')
+
+    <div class="modal fade" id="ubahPassword" tabindex="-1" aria-labelledby="ubahPasswordLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="ubahPasswordLabel">Edit Password</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="forms-sample" id="edit-password-asesor" method="post" action="{{ route('UbahPassword') }}">
+                        @csrf
+                        <div class="form-group">
+                            <div class="col">
+                                <label for="validationCustom01" class="form-label" style="font-size: medium;">Password
+                                    Lama</label>
+                                <div class="input-group has-validation">
+                                    <input name="passwordlama" type="password" class="form-control" id="passwordlama" />
+                                    <span class="input-group-text" onclick="password_show_hide1();">
+                                        <i class="fas fa-eye" id="show_eye"></i>
+                                        <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                                    </span>
+                                    <div class="input-group has-validation">
+                                        <label class="text-danger error-text passwordlama_error"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col">
+                                <label for="validationCustom01" class="form-label" style="font-size: medium;">Password
+                                    Baru</label>
+                                <div class="input-group has-validation">
+                                    <input name="password" type="password" class="input form-control" id="password" />
+                                    <span class="input-group-text" onclick="password_show_hide2();">
+                                        <i class="fas fa-eye" id="show_eye2"></i>
+                                        <i class="fas fa-eye-slash d-none" id="hide_eye2"></i>
+                                    </span>
+                                    <div class="input-group has-validation">
+                                        <label class="text-danger error-text password_error"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col">
+                                <label for="validationCustom01" class="form-label" style="font-size: medium;">Konfirmasi
+                                    Password Baru</label>
+                                <div class="input-group has-validation">
+                                    <input name="konfirmasipasswordbaru" type="password" class="input form-control"
+                                        id="konfirmasipasswordbaru" />
+                                    <span class="input-group-text" onclick="password_show_hide3();">
+                                        <i class="fas fa-eye" id="show_eye3"></i>
+                                        <i class="fas fa-eye-slash d-none" id="hide_eye3"></i>
+                                    </span>
+                                    <div class="input-group has-validation">
+                                        <label class="text-danger error-text konfirmasipasswordbaru_error"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col pt-3">
+                            <button type="submit" class="btn btn-dark mr-2 btn-block py-3"
+                                style="border: none;background: #4747A1;border-radius: 10px;">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@include('asesor.profil._modal-edit-profil')
 @endsection

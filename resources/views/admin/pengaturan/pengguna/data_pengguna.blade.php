@@ -17,7 +17,7 @@
         </nav>
         <div class="card">
             <div class="card-header">
-                <span class="badge bg-info rounded-pill">
+                <span class="badge bg-info rounded-pill" id="tombol-tambah-pengguna">
                     <a class="text-white" href="#" data-bs-toggle="modal"
                         data-bs-target="#modalTambahPengguna">Tambah Pengguna
                     </a>
@@ -53,7 +53,7 @@
                                 </div>
                                 <label>Institusi/Perusahaan</label>
                                 <div class="form-group">
-                                    <select class="js-example-basic-single" name="institusi_id">
+                                    <select class="form-control" name="institusi_id" >
                                         <option value="" selected disabled>Pilih Instansi/Perusahaan</option>
                                         @foreach ($institusi as $data_institusi)
                                         <option value="{{ $data_institusi['id'] }}">{{ $data_institusi['nama_institusi'] }}</option>    
@@ -66,7 +66,7 @@
 
                                 <label>Jurusan</label>
                                 <div class="form-group">
-                                    <select class="js-example-basic-single" name="jurusan_id">
+                                    <select class="form-control" name="jurusan_id">
                                         <option value="" selected disabled>Pilih Jurusan</option>
                                         @foreach ($jurusan as $data_jurusan)
                                         <option value="{{ $data_jurusan['id'] }}">{{ $data_jurusan['jurusan'] }}</option>    
@@ -93,7 +93,7 @@
 
                                 <label>Role</label>
                                 <div class="form-group">
-                                    <select class="js-example-basic-single" name="role_id">
+                                    <select class="form-control" name="role_id" >
                                         <option value="" selected disabled>Pilih Role</option>
                                         <option value="1">Admin</option>
                                         {{-- <option value="2">Peninjau</option> --}}
@@ -183,7 +183,7 @@
                             </div>
                             <label>Institusi/Perusahaan</label>
                             <div class="form-group">
-                                <select class="js-example-basic-single" name="institusi_id" id="institusi">
+                                <select class="form-control" name="institusi_id" id="institusi">
                                 </select>
                                 <div class="input-group has-validation">
                                     <label class="text-danger error-text institusi_id_error"></label>
@@ -192,7 +192,7 @@
 
                             <label>Jurusan</label>
                             <div class="form-group">
-                                <select class="js-example-basic-single" name="jurusan_id" id="jurusan">
+                                <select class="form-control" name="jurusan_id" id="jurusan">
                                 </select>
                                 <div class="input-group has-validation">
                                     <label class="text-danger error-text jurusan_id_error"></label>
@@ -215,7 +215,7 @@
 
                             <label>Role</label>
                             <div class="form-group">
-                                <select class="js-example-basic-single" name="role_id" id="role">
+                                <select class="form-control" name="role_id" id="role">
                                 </select>
                                 <div class="input-group has-validation">
                                     <label class="text-danger error-text role_id_error"></label>
@@ -318,7 +318,13 @@
                 "render": function (data, type, row, meta) 
                 {
 					list_pengguna[row.id] = row;
-                    return row.relasi_jurusan.jurusan;
+					let jurusan;
+					if(row.relasi_jurusan == null || row.relasi_jurusan.jurusan == null){
+					    jurusan = `Jurusan belum ditentukan`
+					}else{
+					    jurusan = row.relasi_jurusan.jurusan
+					}
+                    return jurusan;
                 }
             },
             {
@@ -486,6 +492,15 @@
         $("#role").empty().append('');
     })
 
+    // $("#tombol-tambah-pengguna").on('click', function(){
+    //     $('#institusi_baru').change(function(){
+    //         $('#institusi_baru option[value=""]').attr('selected','selected');
+    //     });
+    //     $('#role_baru').change(function(){
+    //      $('#role_baru option[value=""]').attr('selected','selected');
+    //  });
+    // })
+
     $('#formTambahPengguna').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
@@ -514,6 +529,8 @@
                         successMode: true,
                     }),
                     table_pengguna.ajax.reload(null,false)
+                    
+                    $("#formTambahPengguna")[0].reset();
                     $("#modalTambahPengguna").modal('hide')
                 }
             }

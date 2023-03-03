@@ -37,7 +37,7 @@ class Admin_JadwalUjiKompetensi extends Controller
         $muk = MateriUjiKompetensi::where('jurusan_id', $id)->get()->toArray();
         $user_asesi = User::where('jurusan_id', $id)->with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesi')->get()->toArray();
         $user_asesor = User::where('jurusan_id', $id)->with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesor')->get()->toArray();
-        $user_peninjau = User::where('jurusan_id', $id)->with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'peninjau')->get()->toArray();
+        $user_peninjau = User::where('jurusan_id', $id)->with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesor')->get()->toArray();
         $data_jadwal_uji_kompetensi = JadwalUjiKompetensi::with('relasi_muk', 'relasi_user_asesor.relasi_user_asesor_detail', 
                 'relasi_user_peninjau.relasi_user_peninjau_detail')->get();
 
@@ -292,12 +292,10 @@ class Admin_JadwalUjiKompetensi extends Controller
                 'muk_id' => $request->muk_id,
             ]);
 
-            AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $request->jadwal_uji_kompetensi_id)
-                ->where('user_asesor_id', $request->user_asesor_id)([
+            AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $request->jadwal_uji_kompetensi_id)->update([
                 'user_asesor_id' => $request->user_asesor_id
             ]);
-            PeninjauUjiKompetensi::where('jadwal_uji_kompetensi_id', $request->jadwal_uji_kompetensi_id)
-                ->where('user_peninjau_id', $request->user_peninjau_id)([
+            PeninjauUjiKompetensi::where('jadwal_uji_kompetensi_id', $request->jadwal_uji_kompetensi_id)->update([
                 'user_peninjau_id' => $request->user_peninjau_id
             ]);
             

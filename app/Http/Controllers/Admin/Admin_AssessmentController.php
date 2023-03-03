@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Jurusan;
+use PDF;
 use App\Models\Sertifikasi;
 use App\Models\TandaTangan;
 use Illuminate\Http\Request;
@@ -21,6 +22,119 @@ class Admin_AssessmentController extends Controller
     public function assessment()
     {
         return view('admin.assessment.assessment');
+    }
+
+    public function data_rekap_berkas(Request $request){
+        $data = User::select([
+            'id', 'nama_lengkap', 'jurusan_id'
+        ])->where('role_id','=','4');
+        
+        // if($request->input('search.value')!=null){
+        //     $data = $data->with('relasi_user', 'relasi_tanda_tangan_admin','relasi_user.relasi_jurusan', 'relasi_user.relasi_institusi')
+        //         ->where(function($q)use($request){
+        //             $q->whereRaw('LOWER(relasi_user.nama_lengkap) like ?',['%'.strtolower($request->input('search.value')).'%'])
+        //             ->orWhereRaw('LOWER(relasi_user.relasi_jurusan.jurusan) like ?',['%'.strtolower($request->input('search.value')).'%']);
+        //     });
+        // }
+
+        // if($request->input('data_jurusan')!=null){
+        //     $data = $data->with('relasi_user')->whereRelation('relasi_user', 'jurusan_id', $request->data_jurusan);
+        // }
+
+        $rekamFilter = $data->get()->count();
+        if ($request->input('length') != -1)
+            $data = $data->skip($request->input('start'))->take($request->input('length'));
+            $data = $data->where('role_id', 4)->with('relasi_sertifikasi.relasi_tanda_tangan_admin','relasi_asesmen_mandiri')->get();
+            $rekamTotal = $data->count();
+
+        return response()->json([
+            'draw'=>$request->input('draw'),
+            'data'=>$data,
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter,
+        ]);
+    }
+
+    public function detail_rekapan_permohonan_sertifikasi($id){
+        $permohonan_user_sertifikasi = User::with(
+            'relasi_institusi', 
+            'relasi_user_detail.relasi_kebangsaan', 
+            'relasi_user_detail.relasi_kualifikasi_pendidikan',
+            'relasi_jurusan.relasi_skema_sertifikasi', 
+            'relasi_pekerjaan',
+            'relasi_sertifikasi.relasi_tanda_tangan_admin',
+            'relasi_kelengkapan_pemohon')
+            ->where('id', $id)->first();
+            $date = Carbon::now();
+            $tanggal = $permohonan_user_sertifikasi->relasi_sertifikasi->tanggal;
+        // pas_foto
+        if (!empty($permohonan_user_sertifikasi->relasi_user_detail->foto)) {
+            $pas_foto = explode('-', $permohonan_user_sertifikasi->relasi_user_detail->foto, 2);
+            $pas_foto = $pas_foto[1];
+        } else {
+            $pas_foto = null;
+        }
+
+        // kartu_keluarga
+        if (!empty($permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->kartu_keluarga)) {
+            $kartu_keluarga = explode('-', $permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->kartu_keluarga, 2);
+            $kartu_keluarga = $kartu_keluarga[1];
+        } else {
+            $kartu_keluarga = null;
+        }
+
+        // kartu_pelajar
+        if (!empty($permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->kartu_pelajar)) {
+            $kartu_pelajar = explode('-', $permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->kartu_pelajar, 2);
+            $kartu_pelajar = $kartu_pelajar[1];
+        } else {
+            $kartu_pelajar = null;
+        }
+
+        // sertifikat_prakerin
+        if (!empty($permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->sertifikat_prakerin)) {
+            $sertifikat_prakerin = explode('-', $permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->sertifikat_prakerin, 2);
+            $sertifikat_prakerin = $sertifikat_prakerin[1];
+        } else {
+            $sertifikat_prakerin = null;
+        }
+
+        // nilai_raport
+        if (!empty($permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->nilai_raport)) {
+            $nilai_raport = explode('-', $permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->nilai_raport, 2);
+            $nilai_raport = $nilai_raport[1];
+        } else {
+            $nilai_raport = null;
+        }
+        return view('admin.assessment.permohonan_sertifikasi.detail_berkas_permohonan_sertifikasi',
+                    ['data_permohonan_user_sertifikasi' => $permohonan_user_sertifikasi,
+                    'pas_foto' => $pas_foto,
+                    'kartu_keluarga' => $kartu_keluarga,
+                    'kartu_pelajar' => $kartu_pelajar,
+                    'sertifikat_prakerin' => $sertifikat_prakerin,
+                    'nilai_raport' => $nilai_raport,
+                    'tanggal' => $date->format('d F Y')]);
+    }
+
+    public function cetak_permohonan_sertifikasi($id){
+        $permohonan_user_sertifikasi = User::with(
+            'relasi_institusi', 
+            'relasi_user_detail.relasi_kebangsaan', 
+            'relasi_user_detail.relasi_kualifikasi_pendidikan',
+            'relasi_jurusan.relasi_skema_sertifikasi', 
+            'relasi_pekerjaan',
+            'relasi_sertifikasi.relasi_tanda_tangan_admin',
+            'relasi_kelengkapan_pemohon')
+            ->where('id', $id)->first();
+            $date = Carbon::now();
+            $tanggal = $permohonan_user_sertifikasi->relasi_sertifikasi->tanggal;
+       
+        PDF::setOptions(['dpi' => 96, 'defaultFont' => 'times-roman']);
+        $pdf = PDF::loadView('admin.assessment.permohonan_sertifikasi.pdf_berkas_permohonan_sertifikasi', [
+                'data_permohonan_user_sertifikasi' => $permohonan_user_sertifikasi,
+                'tanggal' => $date->format('d F Y')])
+                ->setPaper("A4", "portrait");
+        return $pdf->stream();
     }
 
     // HALAMAN DAFTAQR PERMOHONAN ASESI UNTUK SERTIFIKASI
@@ -410,5 +524,48 @@ class Admin_AssessmentController extends Controller
             'data_asesmen_mandiri'   => $data_asesmen_mandiri,
             'user_asesi_id'   => $user_asesi_id
         ]);
+    }
+
+    public function detail_rekapan_asesmen_mandiri($user_asesi_id, $jurusan_id){
+        $sertifikasi = SkemaSertifikasi::with( 
+            'relasi_jurusan',
+            'relasi_unit_kompetensi', 'relasi_unit_kompetensi.relasi_unit_kompetensi_sub')
+            ->where('jurusan_id', $jurusan_id)->first();
+
+        $unit_kompetensi = UnitKompetensi::where('skema_sertifikasi_id', $sertifikasi->id)->get();
+        $data_asesmen_mandiri = AsesmenMandiri::with('relasi_user_asesi', 'relasi_user_asesor')
+            ->whereRelation('relasi_user_asesi', 'user_asesi_id', $user_asesi_id)
+            ->first();
+            
+        return view('admin.assessment.asessment_mandiri.detail_berkas_asesmen_mandiri', [
+            'unit_kompetensi'       => $unit_kompetensi,
+            'sertifikasi'           => $sertifikasi,
+            'data_asesmen_mandiri'  => $data_asesmen_mandiri,
+            'user_asesi_id'         => $user_asesi_id,
+            'jurusan_id'            => $jurusan_id
+        ]);
+    }
+
+    public function cetak_asesmen_mandiri($jurusan_id, $user_asesi_id){
+        $sertifikasi = SkemaSertifikasi::with( 
+            'relasi_jurusan',
+            'relasi_unit_kompetensi', 'relasi_unit_kompetensi.relasi_unit_kompetensi_sub')
+            ->where('jurusan_id', $jurusan_id)->first();
+
+        $unit_kompetensi = UnitKompetensi::where('skema_sertifikasi_id', $sertifikasi->id)->get();
+        $data_asesmen_mandiri = AsesmenMandiri::with('relasi_user_asesi', 'relasi_user_asesor')
+            ->whereRelation('relasi_user_asesi', 'user_asesi_id', $user_asesi_id)
+            ->first();
+       
+        PDF::setOptions(['dpi' => 96, 'defaultFont' => 'times-roman']);
+        $pdf = PDF::loadView('admin.assessment.asessment_mandiri.pdf_berkas_asesmen_mandiri', [
+                    'unit_kompetensi'       => $unit_kompetensi,
+                    'sertifikasi'           => $sertifikasi,
+                    'data_asesmen_mandiri'  => $data_asesmen_mandiri,
+                    'user_asesi_id'         => $user_asesi_id,
+                    'jurusan_id'            => $jurusan_id
+                ])
+                ->setPaper("A4", "portrait");
+        return $pdf->stream();
     }
 }

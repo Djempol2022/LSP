@@ -30,7 +30,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title" id="myModalLabel33">Tambah Materi Uji Kompetensi</h4>
-                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <button type="button" class="close batal" data-bs-dismiss="modal" aria-label="Close">
                                         <i data-feather="x"></i>
                                     </button>
                                 </div>
@@ -49,6 +49,7 @@
                                         <div class="form-group">
                                             <label>Pilih Jurusan</label>
                                             <select class="js-example-basic-single" name="jurusan_id">
+                                                    <option value="">Pilih Jurusan</option>
                                                 @foreach ($jurusan as $data_jurusan)
                                                     <option value="{{ $data_jurusan->id }}">{{ $data_jurusan->jurusan }}
                                                     </option>
@@ -61,13 +62,9 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                                            <i class="bx bx-x d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">Batal</span>
+                                        <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal">Batal
                                         </button>
-                                        <button type="submit" class="btn btn-primary ml-1 submit-tambah-muk">
-                                            <i class="bx bx-check d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">Simpan</span>
+                                        <button type="submit" class="btn btn-primary ml-1 submit-tambah-muk">Simpan
                                         </button>
                                     </div>
                                 </form>
@@ -112,7 +109,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="myModalLabel33">Ubah Materi Uji Kompetensi</h4>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close batal" data-bs-dismiss="modal" aria-label="Close">
                                 <i data-feather="x"></i>
                             </button>
                         </div>
@@ -146,13 +143,9 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light-secondary close" data-bs-dismiss="modal">
-                                    <i class="bx bx-x d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Batal</span>
+                                <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal">Batal
                                 </button>
-                                <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk">
-                                    <i class="bx bx-check d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Simpan</span>
+                                <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk">Simpan
                                 </button>
                             </div>
                         </form>
@@ -235,6 +228,10 @@
             ]
         });
 
+        $('.batal').on('click', function(){
+            $(document).find('label.error-text').text('');
+            $("#jurusan_id").empty().append('');
+        })
 
         let data_jurusan = @json($jurusan);
 
@@ -286,10 +283,6 @@
                 });
             });
         }
-
-        $('.close').on('click', function() {
-            $("#jurusan_id").empty().append('');
-        })
 
         $(document).on('click', '.hapus_muk', function(event) {
             const id = $(event.currentTarget).attr('id-muk');

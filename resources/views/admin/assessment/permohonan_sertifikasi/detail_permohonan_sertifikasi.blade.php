@@ -15,22 +15,16 @@
     {{-- EDIT PROFIL --}}
     <div class="mt-5">
         <h5 class="text-black my-4">Permohonan Sertifikasi Kompetensi</h5>
-        <div>
             <div class="col profil-section" style="margin-bottom:0% !important">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="col-lg-6 col-md-4 col-xs-6 thumb">
-                            @isset($data_permohonan_user_sertifikasi->relasi_user_detail->foto)
-                                <img src="{{ asset('storage/' . $data_permohonan_user_sertifikasi->relasi_user_detail->foto) }}"
-                                    class="img-thumbnail rounded-circle mb-3" alt="image">
-                            @else
-                                <img src="/images/logo/favicon_lsp.png" class="img-thumbnail rounded-circle" alt="image">
-                            @endisset
-                        </div>
-                    </div>
+                <div class="thumb-profil thumb">
+                    @isset($data_permohonan_user_sertifikasi->relasi_user_detail->foto)
+                        <img src="{{ asset('storage/' . $data_permohonan_user_sertifikasi->relasi_user_detail->foto) }}"
+                        class="img-thumbnail rounded-circle mb-3" style="width: 100px; height: 100px;object-fit: cover;" alt="image">
+                    @else
+                        <img src="/images/logo/favicon_lsp.png" class="img-thumbnail rounded-circle mb-3" alt="image">
+                    @endisset
                 </div>
             </div>
-        </div>
 
         {{-- RINCIAN DATA PEMOHON SERTIFIKASI --}}
         <div class="mb-5 pb-5" style="margin-bottom: 0% !important">
@@ -124,7 +118,7 @@
                         </div>
                         <div class="col pb-4">
                             <p class="fw-bold">Alamat Kantor</p>
-                            <span>{{ $data_permohonan_user_sertifikasi->relasi_pekerjaan->alamat_kantor ?? ''}}</span>
+                            <span>{{ $data_permohonan_user_sertifikasi->relasi_pekerjaan->alamat_pekerjaan ?? ''}}</span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -150,12 +144,6 @@
             <div class="col profil-section-title">
                 Bagian 2 : Data Sertifikasi
             </div>
-            <p class="py-3" style="font-size: 18px">Tuliskan Judul dan Nomor Skema Sertifikasi yang anda ajukan
-                berikut.
-                Daftar Unit Kompetensi sesuai kemasan pada skema sertifikasi untuk mendapatkan pengakuan sesuai dengan
-                latar
-                belakang pendidikan, pelatihan serta pengalaman kerja yang anda miliki.
-            </p>
             <div class="col profil-section" style="margin-bottom:0% !important">
                 <div class="col pb-45">
                     <p class="fw-bold">Judul Skema Sertifikasi</p>
@@ -192,12 +180,11 @@
             <div class="col profil-section-title">
                 Bagian 3 : Bukti Kelengkapan Pemohon
             </div>
-            <p class="py-3" style="font-size: 18px">Bukti Persyaratan Dasar Pemohon.</p>
             <div class="col profil-section" style="margin-bottom:0% !important">
                 <div class="col pb-45">
                     <p class="fw-bold">Kartu Keluarga</p>
                     @if (!empty($kartu_keluarga))
-                    <p>{{ $kartu_keluarga }}</p>
+                    <p><a href="{{asset('storage/'. $data_permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->kartu_keluarga)}}" target="_blank">Kartu Keluarga.PDF</a></p>
                     @else
                     <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                     @endif
@@ -205,7 +192,7 @@
                 <div class="col pb-45">
                     <p class="fw-bold">Kartu Pelajar</p>
                     @if (!empty($kartu_pelajar))
-                    <p>{{ $kartu_pelajar }}</p>
+                    <p><a href="{{asset('storage/'. $data_permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->kartu_pelajar)}}" target="_blank">Kartu Pelajar.PDF</a></p>
                     @else
                     <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                     @endif
@@ -213,7 +200,7 @@
                 <div class="col pb-45">
                     <p class="fw-bold">Pas Foto</p>
                     @if (!empty($pas_foto))
-                    <p>{{ $pas_foto }}</p>
+                    <p><a href="{{asset('storage/'. $data_permohonan_user_sertifikasi->relasi_user_detail->foto)}}" target="_blank">Foto.PNG</a></p>
                     @else
                     <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                     @endif
@@ -222,7 +209,7 @@
                     <p class="fw-bold">Sertifikat Prakerin atau Surat Keterangan Telah Melaksanakan Praktek Kerja
                         Industri</p>
                     @if (!empty($sertifikat_prakerin))
-                    <p>{{ $sertifikat_prakerin }}</p>
+                    <p><a href="{{asset('storage/'. $data_permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->sertifikat_prakerin)}}" target="_blank">Sertifikat Prakerin.PDF</a></p>
                     @else
                     <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                     @endif
@@ -230,7 +217,7 @@
                 <div class="col pb-45">
                     <p class="fw-bold">Nilai Raport</p>
                     @if (!empty($nilai_raport))
-                    <p>{{ $nilai_raport }}</p>
+                    <p><a href="{{asset('storage/'. $data_permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->nilai_raport)}}" target="_blank">Nilai Raport.PDF</a></p>
                     @else
                     <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                     @endif
@@ -339,6 +326,8 @@
         </div>
     </div>
 
+    <button class="btn btn-sm "></button>
+
     {{-- MODAL PERSETUJUAN/TANDA TANGAN ADMIN --}}
     <div class="modal fade text-left" id="modalPersetujuanAdmin" tabindex="-1" role="dialog"
         aria-labelledby="myModalLabel33" aria-hidden="true">
@@ -416,12 +405,10 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                            <i class="bx bx-x d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Batal</span>
+                            Batal
                         </button>
-                        <button type="submit" class="btn btn-primary ml-1">
-                            <i class="bx bx-check d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block" id="simpan">Simpan</span>
+                        <button type="submit" class="btn btn-primary ml-1" id="simpan">
+                            Simpan
                         </button>
                     </div>
                 </form>
@@ -459,8 +446,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                            <i class="bx bx-x d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Batal</span>
+                            Batal
                         </button>
                         <button id="simpan" type="submit" class="btn btn-primary ml-1">Simpan</button>
                     </div>

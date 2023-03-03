@@ -34,7 +34,7 @@
                         <div class="col-auto col-foto-profile">
                             @isset($user->foto)
                                 <img src="{{ asset('storage/' . $user->foto) }}" style="width: 100%" class="rounded-circle"
-                                    alt="image">
+                                    alt="image" style="width: 50px; height: 50px; object-fit: cover;">
                             @else
                                 <img src="{{ asset('images/logo/favicon.png') }}" style="width: 100%" class="rounded-circle"
                                     alt="image">

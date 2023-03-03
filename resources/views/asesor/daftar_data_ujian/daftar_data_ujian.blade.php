@@ -153,15 +153,29 @@
                     return jenis_tes;
                 }
             },
+            // {
+            //     "targets": 4,
+            //     "class": "text-wrap text-center",
+            //     "render": function (data, type, row, meta) {
+            //         list_unit_kompetensi[row.id] = row;
+            //          let status_koreksi;
+            //         if(row.relasi_jadwal_uji_kompetensi.relasi_status_koreksi == null){
+            //             status_koreksi = `<a class="text-danger" href="#!">Belum Dikoreksi</a>`
+            //         }else if(row.relasi_jadwal_uji_kompetensi.relasi_status_koreksi != null){
+            //             status_koreksi = `<a class="text-success" href="#!">Telah Dikoreksi</a>`
+            //         }
+            //         return status_koreksi;
+            //     }
+            // },
             {
                 "targets": 4,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
-                     let status_koreksi;
-                    if(row.relasi_jadwal_uji_kompetensi.relasi_status_koreksi == null){
+                    let status_koreksi;
+                    if(row.status_kompeten == 0 ){
                         status_koreksi = `<a class="text-danger" href="#!">Belum Dikoreksi</a>`
-                    }else if(row.relasi_jadwal_uji_kompetensi.relasi_status_koreksi != null){
+                    }else if(row.status_kompeten == 1){
                         status_koreksi = `<a class="text-success" href="#!">Telah Dikoreksi</a>`
                     }
                     return status_koreksi;
@@ -173,7 +187,7 @@
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
                     let jenis_tes;
-                    if(row.relasi_jadwal_uji_kompetensi.relasi_status_koreksi == null){
+                    if(row.status_kompeten == 0){
                         if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 1){
                             jenis_tes = `<span class="badge btn-sm bg-info rounded-pill">
                                         <a class="text-black" href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}">Review</a>
@@ -185,7 +199,7 @@
                                             </a>
                                         </span>`
                         }
-                    }else if(row.relasi_jadwal_uji_kompetensi.relasi_status_koreksi != null){
+                    }else if(row.status_kompeten == 1){
                         jenis_tes = `<span class="badge btn-sm bg-info rounded-pill">
                                             <a href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}" class="text-black">
                                                 Hasil Koreksi
@@ -195,6 +209,34 @@
                     return jenis_tes;
                 }
             },
+            // {
+            //     "targets": 5,
+            //     "class": "text-wrap text-center",
+            //     "render": function (data, type, row, meta) {
+            //         list_unit_kompetensi[row.id] = row;
+            //         let jenis_tes;
+            //         if(row.relasi_jadwal_uji_kompetensi.relasi_status_koreksi == null){
+            //             if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 1){
+            //                 jenis_tes = `<span class="badge btn-sm bg-info rounded-pill">
+            //                             <a class="text-black" href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}">Review</a>
+            //                         </span>`
+            //             }else if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 2 || row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 3){
+            //                 jenis_tes = `<span class="badge btn-sm bg-warning rounded-pill">
+            //                                 <a href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}" class="text-black">
+            //                                     Koreksi
+            //                                 </a>
+            //                             </span>`
+            //             }
+            //         }else if(row.relasi_jadwal_uji_kompetensi.relasi_status_koreksi != null){
+            //             jenis_tes = `<span class="badge btn-sm bg-info rounded-pill">
+            //                                 <a href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}" class="text-black">
+            //                                     Hasil Koreksi
+            //                                 </a>
+            //                             </span>`
+            //         }
+            //         return jenis_tes;
+            //     }
+            // },
         ]
     });
 

@@ -35,7 +35,7 @@
                     <div class="col-12 col-lg-4">
                         <div class="card">
                             <div class="card-body py-4 px-4">
-                                <a href="{{ route('admin.Assessment.DataAsesiAsessmentMandiri') }}">
+                                <a href="{{ route('admin.Assessment.DaftarKomponenUmpanBalikAsesi') }}">
                                     <div class="d-flex align-items-center">
                                         <div class="avatar avatar-xl">
                                             <i class="fa fa-vote-yea fa-lg"></i>

@@ -76,7 +76,13 @@
                 "render": function (data, type, row, meta) 
                 {
 					list_kelola_soal[row.id] = row;
-                    return row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
+                    let cek_asesor;
+                    if(row.relasi_user_asesor == null || row.relasi_user_asesor.relasi_user_asesor_detail == null){
+                        cek_asesor = `Asesor belum ditentukan`
+                    }else{
+                        cek_asesor = row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
+                    }
+                    return cek_asesor;
                 }
             },
             {
@@ -85,7 +91,13 @@
                 "render": function (data, type, row, meta) 
                 {
 					list_kelola_soal[row.id] = row;
-                    return row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
+                    let cek_peninjau;
+                    if(row.relasi_user_peninjau == null || row.relasi_user_peninjau.relasi_user_peninjau_detail == null){
+                        cek_peninjau = `Peninjau belum ditentukan`
+                    }else{
+                        cek_peninjau = row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
+                    }
+                    return cek_peninjau;
                 }
             },
             {

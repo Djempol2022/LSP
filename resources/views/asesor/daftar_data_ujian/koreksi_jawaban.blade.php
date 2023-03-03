@@ -256,12 +256,9 @@
                             <div class="col-4 col-md-4">
                             <input class="form-check-input me-1" type="radio"
                               name="status_kompeten" value="1" id="kompeten-1" 
-                              @isset($data_hasil_koreksi->status_kompeten)
-                                @disabled(true)
-                                @if ($data_hasil_koreksi->status_kompeten == 1)
+                              @if($data_hasil_koreksi->status_kompeten == 1)
                                   @checked(true)
-                                @endif
-                              @endisset
+                              @endif
                               >
                             <label class="form-check-label text-success"
                               for="kompeten-1">Kompeten</label>
@@ -270,12 +267,9 @@
                             <input class="form-check-input me-0" type="radio"
                               name="status_kompeten" value="0"
                               id="kompeten-0"
-                              @isset($data_hasil_koreksi->status_kompeten)
-                                @disabled(true)
                                 @if ($data_hasil_koreksi->status_kompeten == 0)
-                                    @checked(true)
-                                @endif
-                              @endisset>
+                                    @checked(false)
+                                @endif>
                             <label class="form-check-label text-danger"
                               for="kompeten-0">Belum Kompeten</label>
                           </div>
@@ -299,7 +293,7 @@
                         </div>
                         <div class="col pb-4">
                             <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
-                            @isset($data_hasil_koreksi->ttd_asesor)
+                            @if($data_hasil_koreksi->status_komponen == 1)
                             <div class="mb-2">
                                 <img src="{{ $data_hasil_koreksi->ttd_asesor }}" alt="ttd" width="180px">
                             </div>
@@ -316,7 +310,7 @@
                             <div class="input-group has-validation">
                                 <label class="text-danger error-text ttd_asesor_error"></label>
                             </div>
-                            @endisset
+                            @endif
                         </div>
                         @empty($data_hasil_koreksi->ttd_asesor)
                           <div class="modal-footer">

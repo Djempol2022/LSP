@@ -24,7 +24,7 @@
                     <div class="thumb-profil thumb">
                         @isset($data->relasi_user_detail->foto)
                             <img src="{{ asset('storage/' . $data->relasi_user_detail->foto) }}"
-                                class="img-thumbnail rounded-circle mb-3" alt="image">
+                                class="img-thumbnail rounded-circle mb-3" alt="image" style="width: 100px; height: 100px;object-fit: cover;">
                         @else
                             <img src="/images/logo/favicon.png" class="img-thumbnail rounded-circle" alt="image">
                         @endisset
@@ -200,12 +200,6 @@
                 <div class="col profil-section-title">
                     Bagian 2 : Data Sertifikasi
                 </div>
-                <p class="py-3" style="font-size: 18px">Tuliskan Judul dan Nomor Skema Sertifikasi yang anda ajukan
-                    berikut.
-                    Daftar Unit Kompetensi sesuai kemasan pada skema sertifikasi untuk mendapatkan pengakuan sesuai dengan
-                    latar
-                    belakang pendidikan, pelatihan serta pengalaman kerja yang anda miliki.
-                </p>
                 <div class="col profil-section" style="margin-bottom:0% !important">
                     <div class="col pb-45">
                         <p class="fw-bold">Judul Skema Sertifikasi</p>
@@ -268,12 +262,11 @@
                 <div class="col profil-section-title">
                     Bagian 3 : Bukti Kelengkapan Pemohon
                 </div>
-                <p class="py-3" style="font-size: 18px">Bukti Persyaratan Dasar Pemohon.</p>
                 <div class="col profil-section" style="margin-bottom:0% !important">
                     <div class="col pb-45">
                         <p class="fw-bold">Kartu Keluarga</p>
                         @if (!empty($kartu_keluarga))
-                            <p>{{ $kartu_keluarga }}</p>
+                        <p><a href="{{asset('storage/'. $data->relasi_kelengkapan_pemohon->kartu_keluarga)}}" target="_blank">Kartu Keluarga.PDF</a></p>
                         @else
                             <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                         @endif
@@ -281,7 +274,7 @@
                     <div class="col pb-45">
                         <p class="fw-bold">Kartu Pelajar</p>
                         @if (!empty($kartu_pelajar))
-                            <p>{{ $kartu_pelajar }}</p>
+                            <p><a href="{{asset('storage/'. $data_permohonan_user_sertifikasi->relasi_kelengkapan_pemohon->kartu_pelajar)}}" target="_blank">Kartu Pelajar.PDF</a></p>
                         @else
                             <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                         @endif
@@ -289,7 +282,7 @@
                     <div class="col pb-45">
                         <p class="fw-bold">Pas Foto</p>
                         @if (!empty($pas_foto))
-                            <p>{{ $pas_foto }}</p>
+                            <p><a href="{{asset('storage/'. $data->relasi_user_detail->foto)}}" target="_blank">Foto.PNG</a></p>
                         @else
                             <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                         @endif
@@ -298,7 +291,7 @@
                         <p class="fw-bold">Sertifikat Prakerin atau Surat Keterangan Telah Melaksanakan Praktek Kerja
                             Industri</p>
                         @if (!empty($sertifikat_prakerin))
-                            <p>{{ $sertifikat_prakerin }}</p>
+                            <p><a href="{{asset('storage/'. $data->relasi_kelengkapan_pemohon->sertifikat_prakerin)}}" target="_blank">Sertifikat Prakerin.PDF</a></p>
                         @else
                             <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                         @endif
@@ -306,7 +299,7 @@
                     <div class="col pb-45">
                         <p class="fw-bold">Nilai Raport</p>
                         @if (!empty($nilai_raport))
-                            <p>{{ $nilai_raport }}</p>
+                            <p><a href="{{asset('storage/'. $data->relasi_kelengkapan_pemohon->nilai_raport)}}" target="_blank">Nilai Raport.PDF</a></p>
                         @else
                             <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                         @endif

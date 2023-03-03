@@ -23,13 +23,13 @@
                     </span>
 
                     {{-- MODAL TAMBAH --}}
-                    <div class="modal fade text-left" id="modalTambahInstitusi" tabindex="-1" role="dialog"
+                    <div class="modal fade text-left" id="modalTambahInstitusi" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
                         aria-labelledby="myModalLabel33" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title" id="myModalLabel33">Tambah Institusi</h4>
-                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <button type="button" class="close batal" data-bs-dismiss="modal" aria-label="Close">
                                         <i data-feather="x"></i>
                                     </button>
                                 </div>
@@ -78,13 +78,9 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                                            <i class="bx bx-x d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">Batal</span>
+                                        <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal"> Batal
                                         </button>
-                                        <button type="submit" class="btn btn-primary ml-1">
-                                            <i class="bx bx-check d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">Simpan</span>
+                                        <button type="submit" class="btn btn-primary ml-1">Simpan
                                         </button>
                                     </div>
                                 </form>
@@ -112,13 +108,13 @@
             </div>
 
             {{-- MODAL EDIT --}}
-            <div class="modal fade text-left" id="modalEditInstitusi" tabindex="-1" role="dialog"
+            <div class="modal fade text-left" id="modalEditInstitusi" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
                 aria-labelledby="myModalLabel33" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="myModalLabel33">Ubah Institusi</h4>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close batal" data-bs-dismiss="modal" aria-label="Close">
                                 <i data-feather="x"></i>
                             </button>
                         </div>
@@ -168,13 +164,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                                    <i class="bx bx-x d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Batal</span>
+                                <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal">Batal
                                 </button>
-                                <button type="submit" class="btn btn-primary ml-1">
-                                    <i class="bx bx-check d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Simpan</span>
+                                <button type="submit" class="btn btn-primary ml-1">Simpan
                                 </button>
                             </div>
                         </form>
@@ -283,6 +275,10 @@
             ]
         });
 
+        $('.batal').on('click', function(){
+            $(document).find('label.error-text').text('');
+        })
+        
         function clickEditInstitusi(id) {
             const data_institusi = list_institusi[id]
             $("#modalEditInstitusi").modal('show');

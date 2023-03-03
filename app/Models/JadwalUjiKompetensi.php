@@ -47,6 +47,6 @@ class JadwalUjiKompetensi extends Model
     }
 
     public function relasi_status_koreksi(){
-        return $this->hasOne(KoreksiJawaban::class, 'jadwal_uji_kompetensi_id', 'id');
+        return $this->belongsTo(KoreksiJawaban::class, 'jadwal_uji_kompetensi_id', 'id');
     }
 }

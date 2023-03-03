@@ -43,7 +43,7 @@
                         <label>Tempat Uji Kompetensi</label>
                         <div class="form-group">
                             <div class="input-group col-xs-12">
-                                <input name="nama_tuk[]" class="form-control rounded-4">
+                                <input name="nama_tuk[]" class="form-control rounded-4" required>
                                 <span class="input-group-append d-flex align-items-center" style="padding: 8px;">
                                     <button class="file-upload-browse btn btn-primary btn-tambah-tuk" type="button">
                                         +
@@ -104,7 +104,7 @@
               <div class="modal-body">
                 <label>Nama Tempat Uji Kompetensi</label>
                 <div class="form-group field_wrapper">
-                    <input name="nama_tuk" class="form-control rounded-4">
+                    <input name="nama_tuk" class="form-control rounded-4" required>
                   <div class="input-group has-validation">
                     <label class="text-danger error-text nama_tuk_error"></label>
                   </div>
@@ -140,7 +140,7 @@
     function tambahNamaTUK() {
         $(".input-tuk").addClass('input-tuk')
         var komponen =
-            `<div class="form-group"><div class="input-group col-xs-12"><input name="nama_tuk[]" class="form-control rounded-4"><span class="input-group-append d-flex align-items-center" style="padding: 8px;"><button class="file-upload-browse btn btn-danger hapusKomponen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text komponen_${total++}_error"></label></div></div></div>`;
+            `<div class="form-group"><div class="input-group col-xs-12"><input name="nama_tuk[]" class="form-control rounded-4" required><span class="input-group-append d-flex align-items-center" style="padding: 8px;"><button class="file-upload-browse btn btn-danger hapusKomponen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text komponen_${total++}_error"></label></div></div></div>`;
         $('.input-tuk').append(komponen);
     };
 
