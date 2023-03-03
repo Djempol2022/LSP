@@ -12,6 +12,8 @@
 <script src="/js/moment.js"></script>
 {{-- <script src="/js/dataTables.responsive.min.js"></script> --}}
 
+<script src="/js/bootstrap-editable.js"></script>
+
 {{-- yearpicker --}}
 <script src="{{ asset('js/yearpicker.js') }}"></script>
 

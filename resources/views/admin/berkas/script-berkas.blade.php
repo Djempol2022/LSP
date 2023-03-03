@@ -26,6 +26,7 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'daftar-tuk-terverifikasi') {
         daftarHasilVerifikasi();
         $('#tambah').show();
@@ -33,6 +34,7 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'hasil-verifikasi-tuk') {
         hasilVerifikasiTUK();
         $('#tambah').show();
@@ -40,6 +42,7 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'st-verifikasi-tuk') {
         stVerifikasiTUK();
         $('#tambah').show();
@@ -47,6 +50,7 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'df-hadir-asesi') {
         dfHadirAsesi();
         $('#tambah').show();
@@ -54,6 +58,7 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'x03-st-verifikasi-tuk') {
         x03STVerifikasiTUK();
         $('#tambah').show();
@@ -61,6 +66,7 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'x04-berita-acara') {
         x04BeritaAcara();
         $('#tambah').show();
@@ -68,6 +74,7 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'z-ba-pecah-rp') {
         zBAPecahRP();
         $('#tambah').show();
@@ -75,6 +82,7 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'z-ba-rp') {
         zBARP();
         $('#tambah').show();
@@ -82,6 +90,7 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'df-hadir-asesor-pleno') {
         dfHadirAsesorPleno();
         $('#tambah').show();
@@ -89,6 +98,7 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'df-hadir-asesor') {
         dfHadirAsesor();
         $('#tambah').show();
@@ -96,6 +106,7 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'df-hadir-asesi-bnsp') {
         $('#table-surat').DataTable().destroy();
         $('#tambah').hide();
@@ -103,6 +114,15 @@
         $('#years').show();
         $('#export_excel').show();
         $('#myImgLightbulb').hide();
+        $('#table-sertifikat').hide();
+      } else if (berkasValue === 'sertifikat') {
+        $('#table-surat').DataTable().destroy();
+        $('#tambah').hide();
+        $('#table-surat').hide();
+        $('#years').show();
+        $('#myImgLightbulb').hide();
+        $('#export_excel').hide();
+        $('#table-sertifikat').show();
       } else {
         $('#table-surat').DataTable();
         $('#tambah').show();
@@ -110,14 +130,124 @@
         $('#years').hide();
         $('#export_excel').hide();
         $('#table-surat').show();
+        $('#table-sertifikat').hide();
       }
     });
 
     // export to excel year dropdown
     $('#years').change(function() {
       let yearValue = $(this).val();
-      $('#export_excel').attr('href', '/admin/berkas/df-hadir-asesi-bnsp/' + yearValue);
+
+      if (yearValue == '#') {
+        $('#export_excel').attr('href', '#');
+
+        $('#table-sertifikat').empty();
+      } else {
+        $('#export_excel').attr('href', '/admin/berkas/df-hadir-asesi-bnsp/' + yearValue);
+
+        $.ajax({
+          type: "GET",
+          url: "/admin/table-sertifikat/" + yearValue,
+          dataType: "json",
+          success: function(response) {
+            console.log(response);
+            $('#table-sertifikat').empty();
+            $('#table-sertifikat').html(`
+                <table class="table table-striped" id="editable-table">
+                <thead>
+                    <tr>
+                    <th>No</th>
+                    <th>Nama Asesi</th>
+                    <th>Asal Sekolah</th>
+                    <th>Nomor Sertifikat</th>
+                    <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${
+                    (() => {
+                        let i = 1;
+                        return response.user.map(data => `
+                        <tr data-id="${data.id}">
+                            <td>${i++}</td>
+                            <td>${data.nama_lengkap}</td>
+                            <td>${data.relasi_institusi.nama_institusi}</td>
+                            <td class="text-primary" data-field="no_sertifikat">${data.nama_lengkap}</td>
+                            <td>
+                            <a href="/admin/print-sertifikat/${data.id}" class="btn btn-primary btn-sm">Print Sertifikat</a>
+                            </td>
+                        </tr>
+                        `).join('');
+                    })()
+                    }
+                </tbody>
+                </table>
+                `);
+
+            // Initialize the Editable plugin
+            $('#editable-table td[data-field]').editable({
+              type: 'text',
+              url: '/admin/update-sertifikat',
+              method: 'POST',
+              params: function(params) {
+                // Include the row ID and field name in the data sent to the server
+                var row = $(this).parent('tr');
+                params.id = row.attr('data-id');
+                params.field = $(this).attr('data-field');
+                return params;
+              },
+              success: function(response, newValue) {
+                // Handle success
+                console.log('Update successful');
+                console.log(response);
+                console.log(newValue);
+              },
+              error: function(response) {
+                // Handle error
+                console.log('Update failed');
+              }
+            });
+          },
+          error: function(xhr, status, error) {
+            console.error(error);
+          }
+        });
+      }
+
     });
+
+    // editable in sertifikat
+    // $('.editable').on('click', 'td[data-field="no_sertifikat"]', function() {
+    //   var cell = $(this);
+    //   cell.edit(function(value) {
+    //     // handle value changes
+    //     console.log('Value changed to: ' + value);
+    //   }, function() {
+    //     // handle cancel
+    //     console.log('Edit cancelled');
+    //   }, function(value) {
+    //     // handle save
+    //     var row = cell.parent('tr');
+    //     var data = {
+    //       id: row.attr('data-id'),
+    //       field: cell.attr('data-field'),
+    //       value: value
+    //     };
+    //     $.ajax({
+    //       method: 'POST',
+    //       url: '/admin/update-sertifikat',
+    //       data: data
+    //     }).done(function(response) {
+    //       // handle success
+    //       console.log('Update successful');
+    //       console.log(response);
+    //     }).fail(function(error) {
+    //       // handle error
+    //       console.log('Update failed: ' + error);
+    //     });
+    //   });
+    // });
+    // end of editable in sertifikat
 
     // lightbulb
     // Get the modal
@@ -205,13 +335,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_sk_penetapan[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -272,13 +396,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_daftar_tuk[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -339,13 +457,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_hasil_verifikasi_tuk[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -406,13 +518,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_st_verifikasi_tuk[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -465,7 +571,7 @@
             "targets": 1,
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
-              return 'Daftar Hadr Asesi';
+              return 'Daftar Hadir Asesi';
             }
           },
           {
@@ -473,13 +579,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_df_hadir_asesi[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -540,13 +640,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_x03_st_verifikasi_tuk[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -607,13 +701,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_x04_berita_acara[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -674,13 +762,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_z_ba_pecah_rp[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -741,13 +823,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_z_ba_rp[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -808,13 +884,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_df_hadir_asesor_pleno[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -875,13 +945,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_df_hadir_asesor[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -1494,5 +1558,27 @@
         });
       }
     });
+  }
+
+  function timestamps(value) {
+    const timestampString = value;
+    const timestamp = Math.floor(Date.parse(timestampString) / 1000);
+    const date = new Date(timestamp * 1000); // multiply by 1000 to convert to milliseconds
+    const formattedDate = date.toLocaleString('id', {
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZone: 'Asia/Jakarta'
+    }).replace(/\./g, ':');
+
+    return formattedDate;
+  }
+
+  function table_sertifikat() {
+    let table = document.createElement('table');
+
   }
 </script>

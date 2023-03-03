@@ -595,4 +595,34 @@ class BerkasController extends Controller
     {
         return Excel::download(new UserExport($year), 'users.xlsx');
     }
+
+    public function table_sertifikat($year)
+    {
+        $user_asesi_id = AsesiUjiKompetensi::selectRaw('MAX(id) as id')
+            ->whereYear('updated_at', $year)
+            ->where('status_ujian_berlangsung', 2)
+            ->groupBy('user_asesi_id')
+            ->orderBy('user_asesi_id')
+            ->get()
+            ->map(function ($item) {
+                return AsesiUjiKompetensi::find($item->id);
+            });
+        $user = User::with(['relasi_user_detail', 'relasi_institusi'])->whereIn('id', $user_asesi_id->pluck('user_asesi_id')->all())->get();
+        return response()->json([
+            'user' => $user,
+        ]);
+    }
+
+    public function print_sertifikat($id)
+    {
+        $user = User::with(['relasi_user_detail', 'relasi_institusi'])->find($id);
+        return view('admin.berkas.sertifikat.pdf', [
+            'user' => $user,
+        ]);
+    }
+
+    public function update_sertifikat()
+    {
+        return response()->json('ok');
+    }
 }

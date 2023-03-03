@@ -240,6 +240,10 @@ Route::middleware(['auth'])->group(function () {
             Route::any('table-surat-df-hadir-asesor', 'table_surat_df_hadir_asesor')->name('SuratDFHadirAsesor');
             Route::get('table-surat-df-hadir-asesor/{id}', 'show_df_hadir_asesor')->name('SuratDFHadirAsesor.Show');
 
+            Route::get('table-sertifikat/{year}', 'table_sertifikat')->name('TableSertifikat');
+            Route::get('print-sertifikat/{id}', 'print_sertifikat')->name('PrintSertifikat');
+            Route::post('update-sertifikat', 'update_sertifikat')->name('UpdateSertifikat');
+
 
             // PDF
             Route::get('cetak-sk-penetapan-tuk/{id}', 'cetak_sk_penetapan_pdf')->name('CetakSKPentapanTUKPDF');

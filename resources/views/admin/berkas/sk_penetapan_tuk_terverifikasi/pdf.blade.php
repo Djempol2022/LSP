@@ -62,7 +62,7 @@
         <h4 style="margin-bottom: -20px">KETUA LSP SMK NEGERI 1 SINTANG</h4>
         <h4 style="margin-bottom: -16px">Nomor : {{ $sk_penetapan_tuk->no_sk }}</h4>
         <h4 style="font-style: italic; font-weight: lighter; margin-bottom: -16px">Tentang</h4>
-        <h4 style="margin-bottom: -17px">PENEMPATAN TEMPAT UJI KOMPETENSI (TUK) TERVERIFIKASI</h4>
+        <h4 style="margin-bottom: -20px">PENEMPATAN TEMPAT UJI KOMPETENSI (TUK) TERVERIFIKASI</h4>
       </div>
       <div>
         <div>
@@ -223,8 +223,8 @@
                             <div>
                               <span>{{ $sk_penetapan_tuk->jabatan_bttd }}</span>
                             </div>
-                            <div style="height: 90px"><img src="{{ $sk_penetapan_tuk->ttd }}" alt="ttd"
-                                style="width: 140px; margin-left: -10px; margin-top: -2px">
+                            <div style="height: 105px"><img src="{{ $sk_penetapan_tuk->ttd }}" alt="ttd"
+                                style="width: 120px; margin-left: 10px; margin-top: -2px">
                             </div>
                             <div>
                               <span>{{ $sk_penetapan_tuk->nama_bttd }}</span>
@@ -328,13 +328,12 @@
                           <div>
                             <span>{{ $sk_penetapan_tuk->jabatan_bttd }}</span>
                           </div>
-                          <div style="height: 90px"><img src="{{ $sk_penetapan_tuk->ttd }}" alt="ttd"
-                              style="width: 140px; margin-left: -10px; margin-top: -2px">
+                          <div style="height: 105px"><img src="{{ $sk_penetapan_tuk->ttd }}" alt="ttd"
+                              style="width: 120px; margin-left: 10px; margin-top: -2px">
+                            <div>
+                              <span>{{ $sk_penetapan_tuk->nama_bttd }}</span>
+                            </div>
                           </div>
-                          <div>
-                            <span>{{ $sk_penetapan_tuk->nama_bttd }}</span>
-                          </div>
-                        </div>
                       </td>
                     </tr>
                   </table>

@@ -12,7 +12,7 @@
     <section class="row">
       <div class="card">
         <div class="card-header d-flex justify-content-between flex-sm-row flex-column gap-2 gap-sm-0">
-          <div class="form-group">
+          <div class="form-group w-50">
             <label for="berkas">Pilih Berkas:</label>
             <select class="form-control" id="berkas" name="berkas">
               {{-- <option value="#" selected>Pilih Berkas</option> --}}
@@ -28,6 +28,7 @@
               <option value="df-hadir-asesor-pleno">Daftar Hadir Asesor Pleno</option>
               <option value="df-hadir-asesor">Daftar Hadir Asesor</option>
               <option value="df-hadir-asesi-bnsp">Daftar Hadir Asesi BNSP</option>
+              <option value="sertifikat">Sertifikat</option>
             </select>
           </div>
           <div class="d-flex justify-content-between align-items-center" style="width: 130px">
@@ -48,6 +49,9 @@
         </div>
 
         <div class="card-body table-responsive">
+          <div id="table-sertifikat">
+
+          </div>
           <table class="table table-striped" id="table-surat">
             <thead>
               <tr>

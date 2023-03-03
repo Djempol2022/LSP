@@ -122,8 +122,8 @@
                           <div>
                             <span>{{ $df_hadir_asesor_pleno->jabatan_bttd }},</span>
                           </div>
-                          <div style="height: 90px"><img src="{{ $df_hadir_asesor_pleno->ttd }}" alt="ttd"
-                              style="width: 140px; margin-left: -10px; margin-top: -2px">
+                          <div style="height: 105px"><img src="{{ $df_hadir_asesor_pleno->ttd }}" alt="ttd"
+                              style="width: 120px; margin-left: 10px; margin-top: -2px">
                           </div>
                           <div>
                             <span>{{ $df_hadir_asesor_pleno->nama_bttd }}</span>
