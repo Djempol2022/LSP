@@ -514,4 +514,5 @@ class BerkasController extends Controller
         // ]);
         $pdf = PDF::loadview('admin.berkas.df_hadir_asesor.pdf', compact('df_hadir_asesor'));
         return $pdf->download('Daftar Hadir Asesor.pdf');
-);
+    }
+}
