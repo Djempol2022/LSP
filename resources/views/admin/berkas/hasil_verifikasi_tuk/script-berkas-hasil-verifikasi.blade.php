@@ -188,7 +188,7 @@
       element6.type = "button";
       element6.id = 'button' + rowCount;
       element6.onclick = function() {
-        removeRow(rowCount);
+        removeRow("rowMain" + rowCount);
       };
       cell7.appendChild(element6);
 
@@ -327,9 +327,29 @@
     }
 
     function removeRow(rowMain) {
-      //   console.log(document.querySelectorAll('.rowMain' + rowMain));
-      document.querySelectorAll('.rowMain' + rowMain).forEach((e, i, arr) => {
-        arr[i].remove();
+      console.log(document.querySelectorAll('.' + rowMain));
+      document.querySelectorAll('.' + rowMain).forEach(e => {
+        e.remove();
+
+        // reset main input after remove
+        let table = document.getElementById('tableHasilVerifikasiTUK');
+
+        arrayRowMain = [];
+        let rowCount = table.rows.length - 1;
+        for (let i = 2; i < rowCount; i++) {
+          let row = table.rows[i];
+
+          arrayRowMain.push('rowMain' + i);
+
+          row.className = 'rowMain' + i;
+          row.cells[6].childNodes[0].id = 'button' + i;
+          row.cells[0].innerHTML = i - 1 + '.';
+          $('#button' + i).prop('onclick', null);
+          row.cells[6].onclick = function() {
+            removeRow("rowMain" + i)
+          };
+        }
+        // end reset main input after remove
       });
 
       // let table = document.getElementById('tableHasilVerifikasiTUK');

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\Berkas\Api\DF_Hadir_Asesi_Controller_API;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-Route::post('/admin/berkas/df-hadir-asesi-api', [DF_Hadir_Asesi_Controller_API::class, 'getDataBerkasDFHadirAsesi']);
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
