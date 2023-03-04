@@ -43,7 +43,7 @@
                         <label>Tempat Uji Kompetensi</label>
                         <div class="form-group">
                             <div class="input-group col-xs-12">
-                                <input name="nama_tuk[]" class="form-control rounded-4">
+                                <input name="nama_tuk[]" class="form-control rounded-4" required>
                                 <span class="input-group-append d-flex align-items-center" style="padding: 8px;">
                                     <button class="file-upload-browse btn btn-primary btn-tambah-tuk" type="button">
                                         +
@@ -79,6 +79,7 @@
           <table class="table table-striped" id="table-nama-tuk">
             <thead>
               <tr>
+                <th>No</th>
                 <th>Komponen</th>
                 <th>Aksi</th>
               </tr>
@@ -103,7 +104,7 @@
               <div class="modal-body">
                 <label>Nama Tempat Uji Kompetensi</label>
                 <div class="form-group field_wrapper">
-                    <input name="nama_tuk" class="form-control rounded-4">
+                    <input name="nama_tuk" class="form-control rounded-4" required>
                   <div class="input-group has-validation">
                     <label class="text-danger error-text nama_tuk_error"></label>
                   </div>
@@ -139,7 +140,7 @@
     function tambahNamaTUK() {
         $(".input-tuk").addClass('input-tuk')
         var komponen =
-            `<div class="form-group"><div class="input-group col-xs-12"><input name="nama_tuk[]" class="form-control rounded-4"><span class="input-group-append d-flex align-items-center" style="padding: 8px;"><button class="file-upload-browse btn btn-danger hapusKomponen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text komponen_${total++}_error"></label></div></div></div>`;
+            `<div class="form-group"><div class="input-group col-xs-12"><input name="nama_tuk[]" class="form-control rounded-4" required><span class="input-group-append d-flex align-items-center" style="padding: 8px;"><button class="file-upload-browse btn btn-danger hapusKomponen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text komponen_${total++}_error"></label></div></div></div>`;
         $('.input-tuk').append(komponen);
     };
 
@@ -162,6 +163,8 @@
       "processing": true,
       "bServerSide": true,
       "searching": false,
+      "sScrollX": '100%',
+      "sScrollXInner": "100%",
       ajax: {
         url: "{{ route('admin.DaftarDataNamaTUK') }}",
         type: "POST",
@@ -172,7 +175,16 @@
           visible: true
         },
         {
-          "targets": 0,
+            "targets": 0,
+            "class": "text-nowrap text-center",
+            "render": function (data, type, row, meta) {
+                let i = 1;
+                list_nama_tuk[row.id] = row;
+                return meta.row + 1;
+            }
+        },
+        {
+          "targets": 1,
           "class": "text-wrap",
           "render": function(data, type, row, meta) {
             list_nama_tuk[row.id] = row;
@@ -180,7 +192,7 @@
           }
         },
         {
-          "targets": 1,
+          "targets": 2,
           "class": "text-nowrap",
           "render": function(data, type, row, meta) {
             let tampilan;

@@ -29,13 +29,19 @@
                   </li>
               </ol>
             </nav>
+        </div>
             {{-- EDIT PROFIL --}}
             <div class="mt-5">
 
-                {{-- JADWAL --}}
-                <div class="col profil-section-title">
+              <div class="card">
+                <div class="card-header">
+                  <div class="col profil-section-title">
                     Uji Kompetensi
+                  </div>
                 </div>
+                <div class="card-body">
+                {{-- JADWAL --}}
+                
                 <div class="col profil-section" style="margin-bottom: 0% !important">
                     <div class="row my-4">
                         <div class="col-md-6">
@@ -68,12 +74,17 @@
                         </div>
                     </div>
                 </div>
+              </div>
+            </div>
             </div>
 
-            <div class="col profil-section-title">
-                Detail Jadwal Uji Kompetensi
-            </div>
-
+            <div class="card">
+              <div class="card-header">
+                <div class="col profil-section-title">
+                  Detail Jadwal Uji Kompetensi
+                </div>
+              </div>
+              <div class="card-body">
             <div class="col profil-section" style="margin-bottom: 0% !important">
               <form action="{{route('admin.UbahJadwalPelaksanaanUjian', $data_pelaksanaan_ujian->id)}}" method="POST" id="form-ubahJadwalPelaksanaanUjian">
                 <div class="row my-4">
@@ -152,9 +163,9 @@
                       </div>
                     </div>
                     <div class="col pb-12" id="tambahAsesiKeUjiKompetensi">
-                      <p class="fw-bold">Asesi</p>
+                      <p class="fw-bold" style="margin-top: 1rem;">Asesi</p>
                       <span class="btn btn-primary btn-sm btn-rounded text-white"
-                        href="#" data-bs-toggle="modal" data-bs-target="#modalTambahAsesiKeJadwalUkom">Tambah Asesi
+                        href="#" data-bs-toggle="modal" data-bs-target="#modalTambahAsesiKeJadwalUkom">+ Tambah Asesi
                       </span>
                       <br>
                       {{-- @isset($relasi_jadwal_uji_kompetensi->relasi_user_asesi) --}}
@@ -184,7 +195,7 @@
                         <span class="text-danger fw-semibold">Asesi Belum di tentukan</span>
                       @endif
                     </div>
-                    <button type="submit" class="bg-primary btn-sm btn rounded-3 text-white">Simpan</button>
+                    <button type="submit" class="bg-primary btn rounded-3 text-white">Simpan</button>
                 </div>
                 </form>
                 <div class="modal fade" id="modalTambahAsesiKeJadwalUkom" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -209,8 +220,7 @@
                           <tbody>
                               <input type="hidden" name="jadwal_uji_kompetensi_id" value="{{$data_pelaksanaan_ujian->jadwal_uji_kompetensi_id}}" hidden>
                               <input type="hidden" name="pelaksanaan_ujian_id" value="{{$data_pelaksanaan_ujian->id}}" hidden>
-                              <input type="hidden" name="jenis_tes" value="{{$data_pelaksanaan_ujian->jenis_tes}}" hidden>  
-                            
+                              <input type="hidden" name="jenis_tes" value="{{$data_pelaksanaan_ujian->jenis_tes}}" hidden>              
                             @foreach ($user_asesi as $data_user_asesi)
                             <tr>
                               <th><input type="checkbox" name="user_asesi_id[]" class="cek" value="{{$data_user_asesi->id}}"></th>
@@ -229,8 +239,8 @@
                   </div>
                 </div>
               </div>
-        </div>
-    </section>
+            </div>
+            </section>
 </div>
 @endsection
 @section('script')

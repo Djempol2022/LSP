@@ -216,13 +216,13 @@
                                             </div>
 
                                             @elseif ($pelaksanaan_ujian->jenis_tes == 3)
-                                            <div class="row">
+                                            {{-- <div class="row">
                                                 <div class="col-lg-12 mb-1">
                                                     <div class="form-group has-icon-left">
                                                         <p class="card-title">Jawaban : {{$data_soal->jawaban}}</p>                                                    
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="row">
                                                 <div class="form-group d-flex justify-content-md-end">
                                                     <span class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$data_soal->id}}"><i class="fa fa-pen"></i></span>
@@ -249,12 +249,12 @@
                                                                     <textarea cols="30" rows="5" name="pertanyaan" class="form-control input-text rounded-3">{{$data_soal->pertanyaan}}</textarea>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12">
+                                                            {{-- <div class="col-md-12">
                                                                 <h6>Jawaban</h6>
                                                                 <div class="form-group shadow-textarea">
                                                                     <textarea cols="30" rows="5" name="jawaban" class="form-control input-text rounded-3">{{$data_soal->jawaban}}</textarea>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">

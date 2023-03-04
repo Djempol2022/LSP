@@ -9,13 +9,15 @@
         <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Asessment Mandiri</li>
     </ol>
 </nav>
+</div>
   <div class="page-content">
     <section class="section">
         <div class="card">
             <div class="card-body">
-                <table class="table table-striped" id="table-asesmen-mandiri">
+                <table class="table table-striped fs-100" id="table-asesmen-mandiri">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Jurusan</th>
                             <th>Nama Asesi</th>
                             <th>Asal Sekolah/Institusi</th>
@@ -29,7 +31,7 @@
       </div>
     </section>
   </div>
-</div>
+
 @endsection
 @section('script')
 <script>
@@ -46,7 +48,9 @@
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
-        "responsive": true,
+        "responsive": false,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "{{ route('admin.DataPengajuanAsesmenMandiri') }}",
             type: "POST",
@@ -61,10 +65,11 @@
             },
             {
                 "targets": 0,
-                "class": "text-nowrap",
+                "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
+                    let i = 1;
                     list_asesmen_mandiri[row.id] = row;
-                    return row.relasi_user_asesi.relasi_jurusan.jurusan;
+                    return meta.row + 1;
                 }
             },
             {
@@ -72,7 +77,7 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_asesmen_mandiri[row.id] = row;
-                    return row.relasi_user_asesi.nama_lengkap;
+                    return row.relasi_user_asesi.relasi_jurusan.jurusan;
                 }
             },
             {
@@ -80,11 +85,19 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_asesmen_mandiri[row.id] = row;
-                    return row.relasi_user_asesi.relasi_institusi.nama_institusi;
+                    return row.relasi_user_asesi.nama_lengkap;
                 }
             },
             {
                 "targets": 3,
+                "class": "text-nowrap",
+                "render": function (data, type, row, meta) {
+                    list_asesmen_mandiri[row.id] = row;
+                    return row.relasi_user_asesi.relasi_institusi.nama_institusi;
+                }
+            },
+            {
+                "targets": 4,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_asesmen_mandiri[row.id] = row;
@@ -101,7 +114,7 @@
                 }
             },
             {
-                "targets": 4,
+                "targets": 5,
                 "class": "none",
                 "render": function (data, type, row, meta) {
                     let tampilan;

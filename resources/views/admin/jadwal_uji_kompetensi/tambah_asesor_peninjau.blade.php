@@ -29,7 +29,7 @@
                 {{-- JADWAL --}}
                 <div class="mb-5 pb-5">
                     <div class="col profil-section-title">
-                        Jadwal Uji Kompetensi Jurusan {{ $data_jurusan->jurusan }}
+                        Jadwal Uji Kompetensi Jurusan
                     </div>
                     <a class="btn btn-primary btn-sm btn-rounded text-white"
                         href="#" data-bs-toggle="modal" data-bs-target="#modalTambahMukAsesorPeninjau">Tambah Data</a>
@@ -40,6 +40,7 @@
                                     <table class="table table-striped" id="table-muk-asesor-peninjau">
                                         <thead>
                                             <tr>
+                                                <th>No</th>
                                                 <th>Materi Uji Kompetensi</th>
                                                 <th>Asesor</th>
                                                 <th>Peninjau</th>
@@ -127,7 +128,7 @@
                  {{-- MODAL TAMBAH MUK ASESOR PENINJAU--}}
                  <div class="modal fade text-left" id="modalEditMukAsesorPeninjau" tabindex="-1" role="dialog"
                     data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="myModalLabel33">Ubah Data</h4>
@@ -169,13 +170,9 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-light-secondary close" data-bs-dismiss="modal">
-                                        <i class="bx bx-x d-block d-sm-none"></i>
-                                        <span class="d-none d-sm-block">Batal</span>
+                                    <button type="button" class="btn btn-light-secondary close" data-bs-dismiss="modal">Batal</span>
                                     </button>
-                                    <button type="submit" class="btn btn-primary ml-1">
-                                        <i class="bx bx-check d-block d-sm-none"></i>
-                                        <span class="d-none d-sm-block">Simpan</span>
+                                    <button type="submit" class="btn btn-primary ml-1">Simpan</span>
                                     </button>
                                 </div>
                             </form>
@@ -229,7 +226,9 @@
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
-        "responsive": true,
+        "responsive": false,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "/admin/data-muk-asesor-peninjau/" + id_jurusan.id,
             type: "POST",
@@ -245,10 +244,11 @@
             },
             {
                 "targets": 0,
-                "class": "text-nowrap",
+                "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
+                    let i = 1;
                     list_muk_asesor_peninjau[row.id] = row;
-                    return row.relasi_muk.muk;
+                    return meta.row + 1;
                 }
             },
             {
@@ -256,7 +256,7 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_muk_asesor_peninjau[row.id] = row;
-                    return row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
+                    return row.relasi_muk.muk;
                 }
             },
             {
@@ -264,11 +264,31 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_muk_asesor_peninjau[row.id] = row;
-                    return row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
+                    let user_cek;
+                    if(row.relasi_user_asesor == null || row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap == null){
+                        user_cek = `Asesor belum ditentukan`
+                    }else{
+                        user_cek = row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
+                    }
+                    return user_cek;
                 }
             },
             {
                 "targets": 3,
+                "class": "text-nowrap",
+                "render": function (data, type, row, meta) {
+                    list_muk_asesor_peninjau[row.id] = row;
+                    let user_cek;
+                    if(row.relasi_user_peninjau == null || row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap == null){
+                        user_cek = `Peninjau belum ditentukan`
+                    }else{
+                        user_cek = row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
+                    }
+                    return user_cek;
+                }
+            },
+            {
+                "targets": 4,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     list_muk_asesor_peninjau[row.id] = row;
@@ -289,7 +309,7 @@
                 }
             },
             {
-                "targets": 4,
+                "targets": 5,
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     let tampilan;
@@ -409,7 +429,10 @@
                             buttons: true,
                             successMode: true,
                         }),
-                        table_jurusan.ajax.reload(null,false)
+                        table_muk_asesor_peninjau.ajax.reload(null,false)
+                        $("#muk_id").empty().append('');
+                        $("#user_asesor_id").empty().append('');
+                        $("#user_peninjau_id").empty().append('');
                         $("#modalEditMukAsesorPeninjau").modal('hide')
                     }
                 }

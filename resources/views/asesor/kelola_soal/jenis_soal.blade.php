@@ -17,7 +17,7 @@
                     <div class="col-6 col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
-                                <a href="{{ route('asesor.BuatSoal',['id' => $id, 'jenis_soal_id' => $jenis_soals->id]) }}">
+                                <a href="{{ route('asesor.KelolaSoal.BuatSoal',['id' => $id, 'jenis_soal_id' => $jenis_soals->id]) }}">
                                     <div class="row">
                                         <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
                                             @if ($jenis_soals->id == 1)
@@ -57,7 +57,7 @@
                     <div class="col-6 col-lg-3 col-md-8">
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
-                                <a href="{{ route('asesor.BuatSoal',['id' => $id, 'jenis_soal_id' => $jenis_soals->id]) }}">
+                                <a href="{{ route('asesor.KelolaSoal.BuatSoal',['id' => $id, 'jenis_soal_id' => $jenis_soals->id]) }}">
                                 <div class="row">
                                     <div class="col-md-2 col-xl-4 col-xxl-4">
                                         <div class="stats-icon purple mb-2">
