@@ -512,7 +512,7 @@
 
 
                         @isset($penyusun->ttd_asesor)
-                            <img src="{{$penyusun->ttd_asesor}}" alt="ttd" width="180px">
+                            <img src="{{$penyusun->ttd_asesor}}" alt="ttd" width="180px" id="clear-asesor">
                         @endisset
                         @if(empty($penyusun->ttd_asesor))
                         <div class="col edit-profil mb-2 signature-pad" id="signature-pad-asesor">

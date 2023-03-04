@@ -70,7 +70,7 @@
     </div>
 </section>
 
-  <div class="row col gap-5 ms-0 mb-2" id="koreksiSoal">
+  <div class="row col gap-3 ms-0 mb-2" id="koreksiSoal">
     @foreach ($soal as $data_soal)
     @php
         $jawaban_asesi = \App\Models\JawabanAsesi::with('relasi_soal.relasi_jadwal_uji_kompetensi')
@@ -233,95 +233,109 @@
       </div>
     </div>
     @endif
-
-
-  <div class="col-md-12 px-0">
-    <div class="col-12 pernyataan">
-        <div class="col isi">
-          @if ($jenis_tes->jenis_tes == 3)
-          <div class="row">
-            <div class="col-2 col-md-2"><h6>Total Soal </h6></div>
-            <div class="col-2 col-md-2"><h6>: {{$hitung_total_soal}}</h6></div>
-          </div>
-          @endif
-            <form action="{{route('asesor.HasilKoreksiJawaban', ['jadwal_id'=>$jadwal_id, 'asesi_id'=>$asesi_id])}}" method="POST" id="form-hasilKoreksiJawaban">
-                <div class="row my-4">
-                    @csrf
-                    <div class="col-md-6">
-                        <div class="col pb-4">
-                          <div class="row">
-                            <div class="col-4 col-md-2"><label class="form-label fw-semibold">Keterangan</label></div>
-                          </div>
-                          <div class="row">
+</div>
+<div class="col-md-12 px-0 mt-4">
+  <div class="col-12 pernyataan">
+      <div class="col isi">
+        @if ($jenis_tes->jenis_tes == 3)
+        <div class="row">
+          <div class="col-2 col-md-2"><h6>Total Soal </h6></div>
+          <div class="col-2 col-md-2"><h6>: {{$hitung_total_soal}}</h6></div>
+        </div>
+        @endif
+          <form action="{{route('asesor.HasilKoreksiJawaban', ['jadwal_id'=>$jadwal_id, 'asesi_id'=>$asesi_id])}}" method="POST" id="form-hasilKoreksiJawaban">
+              <div class="row my-4">
+                  @csrf
+                  <div class="col-md-6">
+                      <div class="col pb-4">
+                        <div class="row">
+                          <div class="col-4 col-md-2"><label class="form-label fw-semibold">Keterangan</label></div>
+                        </div>
+                        <div class="row">
+                        
+                          @if($data_hasil_koreksi->status_koreksi == 0)
                             <div class="col-4 col-md-4">
-                            <input class="form-check-input me-1" type="radio"
-                              name="status_kompeten" value="1" id="kompeten-1" 
-                              @if($data_hasil_koreksi->status_kompeten == 1)
-                                  @checked(true)
-                              @endif
-                              >
-                            <label class="form-check-label text-success"
-                              for="kompeten-1">Kompeten</label>
+                              <input class="form-check-input me-1" type="radio"
+                                name="status_kompeten" value="1" id="kompeten-1" 
+                                >
+                              <label class="form-check-label text-success"
+                                for="kompeten-1">Kompeten</label>
                             </div>
                             <div class="col-4 col-md-6">
+                              <input class="form-check-input me-0" type="radio"
+                                name="status_kompeten" value="0"
+                                id="kompeten-0"
+                                >
+                              <label class="form-check-label text-danger"
+                                for="kompeten-0">Belum Kompeten</label>
+                            </div>
+                          @else
+                          @if($data_hasil_koreksi->status_kompeten == 1)
+                          <div class="col-4 col-md-4">
+                            <input class="form-check-input me-1" type="radio"
+                              name="status_kompeten" value="1" id="kompeten-1" 
+                                @checked(true)>
+                            <label class="form-check-label text-success"
+                              for="kompeten-1">Kompeten</label>
+                          </div>
+                        @elseif($data_hasil_koreksi->status_kompeten == 0)
+                          <div class="col-4 col-md-6">
                             <input class="form-check-input me-0" type="radio"
                               name="status_kompeten" value="0"
-                              id="kompeten-0"
-                                @if ($data_hasil_koreksi->status_kompeten == 0)
-                                    @checked(false)
-                                @endif>
+                              id="kompeten-0" @checked(true)>
                             <label class="form-check-label text-danger"
                               for="kompeten-0">Belum Kompeten</label>
                           </div>
-                        </div>
-                            <div class="input-group has-validation">
-                                <label class="text-danger error-text status_kompeten_error"></label>
-                            </div>
-                        </div>
-                        <div class="col pb-4">
-                            <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
-                            <input type="date" id="tanggal" class="form-control rounded-4"
-                                placeholder="Masukkan Tanggal" name="tanggal" 
-                                @isset($data_hasil_koreksi->tanggal)
-                                value="{{\Carbon\Carbon::parse($data_hasil_koreksi->tanggal)->format('Y-m-d')}}"
-                                @else
-                                value="{{\Carbon\Carbon::now()->format('Y-m-d')}}"
-                                @endisset>
-                            <div class="input-group has-validation">
-                                    <label class="text-danger error-text tanggal_error"></label>
-                            </div>
-                        </div>
-                        <div class="col pb-4">
-                            <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
-                            @if($data_hasil_koreksi->status_komponen == 1)
-                            <div class="mb-2">
-                                <img src="{{ $data_hasil_koreksi->ttd_asesor }}" alt="ttd" width="180px">
-                            </div>
-                            @else
-                            <div class="col edit-profil mb-2 signature-pad" id="signature-pad">
-                              <canvas id="sig"></canvas>
-                              <input type="hidden" name="ttd_asesor" value="" id="ttd" hidden>
-                            </div>
-                            <div class="col" id="signature-clear">
-                              <button type="button" class="btn-sm btn btn-danger mb-2"
-                                  id="clear"><i class="fa fa-eraser"></i>
-                              </button>
-                            </div>
-                            <div class="input-group has-validation">
-                                <label class="text-danger error-text ttd_asesor_error"></label>
-                            </div>
-                            @endif
-                        </div>
-                        @empty($data_hasil_koreksi->ttd_asesor)
-                          <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary tombol-primary-small" id="simpan">Simpan</button>
-                          </div>
-                        @endempty
-            </form>
-        </div>
-    </div>
-</div>
+                        @endif
+                          @endif
 
+                      </div>
+                          <div class="input-group has-validation">
+                              <label class="text-danger error-text status_kompeten_error"></label>
+                          </div>
+                      </div>
+                      <div class="col pb-4">
+                          <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
+                          <input type="date" id="tanggal" class="form-control rounded-4"
+                              placeholder="Masukkan Tanggal" name="tanggal" 
+                              @isset($data_hasil_koreksi->tanggal)
+                              value="{{\Carbon\Carbon::parse($data_hasil_koreksi->tanggal)->format('Y-m-d')}}"
+                              @else
+                              value="{{\Carbon\Carbon::now()->format('Y-m-d')}}"
+                              @endisset>
+                          <div class="input-group has-validation">
+                                  <label class="text-danger error-text tanggal_error"></label>
+                          </div>
+                      </div>
+                      <div class="col pb-4">
+                          <label for="signature-pad" class="form-label fw-semibold">Tanda Tangan</label>
+                          @if($data_hasil_koreksi->status_koreksi == 1)
+                          <div class="mb-2">
+                              <img src="{{ $data_hasil_koreksi->ttd_asesor }}" alt="ttd" width="180px">
+                          </div>
+                          @else
+                          <div class="col edit-profil mb-2 signature-pad" id="signature-pad">
+                            <canvas id="sig"></canvas>
+                            <input type="hidden" name="ttd_asesor" value="" id="ttd" hidden>
+                          </div>
+                          <div class="col" id="signature-clear">
+                            <button type="button" class="btn-sm btn btn-danger mb-2"
+                                id="clear"><i class="fa fa-eraser"></i>
+                            </button>
+                          </div>
+                          <div class="input-group has-validation">
+                              <label class="text-danger error-text ttd_asesor_error"></label>
+                          </div>
+                          @endif
+                      </div>
+                      @empty($data_hasil_koreksi->ttd_asesor)
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary tombol-primary-small" id="simpan">Simpan</button>
+                        </div>
+                      @endempty
+          </form>
+      </div>
+  </div>
 </div>
 @endsection
 @section('script')

@@ -173,9 +173,9 @@
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
                     let status_koreksi;
-                    if(row.status_kompeten == 0 ){
+                    if(row.status_koreksi == 0 ){
                         status_koreksi = `<a class="text-danger" href="#!">Belum Dikoreksi</a>`
-                    }else if(row.status_kompeten == 1){
+                    }else if(row.status_koreksi == 1){
                         status_koreksi = `<a class="text-success" href="#!">Telah Dikoreksi</a>`
                     }
                     return status_koreksi;
@@ -187,7 +187,7 @@
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
                     let jenis_tes;
-                    if(row.status_kompeten == 0){
+                    if(row.status_koreksi == 0){
                         if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 1){
                             jenis_tes = `<span class="badge btn-sm bg-info rounded-pill">
                                         <a class="text-black" href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}">Review</a>
@@ -199,7 +199,7 @@
                                             </a>
                                         </span>`
                         }
-                    }else if(row.status_kompeten == 1){
+                    }else if(row.status_koreksi == 1){
                         jenis_tes = `<span class="badge btn-sm bg-info rounded-pill">
                                             <a href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}" class="text-black">
                                                 Hasil Koreksi
@@ -296,7 +296,12 @@
                 "render": function (data, type, row, meta) {
                     list_pelaksanaan_ujian_wawancara[row.id] = row;
                     let tanggal;
-                    return moment(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.tanggal).format('dddd, D MMMM Y');
+                    if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.tanggal == null){
+                        tanggal = `Tanggal belum ditentukan`
+                    }else{
+                        tanggal = moment(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.tanggal).format('dddd, D MMMM Y');
+                    }
+                    return tanggal;
                 }
             },
             {
@@ -304,7 +309,13 @@
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_pelaksanaan_ujian_wawancara[row.id] = row;
-                    return moment(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai).format('HH:mm:ss') +' s/d '+ moment(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai).format('HH:mm:ss');
+                    let waktu_ujian;
+                    if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai == null && row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai == null){
+                        waktu_ujian = 'Waktu belum ditentukan'
+                    }else{
+                        waktu_ujian = moment(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai).format('HH:mm:ss') +' s/d '+ moment(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai).format('HH:mm:ss');
+                    }
+                    return waktu_ujian;
                 }
             },
             {
@@ -335,26 +346,30 @@
                 "render": function (data, type, row, meta) {
                     list_pelaksanaan_ujian_wawancara[row.id] = row;
                     let jenis_tes;
-                          if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai < moment().format('YYYY-MM-DD HH:mm:ss') && row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai > moment().format('YYYY-MM-DD HH:mm:ss')){
-                              if (
-                                row.status_ujian_berlangsung == 3){
-                                jenis_tes = `<button class="btn btn-warning my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjianWawancara(${row.id})">
-                                              Detail
-                                            </button>`
-                              }
-                          }
-                          else if(
-                            row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai > moment().format('YYYY-MM-DD HH:mm:ss') && row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai > moment().format('YYYY-MM-DD HH:mm:ss')){
-                            jenis_tes = `<span class="btn btn-sm bg-info text-white rounded-4">Belum di Mulai</span>`
-                          }
-                          else if(
-                            row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai < moment().format('YYYY-MM-DD HH:mm:ss') && 
-                            row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai < moment().format('YYYY-MM-DD HH:mm:ss')){
-                            jenis_tes = `<a href="#!" class="btn btn-warning my-1 text-black btn-sm rounded-4">
-                                              Sesi Berakhir
-                                          </a>`
-                          }
-                            return jenis_tes;
+                    if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai == null && row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai == null){
+                        jenis_tes =  `Waktu belum ditentukan`
+                    }else{
+                            if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai < moment().format('YYYY-MM-DD HH:mm:ss') && row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai > moment().format('YYYY-MM-DD HH:mm:ss')){
+                                if (
+                                    row.status_ujian_berlangsung == 3){
+                                    jenis_tes = `<button class="btn btn-warning my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjianWawancara(${row.id})">
+                                                Detail
+                                                </button>`
+                                }
+                            }
+                            else if(
+                                row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai > moment().format('YYYY-MM-DD HH:mm:ss') && row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai > moment().format('YYYY-MM-DD HH:mm:ss')){
+                                jenis_tes = `<span class="btn btn-sm bg-info text-white rounded-4">Belum di Mulai</span>`
+                            }
+                            else if(
+                                row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai < moment().format('YYYY-MM-DD HH:mm:ss') && 
+                                row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai < moment().format('YYYY-MM-DD HH:mm:ss')){
+                                jenis_tes = `<a href="#!" class="btn btn-warning my-1 text-black btn-sm rounded-4">
+                                                Sesi Berakhir
+                                            </a>`
+                            }
+                        }
+                        return jenis_tes;
                         }
                     },
             ]

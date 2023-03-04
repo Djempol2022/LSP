@@ -148,7 +148,7 @@
                             </div>
                         </form>
                     @elseif($data_jenis_soal->id=="2")
-                        <form action="{{ route('asesor.TambahSoalEssay') }}" method="POST">
+                        <form action="{{ route('asesor.TambahSoalEssay') }}" method="POST" id="form-TambahSoalEssay">
                             @csrf
                             <div class="card-body">
                                 <input type="hidden" name="jadwal_uji_kompetensi_id" value="{{ $jadwal_id->id }}" hidden>
@@ -208,7 +208,7 @@
                             </div>
                         </form>
                     @elseif($data_jenis_soal->id=="3")
-                        <form action="{{ route('asesor.TambahSoalWawancara') }}" method="POST">
+                        <form action="{{ route('asesor.TambahSoalWawancara') }}" method="POST" id="form-TambahWawancara">
                             @csrf
                             <div class="card-body">
                                 <input type="hidden" name="jadwal_uji_kompetensi_id" value="{{ $jadwal_id->id }}" hidden>
@@ -463,6 +463,7 @@ var wawancara = jQuery.validator.format(`
     $('#divPertanyaanWawancara').on('click', '.hapusPertanyaanWawancara', function (e) {
         e.preventDefault();
         newId--;
+        nomor--;
         $(this).parent().parent().parent().remove();
     });
 
@@ -511,9 +512,84 @@ var wawancara = jQuery.validator.format(`
     }
 
     function sentToController() {
-        let ttdData = signaturePad.toDataURL();
-        document.getElementById('ttd').value = ttdData;
+        if (signaturePad.isEmpty()) {
+            let ttdData = "";
+            document.getElementById('ttd').value = ttdData;
+        } else {
+            let ttdData = signaturePad.toDataURL();
+            document.getElementById('ttd').value = ttdData;
+        }
     }
+
+    $('#form-TambahWawancara').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+          url: $(this).attr('action'),
+          method: $(this).attr('method'),
+          data: new FormData(this),
+          processData: false,
+          dataType: 'json',
+          contentType: false,
+          beforeSend: function() {
+            $(document).find('label.error-text').text('');
+          },
+          success: function(data) {
+            if (data.status == 0) {
+              $.each(data.error, function(prefix, val) {
+                $('label.' + prefix + '_error').text(val[0]);
+                // $('span.'+prefix+'_error').text(val[0]);
+              });
+            } else if (data.status == 1) {
+              swal({
+                  title: "Berhasil",
+                  text: `${data.msg}`,
+                  icon: "success",
+                  buttons: true,
+                  successMode: true,
+                }),
+                window.location.href = "/asesor/review-soal/"+data.jadwal_id+"/"+data.jenis_tes;
+                // location.reload();
+                // table_jurusan.ajax.reload(null, false)
+              // $("#modalJadwalUjiKompetensi").modal('hide')
+            }
+          }
+        });
+    });
+
+    $('#form-TambahSoalEssay').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+          url: $(this).attr('action'),
+          method: $(this).attr('method'),
+          data: new FormData(this),
+          processData: false,
+          dataType: 'json',
+          contentType: false,
+          beforeSend: function() {
+            $(document).find('label.error-text').text('');
+          },
+          success: function(data) {
+            if (data.status == 0) {
+              $.each(data.error, function(prefix, val) {
+                $('label.' + prefix + '_error').text(val[0]);
+                // $('span.'+prefix+'_error').text(val[0]);
+              });
+            } else if (data.status == 1) {
+              swal({
+                  title: "Berhasil",
+                  text: `${data.msg}`,
+                  icon: "success",
+                  buttons: true,
+                  successMode: true,
+                }),
+                window.location.href = "/asesor/review-soal/"+data.jadwal_id+"/"+data.jenis_tes;
+                // location.reload();
+                // table_jurusan.ajax.reload(null, false)
+              // $("#modalJadwalUjiKompetensi").modal('hide')
+            }
+          }
+        });
+    });
 
     document.getElementById('clear').addEventListener("click", clear);
     document.getElementById('simpan').addEventListener("click", sentToController);

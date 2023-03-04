@@ -18,6 +18,7 @@ use App\Models\AsesiUjiKompetensi;
 use App\Models\MateriUjiKompetensi;
 use App\Http\Controllers\Controller;
 use App\Models\AsesorUjiKompetensi;
+use App\Models\KoreksiJawaban;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StatusUnitKompetensiAsesi;
 use App\Models\UmpanBalikKomponen;
@@ -216,6 +217,12 @@ class AsesmenController extends Controller
             'status_ujian_berlangsung' => 2
         ]);
 
+        KoreksiJawaban::create([
+            'jadwal_uji_kompetensi_id' => $jadwal_id,
+            'user_asesi_id'            => Auth::user()->id,
+            'status_koreksi'          => 0
+        ]);
+
         return response()->json([
             'status' => 1,
             'msg' => "Terima Kasih Telah Menyelesaikan Tes Kompetensi"
@@ -230,6 +237,12 @@ class AsesmenController extends Controller
 
         AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_id)->where('user_asesi_id', Auth::user()->id)->update([
             'status_ujian_berlangsung' => 2
+        ]);
+
+        KoreksiJawaban::create([
+            'jadwal_uji_kompetensi_id' => $jadwal_id,
+            'user_asesi_id'            => Auth::user()->id,
+            'status_koreksi'          => 0
         ]);
 
         return \Redirect::route('asesi.Assesment');

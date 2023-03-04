@@ -52,9 +52,9 @@ use App\Http\Controllers\Peninjau\PeninjauDashboardController;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
+// Route::get('/', function () {
+//     return view('login');
+// });
 // LOGIN CONTROLLER
 Route::middleware('guest')->group(function () {
     Route::controller(LoginController::class)->group(function () {

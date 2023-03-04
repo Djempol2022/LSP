@@ -98,16 +98,18 @@ class AsesorDaftarAsesiMenyelesaikanUjian extends Controller
             if($data_hasil_koreksi == null){
                 $hasil_koreksian = KoreksiJawaban::create([
                     'jadwal_uji_kompetensi_id' => $jadwal_id,
-                    'user_asesi_id' => $asesi_id,
-                    'tanggal' => $request->tanggal,
-                    'status_kompeten' => $request->status_kompeten,
-                    'ttd_asesor' => $request->ttd_asesor,
+                    'user_asesi_id'            => $asesi_id,
+                    'tanggal'                  => $request->tanggal,
+                    'status_kompeten'          => $request->status_kompeten,
+                    'ttd_asesor'               => $request->ttd_asesor,
+                    'status_koreksi'           => 1
                 ]);    
             }else{
                 $hasil_koreksian = KoreksiJawaban::where('jadwal_uji_kompetensi_id', $jadwal_id)->where('user_asesi_id', $asesi_id)->update([
-                    'tanggal' => $request->tanggal,
+                    'tanggal'         => $request->tanggal,
                     'status_kompeten' => $request->status_kompeten,
-                    'ttd_asesor' => $request->ttd_asesor,
+                    'ttd_asesor'      => $request->ttd_asesor,
+                    'status_koreksi'  => 1
                 ]);    
             }
             

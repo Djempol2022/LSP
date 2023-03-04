@@ -41,7 +41,7 @@
     </h4>
   </div>
 
-  <table class="table table-bordered text-wrap" border="1px solid black" >
+  <table border="1" >
     <thead>
       <tr>
         <th rowspan="2">Skema Sertifikasi(IKKNI/<s>Okupasi</s>/<s>Klaster</s>)</th>
@@ -75,14 +75,14 @@
     </tbody>
   </table>
 
-  <table class="table table-bordered text-wrap">
+  <table>
     <thead>
         <tr>
             <th style="background-color: #f9c9ad; color:black;" colspan="7">1.  Menentukan Pendekatan Asesmen</th>
         </tr>
     </thead>
 </table>
-<table class="table table-bordered text-wrap" border="1px solid black" >
+<table border="1" >
     <tbody>
         {{-- KANDIDAT --}}
         <tr>
@@ -220,7 +220,7 @@
   <div class="page-break"></div>
 
     {{-- TABLE 3 --}}
-    <table class="table table-bordered text-wrap">
+    <table>
         <thead>
             <tr>
                 <th style="background-color: #f9c9ad; color:black;" colspan="7">2.	Mempersiapkan Rencana Asesmen </th>
@@ -230,7 +230,7 @@
 
 
     @foreach ($unit_kompetensi as $data_unit_kompetensi)
-    <table class="table table-bordered text-wrap" width="100%" border="1">
+    <table width="100%" border="1">
       <thead>
         <tr>
           <th rowspan="2"><b>Unit Kompetensi</b></th>

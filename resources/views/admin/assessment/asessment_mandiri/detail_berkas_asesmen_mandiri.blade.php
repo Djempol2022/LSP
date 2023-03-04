@@ -57,7 +57,7 @@
                       <td style="width: 7%">
                         <h6 style="margin: 0; font-weight: lighter;">Unit Kompetensi</h6>
                       </td>
-                      <td colspan="3" style="width: 20%">
+                      <td colspan="5" style="width: 20%">
                         <h6 style="margin: 0; font-weight: lighter;">{{$data_unit_kompetensi->judul_unit}}</h6>
                       </td>
                     </tr>
@@ -71,7 +71,7 @@
                       <td style="width: 3%">
                         <h6 style="margin: 0; font-weight: lighter;">KB</h6>
                       </td>
-                      <td rowspan="5" style="width: 20%">
+                      <td style="width: 20%">
                         <h6 style="margin: 0; font-weight: lighter;">Bukti yang relevan</h6>
                       </td>
                     </tr>
@@ -91,7 +91,7 @@
                         
                         <tr>
                           <td colspan="3">
-                            <p style="margin: 0%; padding:0%;">{{$i++}}. Elemen: {{ $data_unit_kompetensi_sub->judul_unit_kompetensi_sub }}</p>
+                            <p style="margin: 0%; padding:0%;">{{$index+1}}. Elemen: {{ $data_unit_kompetensi_sub->judul_unit_kompetensi_sub }}</p>
                             <p style="margin: 0%; padding:0%; padding-left:5%;">Kriteria Unjuk Kerja:</p>
                           </td>
                           <td rowspan="{{$dd+1}}">

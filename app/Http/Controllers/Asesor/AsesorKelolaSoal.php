@@ -6,16 +6,17 @@ use Route;
 use App\Models\Soal;
 use App\Models\Jurusan;
 use App\Models\JenisSoal;
+use App\Models\JawabanAsesi;
 use Illuminate\Http\Request;
 use App\Models\PelaksanaanUjian;
 use App\Models\AsesiUjiKompetensi;
+use App\Models\AsesorUjiKompetensi;
 use App\Models\JadwalUjiKompetensi;
 use App\Models\MateriUjiKompetensi;
 use App\Http\Controllers\Controller;
-use App\Models\AsesorUjiKompetensi;
-use App\Models\JawabanAsesi;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Validator;
 
 class AsesorKelolaSoal extends Controller
 {
@@ -130,6 +131,11 @@ class AsesorKelolaSoal extends Controller
     }
 
     public function tambah_soal_essay(Request $request){
+        $validator = Validator::make($request->all(), [
+            'ttd_asesor' => 'required',
+        ],[
+            'ttd_asesor.required'=> 'Wajib diisi',
+        ]);
         $jadwal_uji_kompetensi_id = $request->input('jadwal_uji_kompetensi_id');
         $jenis_tes = 2;
 
@@ -141,117 +147,150 @@ class AsesorKelolaSoal extends Controller
         $cek_jenis_tes_ada = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)
                     ->where('jenis_tes', 2)->orWhere('jenis_tes', 0)->first();
         
-        if($cek_jadwal <=0 ){
-            PelaksanaanUjian::create([
-                'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
-                'jenis_tes' => $jenis_tes,
-                'acc' => 1
+        if(!$validator->passes()){
+            return response()->json([
+                'status'=>0,
+                'error'=>$validator->errors()->toArray()
             ]);
-            for($x = 0; $x < count($pertanyaans); $x++){
-                $pertanyaan = $pertanyaans[$x];
-                $ambil_jawaban = null;
-                $ambil_jawaban = $jawaban[$x];
-            
-            if(trim($pertanyaan) == "" || is_null($pertanyaan))
-                continue;
-
-                Soal::create([
-                'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
-                'pertanyaan' => $pertanyaan,
-                'jawaban' => $ambil_jawaban
-            ]);
-        }
-            AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
-                'ttd_asesor' => $request->ttd_asesor
-            ]);
-            return redirect()->route('asesor.KelolaSoal.ReviewSoal', 
-                ['jadwal_id'=>$jadwal_uji_kompetensi_id, 
-                'jenis_tes'=>$jenis_tes]);
-        }
-            elseif($cek_jadwal >0){
-                for($x = 0; $x < count($pertanyaans); $x++){
-                    $pertanyaan = $pertanyaans[$x];
-                    $ambil_jawaban = null;
-                    $ambil_jawaban = $jawaban[$x];
+        }else{
+            if($cek_jadwal <=0 ){
+                    PelaksanaanUjian::create([
+                        'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
+                        'jenis_tes' => $jenis_tes,
+                        'acc' => 1
+                    ]);
+                    for($x = 0; $x < count($pertanyaans); $x++){
+                        $pertanyaan = $pertanyaans[$x];
+                        $ambil_jawaban = null;
+                        $ambil_jawaban = $jawaban[$x];
                 
-                if(trim($pertanyaan) == "" || is_null($pertanyaan))
-                    continue;
-
-                    Soal::create([
-                    'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
-                    'pertanyaan' => $pertanyaan,
-                    'jawaban' => $ambil_jawaban
+                    if(trim($pertanyaan) == "" || is_null($pertanyaan))
+                        continue;
+        
+                        Soal::create([
+                        'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
+                        'pertanyaan' => $pertanyaan,
+                        'jawaban' => $ambil_jawaban
+                    ]);
+                    }
+                    AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
+                        'ttd_asesor' => $request->ttd_asesor
+                    ]);
+                    return redirect()->route('asesor.KelolaSoal.ReviewSoal', 
+                    ['jadwal_id'=>$jadwal_uji_kompetensi_id, 
+                    'jenis_tes'=>$jenis_tes]);
+                }
+                elseif($cek_jadwal >0){
+                    for($x = 0; $x < count($pertanyaans); $x++){
+                        $pertanyaan = $pertanyaans[$x];
+                        $ambil_jawaban = null;
+                        $ambil_jawaban = $jawaban[$x];
+                    
+                    if(trim($pertanyaan) == "" || is_null($pertanyaan))
+                        continue;
+    
+                        Soal::create([
+                        'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
+                        'pertanyaan' => $pertanyaan,
+                        'jawaban' => $ambil_jawaban
+                    ]);
+                }
+                AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
+                    'ttd_asesor' => $request->ttd_asesor
+                ]);
+                return response()->json([
+                    'status'=>1,
+                    'msg'   =>'Berhasil Membuat Soal Essay',
+                    'jenis_tes' => $jenis_tes,
+                    'jadwal_id' => $jadwal_uji_kompetensi_id
+                    // 'route' => route('asesor.KelolaSoal.ReviewSoal', ['jadwal_id'=>$jadwal_uji_kompetensi_id, 'jenis_tes'=>$jenis_tes])
                 ]);
             }
-            AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
-                'ttd_asesor' => $request->ttd_asesor
-            ]);
-            return redirect()->route('asesor.KelolaSoal.ReviewSoal', 
-                ['jadwal_id'=>$jadwal_uji_kompetensi_id, 
-                'jenis_tes'=>$jenis_tes]);
         }
     }
 
     public function tambah_soal_wawancara(Request $request){
+        $validator = Validator::make($request->all(), [
+            'ttd_asesor' => 'required',
+        ],[
+            'ttd_asesor.required'=> 'Wajib diisi',
+        ]);
+
         $jadwal_uji_kompetensi_id = $request->input('jadwal_uji_kompetensi_id');
         $jenis_tes = 3;
 
         $pertanyaans = $request->input('wawancara_pertanyaan');
         // $jawaban = $request->input('wawancara_jawaban');
    
-        $cek_jadwal = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->count();
+        $cek_jadwal = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->where('jenis_tes', $jenis_tes)->count();
         // $cek_jenis_tes_ada = PelaksanaanUjian::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)
         //             ->where('jenis_tes', 2)->orWhere('jenis_tes', 0)->first();
         
-        if($cek_jadwal <=0 ){
-            PelaksanaanUjian::create([
-                'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
-                'jenis_tes' => $jenis_tes,
-                'acc' => 1
+        if(!$validator->passes()){
+            return response()->json([
+                'status'=>0,
+                'error'=>$validator->errors()->toArray()
             ]);
-            for($x = 0; $x < count($pertanyaans); $x++){
-                $pertanyaan = $pertanyaans[$x];
-                $ambil_jawaban = null;
-                // $ambil_jawaban = $jawaban[$x];
-            
-                if(trim($pertanyaan) == "" || is_null($pertanyaan))
-                    continue;
-                    Soal::create([
-                        'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
-                        'pertanyaan' => $pertanyaan,
-                        'jawaban' => $ambil_jawaban
-                    ]);
-            }
-            AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
-                'ttd_asesor' => $request->ttd_asesor
-            ]);
-            return redirect()->route('asesor.KelolaSoal.ReviewSoal', 
-                ['jadwal_id'=>$jadwal_uji_kompetensi_id, 
-                'jenis_tes'=>$jenis_tes]);
-        }
-
-        elseif($cek_jadwal >0){
+        }else{
+            if($cek_jadwal <=0 ){
+                PelaksanaanUjian::create([
+                    'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
+                    'jenis_tes' => $jenis_tes,
+                    'acc' => 1
+                ]);
                 for($x = 0; $x < count($pertanyaans); $x++){
                     $pertanyaan = $pertanyaans[$x];
                     $ambil_jawaban = null;
                     // $ambil_jawaban = $jawaban[$x];
                 
-                if(trim($pertanyaan) == "" || is_null($pertanyaan))
-                    continue;
-
-                    Soal::create([
-                    'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
-                    'pertanyaan' => $pertanyaan,
-                    'jawaban' => $ambil_jawaban
+                    if(trim($pertanyaan) == "" || is_null($pertanyaan))
+                        continue;
+                        Soal::create([
+                            'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
+                            'pertanyaan' => $pertanyaan,
+                            'jawaban' => $ambil_jawaban
+                        ]);
+                }
+                AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
+                    'ttd_asesor' => $request->ttd_asesor
+                ]);
+                return response()->json([
+                    'status'=>1,
+                    'msg'   =>'Berhasil Membuat Soal Wawancara',
+                    'jenis_tes' => $jenis_tes,
+                    'jadwal_id' => $jadwal_uji_kompetensi_id
+                    // 'route' => route('asesor.KelolaSoal.ReviewSoal', ['jadwal_id'=>$jadwal_uji_kompetensi_id, 'jenis_tes'=>$jenis_tes])
                 ]);
             }
-            AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
-                'ttd_asesor' => $request->ttd_asesor
-            ]);
-            return redirect()->route('asesor.KelolaSoal.ReviewSoal', 
-                ['jadwal_id'=>$jadwal_uji_kompetensi_id, 
-                'jenis_tes'=>$jenis_tes]);
+    
+            elseif($cek_jadwal >0){
+                    for($x = 0; $x < count($pertanyaans); $x++){
+                        $pertanyaan = $pertanyaans[$x];
+                        $ambil_jawaban = null;
+                        // $ambil_jawaban = $jawaban[$x];
+                    
+                    if(trim($pertanyaan) == "" || is_null($pertanyaan))
+                        continue;
+    
+                        Soal::create([
+                        'jadwal_uji_kompetensi_id' => $jadwal_uji_kompetensi_id,
+                        'pertanyaan' => $pertanyaan,
+                        'jawaban' => $ambil_jawaban
+                    ]);
+                }
+                AsesorUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_uji_kompetensi_id)->update([
+                    'ttd_asesor' => $request->ttd_asesor
+                ]);
+                return response()->json([
+                    'status'=>1,
+                    'msg'   =>'Berhasil Membuat Soal Wawancara',
+                    'jenis_tes' => $jenis_tes,
+                    'jadwal_id' => $jadwal_uji_kompetensi_id
+                    // 'route' => route('asesor.KelolaSoal.ReviewSoal', ['jadwal_id'=>$jadwal_uji_kompetensi_id, 'jenis_tes'=>$jenis_tes])
+                ]);
+            }
         }
+      
     }
 
     public function review_soal($jadwal_id, $jenis_tes){
