@@ -15,7 +15,7 @@ class PeninjauUjiKompetensi extends Model
     {
         return $this->belongsTo(JadwalUjiKompetensi::class, 'jadwal_uji_kompetensi_id', 'id');
     }
-    public function relasi_user_peninjau()
+    public function relasi_user_peninjau_detail()
     {
         return $this->belongsTo(User::class, 'user_peninjau_id', 'id');
     }

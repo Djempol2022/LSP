@@ -54,6 +54,7 @@
                                 style="table-layout: fixed;">
                                 <thead>
                                     <tr class="text-center">
+                                        <th>No</th>
                                         <th>Kode unit</th>
                                         <th>Judul Unit</th>
                                         <th style="word-wrap: break-word;">Jenis Standar(Standar khusus/Standar
@@ -194,7 +195,9 @@
         "bInfo": false,
         "processing": true,
         "bServerSide": true,
-        "responsive": true,
+        "responsive": false,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "/admin/data-unit-kompetensi/" + id_sertifikasi,
             type: "POST",
@@ -210,10 +213,11 @@
             },
             {
                 "targets": 0,
-                "class": "text-wrap text-center",
+                "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
+                    let i = 1;
                     list_unit_kompetensi[row.id] = row;
-                    return row.kode_unit;
+                    return meta.row + 1;
                 }
             },
             {
@@ -221,7 +225,7 @@
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
-                    return row.judul_unit;
+                    return row.kode_unit;
                 }
             },
             {
@@ -229,11 +233,19 @@
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
-                    return row.jenis_standar;
+                    return row.judul_unit;
                 }
             },
             {
                 "targets": 3,
+                "class": "text-wrap text-center",
+                "render": function (data, type, row, meta) {
+                    list_unit_kompetensi[row.id] = row;
+                    return row.jenis_standar;
+                }
+            },
+            {
+                "targets": 4,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     let tampilan;

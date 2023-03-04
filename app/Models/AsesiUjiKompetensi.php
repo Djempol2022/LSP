@@ -20,4 +20,8 @@ class AsesiUjiKompetensi extends Model
     {
         return $this->belongsTo(User::class, 'user_asesi_id', 'id');
     }
+
+    public function relasi_status_koreksi(){
+        return $this->belongsTo(KoreksiJawaban::class, 'user_asesi_id', 'user_asesi_id');
+    }
 }

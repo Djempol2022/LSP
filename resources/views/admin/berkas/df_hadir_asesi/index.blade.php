@@ -214,6 +214,6 @@
 
 @section('script')
   @include('admin.berkas.df_hadir_asesi.script-berkas-df-hadir-asesi')
-  @include('admin.berkas.df_hadir_asesi.script-berkas-df-hadir-asesi-2')
-@endsection
+  <<<<<<< HEAD @include('admin.berkas.df_hadir_asesi.script-berkas-df-hadir-asesi-2')=======>>>>>>> 358fa30f0551ccc9fe512fb930bfdf0ace4ca95d
+  @endsection
 @endsection

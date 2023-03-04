@@ -66,18 +66,7 @@ class DatabaseSeeder extends Seeder
             'nomor_hp_institusi' => '2123453453',
             'email_institusi' => 'institusi@gmail.com'
         ]);
-        // Jurusan::factory(20)->create();
-        Jurusan::create([
-            'jurusan' => 'Teknik Kendaraan Ringan Otomotif'
-        ]);
-
-        Jurusan::create([
-            'jurusan' => 'Teknik Komputer Dan Jaringan'
-        ]);
-
-        Jurusan::create([
-            'jurusan' => 'Teknik Multimedia'
-        ]);
+        Jurusan::factory(20)->create();
 
         User::create([
             'nama_lengkap' => 'admin',
@@ -180,19 +169,13 @@ class DatabaseSeeder extends Seeder
         SkemaSertifikasi::create([
             'judul_skema_sertifikasi' => 'Skema Sertifikasi KKNI Level II Pada Kompetensi Keahlian Multimedia',
             'nomor_skema_sertifikasi' => 'MM-06/LSP.SMKN1-STG/2020',
-            'jurusan_id' => 3,
+            'jurusan_id' => 1,
         ]);
 
         SkemaSertifikasi::create([
-            'judul_skema_sertifikasi' => 'Skema Sertifikasi KKNI Level II Pada Kompetensi Keahlian Teknik Komputer Dan Jaringan',
+            'judul_skema_sertifikasi' => 'Skema Sertifikasi KKNI Level II Pada Kompetensi Keahlian TEKNIK INSTALASI TENAGA LISTRIK',
             'nomor_skema_sertifikasi' => 'ITL-06/LSP.SMKN1-STG/2020',
             'jurusan_id' => 2,
-        ]);
-
-        SkemaSertifikasi::create([
-            'judul_skema_sertifikasi' => 'Skema Sertifikasi KKNI Level II Pada Kompetensi Keahlian Teknik Kendaraan Ringan Otomotif',
-            'nomor_skema_sertifikasi' => 'ITL-06/LSP.SMKN1-STG/2020',
-            'jurusan_id' => 1,
         ]);
 
         Sertifikasi::create([

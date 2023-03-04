@@ -106,7 +106,9 @@
       "bInfo": true,
       "processing": true,
       "bServerSide": true,
-      "responsive": true,
+      "responsive": false,
+      "sScrollX": '100%',
+      "sScrollXInner": "100%",
       ajax: {
         url: "{{ route('admin.DataJurusan') }}",
         type: "POST",
@@ -412,26 +414,5 @@
         }
       });
     }
-
-
-    $.ajax({
-      url: "/admin/detail-data-permohonan-sertifikasi-kompetensi/" + id,
-      type: "POST",
-      dataType: 'json',
-      success: function(response) {
-        if (response.status == 0) {
-          alert("Gagal Hapus")
-        } else if (response.status == 1) {
-          swal({
-              title: "Berhasil",
-              text: `${response.msg}`,
-              icon: "success",
-              buttons: true,
-              successMode: true,
-            }),
-            table_jadwal_uji_kompetensi.ajax.reload(null, false)
-        }
-      }
-    });
   </script>
 @endsection

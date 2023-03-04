@@ -1,28 +1,41 @@
 @extends('layout.main-layout', ['title'=>"Kualifikasi Pendidikan"])
 @section('main-section')
+<nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+                href="{{ route('admin.Dashboard') }}">Dashboard</a></li>
+
+        <li class="breadcrumb-item" aria-current="page">
+            <a class="text-black text-decoration-none"
+                href="{{ route('admin.Pengaturan') }}">Pengaturan
+            </a>
+        </li>
+        <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Kualifikasi Pendidikan</li>
+    </ol>
+</nav>
 <div class="page-content">
     <section class="section">
         <div class="card">
             <div class="card-header">
                 <span class="badge bg-info rounded-pill">
                     <a class="text-white" href="#" data-bs-toggle="modal"
-                        data-bs-target="#tambahMuk">Tambah Kualifikasi Pendidikan
+                        data-bs-target="#modalTambahKualifikasiPendidikan">Tambah Kualifikasi Pendidikan
                     </a>
                 </span>
             
                 {{-- MODAL TAMBAH --}}
-            <div class="modal fade text-left" id="tambahMuk" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+            <div class="modal fade text-left" id="modalTambahKualifikasiPendidikan" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered"
                     role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="myModalLabel33">Tambah Kualifikasi Pendidikan</h4>
-                            <button type="button" class="close" data-bs-dismiss="modal"
+                            <button type="button" class="close batal" data-bs-dismiss="modal"
                                 aria-label="Close">
                                 <i data-feather="x"></i>
                             </button>
                         </div>
-                        <form action="{{ route('admin.TambahKualifikasiPendidikan') }}" id="isi-muk" method="POST">
+                        <form action="{{ route('admin.TambahKualifikasiPendidikan') }}" id="form-TambahKualifikasiPendidikan" method="POST">
                             @csrf
                             <div class="modal-body">
                                 <label>Kualifikasi Pendidikan</label>
@@ -35,14 +48,10 @@
                             </div>
                             
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light-secondary"
-                                    data-bs-dismiss="modal">
-                                    <i class="bx bx-x d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Batal</span>
+                                <button type="button" class="btn btn-light-secondary batal"
+                                    data-bs-dismiss="modal">Batal
                                 </button>
-                                <button type="submit" class="btn btn-primary ml-1 submit-tambah-muk">
-                                    <i class="bx bx-check d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Simpan</span>
+                                <button type="submit" class="btn btn-primary ml-1 submit-tambah-muk">Simpan
                                 </button>
                             </div>
                         </form>
@@ -65,13 +74,13 @@
         </div>
 
         {{-- MODAL EDIT --}}
-        <div class="modal fade text-left" id="editKualifikasiPendidikan" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal fade text-left" id="editKualifikasiPendidikan" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
                 role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel33">Ubah Kualifikasi Pendidikan</h4>
-                        <button type="button" class="close" data-bs-dismiss="modal"
+                        <button type="button" class="close batal" data-bs-dismiss="modal"
                             aria-label="Close">
                             <i data-feather="x"></i>
                         </button>
@@ -90,14 +99,10 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-light-secondary"
-                                data-bs-dismiss="modal">
-                                <i class="bx bx-x d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Batal</span>
+                            <button type="button" class="btn btn-light-secondary batal"
+                                data-bs-dismiss="modal">Batal
                             </button>
-                            <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk">
-                                <i class="bx bx-check d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Simpan</span>
+                            <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk">Simpan
                             </button>
                         </div>
                     </form>
@@ -122,6 +127,9 @@
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
+        "searching": false,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "{{ route('admin.DataKualifikasiPendidikan') }}",
             type: "POST",
@@ -151,10 +159,10 @@
                 {
 					let tampilan;
                     tampilan =  `<span onclick="editKualifikasiPendidikan(${row.id})" class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="#">Edit</a>
+                                    <a class="text-white" href="#!">Edit</a>
                                 </span>
-                                <span onclick="hapusKualifikasiPendidikan(${row.id})" class="badge bg-danger rounded-pill">
-                                    <a class="text-white" href="#">Hapus</a>
+                                <span id-kualifikasi-pendidikan="${row.id}" class="badge bg-danger rounded-pill hapus_kualifikasi_pendidikan">
+                                    <a class="text-white" href="#!">Hapus</a>
                                 </span>`
                     return tampilan;
                 }
@@ -162,11 +170,15 @@
         ]
     });
 
+    $('.batal').on('click', function(){
+        $(document).find('label.error-text').text('');
+    })
+
     function editKualifikasiPendidikan(id){
-        const data_muk = list_kualifikasi_pendidikan[id]
+        const data_pendidikan = list_kualifikasi_pendidikan[id]
             $("#editKualifikasiPendidikan").modal('show');
             $("#formeditKualifikasiPendidikan [name='id']").val(id)
-            $("#formeditKualifikasiPendidikan .muk").val(data_muk.muk);
+            $("#formeditKualifikasiPendidikan [name='pendidikan']").val(data_pendidikan.pendidikan);
         
             $('#formeditKualifikasiPendidikan').on('submit', function (e) {
             e.preventDefault();
@@ -203,15 +215,19 @@
         });
     }
 
-    function hapusKualifikasiPendidikan(id){
+    $(document).on('click', '.hapus_kualifikasi_pendidikan', function (event) {
+        const id = $(event.currentTarget).attr('id-kualifikasi-pendidikan');
+
         swal({
             title: "Yakin ?",
             text: "Menghapus Data ?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
-        })
-        $.ajax({
+        }).then((willDelete) => {
+
+            if (willDelete) {
+                $.ajax({
             url: "/admin/hapus-kualifikasi-pendidikan/" + id,
             dataType: 'json',
             success: function (response) {
@@ -229,9 +245,14 @@
                 }
             }
         });
-    }
+            } else {
+                //alert ('no');
+                return false;
+            }
+        });
+    });
 
-    $('#isi-muk').on('submit', function (e) {
+    $('#form-TambahKualifikasiPendidikan').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
             url: $(this).attr('action'),
@@ -259,7 +280,7 @@
                         successMode: true,
                     }),
                     table_kualifikasi_pendidikan.ajax.reload(null,false)
-                    $("#tambahMuk").modal('hide')
+                    $("#modalTambahKualifikasiPendidikan").modal('hide')
                 }
             }
         });

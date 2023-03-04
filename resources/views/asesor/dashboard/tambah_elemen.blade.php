@@ -83,12 +83,16 @@
                                             <a class="text-white" href="#!">Ubah Elemen Konten</a>
                                         </span> --}}
                                         {{-- ELEMEN KONTEN UNIT KOMPETENSI SUB --}}
+                                        @php
+                                            $i= 1;
+                                        @endphp
+
                                         @forelse ($data_unit_kompetensi_isi as $index2 => $data_isi_sub_elemen)
                                         @if ($data_isi_sub_elemen->unit_kompetensi_sub_id == $data_sub_elemen->id)
                                         <div class="row col mx-3" style="margin-left:0rem !important">
                                             <div class="col mb-3">
                                                 <div class="row mt-3">
-                                                    <div class="col-auto">{{ $index1+1 }}.{{ $index2+1 }}
+                                                    <div class="col-auto">{{ $index1+1 }}.{{ $i++ }}
                                                     </div>
                                                     <div class="col-auto" style="width: 60.83222%">
                                                         <a href="" class="ubah-judul-elemen-isi" data-type="text"
@@ -99,7 +103,7 @@
                                                     <div class="col-auto">
                                                         <span class="badge bg-warning rounded-pill">
                                                             <a class="text-white fw-semibold tambah_isi_elemen"
-                                                                id-elemen="{{ $data_sub_elemen->id }}" href="{{route('asesor.IsiSubElemen', $data_isi_sub_elemen->id)}}">Detail
+                                                                id-elemen="{{ $data_sub_elemen->id }}" href="{{route('asesor.Dashboard.IsiSubElemen', $data_isi_sub_elemen->id)}}">Detail
                                                             </a>
                                                         </span>
                                                         <span id-elemen="{{ $data_sub_elemen->id }}"
@@ -545,33 +549,14 @@
                         // $('span.'+prefix+'_error').text(val[0]);
                     });
                 } else if (data.status == 1) {
-
                     swal({
-                                title: "Berhasil",
-                                text: `${data.msg}`,
-                                icon: "success",
-                                buttons: true,
-                                successMode: true,
-                            }),
-                            location.reload();
-
-                    // $("#search-button").addClass("fa fa-spinner fa-spin")
-                    //     $("#text-simpan").html('')
-
-                    //     setTimeout(function() {
-                    //         for (var i = 0; i < 10000; i++) {
-                    //             $("#modalTambahElemen").modal('hide')
-                    //             $search.addClass("fa-search").removeClass("fa fa-spinner fa-spin")
-                    //         }
-                    //         swal({
-                    //             title: "Berhasil",
-                    //             text: `${data.msg}`,
-                    //             icon: "success",
-                    //             buttons: true,
-                    //             successMode: true,
-                    //         }),
-                    //         location.reload();
-                    //     }, 2500);
+                        title: "Berhasil",
+                        text: `${data.msg}`,
+                        icon: "success",
+                        buttons: true,
+                        successMode: true,
+                    }),
+                    location.reload();
                 }
             }
         });
