@@ -310,6 +310,8 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratSKPenetapan') }}",
           type: "POST",
@@ -371,6 +373,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratDaftarTUK') }}",
           type: "POST",
@@ -432,6 +435,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratHasilVerifikasiTUK') }}",
           type: "POST",
@@ -493,6 +497,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratSTVerifikasiTUK') }}",
           type: "POST",
@@ -554,6 +559,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratDFHadirAsesi') }}",
           type: "POST",
@@ -615,6 +621,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratX03STVerifikasiTUK') }}",
           type: "POST",
@@ -676,6 +683,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratX04BeritaAcara') }}",
           type: "POST",
@@ -737,6 +745,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratZBAPecahRP') }}",
           type: "POST",
@@ -798,6 +807,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratZBARP') }}",
           type: "POST",
@@ -859,6 +869,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratDFHadirAsesorPleno') }}",
           type: "POST",
@@ -920,6 +931,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratDFHadirAsesor') }}",
           type: "POST",

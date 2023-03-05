@@ -176,7 +176,7 @@
                             <div>
                               <span>{{ $x03_st_verifikasi_tuk->jabatan_bttd }}</span>
                             </div>
-                            <div style="height: 105px"><img src="{{ $x03_st_verifikasi_tuk->tt }}" alt="ttd"
+                            <div style="height: 105px"><img src="{{ $x03_st_verifikasi_tuk->ttd }}" alt="ttd"
                                 style="width: 120px; margin-left: 10px; margin-top: -2px">
                             </div>
                             <div>
