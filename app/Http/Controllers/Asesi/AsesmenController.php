@@ -9,19 +9,20 @@ use App\Models\Sertifikasi;
 use App\Models\JawabanAsesi;
 use Illuminate\Http\Request;
 use App\Models\AsesmenMandiri;
+use App\Models\KoreksiJawaban;
 use App\Models\UnitKompetensi;
 use App\Models\PelaksanaanUjian;
 use App\Models\SkemaSertifikasi;
 use App\Models\UnitKompetensiIsi;
 use App\Models\UnitKompetensiSub;
 use App\Models\AsesiUjiKompetensi;
+use App\Models\UmpanBalikKomponen;
+use App\Models\AsesorUjiKompetensi;
 use App\Models\MateriUjiKompetensi;
 use App\Http\Controllers\Controller;
-use App\Models\AsesorUjiKompetensi;
-use App\Models\KoreksiJawaban;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StatusUnitKompetensiAsesi;
-use App\Models\UmpanBalikKomponen;
+use Illuminate\Support\Facades\Validator;
 use SebastianBergmann\CodeCoverage\Report\Xml\Unit;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
@@ -69,46 +70,59 @@ class AsesmenController extends Controller
     // PENGAJUAN ASESMEN MANDIRI
     public function store(Request $request)
     {
-        $unit_kompetensi_isi_id = $request->unit_kompetensi_isi;
-        $unit_kompetensi_sub_id = $request->unit_kompetensi_sub;
+        $validator = Validator::make($request->all(), [
+            'ttd_asesi'=>'required'
+        ],[
+            'ttd_asesi.required'=> 'Wajib diisi'
 
-        foreach ($unit_kompetensi_sub_id as $key => $sub_id) {
-            UnitKompetensiSub::where('id', $sub_id)->update([
-                'bukti_relevan' => $request['bukti_relevan-' . $sub_id]
+        ]);
+        if(!$validator->passes()){
+            return response()->json([
+                'status'=>0,
+                'error'=>$validator->errors()->toArray()
             ]);
-        }
+        }else{
+            $unit_kompetensi_isi_id = $request->unit_kompetensi_isi;
+            $unit_kompetensi_sub_id = $request->unit_kompetensi_sub;
 
-        foreach ($unit_kompetensi_isi_id as $key => $isi_id) {
-            $data_status_kompeten = StatusUnitKompetensiAsesi::where('unit_kompetensi_isi_id', $isi_id)->where('user_asesi_id', Auth::user()->id)->first();
-            if (!$data_status_kompeten) {
-                StatusUnitKompetensiAsesi::create([
-                    'unit_kompetensi_isi_id' => $unit_kompetensi_isi_id[$key],
-                    'user_asesi_id' => Auth::user()->id,
-                    'status' => $request['status-' . $isi_id]
-                ]);
-            } else {
-                StatusUnitKompetensiAsesi::where('unit_kompetensi_isi_id', $isi_id)->update([
-                    'status' => $request['status-' . $isi_id]
+            foreach ($unit_kompetensi_sub_id as $key => $sub_id) {
+                UnitKompetensiSub::where('id', $sub_id)->update([
+                    'bukti_relevan' => $request['bukti_relevan-' . $sub_id]
                 ]);
             }
-        }
-        $data_asesmen_mandiri = AsesmenMandiri::where('user_asesi_id', Auth::user()->id)->first();
-        if (!$data_asesmen_mandiri) {
-            AsesmenMandiri::create([
-                'user_asesi_id' => Auth::user()->id,
-                'ttd_asesi' => $request->ttd_asesi,
-                'tanggal_asesi' => Carbon::now(),
+
+            foreach ($unit_kompetensi_isi_id as $key => $isi_id) {
+                $data_status_kompeten = StatusUnitKompetensiAsesi::where('unit_kompetensi_isi_id', $isi_id)->where('user_asesi_id', Auth::user()->id)->first();
+                if (!$data_status_kompeten) {
+                    StatusUnitKompetensiAsesi::create([
+                        'unit_kompetensi_isi_id' => $unit_kompetensi_isi_id[$key],
+                        'user_asesi_id' => Auth::user()->id,
+                        'status' => $request['status-' . $isi_id]
+                    ]);
+                } else {
+                    StatusUnitKompetensiAsesi::where('unit_kompetensi_isi_id', $isi_id)->update([
+                        'status' => $request['status-' . $isi_id]
+                    ]);
+                }
+            }
+            $data_asesmen_mandiri = AsesmenMandiri::where('user_asesi_id', Auth::user()->id)->first();
+            if (!$data_asesmen_mandiri) {
+                AsesmenMandiri::create([
+                    'user_asesi_id' => Auth::user()->id,
+                    'ttd_asesi' => $request->ttd_asesi,
+                    'tanggal_asesi' => Carbon::now(),
+                ]);
+            } else {
+                AsesmenMandiri::where('user_asesi_id', Auth::user()->id)->update([
+                    'ttd_asesi' => $request->ttd_asesi,
+                    'tanggal_asesi' => Carbon::now(),
+                ]);
+            }
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Berhasil'
             ]);
-        } else {
-            AsesmenMandiri::where('user_asesi_id', Auth::user()->id)->update([
-                'ttd_asesi' => $request->ttd_asesi,
-                'tanggal_asesi' => Carbon::now(),
-            ]);
         }
-        return response()->json([
-            'status' => 1,
-            'msg' => 'Berhasil'
-        ]);
     }
 
     // JADWAL PELAKSANAAN UJIAN

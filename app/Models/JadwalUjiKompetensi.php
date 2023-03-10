@@ -25,6 +25,10 @@ class JadwalUjiKompetensi extends Model
     public function relasi_user_login_asesor(){
         return $this->belongsTo(AsesorUjiKompetensi::class, 'id', 'jadwal_uji_kompetensi_id')->where('user_asesor_id', Auth::user()->id);
     }
+
+    public function relasi_user_login_peninjau(){
+        return $this->belongsTo(PeninjauUjiKompetensi::class, 'id', 'jadwal_uji_kompetensi_id')->where('user_peninjau_id', Auth::user()->id);
+    }
     
     public function relasi_user_peninjau(){
         return $this->belongsTo(PeninjauUjiKompetensi::class, 'id', 'jadwal_uji_kompetensi_id');

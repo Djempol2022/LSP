@@ -28,5 +28,6 @@ class UmpanBalikController extends Controller
         AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id',$jadwal_id)->where('user_asesi_id', Auth::user()->id)->update([
             'status_umpan_balik' => 1,
         ]);
+        return redirect()->back();
     }
 }

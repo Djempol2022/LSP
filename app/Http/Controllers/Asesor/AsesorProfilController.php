@@ -56,6 +56,7 @@ class AsesorProfilController extends Controller
             'jurusan' => 'required',
             'email' => 'required|email',
             'jenis_kelamin' => 'required',
+            'no_reg' => 'required',
             'pas_foto' => 'file|image|mimes:png,jpg,jpeg|max:2048',
         ], [
             'nama_lengkap.required' => 'Wajib diisi',
@@ -63,6 +64,7 @@ class AsesorProfilController extends Controller
             'tempat_lahir.required' => 'Wajib diisi',
             'jurusan.required' => 'Wajib diisi',
             'jenis_kelamin.required' => 'Wajib diisi',
+            'no_reg.required' => 'Wajib diisi',
             'email.required' => 'Wajib diisi',
             'email.email' => 'Email tidak sesuai format',
             'pas_foto.file' => 'Wajib file',
@@ -92,6 +94,7 @@ class AsesorProfilController extends Controller
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'alamat_rumah' => $request->alamat_rumah,
+            'no_reg' => $request->no_reg,
             'foto' => $image
         ]);
 

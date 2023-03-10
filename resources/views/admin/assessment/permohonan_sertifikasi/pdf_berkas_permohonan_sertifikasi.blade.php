@@ -45,9 +45,8 @@
     </div>
     <div style="padding: 5%; padding-top:0% ">
     {{-- LEMBAR 1 --}}
-        <h6>Bagian 1 : Rincian Data Pemohon Sertifikasi</h6>
-        <h6 style="font-weight: lighter; width: 100%;">Pada bagian ini, cantumlan data pribadi, data pendidikan formal serta data pekerjaan anda pada saat ini.</h6>
-        <h6><b>a. Data Pribadi</b></h6>
+        <h6 style="margin: 0%; margin-bottom: 1%; padding:0%;">Bagian 1 : Rincian Data Pemohon Sertifikasi</h6>
+        <h6 style="margin: 0%; margin-bottom: 1%; padding:0%;"><b>a. Data Pribadi</b></h6>
 
         <table style="table-layout: fixed; font-size: 13px; width: 100%; margin-bottom:5%" cellspacing=0 cellpadding=5 border="1">
             <tbody style="font-size: 13px">
@@ -183,7 +182,7 @@
             </tbody>
         </table>
 
-        <h6><b>b. Data Pekerjaan Sekarang</b></h6>
+        <h6 style="margin: 0%; margin-bottom: 1%; padding:0%;"><b>b. Data Pekerjaan Sekarang</b></h6>
         <table style="font-size: 13px; width: 100%" cellspacing=0 cellpadding=5 border="1">
             <tbody style="font-size: 13px">
                 <tr>
@@ -265,13 +264,8 @@
         <div class="page-break"></div>
 
     {{-- LEMBAR 2 --}}
-        <h6>Bagian 2 : Data Sertifikasi</h6>
-        <h6 style="font-weight: lighter; width: 100%">
-            Tuliskan Judul dan Nomor Skema Sertifikasi yang anda ajukan berikut Daftar Unit Kompetensi sesuai kemasan pada
-            skema sertifikasi untuk mendapatkan pengakuan sesuai dengan latar belakang pendidikan, pelatihan serta
-            pengalaman kerja yang anda miliki.
-        </h6>
-        <table border="1" style="font-size: 13px; width: 100%; margin-bottom:2%" cellspacing=0 cellpadding=5>
+        <h6 style="margin: 0%; margin-bottom: 1%; padding:0%;">Bagian 2 : Data Sertifikasi</h6>
+        <table border="1" style="font-size: 13px; width: 100%; margin-bottom:5%;" cellspacing=0 cellpadding=5>
             <tbody style="font-size: 13px">
                 <tr>
                     <td rowspan="2" style="width: 20%">
@@ -350,15 +344,15 @@
             </tbody>
         </table>
 
-        <h6>Daftar Unit Kompetensi sesuai kemasan:</h6>
-        <table border="1" style=" font-size: 13px; width: 100%" cellspacing=0
+        <h6 style="margin: 0%; margin-bottom: 1%; padding:0%;">Daftar Unit Kompetensi sesuai kemasan:</h6>
+        <table border="1" style=" font-size: 13px; width: 100%;" cellspacing=0
             cellpadding=5>
             <thead style="font-size: 14px">
                 <tr>
-                    <th><h6>No</h6></th>
-                    <th><h6>Kode unit</h6></th>
-                    <th><h6>Judul Unit</h6></th>
-                    <th style="word-wrap: break-word;"><h6>Jenis Standar(Standar khusus/Standar
+                    <th><h6 style="margin: 0%; padding:0%;">No</h6></th>
+                    <th><h6 style="margin: 0%; padding:0%;">Kode unit</h6></th>
+                    <th><h6 style="margin: 0%; padding:0%;">Judul Unit</h6></th>
+                    <th><h6 style="margin: 0%; padding:0%;" style="text-wrap">Jenis Standar(Standar khusus/Standar
                         internasional/SKKNI)</h6></th>
                 </tr>
             </thead>
@@ -371,16 +365,16 @@
                 @foreach($unit_kompetensi as $data_unit_kompetensi)
                     <tr>
                         <td style="text-align: center">
-                            <h6 style="font-weight: lighter;">{{ $i++ }}</h6>
+                            <h6 style="margin: 0%; padding:0%; font-weight: lighter;">{{ $i++ }}</h6>
                         </td>
                         <td>
-                            <h6 style="font-weight: lighter;">{{ $data_unit_kompetensi->kode_unit }}</h6>
+                            <h6 style="margin: 0%; padding:0%; font-weight: lighter;">{{ $data_unit_kompetensi->kode_unit }}</h6>
                         </td>
                         <td>
-                            <h6 style="font-weight: lighter;">{{ $data_unit_kompetensi->judul_unit }}</h6>
+                            <h6 style="margin: 0%; padding:0%; font-weight: lighter;">{{ $data_unit_kompetensi->judul_unit }}</h6>
                         </td>
                         <td>
-                            <h6 style="font-weight: bold;">{{ $data_unit_kompetensi->jenis_standar }}</h6>
+                            <h6 style="margin: 0%; padding:0%; font-weight: lighter;">{{ $data_unit_kompetensi->jenis_standar }}</h6>
                         </td>
                     </tr>
                 @endforeach
@@ -388,68 +382,68 @@
         </table>
 
         <p class="card-text">
-            <h6>Bagian 3 : Bukti Kelengkapan Pemohon</h6>
-            <h6>Bukti Persyaratan Dasar Pemohon</h6>
+            <h6 style="margin: 0%; margin-bottom: 1%; padding:0%;">Bagian 3 : Bukti Kelengkapan Pemohon</h6>
+            <h6 style="margin: 0%; margin-bottom: 1%; padding:0%; font-weight: lighter;">Bukti Persyaratan Dasar Pemohon</h6>
         </p>
         <table border="1" style="table-layout: fixed; font-size: 13px; width: 100%; margin-bottom:5%" cellspacing=0
             cellpadding=3>
             <thead>
                 <tr class="text-center">
-                    <th rowspan="2"><h6>No.</h6></th>
-                    <th rowspan="2"><h6>Bukti Persyaratan Dasar</h6></th>
-                    <th colspan="2"><h6>Ada</h6></th>
-                    <th rowspan="2"><h6>Tidak Ada</h6></th>
+                    <th rowspan="2"><h6 style="margin: 0%; padding:0%;">No.</h6></th>
+                    <th rowspan="2"><h6 style="margin: 0%; padding:0%;">Bukti Persyaratan Dasar</h6></th>
+                    <th colspan="2"><h6 style="margin: 0%; padding:0%;">Ada</h6></th>
+                    <th rowspan="2"><h6 style="margin: 0%; padding:0%;">Tidak Ada</h6></th>
                 </tr>
                 <tr class="text-center">
-                    <th><h6>Memenuhi Syarat</h6></th>
-                    <th><h6>Tidak Memenuhi Syarat</h6></th>
+                    <th><h6 style="margin: 0%; padding:0%;">Memenuhi Syarat</h6></th>
+                    <th><h6 style="margin: 0%; padding:0%;">Tidak Memenuhi Syarat</h6></th>
                 </tr>
             </thead>
             <tbody style="font-size: 13px">
                 <tr>
                     <td>
-                        <h6 style="font-weight: lighter; text-align:center">1</h6>
+                        <h6 style="margin: 0%; padding:0%; font-weight: lighter; text-align:center">1</h6>
                     </td>
                     <td>
-                        <h6 style="font-weight: lighter;">Fotocopy Nilai Mata Pelajaran Kompetensi Keahlian
+                        <h6 style="margin: 0%; padding:0%; font-weight: lighter;">Fotocopy Nilai Mata Pelajaran Kompetensi Keahlian
                             {{ $data_permohonan_user_sertifikasi->relasi_jurusan->jurusan }}</h6>
                     </td>
                     <td>
-                        <h6 style="text-align:center; font-weight: lighter;">Centang</h6>
+                        <h6 style="text-align:center; margin: 0%; padding:0%; font-weight: lighter;font-family: DejaVu Sans, sans-serif;">✔</h6>
                     </td>
                     <td>
-                        <h6 style="text-align:center; font-weight: lighter;">Centang</h6>
+                        {{-- <h6 style="text-align:center; margin: 0%; padding:0%; font-weight: lighter;">Centang</h6> --}}
                     </td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>
-                        <h6 style="font-weight: lighter; text-align:center">2</h6>
+                        <h6 style="margin: 0%; padding:0%; font-weight: lighter; text-align:center">2</h6>
                     </td>
                     <td>
-                        <h6 style="font-weight: lighter;">Fotocopy Sertifikat Prakerin atau surat keterangan telah
+                        <h6 style="margin: 0%; padding:0%; font-weight: lighter;">Fotocopy Sertifikat Prakerin atau surat keterangan telah
                             melaksanakan Praktek Kerja Industri</h6>
                     </td>
                     <td>
-                        <h6 style="text-align:center; font-weight: lighter;">Centang</h6>
+                        <h6 style="text-align:center; margin: 0%; padding:0%; font-weight: lighter;font-family: DejaVu Sans, sans-serif;">✔</h6>
                     </td>
                     <td>
-                        <h6 style="text-align:center; font-weight: lighter;">Centang</h6>
+                        {{-- <h6 style="text-align:center; margin: 0%; padding:0%; font-weight: lighter;">Centang</h6> --}}
                     </td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>
-                        <h6 style="font-weight: lighter; text-align:center">3</h6>
+                        <h6 style="margin: 0%; padding:0%; font-weight: lighter; text-align:center">3</h6>
                     </td>
                     <td>
-                        <h6 style="font-weight: lighter;">Fotocopy Nilai Raport</h6>
+                        <h6 style="margin: 0%; padding:0%; font-weight: lighter;">Fotocopy Nilai Raport</h6>
                     </td>
                     <td>
-                        <h6 style="text-align:center; font-weight: lighter;">Centang</h6>
+                        <h6 style="text-align:center; margin: 0%; padding:0%; font-weight: lighter;font-family: DejaVu Sans, sans-serif;">✔</h6>
                     </td>
                     <td>
-                        <h6 style="text-align:center; font-weight: lighter;">Centang</h6>
+                        {{-- <h6 style="text-align:center; margin: 0%; padding:0%; font-weight: lighter;">Centang</h6> --}}
                     </td>
                     <td></td>
                 </tr>

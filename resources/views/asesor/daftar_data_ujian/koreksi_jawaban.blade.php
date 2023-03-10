@@ -68,7 +68,8 @@
             </div>
         </div>
     </div>
-</section>
+  
+  </section>
 
   <div class="row col gap-3 ms-0 mb-2" id="koreksiSoal">
     @foreach ($soal as $data_soal)
@@ -141,6 +142,7 @@
         @elseif ($jenis_tes->jenis_tes == 2)
           @foreach ($jawaban_asesi as $data_jawaban_asesi)
             @if($data_jawaban_asesi->koreksi_jawaban == null)
+            
               <div class="card">
                 <div class="card-header">
                   <div class="buttons" style="display: flex;">
@@ -155,6 +157,11 @@
               </div>
               @elseif($data_jawaban_asesi->koreksi_jawaban == 1)
               <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(201, 76, 76, 0.3);">
+                <div class="card-header">
+                  <div class="buttons" style="display: flex;">
+                    <button salah-undo-koreksi-soal-id = {{$data_jawaban_asesi->id}} class="btn btn-sm icon btn-primary undo-koreksi-salah"><i class="fa fa-undo"></i></button>
+                  </div>
+                </div>
                 <div class="card-body">
                   <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
                   <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
@@ -162,9 +169,19 @@
               </div>
               @elseif($data_jawaban_asesi->koreksi_jawaban == 2)
               <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(120, 212, 77, 0.58);">
+                <div class="card-header">
+                  <div class="buttons" style="display: flex;">
+                    <button benar-undo-koreksi-soal-id = {{$data_jawaban_asesi->id}} class="btn btn-sm icon btn-primary undo-koreksi-benar"><i class="fa fa-undo"></i></button>
+                  </div>
+                </div>
                 <div class="card-body">
                   <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
                   <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text">Kunci Jawaban : {{$data_soal->jawaban}}</p>
                 </div>
               </div>
             @endif
@@ -186,6 +203,11 @@
               </div>
               @elseif($data_jawaban_asesi->koreksi_jawaban == 1)
               <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(201, 76, 76, 0.3);">
+                <div class="card-header">
+                  <div class="buttons" style="display: flex;">
+                    <button salah-undo-koreksi-soal-id = {{$data_jawaban_asesi->id}} class="btn btn-sm icon btn-primary undo-koreksi-salah"><i class="fa fa-undo"></i></button>
+                  </div>
+                </div>
                 <div class="card-body">
                   <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
                   <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
@@ -193,6 +215,11 @@
               </div>
               @elseif($data_jawaban_asesi->koreksi_jawaban == 2)
               <div class="card" style="margin-bottom: 0%; outline-style: solid; outline-color: rgba(120, 212, 77, 0.58);">
+                <div class="card-header">
+                  <div class="buttons" style="display: flex;">
+                    <button salah-undo-koreksi-soal-id = {{$data_jawaban_asesi->id}} class="btn btn-sm icon btn-primary undo-koreksi-salah"><i class="fa fa-undo"></i></button>
+                  </div>
+                </div>
                 <div class="card-body">
                   <h5 class="card-title">{{$data_soal->pertanyaan}}</h5>
                   <p class="card-text">Jawaban Asesi: {{$data_jawaban_asesi->jawaban}}</p>
@@ -444,6 +471,36 @@
         const id = $(event.currentTarget).attr('soal-id');
         $.ajax({
             url: "/asesor/pilih-jawaban-benar/" + id,
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == 0) {
+                    alert("Gagal Hapus")
+                } else if (response.status == 1) {
+                  $("#koreksiSoal").load(location.href + " #koreksiSoal>*", "");
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.undo-koreksi-salah', function (event) {
+        const id = $(event.currentTarget).attr('salah-undo-koreksi-soal-id');
+        $.ajax({
+            url: "/asesor/undo-koreksi-soal/" + id,
+            dataType: 'json',
+            success: function (response) {
+                if (response.status == 0) {
+                    alert("Gagal Hapus")
+                } else if (response.status == 1) {
+                  $("#koreksiSoal").load(location.href + " #koreksiSoal>*", "");
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.undo-koreksi-benar', function (event) {
+        const id = $(event.currentTarget).attr('benar-undo-koreksi-soal-id');
+        $.ajax({
+            url: "/asesor/undo-koreksi-soal/" + id,
             dataType: 'json',
             success: function (response) {
                 if (response.status == 0) {

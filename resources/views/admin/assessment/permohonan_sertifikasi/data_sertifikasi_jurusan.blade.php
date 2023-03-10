@@ -39,9 +39,14 @@
                 </div>
                 <div class="col pb-45">
                     <p class="fw-bold">Daftar Unit Kompetensi Sesuai Kemasan</p>
-                    <a class="text-white fw-semibold btn btn-sm btn-info btn-info" href="#" data-bs-toggle="modal"
-                        data-bs-target="#modalTambahUnitKompetensi">+ Unit kompetensi
-                    </a>
+                    
+                    <div class="buttons">
+                        <a class="btn icon icon-left btn-sm btn-info rounded-pill fw-semibold"
+                            href="#!" data-bs-toggle="modal"
+                            data-bs-target="#modalTambahUnitKompetensi">
+                            <i class="fa fa-plus fa-xs"></i> Tambah Unit kompetensi
+                        </a>
+                    </div>
                 </div>
                 <section class="section">
                     <div class="card">
@@ -54,8 +59,8 @@
                                 style="table-layout: fixed;">
                                 <thead>
                                     <tr class="text-center">
-                                        <th>No</th>
-                                        <th>Kode unit</th>
+                                        <th width="20">No</th>
+                                        <th width="60">Kode unit</th>
                                         <th>Judul Unit</th>
                                         <th style="word-wrap: break-word;">Jenis Standar(Standar khusus/Standar
                                             internasional/SKKNI)</th>
@@ -73,7 +78,7 @@
 {{-- MODAL TAMBAH UNIT KOMPETENSI --}}
 <div class="modal fade text-left" id="modalTambahUnitKompetensi" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel33">Tambah Unit Kompetensi</h4>
@@ -113,11 +118,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Batal</span>
                     </button>
-                    <button type="submit" class="btn btn-primary ml-1">
+                    <button type="submit" class="btn btn-primary ml-1 rounded-pill">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Simpan</span>
                     </button>
@@ -130,7 +135,7 @@
 {{-- MODAL UBAH UNIT KOMPETENSI --}}
 <div class="modal fade text-left" id="modalUbahUnitKompetensi" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel33">Edit Unit Kompetensi</h4>
@@ -167,11 +172,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Batal</span>
                     </button>
-                    <button type="submit" class="btn btn-primary ml-1">
+                    <button type="submit" class="btn btn-primary ml-1 rounded-pill">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Simpan</span>
                     </button>
@@ -213,7 +218,7 @@
             },
             {
                 "targets": 0,
-                "class": "text-nowrap text-center",
+                "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     let i = 1;
                     list_unit_kompetensi[row.id] = row;
@@ -250,13 +255,18 @@
                 "render": function (data, type, row, meta) {
                     let tampilan;
                     tampilan = `
-                                <span onclick="clickUbahUnitKompetensi(${row.id})" class="badge bg-info rounded-pill">
-                                    <a class="text-white" href="#!">Edit</a>
-                                </span>
-                                <span data-id-unit-kompetensi = "${row.id}" class="badge bg-danger rounded-pill 
-                                hapus_unit_kompetensi">
-                                    <a class="text-white" href="#!">Hapus</a>
-                                </span>
+                                <div class="buttons">
+
+                                    <a onclick="clickUbahUnitKompetensi(${row.id})" class="btn btn-sm icon icon-left btn-sm btn-info rounded-pill fw-semibold"
+                                        href="#!">
+                                        <i class="fa fa-pen fa-sm"></i> Edit
+                                    </a>
+                                    <a data-id-unit-kompetensi = "${row.id}" class="btn btn-sm icon icon-left btn-danger rounded-pill fw-semibold hapus_unit_kompetensi"
+                                        href="#!">
+                                        <i class="fa fa-trash fa-sm"></i> Hapus
+                                    </a>
+                                    
+                                </div>
                                 `
                     return tampilan;
                 }
@@ -308,7 +318,6 @@
                             title: "Berhasil",
                             text: `${data.msg}`,
                             icon: "success",
-                            buttons: true,
                             successMode: true,
                         }),
                         table_data_unit_kompetensi.ajax.reload(null, false)

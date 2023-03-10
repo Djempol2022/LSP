@@ -521,6 +521,8 @@ table.dataTable td {
 }
 
 .dataTables_wrapper {
+    font-family: Nunito;
+    font-size: 14px;
     position: relative;
     clear: both
 }

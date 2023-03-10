@@ -16,7 +16,7 @@
       <form action="{{ route('admin.Berkas.ZBARP.Add') }}" method="POST">
         @csrf
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">BERITA ACARA</h6>
@@ -51,12 +51,10 @@
                       id="tgl_tes_tertulis_1" onchange="inputAutoTglTesTertulis()"
                       style="border: none; outline-color: skyblue; font-weight: bolder; text-align: center"
                       required></span>
-                  untuk
-                  tes tertulis dan tanggal
+                  sampai tanggal
                   <span><input type="date" name="tgl_tes_praktek" id="tgl_tes_praktek_1"
                       style="border: none; outline-color: skyblue; font-weight: bolder; text-align: center"
-                      onchange="inputAutoTglTesPraktek()" required></span> untuk
-                  tes praktek.
+                      onchange="inputAutoTglTesPraktek()" required></span>
                 </li>
                 <li>
                   Jumlah asesi yang mengikuti uji kompetensi secara keseluruhan berjumlah <span><input type="number"
@@ -142,7 +140,7 @@
         </div>
 
         {{-- lembar 2 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">NOTULEN RAPAT PLENO PELAKSANAAN UJI KOMPETENSI</h6>
@@ -278,7 +276,7 @@
         </div>
 
         {{-- lembar 3 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div style="color: black;">
             <h6 style="font-weight: bold">Bahasan/Diskusi <button type="button"

@@ -5,6 +5,8 @@
 
     skPenetapanTUKTerverifikasi();
     $('#tambah').attr('href', '/admin/berkas/sk-penetapan-tuk-terverifikasi');
+    $('#years').hide();
+    $('#export_excel').hide();
 
 
     // value berkas dropdown
@@ -19,28 +21,235 @@
 
       if (berkasValue === 'sk-penetapan-tuk-terverifikasi') {
         skPenetapanTUKTerverifikasi();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'daftar-tuk-terverifikasi') {
         daftarHasilVerifikasi();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'hasil-verifikasi-tuk') {
         hasilVerifikasiTUK();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'st-verifikasi-tuk') {
         stVerifikasiTUK();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
+      } else if (berkasValue === 'df-hadir-asesi') {
+        dfHadirAsesi();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'x03-st-verifikasi-tuk') {
         x03STVerifikasiTUK();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'x04-berita-acara') {
         x04BeritaAcara();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'z-ba-pecah-rp') {
         zBAPecahRP();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'z-ba-rp') {
         zBARP();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'df-hadir-asesor-pleno') {
         dfHadirAsesorPleno();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
       } else if (berkasValue === 'df-hadir-asesor') {
         dfHadirAsesor();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
+      } else if (berkasValue === 'df-hadir-asesi-bnsp') {
+        $('#table-surat').DataTable().destroy();
+        $('#tambah').hide();
+        $('#table-surat').hide();
+        $('#years').show();
+        $('#export_excel').show();
+        $('#myImgLightbulb').hide();
+        $('#table-sertifikat').hide();
+      } else if (berkasValue === 'sertifikat') {
+        $('#table-surat').DataTable().destroy();
+        $('#tambah').hide();
+        $('#table-surat').hide();
+        $('#years').show();
+        $('#myImgLightbulb').hide();
+        $('#export_excel').hide();
+        $('#table-sertifikat').show();
       } else {
         $('#table-surat').DataTable();
+        $('#tambah').show();
+        $('#myImgLightbulb').show();
+        $('#years').hide();
+        $('#export_excel').hide();
+        $('#table-surat').show();
+        $('#table-sertifikat').hide();
       }
     });
+
+    // export to excel year dropdown
+    $('#years').change(function() {
+      let yearValue = $(this).val();
+
+      if (yearValue == '#') {
+        $('#export_excel').attr('href', '#');
+
+        $('#table-sertifikat').empty();
+      } else {
+        $('#export_excel').attr('href', '/admin/berkas/df-hadir-asesi-bnsp/' + yearValue);
+
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+
+        $.ajax({
+          type: "GET",
+          url: "/admin/table-sertifikat/" + yearValue,
+          dataType: "json",
+          success: function(response) {
+            console.log(response);
+            $('#table-sertifikat').empty();
+            $('#table-sertifikat').html(`
+                <table class="table table-striped" id="editable-table">
+                <thead>
+                    <tr>
+                    <th>No</th>
+                    <th>Nama Asesi</th>
+                    <th>Asal Sekolah</th>
+                    <th>Nomor Sertifikat</th>
+                    <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${
+                    (() => {
+                        let i = 1;
+                        return response.user.map(data => `
+                        <tr>
+                            <td>${i++}</td>
+                            <td>${data.nama_lengkap}</td>
+                            <td>${data.relasi_institusi.nama_institusi}</td>
+                            <td class="text-primary" data-field="no_sertifikat" data-pk="${data.id}">${data.relasi_user_detail.no_sertifikat ?? 'Belum ada nomor sertifikat'}</td>
+                            <td>
+                            <a href="/admin/print-sertifikat/${data.id}" class="btn btn-primary btn-sm">Print Sertifikat</a>
+                            </td>
+                        </tr>
+                        `).join('');
+                    })()
+                    }
+                </tbody>
+                </table>
+                `);
+
+            // Initialize the Editable plugin
+            $('#editable-table td[data-field]').editable({
+              type: 'text',
+              url: '/admin/update-sertifikat',
+              //   data: {
+              //     id: $(this).parent('tr').attr('data-id'),
+              //     field: $(this).attr('data-field'),
+              //   },
+              //   success: function(response, newValue) {
+              //     // Handle success
+              //     console.log('Update successful');
+              //     console.log(response);
+              //     console.log(newValue);
+              //   },
+              //   error: function(response) {
+              //     // Handle error
+              //     console.log('Update failed');
+              //   }
+            });
+          },
+          error: function(xhr, status, error) {
+            console.error(error);
+          }
+        });
+      }
+
+    });
+
+    // editable in sertifikat
+    // $('.editable').on('click', 'td[data-field="no_sertifikat"]', function() {
+    //   var cell = $(this);
+    //   cell.edit(function(value) {
+    //     // handle value changes
+    //     console.log('Value changed to: ' + value);
+    //   }, function() {
+    //     // handle cancel
+    //     console.log('Edit cancelled');
+    //   }, function(value) {
+    //     // handle save
+    //     var row = cell.parent('tr');
+    // var data = {
+    //   id: row.attr('data-id'),
+    //   field: cell.attr('data-field'),
+    //   value: value
+    // };
+    //     $.ajax({
+    //       method: 'POST',
+    //       url: '/admin/update-sertifikat',
+    //       data: data
+    //     }).done(function(response) {
+    //       // handle success
+    //       console.log('Update successful');
+    //       console.log(response);
+    //     }).fail(function(error) {
+    //       // handle error
+    //       console.log('Update failed: ' + error);
+    //     });
+    //   });
+    // });
+    // end of editable in sertifikat
 
     // lightbulb
     // Get the modal
@@ -101,6 +310,8 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratSKPenetapan') }}",
           type: "POST",
@@ -128,13 +339,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_sk_penetapan[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -143,7 +348,7 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailSKPenetapan(${row.id})" id="detailSKPenetapan">Detail</button>
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailSKPenetapan(${row.id})" id="detailSKPenetapan">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'sk-penetapan-tuk-terverifikasi')">Hapus</button>
                 `
               return tampilan;
@@ -168,6 +373,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratDaftarTUK') }}",
           type: "POST",
@@ -195,13 +401,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_daftar_tuk[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -210,7 +410,7 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailDaftarTUK(${row.id})">Detail</button>
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailDaftarTUK(${row.id})">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'daftar-tuk-terverifikasi')">Hapus</button>
                 `
               return tampilan;
@@ -235,6 +435,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratHasilVerifikasiTUK') }}",
           type: "POST",
@@ -262,13 +463,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_hasil_verifikasi_tuk[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -277,7 +472,7 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailHasilVerifikasiTUK(${row.id})">Detail</button>
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailHasilVerifikasiTUK(${row.id})">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'hasil-verifikasi-tuk')">Hapus</button>
                 `
               return tampilan;
@@ -302,6 +497,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratSTVerifikasiTUK') }}",
           type: "POST",
@@ -329,13 +525,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_st_verifikasi_tuk[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -344,8 +534,70 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailSTVerifikasiTUK(${row.id})">Detail</button>
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailSTVerifikasiTUK(${row.id})">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'st-verifikasi-tuk')">Hapus</button>
+                `
+              return tampilan;
+            }
+          },
+        ]
+      });
+    }
+
+    function dfHadirAsesi() {
+      let list_df_hadir_asesi = [];
+      $('#table-surat').DataTable({
+        destroy: true,
+        "pageLength": 5,
+        "lengthMenu": [
+          [5, 10, 25, -1],
+          [5, 10, 25, 'semua']
+        ],
+        "bLengthChange": true,
+        "bFilter": false,
+        "bInfo": true,
+        "processing": true,
+        "bServerSide": true,
+        "responsive": true,
+        "ordering": false,
+        ajax: {
+          url: "{{ route('admin.SuratDFHadirAsesi') }}",
+          type: "POST",
+        },
+        columnDefs: [{
+            targets: '_all',
+            visible: true
+          },
+          {
+            "targets": 0,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+            }
+          },
+          {
+            "targets": 1,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              return 'Daftar Hadir Asesi';
+            }
+          },
+          {
+            "targets": 2,
+            "class": "text-nowrap my-1 px-4",
+            "render": function(data, type, row, meta) {
+              list_df_hadir_asesi[row.id] = row;
+              return timestamps(row.created_at);
+            }
+          },
+          {
+            "targets": 3,
+            "class": "text-nowrap text-center",
+            "render": function(data, type, row, meta) {
+              let tampilan;
+              tampilan =
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailDFHadirAsesi(${row.id})">Detail</button>
+                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesi')">Hapus</button>
                 `
               return tampilan;
             }
@@ -369,6 +621,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratX03STVerifikasiTUK') }}",
           type: "POST",
@@ -396,13 +649,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_x03_st_verifikasi_tuk[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -411,7 +658,7 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailX03STVerifikasiTUK(${row.id})">Detail</button>
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailX03STVerifikasiTUK(${row.id})">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'x03-st-verifikasi-tuk')">Hapus</button>
                 `
               return tampilan;
@@ -436,6 +683,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratX04BeritaAcara') }}",
           type: "POST",
@@ -463,13 +711,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_x04_berita_acara[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -478,7 +720,7 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailX04BeritaAcara(${row.id})">Detail</button>
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailX04BeritaAcara(${row.id})">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'x04-berita-acara')">Hapus</button>
                 `
               return tampilan;
@@ -503,6 +745,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratZBAPecahRP') }}",
           type: "POST",
@@ -530,13 +773,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_z_ba_pecah_rp[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -545,7 +782,7 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailZBAPecahRP(${row.id})">Detail</button>
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailZBAPecahRP(${row.id})">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'z-ba-pecah-rp')">Hapus</button>
                 `
               return tampilan;
@@ -570,6 +807,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratZBARP') }}",
           type: "POST",
@@ -597,13 +835,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_z_ba_rp[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -612,7 +844,7 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailZBARP(${row.id})">Detail</button>
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailZBARP(${row.id})">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'z-ba-pecah-rp')">Hapus</button>
                 `
               return tampilan;
@@ -637,6 +869,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratDFHadirAsesorPleno') }}",
           type: "POST",
@@ -664,13 +897,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_df_hadir_asesor_pleno[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -679,7 +906,7 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailDFHadirAsesorPleno(${row.id})">Detail</button>
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailDFHadirAsesorPleno(${row.id})">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesor-pleno')">Hapus</button>
                 `
               return tampilan;
@@ -704,6 +931,7 @@
         "processing": true,
         "bServerSide": true,
         "responsive": true,
+        "ordering": false,
         ajax: {
           url: "{{ route('admin.SuratDFHadirAsesor') }}",
           type: "POST",
@@ -731,13 +959,7 @@
             "class": "text-nowrap my-1 px-4",
             "render": function(data, type, row, meta) {
               list_df_hadir_asesor[row.id] = row;
-              const date = new Date(row.created_at);
-              let tanggal = new Intl.DateTimeFormat('id', {
-                year: "numeric",
-                month: "long",
-                day: "2-digit"
-              }).format(date).split(" ").join(" ");
-              return tanggal;
+              return timestamps(row.created_at);
             }
           },
           {
@@ -746,7 +968,7 @@
             "render": function(data, type, row, meta) {
               let tampilan;
               tampilan =
-                `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailDFHadirAsesor(${row.id})">Detail</button>
+                `<button class="btn btn-warning my-1 text-black" data-bs-toggle="modal" onclick="detailDFHadirAsesor(${row.id})">Detail</button>
                 <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesor-pleno')">Hapus</button>
                 `
               return tampilan;
@@ -754,6 +976,10 @@
           },
         ]
       });
+    }
+
+    function dfHadirAsesiBNSP() {
+      $('#table-surat').DataTable().destroy();
     }
 
   })
@@ -796,7 +1022,7 @@
         i) {
         return $(
           `<tr>
-                    <td>${i + 1}.</td>
+                    <td style="text-align: center;">${i + 1}.</td>
                     <td>${d.relasi_nama_tuk.nama_tuk}</td>
                     <td>${d.relasi_skema_sertifikasi.judul_skema_sertifikasi}</td>
                     <td>${d.penanggung_jawab}</td>
@@ -952,6 +1178,60 @@
     })
   }
 
+  function detailDFHadirAsesi(id) {
+    let url = "table-surat-df-hadir-asesi/" + id;
+    $.get(url, function(data) {
+      console.log(data);
+      $('#modalDFHadirAsesi').modal('show');
+      if (data.tgl) {
+        $('#tgl_df_hadir_asesi').text(date_format(data.tgl));
+      } else {
+        $('#tgl_df_hadir_asesi').text(
+          '..................................................................................................');
+      }
+      if (data.waktu) {
+        $('#wkt_df_hadir_asesi').text(time_format(data.waktu) + ' WIB - selesai');
+      } else {
+        $('#wkt_df_hadir_asesi').text(
+          '..................................................................................................');
+      }
+      if (data.tempat) {
+        $('#tempat_df_hadir_asesi').text(data.tempat);
+      } else {
+        $('#tempat_df_hadir_asesi').text(
+          '..................................................................................................');
+      }
+      if (data.skema_sertifikasi_id) {
+        $('#skema_sertifikasi_df_hadir_asesi').text(data.relasi_skema_sertifikasi.judul_skema_sertifikasi);
+      } else {
+        $('#skema_sertifikasi_df_hadir_asesi').text(
+          '..................................................................................................');
+      }
+
+      $('#bodyTableDFHadirAsesi').html(data.relasi_df_hadir_asesi_child.map(function(d, i) {
+        return $(
+          `<tr>
+                    <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                    <td>${d.no_peserta}</td>
+                    <td>${d.nama_asesi}</td>
+                    <td>${d.relasi_institusi.nama_institusi}</td>
+                    <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+                </tr>`
+        )
+      }));
+
+      $('#jabatan_bttd_df_hadir_asesi').text(data.jabatan_bttd);
+      $('#nama_bttd_df_hadir_asesi').text(data.nama_bttd);
+      $('#ttd_bttd_df_hadir_asesi').attr('src', data.ttd_bttd);
+      $('#no_met_bttd_df_hadir_asesi').text(data.no_met_bttd);
+      $('#ttd_asesor_df_hadir_asesi').attr('src', data.ttd_asesor);
+      $('#nama_asesor_df_hadir_asesi').text(data.nama_asesor);
+      $('#no_met_asesor_df_hadir_asesi').text(data.no_met_asesor);
+
+      $("#pdfDFHadirAsesi").attr('href', 'cetak-df-hadir-asesi/' + data.id);
+    })
+  }
+
   function detailX03STVerifikasiTUK(id) {
     let url = "table-surat-x03-st-verifikasi-tuk/" + id;
     $.get(url, function(data) {
@@ -1091,16 +1371,17 @@
       $('#topik_z_ba_rp').text(data.topik);
       $('#ketua_rapat_z_ba_rp').text(data.ketua_rapat);
       $('#notulis_z_ba_rp').text(data.notulis);
-      //   $("#tbody_z_ba_rp").html(data.relasi_nama_jabatan.map(function(d, i) {
-      //     return $(
-      //       `<tr>
-      //         <td class="text-center" style="width: 10px;">${i + 1}.</td>
-      //                   <td>${d.nama}</td>
-      //                   <td>${d.jabatan}</td>
-      //                   <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
-      //               </tr>`
-      //     )
-      //   }));
+      $("#tbody_z_ba_rp").html(data.relasi_nama_jabatan.map(function(d, i) {
+        return $(
+          `<tr>
+              <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                        <td>${d.nama}</td>
+                        <td>${d.jabatan}</td>
+                        <td>${d.jml_asesi}</td>
+                        <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+                    </tr>`
+        )
+      }));
       $('#tgl_tes_tertulis_2_z_ba_rp').text(date_format(data.tgl_tes_tertulis, false));
       $('#tgl_tes_praktek_2_z_ba_rp').text(date_format(data.tgl_tes_praktek));
       $("#bahasan_diskusi_z_ba_rp").html(data.relasi_bahasan_diskusi.map(function(d, i) {
@@ -1113,6 +1394,10 @@
       $('#no_met_bttd_2_z_ba_rp').text(data.no_met_bttd);
       $('#notulis_2_z_ba_rp').text(data.notulis);
       $('#no_met_notulis_2_z_ba_rp').text(data.no_met_notulis);
+      $('#ttd_z_ba_rp_1').attr('src', data.ttd);
+      $('#ttd_z_ba_rp_2').attr('src', data.ttd);
+
+      $("#pdfZBARP").attr('href', 'cetak-z-ba-rp/' + data.id);
     })
   }
 
@@ -1178,17 +1463,9 @@
       let hari_df_hadir_asesor = date_hari_df_hadir_asesor.getDay();
       $('#hari_df_hadir_asesor').text(hari(hari_df_hadir_asesor));
       $('#tgl_df_hadir_asesor').text(date_format(data.tgl));
-      const time_wkt_mulai_df_hadir_asesor = new Date(data.wkt_mulai);
-      let wkt_mulai_df_hadir_asesor = ('0' + time_wkt_mulai_df_hadir_asesor.getHours()).substr(-2);
-      let menit_mulai_df_hadir_asesor = time_wkt_mulai_df_hadir_asesor.getMinutes();
 
-      const time_wkt_selesai_df_hadir_asesor = new Date(data.wkt_selesai);
-      let wkt_selesai_df_hadir_asesor = ('0' + time_wkt_selesai_df_hadir_asesor.getHours()).substr(-2);
-      let menit_selesai_df_hadir_asesor = time_wkt_selesai_df_hadir_asesor.getMinutes();
-
-      $('#wkt_mulai_df_hadir_asesor').text('' + wkt_mulai_df_hadir_asesor + ':' + menit_mulai_df_hadir_asesor);
-      $('#wkt_selesai_df_hadir_asesor').text('' + wkt_selesai_df_hadir_asesor + ':' +
-        menit_selesai_df_hadir_asesor);
+      $('#wkt_mulai_df_hadir_asesor').text(time_format(data.wkt_mulai));
+      $('#wkt_selesai_df_hadir_asesor').text(time_format(data.wkt_selesai));
       $('#tempat_df_hadir_asesor').text(data.tempat);
       let nama = data.relasi_nama_jabatan.filter(function(d) {
         return d.is_nip === 0;
@@ -1295,5 +1572,27 @@
         });
       }
     });
+  }
+
+  function timestamps(value) {
+    const timestampString = value;
+    const timestamp = Math.floor(Date.parse(timestampString) / 1000);
+    const date = new Date(timestamp * 1000); // multiply by 1000 to convert to milliseconds
+    const formattedDate = date.toLocaleString('id', {
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZone: 'Asia/Jakarta'
+    }).replace(/\./g, ':');
+
+    return formattedDate;
+  }
+
+  function table_sertifikat() {
+    let table = document.createElement('table');
+
   }
 </script>

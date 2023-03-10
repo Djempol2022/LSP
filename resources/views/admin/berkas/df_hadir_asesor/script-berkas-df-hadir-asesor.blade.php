@@ -68,6 +68,7 @@
               rowJ.cells[3].style = '';
             }
             rowJ.cells[3].innerHTML = j;
+            rowJ.cells[4].childNodes[0].name = 'button' + (j + 1);
           }
         }
       }

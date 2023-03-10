@@ -16,7 +16,7 @@
       <form action="{{ route('admin.Berkas.SKPenetapanTUKTerverifikasi.Add') }}" method="POST">
         @csrf
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-berkas')
           <div class="text-center d-flex flex-column">
             <h6 class="mb-0">SURAT KEPUTUSAN</h6>
@@ -120,8 +120,8 @@
                   </tr>
                   <tr style="height: 60px">
                     <td colspan="3" class="lh-sm" style="width: 80%">
-                      <div class="d-flex justify-content-end">
-                        <div class="text-start" style="width: 35%">
+                      <div class="d-flex justify-content-center justify-content-sm-end">
+                        <div class="text-start w-sm-auto">
                           <div class="d-flex justify-content-between align-items-center mb-2">
                             <span style="width: 47%">Ditetapkan di</span>
                             <span style="width: 3%">:</span>
@@ -186,7 +186,7 @@
         </div>
 
         {{-- lembar 2 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-berkas')
           <div class="text-left d-flex flex-column mb-3">
             <h6 class="mb-0 fw-light">Lampiran SK</h6>
@@ -235,27 +235,29 @@
             <div>
               <h6 class="line-sp mb-0 text-center">PENEMPATAN TEMPAT UJI KOMPETENSI (TUK) TERVERIFIKASI</h6>
               <h6 class="text-center">LSP SMK NEGERI 1 SINTANG</h6>
-              {{--  --}}
-              <table class="table table-bordered" id="tableTUK">
-                <thead>
-                  <tr>
-                    <th>NO</th>
-                    <th>NAMA TUK</th>
-                    <th>NAMA SKEMA SERTIFIKASI</th>
-                    <th>TEMPAT</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody id="bodyTable">
-                  <tr>
-                    <td colspan="5" class="text-center font-extrabold h1 m-0 p-0"><button type="button"
-                        class="border-0 bg-transparent text-primary" id="addRow">+</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="d-flex justify-content-end text-black">
-                <div class="text-start" style="width: 35%">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="tableTUK">
+                  <thead>
+                    <tr>
+                      <th>NO</th>
+                      <th>NAMA TUK</th>
+                      <th>NAMA SKEMA SERTIFIKASI</th>
+                      <th>TEMPAT</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bodyTable">
+                    <tr>
+                      <td colspan="5" class="text-center font-extrabold h1 m-0 p-0"><button type="button"
+                          class="border-0 bg-transparent text-primary" id="addRow">+</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="d-flex justify-content-center justify-content-sm-end text-black">
+                <div class="text-start w-sm-auto">
+                  {{-- <div class="text-start w-sm-auto" style="width: 35%"> --}}
                   <div class="d-flex justify-content-between align-items-center mb-2">
                     <span style="width: 47%">Ditetapkan di</span>
                     <span style="width: 3%">:</span>
@@ -294,7 +296,7 @@
                   </div>
                   <div>
                     {{-- TANDA TANGAN / TTD --}}
-                    <div class="mb-2 signature-pad" id="signature-pad">
+                    <div class="mb-2 signature-pad" id="signature-pad" style="width: 75%">
                       <canvas id="sig"></canvas>
                       <input type="hidden" name="ttd" value="" id="ttd">
                     </div>

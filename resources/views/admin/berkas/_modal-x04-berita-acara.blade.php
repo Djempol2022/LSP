@@ -1,13 +1,13 @@
 <div class="modal fade" id="modalDetailX04BeritaAcara" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
+  <div class="modal-dialog modal-dialog-scrollable" style="max-width: 90vw; overflow-y: auto">
+    <div class="modal-content" style="overflow-x: auto">
       <div class="modal-header">
         <h1 class="modal-title fs-5">X 04 Berita Acara</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {{-- lembar 1 --}}
-        <div class="card pt-5 px-5">
+        <div class="card pt-5 px-5 overflow-x-auto mx-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div class="text-center d-flex flex-column">
             <h6 class="mb-0 font-extrabold">SURAT TUGAS</h6>
@@ -60,7 +60,7 @@
           </div>
 
           <div style="margin-top: 20px">
-            <table style="width: 100%; margin-left: 28px">
+            <table style="width: 90%; margin-left: 28px">
               <tr>
                 <td colspan="2">Yang melakukan verifikasi</td>
               </tr>

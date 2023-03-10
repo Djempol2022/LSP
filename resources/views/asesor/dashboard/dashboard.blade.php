@@ -28,8 +28,8 @@
                             </table>
                         </div>
                     </div>
+                </section>
             </div>
-            </section>
 
             <div class="col profil-section-title">
                 Unit Kompetensi
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -141,7 +141,7 @@
                 },
                 {
                     "targets": 2,
-                    "class": "text-nowrap text-center",
+                    "class": "text-wrap text-center",
                     "render": function(data, type, row, meta) {
                         list_unit_kompetensi[row.id] = row;
                         return row.judul_unit;
@@ -161,9 +161,9 @@
                     "render": function(data, type, row, meta) {
                         let tampilan;
                         tampilan = `
-                                <span class="badge bg-info rounded-pill">
-                                    <a class="text-white" href="/asesor/tambah-elemen-unit-kompetensi/${row.id}">Tambah Elemen</a>
-                                </span>
+                                <div class="buttons">
+                                    <a class="btn btn-sm btn-primary rounded-pill icon icon-left" href="/asesor/tambah-elemen-unit-kompetensi/${row.id}"><i class="fa fa-plus fa-xs"></i>Tambah Elemen</a>
+                                </div>
                                 `
                         return tampilan;
                     }
@@ -406,7 +406,6 @@
                     },
                 ]
             });
-
         }
     </script>
 @endsection

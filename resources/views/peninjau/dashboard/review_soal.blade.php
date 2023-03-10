@@ -10,7 +10,53 @@
 </nav>
 
     <div class="container-fluid" style="margin-top: 20px;">
-        <div id="demo"> </div>
+        <section id="basic-horizontal-layouts">
+            <div class="row match-height">
+                <div class="col-md-12 col-12">
+                    <div class="card">
+                        <div class="card-header">
+                          <div class="col profil-section-title">
+                            Detail Jadwal Ujian
+                          </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <form class="form form-horizontal">
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label>Nama Asesor</label>
+                                            </div>
+                                            <div class="col-md-8 form-group">
+                                                <input class="form-control" value="{{$asesor->relasi_user_asesor_detail->nama_lengkap}}"readonly>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Nama Peninjau</label>
+                                            </div>
+                                            <div class="col-md-8 form-group">
+                                              <input class="form-control" value="{{$peninjau->relasi_user_peninjau_detail->nama_lengkap}}" readonly>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Jenis Soal</label>
+                                            </div>
+                                            <div class="col-md-8 form-group">
+                                              <input class="form-control" value="@if($pelaksanaan_ujian->jenis_tes == 1)Pilihan Ganda @elseif($pelaksanaan_ujian->jenis_tes ==2) Essay @elseif ($pelaksanaan_ujian->jenis_tes == 3)Wawancara @endif" readonly>
+                                            </div>
+                                            <div class="col-md-3">
+                                              <label>Materi Uji Kompetensi</label>
+                                            </div>
+                                            <div class="col-md-8 form-group">
+                                                <input class="form-control" value="{{$muk->relasi_muk->muk}}" readonly>
+                                              </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </section>
 
         {{-- <h5>Materi Uji Kompetensi {{$pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_muk->muk}}</h5> --}}
         {{-- <h3 class="mt-5" id="timer"></h3> --}}

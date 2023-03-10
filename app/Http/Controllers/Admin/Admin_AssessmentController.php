@@ -13,21 +13,30 @@ use App\Models\AsesmenMandiri;
 use App\Models\UnitKompetensi;
 use App\Models\SkemaSertifikasi;
 use App\Http\Controllers\Controller;
+use App\Models\AsesiUjiKompetensi;
+use App\Models\HasilUmpanBalik;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StatusUnitKompetensiAsesi;
+use App\Models\UmpanBalikKomponen;
+use App\Models\UserDetail;
 use Illuminate\Support\Facades\Validator;
 
 class Admin_AssessmentController extends Controller
 {
     public function assessment()
     {
-        return view('admin.assessment.assessment');
+        $jurusan = Jurusan::get(['id', 'jurusan']);
+        return view('admin.assessment.assessment', ['jurusan' => $jurusan]);
     }
 
     public function data_rekap_berkas(Request $request){
         $data = User::select([
             'id', 'nama_lengkap', 'jurusan_id'
         ])->where('role_id','=','4');
+
+        if($request->input('jurusan_pengguna')!=null){
+            $data = $data->where('jurusan_id', $request->jurusan_pengguna);
+        }
         
         // if($request->input('search.value')!=null){
         //     $data = $data->with('relasi_user', 'relasi_tanda_tangan_admin','relasi_user.relasi_jurusan', 'relasi_user.relasi_institusi')
@@ -44,7 +53,9 @@ class Admin_AssessmentController extends Controller
         $rekamFilter = $data->get()->count();
         if ($request->input('length') != -1)
             $data = $data->skip($request->input('start'))->take($request->input('length'));
-            $data = $data->where('role_id', 4)->with('relasi_sertifikasi.relasi_tanda_tangan_admin','relasi_asesmen_mandiri')->get();
+            $data = $data->where('role_id', 4)->with(
+                'relasi_sertifikasi.relasi_tanda_tangan_admin','relasi_asesmen_mandiri',
+                'relasi_user_asesi_ukom')->get();
             $rekamTotal = $data->count();
 
         return response()->json([
@@ -432,9 +443,9 @@ class Admin_AssessmentController extends Controller
     // TAMBAH ATAU UBAH NOMOR URUT ASESI
     public function tambah_ubah_nomor_urut(Request $request){
         $validator = Validator::make($request->all(), [
-            'nomor_urut'=>'required',
+            'no_reg'=>'required',
         ],[
-            'nomor_urut.required'=> 'Wajib diisi'
+            'no_reg.required'=> 'Wajib diisi'
         ]);
 
         if(!$validator->passes()){
@@ -443,10 +454,10 @@ class Admin_AssessmentController extends Controller
                 'error'=>$validator->errors()->toArray()
             ]);
         }else{
-            $nomor_urut_asesi = Sertifikasi::where('id', $request->sertifikasi_id)->update([
-                'nomor_urut' => $request->nomor_urut,
+            $no_reg_asesi = UserDetail::where('user_id', $request->user_asesi_id)->update([
+                'no_reg' => $request->no_reg,
             ]);
-            if(!$nomor_urut_asesi){
+            if(!$no_reg_asesi){
                 return response()->json([
                     'status'=>0,
                     'msg'=>'Terjadi kesalahan, Gagal Menambah Nomor Urut Asesi'
@@ -470,6 +481,14 @@ class Admin_AssessmentController extends Controller
         return view('admin.assessment.asessment_mandiri.data_asessment_mandiri', [
             'status_kompeten_asesi'=>$status_kompeten_asesi]);
     }
+
+
+
+
+
+
+
+
 
     // ASESMEN MANDIRI
     public function data_pengajuan_asesmen_mandiri_acc(Request $request){
@@ -532,7 +551,10 @@ class Admin_AssessmentController extends Controller
             'relasi_unit_kompetensi', 'relasi_unit_kompetensi.relasi_unit_kompetensi_sub')
             ->where('jurusan_id', $jurusan_id)->first();
 
-        $unit_kompetensi = UnitKompetensi::where('skema_sertifikasi_id', $sertifikasi->id)->get();
+        // $unit_kompetensi = UnitKompetensi::where('skema_sertifikasi_id', $sertifikasi->id)->get();
+
+        $unit_kompetensi = UnitKompetensi::get(['id', 'skema_sertifikasi_id', 'kode_unit', 'judul_unit', 'jenis_standar'])->where('skema_sertifikasi_id', $sertifikasi->id);
+
         $data_asesmen_mandiri = AsesmenMandiri::with('relasi_user_asesi', 'relasi_user_asesor')
             ->whereRelation('relasi_user_asesi', 'user_asesi_id', $user_asesi_id)
             ->first();
@@ -557,6 +579,13 @@ class Admin_AssessmentController extends Controller
             ->whereRelation('relasi_user_asesi', 'user_asesi_id', $user_asesi_id)
             ->first();
        
+        // return view('admin.assessment.asessment_mandiri.pdf2_berkas_asesmen_mandiri', [
+        //     'unit_kompetensi'       => $unit_kompetensi,
+        //     'sertifikasi'           => $sertifikasi,
+        //     'data_asesmen_mandiri'  => $data_asesmen_mandiri,
+        //     'user_asesi_id'         => $user_asesi_id,
+        //     'jurusan_id'            => $jurusan_id
+        // ]);
         PDF::setOptions(['dpi' => 96, 'defaultFont' => 'times-roman']);
         $pdf = PDF::loadView('admin.assessment.asessment_mandiri.pdf_berkas_asesmen_mandiri', [
                     'unit_kompetensi'       => $unit_kompetensi,
@@ -566,6 +595,41 @@ class Admin_AssessmentController extends Controller
                     'jurusan_id'            => $jurusan_id
                 ])
                 ->setPaper("A4", "portrait");
-        return $pdf->stream();
+        return $pdf->download('02 FR.APL.02.pdf');
     }
+
+    // DETAIL REKAPAN UMPAN BALIK
+    public function detail_rekapan_umpan_balik($id){
+        $umpan_balik_asesi = AsesiUjiKompetensi::with(
+            'relasi_user_asesi',
+            'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian', 
+            'relasi_jadwal_uji_kompetensi.relasi_user_asesor.relasi_user_asesor_detail')
+            ->where('user_asesi_id', $id)->get();
+        $umpan_balik_komponen = UmpanBalikKomponen::get();
+
+        return view('admin.assessment.umpan_balik.detail_berkas_umpan_balik', [
+            'umpan_balik_asesi'     => $umpan_balik_asesi,
+            'umpan_balik_komponen'  => $umpan_balik_komponen,
+            'user_asesi_id'         => $id
+        ]);
+    }
+
+    public function cetak_rekapan_umpan_balik($id){
+        $umpan_balik_asesi = AsesiUjiKompetensi::with(
+            'relasi_user_asesi',
+            'relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian', 
+            'relasi_jadwal_uji_kompetensi.relasi_user_asesor.relasi_user_asesor_detail')
+            ->where('user_asesi_id', $id)->get();
+        $umpan_balik_komponen = UmpanBalikKomponen::get();
+       
+        PDF::setOptions(['dpi' => 96, 'defaultFont' => 'times-roman']);
+        $pdf = PDF::loadView('admin.assessment.umpan_balik.pdf_berkas_umpan_balik', [
+                    'umpan_balik_asesi'     => $umpan_balik_asesi,
+                    'umpan_balik_komponen'  => $umpan_balik_komponen,
+                    'user_asesi_id'         => $id
+                ])
+                ->setPaper("A4", "portrait");
+        return $pdf->download('18 FR.AK.03.UMPAN BALIK.pdf');
+    }
+
 }

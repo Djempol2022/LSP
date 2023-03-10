@@ -31,8 +31,12 @@
                     <div class="col profil-section-title">
                         Jadwal Uji Kompetensi Jurusan
                     </div>
-                    <a class="btn btn-primary btn-sm btn-rounded text-white"
-                        href="#" data-bs-toggle="modal" data-bs-target="#modalTambahMukAsesorPeninjau">Tambah Data</a>
+                    <div class="buttons">
+                        <a class="btn btn-sm icon icon-left btn-primary rounded-pill fw-semibold"
+                        href="#" data-bs-toggle="modal" data-bs-target="#modalTambahMukAsesorPeninjau">
+                            <i class="fa fa-eye fa-xs"></i> Tambah Data
+                        </a>
+                    </div>
                     <div class="col profil-section">
                         <div class="row my-4">
                             <div class="col-md-12">
@@ -58,7 +62,7 @@
                 {{-- MODAL TAMBAH MUK ASESOR PENINJAU--}}
                 <div class="modal fade text-left" id="modalTambahMukAsesorPeninjau" tabindex="-1" role="dialog"
                     data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="myModalLabel33">Tambah Data</h4>
@@ -87,7 +91,7 @@
                                         <label>Nama Asesor</label>
                                         <select class="form-control jurusan" name="user_asesor_id" aria-hidden="true">
                                             <option value="" selected disabled>-- Pilih Asesor --</option>
-                                            @foreach ($user_asesor as $data_user_asesor)
+                                            @foreach ($user_asesor_peninjau as $data_user_asesor)
                                             <option value="{{ $data_user_asesor['id'] }}">{{ $data_user_asesor['nama_lengkap'] }}
                                             </option>
                                             @endforeach
@@ -100,7 +104,7 @@
                                         <label>Nama Peninjau</label>
                                         <select class="form-control jurusan" name="user_peninjau_id" aria-hidden="true">
                                             <option value="" selected disabled>-- Pilih Peninjau --</option>
-                                            @foreach ($user_peninjau as $data_user_peninjau)
+                                            @foreach ($user_asesor_peninjau as $data_user_peninjau)
                                             <option value="{{ $data_user_peninjau['id'] }}">
                                                 {{ $data_user_peninjau['nama_lengkap'] }}</option>
                                             @endforeach
@@ -111,11 +115,11 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                    <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                                         <i class="bx bx-x d-block d-sm-none"></i>
                                         <span class="d-none d-sm-block">Batal</span>
                                     </button>
-                                    <button type="submit" class="btn btn-primary ml-1">
+                                    <button type="submit" class="btn btn-primary ml-1 rounded-pill">
                                         <i class="bx bx-check d-block d-sm-none"></i>
                                         <span class="d-none d-sm-block">Simpan</span>
                                     </button>
@@ -170,9 +174,9 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-light-secondary close" data-bs-dismiss="modal">Batal</span>
+                                    <button type="button" class="btn btn-light-secondary close rounded-pill" data-bs-dismiss="modal">Batal</span>
                                     </button>
-                                    <button type="submit" class="btn btn-primary ml-1">Simpan</span>
+                                    <button type="submit" class="btn btn-primary ml-1 rounded-pill">Simpan</span>
                                     </button>
                                 </div>
                             </form>
@@ -197,8 +201,7 @@
 <script>
     let id_jurusan = @json($data_jurusan);
     let data_muk = @json($muk);
-    let data_asesor = @json($user_asesor);
-    let data_peninjau = @json($user_peninjau);
+    let user_asesor_peninjau = @json($user_asesor_peninjau);
     let list_muk_asesor_peninjau = [];
     let list_muk = [];
 
@@ -314,23 +317,36 @@
                 "render": function (data, type, row, meta) {
                     let tampilan;
                     if(row.relasi_pelaksanaan_ujian == null || row.relasi_pelaksanaan_ujian.acc == 0){
-                        tampilan = `<span onclick="clickEditMukAsesorPeninjau(${row.id})" class="badge bg-warning rounded-pill">
-                                        <a class="text-white" href="#!">Ubah</a>
-                                    </span>
-                                    <span id-jadwal-ukom="${row.id}" class="badge bg-danger rounded-pill hapus_jadwal_ukom">
-                                        <a class="text-white" href="#!">Hapus</a>
-                                    </span>`
+                        tampilan = `
+                                    <div class="buttons">
+                                        <a onclick="clickEditMukAsesorPeninjau(${row.id})" class="btn btn-sm icon icon-left btn-info rounded-pill fw-semibold"
+                                            href="#!">
+                                            <i class="fa fa-pen fa-xs"></i> Ubah
+                                        </a>
+                                        <a id-jadwal-ukom="${row.id}" class="btn btn-sm icon icon-left btn-danger rounded-pill fw-semibold hapus_jadwal_ukom"
+                                            href="#!">
+                                            <i class="fa fa-trash fa-sm"></i> Hapus
+                                        </a>
+                                    </div>
+                                    `
                     }
                     else if(row.relasi_pelaksanaan_ujian.acc == 1){
-                        tampilan = `<span onclick="clickEditMukAsesorPeninjau(${row.id})" class="badge bg-warning rounded-pill">
-                                        <a class="text-white" href="#!">Ubah</a>
-                                    </span>
-                                    <span id-jadwal-ukom="${row.id}" class="badge bg-danger rounded-pill hapus_jadwal_ukom">
-                                        <a class="text-white" href="#!">Hapus</a>
-                                    </span>
-                                    <span class="badge bg-info rounded-pill">
-                                    <a class="text-white" href="/admin/detail-jadwal-uji-kompetensi-acc/${row.id}/${row.relasi_muk.jurusan_id}">Detail</a>
-                                    </span>`     
+                        tampilan = `
+                                    <div class="buttons">
+                                        <a onclick="clickEditMukAsesorPeninjau(${row.id})" class="btn btn-sm icon icon-left btn-info rounded-pill fw-semibold"
+                                            href="#!">
+                                            <i class="fa fa-pen fa-xs"></i> Ubah
+                                        </a>
+                                        <a id-jadwal-ukom="${row.id}" class="btn btn-sm icon icon-left btn-danger rounded-pill fw-semibold hapus_jadwal_ukom"
+                                            href="#!">
+                                            <i class="fa fa-trash fa-xs"></i> Hapus
+                                        </a>
+                                        <a class="btn btn-sm icon icon-left btn-warning text-black rounded-pill fw-semibold"
+                                            href="/admin/detail-jadwal-uji-kompetensi-acc/${row.id}/${row.relasi_muk.jurusan_id}">
+                                            <i class="fa fa-eye fa-xs"></i> Detail
+                                        </a>
+                                    </div>
+                                    `     
                     }          
                     return tampilan;
                 }
@@ -363,7 +379,6 @@
                             title: "Berhasil",
                             text: `${data.msg}`,
                             icon: "success",
-                            buttons: true,
                             successMode: true,
                         }),
                         table_muk_asesor_peninjau.ajax.reload(null, false)
@@ -390,13 +405,13 @@
                 $('#muk_id')
                 .append(`<option value="${value.id}" ${value.id == muk_asesor_peninjau.muk_id ? 'selected' : ''}>${value.muk}</option>`)
             });
-            $.each(data_asesor, function(key, value) {
+            $.each(user_asesor_peninjau, function(key, value) {
                 $('#user_asesor_id')
                 .append(`<option value="${value.id}" ${value.id == muk_asesor_peninjau.relasi_user_asesor.user_asesor_id ? 'selected' : ''}>${value.nama_lengkap}</option>`)
             });
-            $.each(data_peninjau, function(key, value) {
+            $.each(user_asesor_peninjau, function(key, value) {
                 $('#user_peninjau_id')
-                .append(`<option value="${value.id}" ${value.id == muk_asesor_peninjau.relasi_user_asesor.user_peninjau_id ? 'selected' : ''}>${value.nama_lengkap}</option>`)
+                .append(`<option value="${value.id}" ${value.id == muk_asesor_peninjau.relasi_user_peninjau.user_peninjau_id ? 'selected' : ''}>${value.nama_lengkap}</option>`)
             });
 
             $("#formEditMukAsesorPeninjau [name='id']").val(id)
@@ -426,7 +441,6 @@
                             title: "Berhasil",
                             text: `${data.msg}`,
                             icon: "success",
-                            buttons: true,
                             successMode: true,
                         }),
                         table_muk_asesor_peninjau.ajax.reload(null,false)
@@ -463,7 +477,6 @@
                             title: "Berhasil",
                             text: `${response.msg}`,
                             icon: "success",
-                            buttons: true,
                             successMode: true,
                         }),
                     table_muk_asesor_peninjau.ajax.reload()

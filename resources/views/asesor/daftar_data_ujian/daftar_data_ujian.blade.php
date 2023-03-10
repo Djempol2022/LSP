@@ -84,7 +84,7 @@
 @endsection
 @section('script')
 <script>
-    $("#table-peserta-selesai-ujian").rowspanizer({vertical_align: 'middle'});
+    // $("#table-peserta-selesai-ujian").rowspanizer({vertical_align: 'middle'});
     let list_unit_kompetensi = [];
     const table_peserta_selesai_ujian = $('#table-peserta-selesai-ujian').DataTable({
         
@@ -144,11 +144,11 @@
                     list_unit_kompetensi[row.id] = row;
                     let jenis_tes;
                     if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 1){
-                        jenis_tes = `<a class="text-black" href="#!">Pilihan Ganda</a>`
+                        jenis_tes = `<p class="fw-semibold">Pilihan Ganda</p>`
                     }else if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 2){
-                        jenis_tes = `<a class="text-black" href="#!">Essay</a>`
+                        jenis_tes = `<p class="fw-semibold">Essay</p>`
                     }else if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 3){
-                        jenis_tes = `<a class="text-black" href="#!">Wawancara</a>`
+                        jenis_tes = `<p class="fw-semibold">Wawancara</p>`
                     }
                     return jenis_tes;
                 }
@@ -174,9 +174,9 @@
                     list_unit_kompetensi[row.id] = row;
                     let status_koreksi;
                     if(row.status_koreksi == 0 ){
-                        status_koreksi = `<a class="text-danger" href="#!">Belum Dikoreksi</a>`
+                        status_koreksi = `<p class="fw-semibold text-danger">Belum Dikoreksi</p>`
                     }else if(row.status_koreksi == 1){
-                        status_koreksi = `<a class="text-success" href="#!">Telah Dikoreksi</a>`
+                        status_koreksi = `<p class="fw-semibold text-success">Telah Dikoreksi</p>`
                     }
                     return status_koreksi;
                 }
@@ -189,22 +189,33 @@
                     let jenis_tes;
                     if(row.status_koreksi == 0){
                         if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 1){
-                            jenis_tes = `<span class="badge btn-sm bg-info rounded-pill">
-                                        <a class="text-black" href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}">Review</a>
-                                    </span>`
-                        }else if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 2 || row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 3){
-                            jenis_tes = `<span class="badge btn-sm bg-warning rounded-pill">
-                                            <a href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}" class="text-black">
-                                                Koreksi
+                            jenis_tes = `
+                                        <div class="buttons">
+                                            <a class="btn btn-sm btn-warning text-black rounded-pill text-white fw-semibold"
+                                                href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}">
+                                                <i class="fa fa-eye fa-xs"></i> Review
                                             </a>
-                                        </span>`
+                                        </div>
+                                        `
+                        }else if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 2 || row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 3){
+                            jenis_tes = `
+                                        <div class="buttons">
+                                            <a class="btn btn-sm btn-warning text-black rounded-pill text-white fw-semibold"
+                                                href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}">
+                                                <i class="fa fa-pen fa-xs"></i> Koreksi
+                                            </a>
+                                        </div>
+                                        `
                         }
                     }else if(row.status_koreksi == 1){
-                        jenis_tes = `<span class="badge btn-sm bg-info rounded-pill">
-                                            <a href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}" class="text-black">
-                                                Hasil Koreksi
-                                            </a>
-                                        </span>`
+                        jenis_tes = `
+                                    <div class="buttons">
+                                        <a class="btn btn-sm btn-warning text-black rounded-pill fw-semibold"
+                                            href="/asesor/koreksi-jawaban/${row.jadwal_uji_kompetensi_id}/${row.relasi_user_asesi.id}">
+                                            <i class="fa fa-eye fa-xs"></i> Hasil Koreksi
+                                        </a>
+                                    </div>
+                                    `
                     }
                     return jenis_tes;
                 }
@@ -333,9 +344,9 @@
                     list_pelaksanaan_ujian_wawancara[row.id] = row;
                     let jenis_tes;
                     if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.jenis_tes == 3){
-                        jenis_tes = `<span class="badge btn-sm bg-warning rounded-pill">
-                                        <a class="text-black" href="#!">Wawancara</a>
-                                    </span>`
+                        jenis_tes = `
+                                        <p class="fw-semibold">Wawancara</p>
+                                    `
                     } 
                     return jenis_tes;
                   }
@@ -352,9 +363,13 @@
                             if(row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai < moment().format('YYYY-MM-DD HH:mm:ss') && row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai > moment().format('YYYY-MM-DD HH:mm:ss')){
                                 if (
                                     row.status_ujian_berlangsung == 3){
-                                    jenis_tes = `<button class="btn btn-warning my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjianWawancara(${row.id})">
-                                                Detail
-                                                </button>`
+                                    jenis_tes = `
+                                    <div class="buttons">
+                                        <a class="btn btn-sm icon icon-left btn-warning text-black rounded-pill fw-semibold"
+                                        href="#!" data-bs-toggle="modal" onclick="detailUjianWawancara(${row.id})">
+                                            <i class="fa fa-eye fa-sm"></i> Detail
+                                        </a>
+                                    </div>`
                                 }
                             }
                             else if(
@@ -364,9 +379,7 @@
                             else if(
                                 row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_mulai < moment().format('YYYY-MM-DD HH:mm:ss') && 
                                 row.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.waktu_selesai < moment().format('YYYY-MM-DD HH:mm:ss')){
-                                jenis_tes = `<a href="#!" class="btn btn-warning my-1 text-black btn-sm rounded-4">
-                                                Sesi Berakhir
-                                            </a>`
+                                jenis_tes = `<p class="fw-semibold">Sesi Berakhir</p>`
                             }
                         }
                         return jenis_tes;
@@ -392,7 +405,7 @@
       
       $(".total_waktu").text('Waktu Pengerjaan : ' + data_ujian_wawancara_asesi.relasi_jadwal_uji_kompetensi.relasi_pelaksanaan_ujian.total_waktu + ' Menit');
       
-      $('.mulai_ujian').html('<a href='+url+data_ujian_wawancara_asesi.jadwal_uji_kompetensi_id+'/'+data_ujian_wawancara_asesi.relasi_jadwal_uji_kompetensi.relasi_soal.id+'/'+data_ujian_wawancara_asesi.user_asesi_id+' class="btn btn-primary tombol-primary-max btn-block">Mulai Ujian Wawancara</a>');
+      $('.mulai_ujian').html('<a href='+url+data_ujian_wawancara_asesi.jadwal_uji_kompetensi_id+'/'+data_ujian_wawancara_asesi.relasi_jadwal_uji_kompetensi.relasi_soal.id+'/'+data_ujian_wawancara_asesi.user_asesi_id+' class="btn btn-primary tombol-primary-max btn-block">Mulai Wawancara</a>');
     }
 
 </script>

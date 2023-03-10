@@ -83,6 +83,6 @@ class User extends Authenticatable
     }
 
     public function relasi_user_asesi_ukom(){
-        return $this->hasOne(AsesiUjiKompetensi::class, 'id', 'user_asesi_id');
+        return $this->belongsTo(AsesiUjiKompetensi::class, 'id', 'user_asesi_id');
     }
 }

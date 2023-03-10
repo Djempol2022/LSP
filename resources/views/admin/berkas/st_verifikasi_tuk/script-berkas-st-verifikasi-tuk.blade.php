@@ -99,6 +99,7 @@
             for (let j = 1; j < rowCount; j++) {
               let rowJ = table.rows[j];
               rowJ.cells[0].innerHTML = j + '.';
+              rowJ.cells[3].childNodes[0].name = 'button' + (j + 1);
             }
           }
         }

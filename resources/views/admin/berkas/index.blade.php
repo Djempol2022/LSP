@@ -11,9 +11,10 @@
   <div class="page-content">
     <section class="row">
       <div class="card">
-        <div class="card-header d-flex justify-content-between">
-          <div>
-            <select class="form-select" id="berkas">
+        <div class="card-header d-flex justify-content-between flex-sm-row flex-column gap-2 gap-sm-0">
+          <div class="form-group w-50">
+            <label for="berkas">Pilih Berkas:</label>
+            <select class="form-control" id="berkas" name="berkas">
               {{-- <option value="#" selected>Pilih Berkas</option> --}}
               <option value="sk-penetapan-tuk-terverifikasi">001 - SK Penetapan TUK Terverifikasi</option>
               <option value="daftar-tuk-terverifikasi">002 - Daftar TUK Terverifikasi</option>
@@ -26,19 +27,31 @@
               <option value="z-ba-rp">Z Berita Acara Rapat Pleno</option>
               <option value="df-hadir-asesor-pleno">Daftar Hadir Asesor Pleno</option>
               <option value="df-hadir-asesor">Daftar Hadir Asesor</option>
+              <option value="df-hadir-asesi-bnsp">Daftar Hadir Asesi BNSP</option>
+              <option value="sertifikat">Sertifikat</option>
             </select>
           </div>
           <div class="d-flex justify-content-between align-items-center" style="width: 130px">
             <div>
               @include('admin.berkas.modal_image.index')
+              <a href="#" class="btn btn-primary" id="export_excel" disabled>Export to Excel</a>
             </div>
             <div>
               <a href="#" class="btn btn-primary" id="tambah" disabled>Tambah</a>
+              <select name="years" id="years" class="form-control">
+                <option value="#">Pilih Tahun</option>
+                @foreach ($years as $year)
+                  <option value="{{ $year->year }}">{{ $year->year }}</option>
+                @endforeach
+              </select>
             </div>
           </div>
         </div>
 
         <div class="card-body table-responsive">
+          <div id="table-sertifikat">
+
+          </div>
           <table class="table table-striped" id="table-surat">
             <thead>
               <tr>
@@ -65,6 +78,9 @@
 
   {{-- modal st verifikasi tuk --}}
   @include('admin.berkas._modal-st-verifikasi-tuk')
+
+  {{-- modal df hadir asesi --}}
+  @include('admin.berkas._modal-df-hadir-asesi')
 
   {{-- modal x03 st verifikasi tuk --}}
   @include('admin.berkas._modal-x03-st-verifikasi-tuk')

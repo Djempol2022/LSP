@@ -58,7 +58,7 @@
                 "render": function (data, type, row, meta) {
                     let i = 1;
                     list_kelola_soal[row.id] = row;
-                    return meta.row + 1;
+                    return `<p class="font-semibold">${meta.row + 1}</p>`;
                 }
             },
             {
@@ -67,7 +67,7 @@
                 "render": function (data, type, row, meta) 
                 {
 					list_kelola_soal[row.id] = row;
-                    return row.relasi_muk.muk;
+                    return `<p class="font-semibold">${row.relasi_muk.muk}</p>`;
                 }
             },
             {
@@ -78,9 +78,9 @@
 					list_kelola_soal[row.id] = row;
                     let cek_asesor;
                     if(row.relasi_user_asesor == null || row.relasi_user_asesor.relasi_user_asesor_detail == null){
-                        cek_asesor = `Asesor belum ditentukan`
+                        cek_asesor = `<p class="font-semibold">Asesor belum ditentukan</p>`
                     }else{
-                        cek_asesor = row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap;
+                        cek_asesor = `<p class="font-semibold">${row.relasi_user_asesor.relasi_user_asesor_detail.nama_lengkap}`;
                     }
                     return cek_asesor;
                 }
@@ -93,9 +93,9 @@
 					list_kelola_soal[row.id] = row;
                     let cek_peninjau;
                     if(row.relasi_user_peninjau == null || row.relasi_user_peninjau.relasi_user_peninjau_detail == null){
-                        cek_peninjau = `Peninjau belum ditentukan`
+                        cek_peninjau = `<p class="font-semibold">Peninjau belum ditentukan</p>`
                     }else{
-                        cek_peninjau = row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap;
+                        cek_peninjau = `<p class="font-semibold">${row.relasi_user_peninjau.relasi_user_peninjau_detail.nama_lengkap}</p>`;
                     }
                     return cek_peninjau;
                 }
@@ -111,11 +111,11 @@
                         jenis_tes = `<p>Belum di tentukan</p>`;
                     }else if(row.relasi_pelaksanaan_ujian.jenis_tes){
                         if(row.relasi_pelaksanaan_ujian.jenis_tes == 1){
-                            jenis_tes = `<p>Pilihan Ganda</p>`
+                            jenis_tes = `<p class="font-semibold">Pilihan Ganda</p>`
                         }else if(row.relasi_pelaksanaan_ujian.jenis_tes == 2){
-                            jenis_tes = `<p>Essay</p>`
+                            jenis_tes = `<p class="font-semibold">Essay</p>`
                         }else if(row.relasi_pelaksanaan_ujian.jenis_tes == 3){
-                            jenis_tes = `<p>Wawancara</p>`
+                            jenis_tes = `<p class="font-semibold">Wawancara</p>`
                         }
                     }
                     return jenis_tes;
@@ -128,19 +128,33 @@
                 {
 					let tampilan;
                     if (row.relasi_pelaksanaan_ujian == null ){
-                        tampilan =  `<span class="badge bg-warning rounded-pill">
-                                        <a class="text-white" href="/asesor/jenis-soal/${row.id}">Buat Soal</a>
-                                    </span>`
+                        tampilan =  `
+                        <div class="buttons">
+                          <a class="btn btn-sm btn-primary rounded-pill text-white fw-semibold"
+                            href="/asesor/jenis-soal/${row.id}">
+                              <i class="fa fa-plus fa-xs"></i> Buat Soal
+                          </a>
+                        </div>`
                     }
                     else if (row.relasi_pelaksanaan_ujian.jadwal_uji_kompetensi_id == row.id ) {
                         if(row.relasi_pelaksanaan_ujian.jenis_tes == null){
-                            tampilan = `<span class="badge bg-info rounded-pill">
-                                            <a class="text-white" href="/asesor/review-soal/${row.id}">Review Soal</a>
-                                        </span>`
+                            tampilan = `
+                                        <div class="buttons">
+                                            <a class="btn btn-sm btn-warning text-black rounded-pill fw-semibold"
+                                                href="/asesor/review-soal/${row.id}">
+                                                <i class="fa fa-eye fa-xs"></i> Buat Soal
+                                            </a>
+                                        </div>
+                                        `
                         }else if(row.relasi_pelaksanaan_ujian.jenis_tes != null){
-                            tampilan = `<span class="badge bg-info rounded-pill">
-                                            <a class="text-white" href="/asesor/review-soal/${row.id}/${row.relasi_pelaksanaan_ujian.jenis_tes}">Review Soal</a>
-                                        </span>`
+                            tampilan = `
+                                        <div class="buttons">
+                                            <a class="btn btn-sm btn-warning text-black rounded-pill fw-semibold"
+                                                href="/asesor/review-soal/${row.id}/${row.relasi_pelaksanaan_ujian.jenis_tes}">
+                                                <i class="fa fa-eye fa-xs"></i> Review Soal
+                                            </a>
+                                        </div>
+                                        `
                         }
                     }
                         // tampilan += `<div class="buttons"><span onclick="hapusMUK(${row.id})" class="badge bg-danger rounded-pill">
@@ -183,7 +197,6 @@
                             title: "Berhasil",
                             text: `${data.msg}`,
                             icon: "success",
-                            buttons: true,
                             successMode: true,
                         }),
                         table_muk.ajax.reload(null,false);
@@ -212,7 +225,6 @@
                             title: "Berhasil",
                             text: `${response.msg}`,
                             icon: "success",
-                            buttons: true,
                             successMode: true,
                         }),
                     table_muk.ajax.reload(null, false)

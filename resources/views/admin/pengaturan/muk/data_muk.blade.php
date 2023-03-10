@@ -16,17 +16,19 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <span class="badge bg-info rounded-pill">
-                        <a class="text-white" href="#" data-bs-toggle="modal" data-bs-target="#tambahMuk">Tambah
+                    <div class="buttons">
+                        <a class="btn btn-sm icon icon-left btn-primary rounded-pill fw-semibold"
+                            href="#" data-bs-toggle="modal" data-bs-target="#tambahMuk">
+                            <i class="fa fa-plus fa-sm"></i> Tambah
                             Materi Uji
                             Kompetensi
                         </a>
-                    </span>
+                    </div>
 
                     {{-- MODAL TAMBAH --}}
                     <div class="modal fade text-left" id="tambahMuk" data-bs-backdrop="static" data-bs-keyboard="false"
                         aria-labelledby="myModalLabel33" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title" id="myModalLabel33">Tambah Materi Uji Kompetensi</h4>
@@ -62,9 +64,9 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal">Batal
+                                        <button type="button" class="btn btn-light-secondary batal rounded-pill" data-bs-dismiss="modal">Batal
                                         </button>
-                                        <button type="submit" class="btn btn-primary ml-1 submit-tambah-muk">Simpan
+                                        <button type="submit" class="btn btn-primary ml-1 submit-tambah-muk rounded-pill">Simpan
                                         </button>
                                     </div>
                                 </form>
@@ -76,7 +78,7 @@
 
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-4 mb-4">
                             <fieldset class="form-group">
                                 <select class="form-select filter-jurusan" id="jurusan-id">
                                     <option value="" disabled selected>Filter berdasarkan jurusan</option>
@@ -105,7 +107,7 @@
             {{-- MODAL EDIT --}}
             <div class="modal fade text-left" id="editMUK" data-bs-backdrop="static" data-bs-keyboard="false"
                 aria-labelledby="myModalLabel33" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="myModalLabel33">Ubah Materi Uji Kompetensi</h4>
@@ -143,9 +145,9 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal">Batal
+                                <button type="button" class="btn btn-light-secondary batal rounded-pill" data-bs-dismiss="modal">Batal
                                 </button>
-                                <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk">Simpan
+                                <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk rounded-pill">Simpan
                                 </button>
                             </div>
                         </form>
@@ -216,12 +218,18 @@
                     "class": "text-nowrap",
                     "render": function(data, type, row, meta) {
                         let tampilan;
-                        tampilan = `<span onclick="editMUK(${row.id})" class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="#!">Edit</a>
-                                </span>
-                                <span id-muk = "${row.id}" class="badge bg-danger rounded-pill hapus_muk">
-                                    <a class="text-white" href="#!">Hapus</a>
-                                </span>`
+                        tampilan = `
+                                    <div class="buttons">
+                                        <a class="btn btn-sm icon icon-left btn-info rounded-pill fw-semibold"
+                                            href="#!" onclick="editMUK(${row.id})">
+                                            <i class="fa fa-pen fa-sm"></i> Edit
+                                        </a>
+                                        <a class="btn btn-sm icon icon-left btn-danger rounded-pill fw-semibold hapus_muk"
+                                            href="#!" id-muk = "${row.id}">
+                                            <i class="fa fa-trash fa-sm"></i> Hapus
+                                        </a>
+                                    </div>
+                                    `
                         return tampilan;
                     }
                 },

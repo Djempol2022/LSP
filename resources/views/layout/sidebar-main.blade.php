@@ -225,10 +225,10 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="sidebar-item {{ request()->routeIs('peninjau.PengesahanMuk*') ? 'active' : '' }}">
-                            <a href="{{ route('peninjau.PengesahanMuk') }}" class='sidebar-link'>
-                                <i class="bi bi-journal-text {{ request()->routeIs('peninjau.PengesahanMuk*') ? 'warna-white' : '' }} warna-secondary"
-                                    style="{{ request()->routeIs('peninjau.PengesahanMuk*') ? 'font-weight: 1000' : '' }}"></i>
+                        <li class="sidebar-item {{ request()->routeIs('peninjau.DaftarPengesahanMuk*') ? 'active' : '' }}">
+                            <a href="{{ route('peninjau.DaftarPengesahanMuk') }}" class='sidebar-link'>
+                                <i class="bi bi-journal-text {{ request()->routeIs('peninjau.DaftarPengesahanMuk*') ? 'warna-white' : '' }} warna-secondary"
+                                    style="{{ request()->routeIs('peninjau.DaftarPengesahanMuk*') ? 'font-weight: 1000' : '' }}"></i>
                                 <span>Pengesahan MUK</span>
                             </a>
                         </li>

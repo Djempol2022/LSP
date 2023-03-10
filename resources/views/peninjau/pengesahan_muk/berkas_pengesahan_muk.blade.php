@@ -1,7 +1,14 @@
 @extends('layout.main-layout', ['title' => 'Pengesahan Materi Uji Kompetensi'])
 @section('main-section')
 <div class="page-content">
-    <form action="{{route('peninjau.MukDiSahkan')}}" method="POST">
+<nav class="jalur-file mb-5" style="padding-left: 6px" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="text-black text-decoration-none"
+                href="{{route('peninjau.DaftarPengesahanMuk')}}">Daftar Materi Uji Kompetensi</a></li>
+        <li class="breadcrumb-item active text-primary fw-semibold" aria-current="page">Pengesahan Materi Uji Kompetensi</li>
+    </ol>
+</nav>
+    <form action="{{route('peninjau.MukDiSahkan')}}" method="POST" id="form-PengesahanMuk">
         @csrf
 
     <section class="row">
@@ -10,56 +17,61 @@
           <div>
             <h6 class="line-sp mb-2 text-center">MERENCANAKAN AKTIVITAS DAN PROSES ASESMEN</h6>
 
-            {{-- TABLE 1 --}}
-            <table class="table table-bordered text-wrap">
-              <thead>
-                <tr>
-                  <th rowspan="2">Skema Sertifikasi(IKKNI/<s>Okupasi</s>/<s>Klaster</s>)</th>
-                    <td>
-                        Judul
+            {{-- TABLE 1 SKEMA SERTIFIKASI--}}
+            <div class="table-responsive">
+                <table class="table table-bordered text-wrap">
+                <thead>
+                    <tr>
+                    <th rowspan="2">Skema Sertifikasi(IKKNI/<s>Okupasi</s>/<s>Klaster</s>)</th>
+                        <td>
+                            Judul
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            {{$skema_sertifikasi->judul_skema_sertifikasi}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Nomor
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            {{$skema_sertifikasi->nomor_skema_sertifikasi}}
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td colspan="2" class="text-center font-extrabold h1 m-0 p-0">
                     </td>
-                    <td>
-                        :
-                    </td>
-                    <td>
-                        {{$skema_sertifikasi->judul_skema_sertifikasi}}
-                    </td>
-                </tr>
-                <tr>
-                      <td>
-                          Nomor
-                      </td>
-                      <td>
-                          :
-                      </td>
-                      <td>
-                          {{$skema_sertifikasi->nomor_skema_sertifikasi}}
-                      </td>
-                  </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td colspan="2" class="text-center font-extrabold h1 m-0 p-0">
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                    </tr>
+                </tbody>
+                </table>
 
-             {{-- TABLE 2 --}}
-            <table class="table table-bordered text-wrap">
+
+             {{-- TABLE 2 PENDEKATAN ASESMEN--}}
+            <table class="table table-bordered text-wrap table-responsive">
                 <thead>
                     <tr>
                         <th style="background-color: #f9c9ad; color:black;" colspan="7">1.  Menentukan Pendekatan Asesmen</th>
                     </tr>
                 </thead>
             </table>
-            <table class="table table-bordered text-wrap">
+
+            <table class="table table-bordered text-wrap table-responsive">
                 <tbody>
+
                     {{-- KANDIDAT --}}
                     <tr>
                         <th rowspan="21">1.1</th>
                         <th rowspan="3">Kandidat</th>
-                        <input type="hidden" value="{{$skema_sertifikasi->id}}" name="skema_sertifikasi_id" hidden>
+                        <input type="hidden" value="{{$jadwal_id->id}}" name="jadwal_uji_kompetensi_id" hidden>
+                        <input type="hidden" value="{{$jadwal_id->muk_id}}" name="muk_id" hidden>
 
                         <td class="text-center"><input type="radio" value="1" @if($penekatan_asesmen->kandidat == 1) type="checkbox" checked @endif name="kandidat"></td>
                         <td colspan="4"><b>Hasil pelatihan dan / atau pendidikan:</b></td>
@@ -144,7 +156,7 @@
                     
 
                      {{-- TUJUAN ASESMEN --}}
-                     <tr>
+                    <tr>
                         <th rowspan="4">Konfirmasi dengan orang yang relevan</th>
                         <td class="text-center"><input type="radio" value="1" @if($penekatan_asesmen->konfirmasi == 1) checked @endif name="konfirmasi"></td>
                         <td colspan="4"><b>Manajer sertifikasi LSP</b></td>
@@ -163,7 +175,7 @@
                     </tr>
 
                       {{-- TOLAK UKUR --}}
-                      <tr>
+                    <tr>
                         <th rowspan="21">1.2</th>
                         <th rowspan="5">Tolok Ukur Asesmen</th>
                         <td class="text-center"><input type="radio" value="1" @if($penekatan_asesmen->tolok == 1) checked @endif name="tolok"></td>
@@ -188,8 +200,9 @@
                 </tbody>
             </table>
 
-            {{-- TABLE 3 --}}
-            <table class="table table-bordered text-wrap">
+
+            {{-- TABLE 3 MEMPERSIAPKAN RENCANA ASESMEN--}}
+            <table class="table table-bordered text-wrap table-responsive">
                 <thead>
                     <tr>
                         <th style="background-color: #f9c9ad; color:black;" colspan="7">2.	Mempersiapkan Rencana Asesmen </th>
@@ -197,9 +210,8 @@
                 </thead>
             </table>
         
-        
             @foreach ($unit_kompetensi as $data_unit_kompetensi)
-            <table class="table table-bordered text-wrap">
+            <table class="table table-bordered text-wrap table-responsive">
               <thead>
                 <tr>
                   <th rowspan="2"><b>Unit Kompetensi</b></th>
@@ -232,25 +244,23 @@
                 </tr>
               </tbody>
             </table>
-            
-            
-            <table class="table table-bordered text-wrap text-center" id="berkas-pengesahan-muk">
+    
+            <table class="table table-bordered text-wrap table-responsive" style="font-size:80%" id="berkas-pengesahan-muk">
                 <thead>
                   <tr>
-                    <th rowspan="2"><b>Kriteria Unjuk Kerja</b></th>
+                    <th rowspan="2"><h6 style="text-align:center;">Kriteria Unjuk Kerja</h6></th>
 
                     <th rowspan="2">
-                        <b>Bukti-Bukti
-                        (Kinerja, Produk, Portofolio, dan / atau Hafalan) diidentifikasi berdasarkan 
-                        Kriteria Unjuk Kerja dan Pendekatan Asesmen.
-                        </b>
+                        <h6 style="text-align:center">Bukti-Bukti</h6>
+                        <h6 style="font-weight:lighter; text-align:center;">(Kinerja, Produk, Portofolio, dan / atau Hafalan) diidentifikasi berdasarkan 
+                        Kriteria Unjuk Kerja dan Pendekatan Asesmen.</h6>
                     </th>
                       
-                    <td colspan="3">Jenis Bukti</td>
-                      <td colspan="6">
+                    <td colspan="3"><h6 style="text-align:center">Jenis Bukti</h6></td>
+                      <td colspan="6"><h6 style="text-align:center">
                         Metode dan Perangkat Asesmen
                         CL (Ceklis Observasi/ Lembar Periksa), DIT (Daftar Instruksi Terstruktur), DPL (Daftar Pertanyaan Lisan),
-                         DPT (Daftar Pertanyaan Tertulis), VP (Verifikasi Portofolio), CUP (Ceklis Ulasan Produk), PW (Pertanyaan Wawancara)
+                         DPT (Daftar Pertanyaan Tertulis), VP (Verifikasi Portofolio), CUP (Ceklis Ulasan Produk), PW (Pertanyaan Wawancara)</h6>
                       </td>
 
                       <tr>
@@ -287,27 +297,36 @@
                 @endphp
                 @foreach ($elemen as $index => $data_unit_kompetensi_elemen_get)
                 <tbody>
-                    <td colspan="11"><b><h6>{{$index+1}}. {{$data_unit_kompetensi_elemen_get->judul_unit_kompetensi_sub}}</h6></b></td>
+                    <td colspan="11"><b><h6>Elemen {{$index+1}}. {{$data_unit_kompetensi_elemen_get->judul_unit_kompetensi_sub}}</h6></b></td>
                     @php
                         $elemen_isi = \App\Models\UnitKompetensiIsi::where('unit_kompetensi_sub_id', $data_unit_kompetensi_elemen_get->id)->get();
+                        $index = 1;
                     @endphp
-                    @foreach ($elemen_isi as $index => $data_elemen_isi)
+                    @foreach ($elemen_isi as $index_isi => $data_elemen_isi)
                     <tr>
                         @php
                             $elemen_isi_isi = \App\Models\UnitKompetensiIsi2::where('unit_kompetensi_isi_id', $data_elemen_isi->id)->get();
                             $dd = \App\Models\UnitKompetensiIsi2::where('unit_kompetensi_isi_id', $data_elemen_isi->id)->count();
-                            $isi_count = \App\Models\UnitKompetensiIsi2::with('relasi_unit_kompetensi_isi')->whereRelation('relasi_unit_kompetensi_isi', 'unit_kompetensi_isi_id', $data_elemen_isi->id)->count();
+                            $isi_count = \App\Models\UnitKompetensiIsi2::with('relasi_unit_kompetensi_isi')
+                                        ->whereRelation('relasi_unit_kompetensi_isi', 'unit_kompetensi_isi_id', $data_elemen_isi->id)->count();
+                            $index_isi = 1;
                         @endphp
-                        <td rowspan="{{$dd+1}}">{{$data_elemen_isi->judul_unit_kompetensi_isi}}</td>
+                        <td rowspan="{{$dd+1}}">
+                            <h6 style="font-weight:lighter; font-size:90%">
+                                {{$index_isi}}.{{$loop->iteration}} {{$data_elemen_isi->judul_unit_kompetensi_isi}}
+                            </h6>
+                        </td>
                     </tr>
                         @foreach ($elemen_isi_isi as $index => $data_elemen_isi_isi)
                         @php
-                            $hasil_elemen_isi = \App\Models\PengesahanMuk_RencanaAsesmen::where('elemen_isi_2_id', $data_elemen_isi_isi->id)->first();
+                            $hasil_elemen_isi = \App\Models\PengesahanMuk_RencanaAsesmen::where('jadwal_uji_kompetensi_id', $jadwal_id->id)->where('elemen_isi_2_id', $data_elemen_isi_isi->id)->first();
                         @endphp
                         <input value="{{$data_elemen_isi_isi->id}}" type="hidden" name="elemen_isi_2_id[]" hidden>                        
                             <tr>
                                 <td>
-                                    {{$data_elemen_isi_isi->judul_unit_kompetensi_isi_2}}
+                                    <h6 style="font-weight:lighter; font-size:90%">
+                                        {{$data_elemen_isi_isi->judul_unit_kompetensi_isi_2}}
+                                    </h6>
                                 </td>
 
                                 @for($i=0;$i<3;$i++)@endfor
@@ -395,8 +414,8 @@
             </table>
             @endforeach
 
-            {{-- TABLE 4 --}}
-            <table class="table table-bordered text-wrap">
+            {{-- TABLE 4 MENGIDENTIFIKASI PERSYARATAN--}}
+            <table class="table table-bordered text-wrap table-responsive">
                 <thead>
                     <tr>
                         <th style="background-color: #f9c9ad; color:black;" colspan="7">3.  Mengidentifikasi Persyaratan Modifikasi dan Kontekstualisasi</th>
@@ -404,30 +423,31 @@
                 </thead>
             </table>
             
-            <table class="table table-bordered text-wrap">
+            <table class="table table-bordered text-wrap table-responsive">
                 <tbody>
-                    {{-- KANDIDAT --}}
                     @foreach ($mengidentifikasi as $data_mengidentifikasi)
                     @php
-                        $hasil_identifikasi = \App\Models\PengesahanMuk_Mengidentifikasi_2::where('skema_sertifikasi_id', $skema_sertifikasi->id)->where('keterangan_id', $data_mengidentifikasi->id)->first();
+                        $hasil_identifikasi = \App\Models\PengesahanMuk_Mengidentifikasi_2::where('jadwal_uji_kompetensi_id', $jadwal_id->id)->where('keterangan_id', $data_mengidentifikasi->id)->first();
                     @endphp
                     <tr>
                         <td width="50%">{{$data_mengidentifikasi->keterangan}}</td>
                         <td>
 
                             <input value="{{$data_mengidentifikasi->id}}" type="hidden" name="mengidentifikasi_id[]" hidden>
-                            <input type="radio" name="status-{{$data_mengidentifikasi->id}}" value="ada" 
+                            <input type="radio" name="status-{{$data_mengidentifikasi->id}}" value="ada"
                             @isset($hasil_identifikasi->status)
                             @if ($hasil_identifikasi->status == "ada")
                                 @checked(true)   
-                            @endif @endisset>Ada
+                            @endif @endisset required>Ada
                             <input type="radio" name="status-{{$data_mengidentifikasi->id}}" value="tidak ada"
                             @isset($hasil_identifikasi->status) @if ($hasil_identifikasi->status == "tidak ada")
                                 @checked(true)   
-                            @endif @endisset>Tidak Ada
+                            @endif @endisset required>Tidak Ada
                             <p>Jika Ada, tuliskan</p>
                             @isset($hasil_identifikasi->tuliskan_keterangan)
-                                <textarea name="tuliskan-{{$data_mengidentifikasi->id}}" class="form-input">{{$hasil_identifikasi->tuliskan_keterangan}}</textarea>
+                                <textarea name="tuliskan-{{$data_mengidentifikasi->id}}" class="form-input form-control">{{$hasil_identifikasi->tuliskan_keterangan}}</textarea>
+                            @else
+                                <textarea name="tuliskan-{{$data_mengidentifikasi->id}}" class="form-input form-control" placeholder="Kosongkan jika tidak ada"></textarea>
                             @endisset
                         </td>
                     </tr>
@@ -435,7 +455,8 @@
                 </tbody>
             </table>
             
-            <table class="table table-bordered text-wrap">
+            {{-- TABLE 5 TTD ORANG RELEVAN --}}
+            <table class="table table-bordered text-wrap table-responsive">
                 <thead>
                     <p class="font-bold mb-1" style="color:black;">Konfirmasi dengan orang yang relevan</p>
                     <tr>
@@ -444,10 +465,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- KANDIDAT --}}
                     @foreach ($orang_relevan as $data_orang_relevan)
                     @php
-                        $ttd_orang_relevan = \App\Models\PengesahanMuk_OrangRelevanTtd::where('skema_sertifikasi_id', $skema_sertifikasi->id)->where('orang_relevan_id', $data_orang_relevan->id)->first();
+                        $ttd_orang_relevan = \App\Models\PengesahanMuk_OrangRelevanTtd::where('jadwal_uji_kompetensi_id', $jadwal_id->id)
+                            ->where('jadwal_uji_kompetensi_id', $jadwal_id->id)
+                            ->where('orang_relevan_id', $data_orang_relevan->id)
+                            ->first();
+                        $orang_relevan_lainnya = \App\Models\PengesahanMuk_OrangRelevanLainnyaTtd::where('jadwal_uji_kompetensi_id', $jadwal_id->id)
+                            ->where('orang_relevan_id', $data_orang_relevan->id)
+                            ->first();
                     @endphp
                     <input value="{{$data_orang_relevan->id}}" type="hidden" name="orang_relevan[]" hidden>
                     <tr>
@@ -456,32 +482,43 @@
                             @checked(true)    
                         @endisset>
                         </td>
-                        <td>
+                        <td width="58.4%">
                             <p>{{$data_orang_relevan->orang_relevan}}</p>
+                            @if ($data_orang_relevan->id == 4)
+                                <textarea name="orang_relevan_lainnya" class="form-control" cols="55" placeholder="{{$orang_relevan_lainnya->orang_relevan_lainnya ?? 'Inputkan nama atau jabatan orang relevan lainnya'}}"></textarea>
+                            @endif
                         </td>
                         <td class="text-center">
                             @isset($ttd_orang_relevan->ttd)
-                                <img src="{{$ttd_orang_relevan->ttd}}" alt="ttd" width="180px" id="clear-{{$data_orang_relevan->id}}">
-                                {{-- <canvas hidden id="sig{{$data_orang_relevan->id}}"></canvas> --}}
-                            @endisset
-                            @if(empty($ttd_orang_relevan->ttd))
+                                <img src="{{$ttd_orang_relevan->ttd}}" alt="ttd" width="180px">
                                 <div class="col edit-profil mb-2 signature-pad" id="signature-pad{{$data_orang_relevan->id}}">
                                     <canvas id="sig{{$data_orang_relevan->id}}"></canvas>
-                                    <input type="hidden" name="ttd-{{$data_orang_relevan->id}}" value="" id="ttd{{$data_orang_relevan->id}}" hidden>
+                                    <input type="hidden" name="ttd-{{$data_orang_relevan->id}}" id="ttd{{$data_orang_relevan->id}}" value="{{$ttd_orang_relevan->ttd}}" hidden>
                                 </div>
                                 <div class="col" id="signature-clear{{$data_orang_relevan->id}}">
                                     <button type="button" class="btn-sm btn btn-danger mb-2" id="clear-{{$data_orang_relevan->id}}"><i
                                             class="fa fa-eraser"></i>
                                     </button>
                                 </div>
-                            @endif
+                            @else
+                                <div class="col edit-profil mb-2 signature-pad" id="signature-pad{{$data_orang_relevan->id}}">
+                                    <canvas id="sig{{$data_orang_relevan->id}}"></canvas>
+                                    <input type="hidden" name="ttd-{{$data_orang_relevan->id}}" id="ttd{{$data_orang_relevan->id}}" value="" hidden>
+                                </div>
+                                <div class="col" id="signature-clear{{$data_orang_relevan->id}}">
+                                    <button type="button" class="btn-sm btn btn-danger mb-2" id="clear-{{$data_orang_relevan->id}}"><i
+                                            class="fa fa-eraser"></i>
+                                    </button>
+                                </div>
+                            @endisset
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
 
-            <table class="table table-bordered text-wrap">
+            {{-- TABLE 6 PENYUSUN DAN VALIDATOR --}}
+            <table class="table table-bordered text-wrap table-responsive">
                 <thead>
                     <p class="font-bold mb-1" style="color:black;">Penyusun dan Validator</p>
                     <tr>
@@ -494,14 +531,11 @@
                     <tr>
                         <td>
                             <div class="col-md-12">
-                            <div class="input-group mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Dibuat oleh :</label>
-                                <select class="form-select" id="inputGroupSelect01" name="asesor_id" required>
-                                    <option selected="" disabled>Pilih Asesor</option>
-                                    @foreach ($asesor as $data_asesor)
-                                        <option value="{{$data_asesor->id}}" @selected($penyusun->user_asesor_id == $data_asesor->id)>{{$data_asesor->nama_lengkap}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="input-group">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">Dibuat oleh : {{$jadwal_id->relasi_user_asesor->relasi_user_asesor_detail->nama_lengkap}}</span>
+                                    <input type="hidden" name="asesor_id" value="{{$jadwal_id->relasi_user_asesor->user_asesor_id}}" hidden>
+                                </div>
                             </div>
                         </div>
                         </td>
@@ -512,32 +546,37 @@
 
 
                         @isset($penyusun->ttd_asesor)
-                            <img src="{{$penyusun->ttd_asesor}}" alt="ttd" width="180px" id="clear-asesor">
+                            <img src="{{$penyusun->ttd_asesor}}" alt="ttd" width="180px">
+                            <div class="col edit-profil mb-2 signature-pad" id="signature-pad-asesor">
+                                <canvas id="sig-asesor"></canvas>
+                                <input type="hidden" name="ttd_asesor" value="{{$penyusun->ttd_asesor}}" id="ttd-asesor" hidden>
+                            </div>
+                            <div class="col" id="signature-clear-asesor">
+                                <button type="button" class="btn-sm btn btn-danger mb-2" id="clear-asesor"><i
+                                        class="fa fa-eraser"></i>
+                                </button>
+                            </div>
+                        @else
+                            <div class="col edit-profil mb-2 signature-pad" id="signature-pad-asesor">
+                                <canvas id="sig-asesor"></canvas>
+                                <input type="hidden" name="ttd_asesor" value="" id="ttd-asesor" hidden>
+                            </div>
+                            <div class="col" id="signature-clear-asesor">
+                                <button type="button" class="btn-sm btn btn-danger mb-2" id="clear-asesor"><i
+                                        class="fa fa-eraser"></i>
+                                </button>
+                            </div>
                         @endisset
-                        @if(empty($penyusun->ttd_asesor))
-                        <div class="col edit-profil mb-2 signature-pad" id="signature-pad-asesor">
-                            <canvas id="sig-asesor"></canvas>
-                            <input type="text" name="ttd_asesor" value="" id="ttd-asesor">
-                        </div>
-                        <div class="col" id="signature-clear-asesor">
-                            <button type="button" class="btn-sm btn btn-danger mb-2" id="clear-asesor"><i
-                                    class="fa fa-eraser"></i>
-                            </button>
-                        </div>
-                        @endif
 
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <div class="input-group mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Divalidasi oleh :</label>
-                                <select class="form-select" id="inputGroupSelect01" name="peninjau_id" required>
-                                    <option selected="" disabled>Pilih Peninjau</option>
-                                    @foreach ($peninjau as $data_peninjau)
-                                        <option value="{{$data_peninjau->id}}" @selected($validator->user_peninjau_id == $data_peninjau->id)>{{$data_peninjau->nama_lengkap}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="input-group">
+                                <div class="input-group input-group-sm">
+                                    <label class="input-group-text" for="inputGroupSelect01">Divalidasi oleh : {{$jadwal_id->relasi_user_peninjau->relasi_user_peninjau_detail->nama_lengkap}}</label>
+                                    <input type="hidden" name="peninjau_id" value="{{$jadwal_id->relasi_user_peninjau->user_peninjau_id}}" hidden>
+                                </div>
                             </div>
                         </td>
                         <td>
@@ -546,28 +585,40 @@
                         <td>
                             @isset($validator->ttd_peninjau)
                                 <img src="{{$validator->ttd_peninjau}}" alt="ttd" width="180px">
-                            @endisset
-                            @if(empty($validator->ttd_peninjau))
                                 <div class="col edit-profil mb-2 signature-pad" id="signature-pad-peninjau">
                                     <canvas id="sig-peninjau"></canvas>
-                                    <input type="text" name="ttd_peninjau" value="" id="ttd-peninjau">
+                                    <input type="hidden" name="ttd_peninjau" value="{{$validator->ttd_peninjau}}" id="ttd-peninjau" hidden>
                                 </div>
                                 <div class="col" id="signature-clear-peninjau">
                                     <button type="button" class="btn-sm btn btn-danger mb-2" id="clear-peninjau"><i
                                             class="fa fa-eraser"></i>
                                     </button>
                                 </div>
-                            @endif
+                            @else
+                                <div class="col edit-profil mb-2 signature-pad" id="signature-pad-peninjau">
+                                    <canvas id="sig-peninjau"></canvas>
+                                    <input type="hidden" name="ttd_peninjau" value="" id="ttd-peninjau" hidden>
+                                </div>
+                                <div class="col" id="signature-clear-peninjau">
+                                    <button type="button" class="btn-sm btn btn-danger mb-2" id="clear-peninjau"><i
+                                            class="fa fa-eraser"></i>
+                                    </button>
+                                </div>
+                            @endisset
                         </td>
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
         <div class="row">   
             <div class="col-md-12">
                 <div class="buttons">
-                    <button class="btn btn-primary rounded-4" type="submit" id="simpan">Submit</button>
-                    <a href="{{route('peninjau.CetakPengesahanMukPDF')}}" class="btn btn-warning rounded-4">Simpan PDF &nbsp;<i class="fa fa-print"></i></a>
+                    <a href="{{route('peninjau.CetakPengesahanMukPDF', $jadwal_id->id)}}" class="btn btn-warning rounded-4 text-black"><i class="fa fa-print"></i> Simpan PDF</a>
+                    <button id="pengesahan-muk-btn" type="submit" class="btn btn-primary ml-1 rounded-4">
+                        <i id="icon-button-pengesahan-muk"></i>
+                        <span id="text-simpan-pengesahan-muk" class="d-none d-sm-block">Simpan</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -578,6 +629,39 @@
 @endsection
 @section('script')
 <script>
+        // var sig1 = $('#sig-1').signature({syncField: '#signature-1', syncFormat: 'PNG'});
+        // var sig2 = $('#sig-2').signature({syncField: '#signature-2', syncFormat: 'PNG'});
+        // var sig3 = $('#sig-3').signature({syncField: '#signature-3', syncFormat: 'PNG'});
+        // var sig4 = $('#sig-4').signature({syncField: '#signature-4', syncFormat: 'PNG'});
+
+        $('#clear-1').click(function(e) {
+            e.preventDefault();
+            sig1.signature('clear-1');
+            $("#signature-1").val('');
+        });
+        $('#clear-2').click(function(e) {
+            e.preventDefault();
+            sig2.signature('clear-2');
+            $("#signature-2").val('');
+        });
+        $('#clear-3').click(function(e) {
+            e.preventDefault();
+            sig3.signature('clear-3');
+            $("#signature-3").val('');
+        });
+        $('#clear-4').click(function(e) {
+            e.preventDefault();
+            sig4.signature('clear-4');
+            $("#signature-4").val('');
+        });
+
+        let ttd1 = @json($ttd1);
+        let ttd2 = @json($ttd2);
+        let ttd3 = @json($ttd3);
+        let ttd4 = @json($ttd4);
+
+        let penyusun = @json($penyusun);
+        let validator = @json($validator);
 
         function setupSignatureBox() {
 
@@ -735,35 +819,82 @@
             signaturePad_peninjau.clear();
         }
 
-        function sentToController() {
-            if (signaturePad1.isEmpty() && signaturePad2.isEmpty() && signaturePad3.isEmpty() && signaturePad4.isEmpty() && signaturePad_asesor.isEmpty() && signaturePad_peninjau.isEmpty()) {
-                let ttdData1 = data.relasi_sertifikasi.ttd_asesi;
-                let ttdData2 = data.relasi_sertifikasi.ttd_asesi;
-                let ttdData3 = data.relasi_sertifikasi.ttd_asesi;
-                let ttdData4 = data.relasi_sertifikasi.ttd_asesi;
-                let ttdData_asesor = data.relasi_sertifikasi.ttd_asesi;
-                let ttdData_peninjau = data.relasi_sertifikasi.ttd_asesi;
-                document.getElementById('ttd1').value = ttdData1;
-                document.getElementById('ttd2').value = ttdData2;
-                document.getElementById('ttd3').value = ttdData3;
-                document.getElementById('ttd4').value = ttdData4;
-                document.getElementById('ttd-asesor').value = ttdData_asesor;
-                document.getElementById('ttd-peninjau').value = ttdData_peninjau;
+        
+        function check_ttd(pad, ttd, element){
+            if(pad.isEmpty()){
+                let ttdData = ttd;
+                document.getElementById(element).value = ttdData;
             } else {
-                let ttdData1 = signaturePad1.toDataURL();
-                let ttdData2 = signaturePad2.toDataURL();
-                let ttdData3 = signaturePad3.toDataURL();
-                let ttdData4 = signaturePad4.toDataURL();
-                let ttdData_asesor   = signaturePad_asesor.toDataURL();
-                let ttdData_peninjau = signaturePad_peninjau.toDataURL();
-                document.getElementById('ttd1').value = ttdData1;
-                document.getElementById('ttd2').value = ttdData2;
-                document.getElementById('ttd3').value = ttdData3;
-                document.getElementById('ttd4').value = ttdData4;
-                document.getElementById('ttd-asesor').value = ttdData_asesor;
-                document.getElementById('ttd-peninjau').value = ttdData_peninjau;
+                let ttdData = pad.toDataURL();
+                document.getElementById(element).value = ttdData;
             }
+            return element;
         }
+
+
+        function sentToController() {
+            check_ttd(signaturePad1, ttd1.ttd, 'ttd1');
+            check_ttd(signaturePad2, ttd2.ttd, 'ttd2');
+            check_ttd(signaturePad3, ttd3.ttd, 'ttd3');
+            check_ttd(signaturePad4, ttd4.ttd, 'ttd4');
+            check_ttd(signaturePad_asesor, penyusun.ttd_asesor, 'ttd-asesor');
+            check_ttd(signaturePad_peninjau, validator.ttd_peninjau, 'ttd-peninjau');
+            
+            // if (signaturePad1.isEmpty()) {
+            //     let ttdData1 = ttd1.ttd;
+            //     document.getElementById('ttd1').value = ttdData1;
+            // }else {
+            //     let ttdData1 = signaturePad1.toDataURL();
+            //     document.getElementById('ttd1').value = ttdData1;
+            // }
+
+            // if (signaturePad2.isEmpty()) {
+            //     let ttdData2 = ttd2.ttd;
+            //     document.getElementById('ttd2').value = ttdData2;
+            // }else {
+            //     let ttdData2 = signaturePad2.toDataURL();
+            //     document.getElementById('ttd2').value = ttdData2;
+            // }
+
+            // if (signaturePad2.isEmpty()) {
+            //     let ttdData2 = ttd2.ttd;
+            //     document.getElementById('ttd2').value = ttdData2;
+            // }else {
+            //     let ttdData2 = signaturePad2.toDataURL();
+            //     document.getElementById('ttd2').value = ttdData2;
+            // }
+            
+        }
+
+        // function sentToController() {
+        //     if (signaturePad1.isEmpty() && signaturePad2.isEmpty() && signaturePad3.isEmpty() && signaturePad4.isEmpty() && signaturePad_asesor.isEmpty() && signaturePad_peninjau.isEmpty()) {
+        //         let ttdData1 = ttd1.ttd;
+        //         let ttdData2 = ttd2.ttd;
+        //         let ttdData3 = ttd3.ttd;
+        //         let ttdData4 = ttd4.ttd;
+        //         let ttdData_asesor = penyusun.ttd_asesor;
+        //         let ttdData_peninjau = validator.ttd_peninjau;
+        //         document.getElementById('ttd1').value = ttdData1;
+        //         document.getElementById('ttd2').value = ttdData2;
+        //         document.getElementById('ttd3').value = ttdData3;
+        //         document.getElementById('ttd4').value = ttdData4;
+        //         document.getElementById('ttd-asesor').value = ttdData_asesor;
+        //         document.getElementById('ttd-peninjau').value = ttdData_peninjau;
+        //     }else {
+        //         let ttdData1 = signaturePad1.toDataURL();
+        //         let ttdData2 = signaturePad2.toDataURL();
+        //         let ttdData3 = signaturePad3.toDataURL();
+        //         let ttdData4 = signaturePad4.toDataURL();
+        //         let ttdData_asesor   = signaturePad_asesor.toDataURL();
+        //         let ttdData_peninjau = signaturePad_peninjau.toDataURL();
+        //         document.getElementById('ttd1').value = ttdData1;
+        //         document.getElementById('ttd2').value = ttdData2;
+        //         document.getElementById('ttd3').value = ttdData3;
+        //         document.getElementById('ttd4').value = ttdData4;
+        //         document.getElementById('ttd-asesor').value = ttdData_asesor;
+        //         document.getElementById('ttd-peninjau').value = ttdData_peninjau;
+        //     }
+        // }
 
         document.getElementById('clear-1').addEventListener("click", clear1);
         document.getElementById('clear-2').addEventListener("click", clear2);
@@ -772,7 +903,7 @@
         document.getElementById('clear-asesor').addEventListener("click", clear_asesor);
         document.getElementById('clear-peninjau').addEventListener("click", clear_peninjau);
 
-        document.getElementById('simpan').addEventListener("click", sentToController);
+        document.getElementById('pengesahan-muk-btn').addEventListener("click", sentToController);
         document.addEventListener("DOMContentLoaded", setupSignatureBox);
 
     $(function() {  
@@ -806,5 +937,85 @@
         $('#berkas-pengesahan-muk .deleted').remove();
     });
 
+
+    // $('#form-PengesahanMuk').on('submit', function (e) {
+    //     e.preventDefault();
+
+    //     var $search = $("#search-button")
+    //     // $("#simpan-elemen-btn").attr('disabled','disabled');
+        
+    //     $.ajax({
+    //         url: $(this).attr('action'),
+    //         method: $(this).attr('method'),
+    //         data: new FormData(this),
+    //         processData: false,
+    //         dataType: 'json',
+    //         contentType: false,
+    //         beforeSend: function () {
+    //             $(document).find('label.error-text').text('');
+    //         },
+    //         success: function (data) {
+    //             if (data.status == 0) {
+    //                 $("#simpan-elemen-btn").removeAttr('disabled');
+    //                 $.each(data.error, function (prefix, val) {
+    //                     $('label.' + prefix + '_error').text(val[0]);
+    //                     // $('span.'+prefix+'_error').text(val[0]);
+    //                 });
+    //             } else if (data.status == 1) {
+    //                 swal({
+    //                     title: "Berhasil",
+    //                     text: `${data.msg}`,
+    //                     icon: "success",
+    //                     buttons: true,
+    //                     successMode: true,
+    //                 }),
+    //                 location.reload();
+    //             }
+    //         }
+    //     });
+    // });
+
+    $('#form-PengesahanMuk').on('submit', function(e) {
+            e.preventDefault();
+            $("#pengesahan-muk-btn").attr('disabled','disabled');
+            $("#text-simpan-pengesahan-muk").html('')
+            $("#icon-button-pengesahan-muk").addClass("fa fa-spinner fa-spin")
+            
+            $.ajax({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                data: new FormData(this),
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                beforeSend: function() {
+                    $(document).find('label.error-text').text('');
+                },
+                success: function(data) {
+                    if (data.status == 0) {
+                        $.each(data.error, function(prefix, val) {
+                            $('label.' + prefix + '_error').text(val[0]);
+                            // $('span.'+prefix+'_error').text(val[0]);
+                        });
+                        $("#pengesahan-muk-btn").removeAttr('disabled')
+                        $(".batal").removeAttr('disabled')
+                    }
+                    else if (data.status == 1) {
+                        $("#icon-button-pengesahan-muk").addClass("fa fa-spinner fa-spin")
+                        $("#text-simpan-pengesahan-muk").html('')
+    
+                        setTimeout(function() {
+                            swal({
+                                title: "Berhasil",
+                                text: `${data.msg}`,
+                                icon: "success",
+                                successMode: true,
+                            }),
+                            location.reload();
+                        },2000);
+                    }
+                }
+            });
+        });
 </script>
 @endsection

@@ -76,6 +76,7 @@
 
 @section('script')
     <script>
+        let data_asesmen_mandiri = @json($data_asesmen_mandiri);
         let list_ujian_asesi = [];
         const table_pelaksanaan_ujian = $('#table-pelaksanaan-ujian').DataTable({
             //   "pageLength": 10,
@@ -181,7 +182,7 @@
                                 .jadwal_uji_kompetensi_id == row.jadwal_uji_kompetensi_id &&
                                 row.relasi_jadwal_uji_kompetensi.relasi_user_login_asesi
                                 .status_ujian_berlangsung == 0) {
-                                tampilan = `<button class="btn btn-warning my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjian(${row.id})">
+                                tampilan = `<button class="btn text-black btn-warning text-black my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjian(${row.id})">
                                   Detail Ujian
                                 </button>`
                             } else if (
@@ -191,7 +192,7 @@
                                 .jadwal_uji_kompetensi_id == row.jadwal_uji_kompetensi_id &&
                                 row.relasi_jadwal_uji_kompetensi.relasi_user_login_asesi
                                 .status_ujian_berlangsung == 1) {
-                                tampilan = `<button class="btn btn-warning my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjian(${row.id})">
+                                tampilan = `<button class="btn text-black btn-warning text-black my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjian(${row.id})">
                                   Lanjutkan Ujian
                                 </button>`
                             } else if (
@@ -201,7 +202,7 @@
                                 .jadwal_uji_kompetensi_id == row.jadwal_uji_kompetensi_id &&
                                 row.relasi_jadwal_uji_kompetensi.relasi_user_login_asesi
                                 .status_ujian_berlangsung == 2) {
-                                tampilan = `<a href="/asesi/review-jawaban/${row.jadwal_uji_kompetensi_id}" class="btn btn-warning my-1 text-black btn-sm rounded-4">
+                                tampilan = `<a href="/asesi/review-jawaban/${row.jadwal_uji_kompetensi_id}" class="btn text-black text-black btn-warning my-1 text-black btn-sm rounded-4">
                                   Review Jawaban
                                 </a>`
                             } else if (
@@ -211,7 +212,7 @@
                                 .jadwal_uji_kompetensi_id == row.jadwal_uji_kompetensi_id &&
                                 row.relasi_jadwal_uji_kompetensi.relasi_user_login_asesi
                                 .status_ujian_berlangsung == 3) {
-                                tampilan = `<button class="btn btn-warning my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjian(${row.id}, ${row.jenis_tes})">
+                                tampilan = `<button class="btn text-black text-black btn-warning my-1 text-black btn-sm rounded-4" data-bs-toggle="modal" onclick="detailUjian(${row.id}, ${row.jenis_tes})">
                                   Wawancara
                                 </button>`
                             }
@@ -223,7 +224,7 @@
                         } else if (
                             row.waktu_mulai < moment().format('YYYY-MM-DD HH:mm:ss') &&
                             row.waktu_selesai < moment().format('YYYY-MM-DD HH:mm:ss')) {
-                            tampilan = `<a href="#!" class="btn btn-warning my-1 text-black btn-sm rounded-4">
+                            tampilan = `<a href="#!" class="btn text-black text-black btn-warning my-1 text-black btn-sm rounded-4">
                                 Sesi Berakhir
                             </a>`
                         }
@@ -333,7 +334,7 @@
 
         function sentToController() {
             if (signaturePad.isEmpty()) {
-                let ttdData = data.relasi_sertifikasi.ttd_asesi;
+                let ttdData = ""
                 document.getElementById('ttd').value = ttdData;
             } else {
                 let ttdData = signaturePad.toDataURL();

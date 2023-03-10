@@ -41,10 +41,12 @@ class VerifyCsrfToken extends Middleware
         '/asesor/data-asesi-ujian-wawancara/',
         
         '/asesi/asesi-materi-uji-kompetensi',
+
         '/admin/table-surat-sk-penetapan',
         '/admin/table-surat-daftar-tuk',
         '/admin/table-surat-hasil-verifikasi-tuk',
         '/admin/table-surat-st-verifikasi-tuk',
+        '/admin/table-surat-df-hadir-asesi',
         '/admin/table-surat-x03-st-verifikasi-tuk',
         '/admin/table-surat-x04-berita-acara',
         '/admin/table-surat-z-ba-pecah-rp',

@@ -7,10 +7,30 @@
     <title>PDF</title>
 
     <style>
+      table thead{
+          display: table-row-group;
+        }
+        td{
+          /* border-style: solid;
+          border-width: 2px; */
+          break-inside: avoid;
+        }
         .page-break {
-            page-break-after: always;
+          page-break-after: always;
         }
 
+        /* table{
+          page-break-inside: auto;
+        } */
+        tr{
+          /* page-break-before: always!important; */
+          /* page-break-inside: avoid!important; */
+          break-inside: avoid;
+          /* page-break-after: auto!important; */
+        }
+        /* thead{
+          display: table-header-group;
+        } */
     </style>
 
 </head>
@@ -40,124 +60,183 @@
     <hr />
 
     <div style="text-align: center; font-size: 15px;">
-        <h4 style="margin-top: 10px;">FR.APL.01. PERMOHONAN SERTIFIKASI KOMPETENSI
+        <h4 style="margin-top: 10px;">FR.APL.02. ASESMEN MANDIRI
         </h4>
     </div>
     <div style="padding: 5%; padding-top:0% ">
     {{-- LEMBAR 1 --}}
-
-    <p class="card-text">
-        <h6>Bagian  2 :  Data Sertifikasi</h6>
-    </p>
-    <p class="card-text" style="width: 100%;">
-        Tuliskan Judul dan Nomor Skema Sertifikasi yang anda ajukan berikut Daftar Unit Kompetensi sesuai kemasan pada skema sertifikasi untuk mendapatkan pengakuan sesuai dengan latar belakang pendidikan, pelatihan serta pengalaman kerja yang anda miliki.
-    </p>
-    <table class="table table-bordered" style="font-size: 13px; width: 100%; margin-bottom:2%" cellspacing=0 cellpadding=5>
+    <table border="1" style="font-size: 13px; width: 100%; margin-bottom:2%" cellspacing=0 cellpadding=5>
         <tbody style="font-size: 13px">
               <tr>
-                <td rowspan="2" style="width: 20%">
-                  <h6 style="margin: 0; font-weight: lighter;">Skema Sertifikasi   (KKNI/Okupasi/Klaster)</h6>
+                <td rowspan="2" style="width: 10%">
+                  <h6 style="margin: 0; font-weight: bold;">Skema Sertifikasi (KKNI/Okupasi/Klaster)</h6>
                 </td>
-                <td style="width: 20%">
-                  <h6 style="margin: 0; font-weight: lighter;">Judul</h6>
+                <td style="width: 10%">
+                  <h6 style="margin: 0; font-weight: bold;">Judul</h6>
                 </td>
-                <td style="width: 5%">
-                  <h6 style="margin: 0; font-weight: lighter;">:</h6>
+                <td style="width: 2%">
+                  <h6 style="margin: 0; font-weight: bold;">:</h6>
                 </td>
-                <td style="width: 20%">
-                    <h6 style="margin: 0; font-weight: lighter;">{{$sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->judul_skema_sertifikasi}}</h6>
+                <td style="width: 88%">
+                    <h6 style="margin: 0; font-weight: bold;">{{$sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->judul_skema_sertifikasi}}</h6>
                 </td>
               </tr>
               <tr>
-                <td style="width: 20%">
-                    <h6 style="margin: 0; font-weight: lighter;">Nomor</h6>
-                </td>
                 <td style="width: 10%">
-                    <h6 style="margin: 0; font-weight: lighter;">:</h6>
+                    <h6 style="margin: 0; font-weight: bold;">Nomor</h6>
                 </td>
-                <td style="width: 20%">
-                    <h6 style="margin: 0; font-weight: lighter;">{{$sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->nomor_skema_sertifikasi}}</h6>
+                <td style="width: 2%">
+                    <h6 style="margin: 0; font-weight: bold;">:</h6>
+                </td>
+                <td style="width: 88%">
+                    <h6 style="margin: 0; font-weight: bold;">{{$sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->nomor_skema_sertifikasi}}</h6>
                 </td>
               </tr>
-
         </tbody>
     </table>
-    @foreach ($unit_kompetensi as $data_unit_kompetensi)
-    <div class="col">
-      <div class="row col unit-kompetensi">
-        <span>Unit Kompetensi</span><br>
-        <div class="col row fs-6">
-          <div class="col-lg-auto unit-kode" style="width: auto !important">{{ $data_unit_kompetensi->kode_unit }}</div>
-          <div class="col-lg-auto unit-isi">{{ $data_unit_kompetensi->judul_unit }}
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="my-4 fw-bold fs-6">Dapatkah Saya ?</div>
-    <div class="col mb-5">
-      <ol class="list-group list-group-numbered">
-          @php
-          $unit_kompetensi_sub = \App\Models\UnitKompetensiSub::with('relasi_unit_kompetensi.relasi_skema_sertifikasi')
-              ->whereRelation('relasi_unit_kompetensi', 'unit_kompetensi_id', $data_unit_kompetensi->id)
-              ->get();
-          @endphp
-        @foreach ($unit_kompetensi_sub as $data_unit_kompetensi_sub)
-          @php
-          $unit_kompetensi_isi = \App\Models\UnitKompetensiIsi::with('relasi_unit_kompetensi_sub')
-              ->whereRelation('relasi_unit_kompetensi_sub', 'unit_kompetensi_sub_id', $data_unit_kompetensi_sub->id)
-              ->get();
-          @endphp
+    <table border="1px;" style="font-size: 13px; width: 100%; margin-bottom:2%;" cellspacing=0 cellpadding=5>
+      <thead>
+        <tr>
+          <td style="background-color: #ffc6a5; width: 7%">
+            <h6 style="margin: 0; font-weight: bold;">PANDUAN ASESMEN MANDIRI</h6>
+          </td>
+        </tr>
+      </thead>
+      <tbody style="font-size: 13px">
+            <tr>
+              <td>
+                <h6 style="margin: 0; font-weight: lighter;">
+                  Instruksi:<br>
+                  Baca setiap pertanyaan di kolom sebelah kiri
+                  Beri tanda centang () pada kotak jika Anda yakin dapat melakukan tugas yang dijelaskan.
+                  Isi kolom di sebelah kanan dengan mendaftar bukti yang Anda miliki untuk menunjukkan bahwa Anda melakukan tugas-tugas ini.
+                </h6>
+              </td>
+            </tr>
+      </tbody>
+    </table>
+   @foreach ($unit_kompetensi as $data_unit_kompetensi)
+              @php
+              $unit_kompetensi_sub = \App\Models\UnitKompetensiSub::with('relasi_unit_kompetensi.relasi_skema_sertifikasi')
+                  ->whereRelation('relasi_unit_kompetensi', 'unit_kompetensi_id', $data_unit_kompetensi->id)
+                  ->get();
+              @endphp
+                <table border="1" style="font-size: 13px; width: 100%; margin-bottom:2% border:1px solid;" cellspacing=0 cellpadding=3>
+                  <thead>
+                    <tr>
+                      <td style="width: 7%">
+                        <h6 style="margin: 0; font-weight: bold;">Unit Kompetensi</h6>
+                      </td>
+                      <td colspan="3" style="width: 20%">
+                        <h6 style="margin: 0; font-weight: bold;">{{$data_unit_kompetensi->judul_unit}}</h6>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 20%">
+                        <h6 style="margin: 0; font-weight: bold; ">Dapatkah Saya ................?</h6>
+                      </td>
+                      <td style="width: 3%">
+                        <h6 style="margin: 0; font-weight: bold;">K</h6>
+                      </td>
+                      <td style="width: 3%">
+                        <h6 style="margin: 0; font-weight: bold;">KB</h6>
+                      </td>
+                      <td style="width: 20%">
+                        <h6 style="margin: 0; font-weight: bold;">Bukti yang relevan</h6>
+                      </td>
+                    </tr>
+                  </thead>
 
-          <li class="list-group-item d-flex justify-content-between align-items-start border-0 fw-semibold">
-            <div class="ms-2 me-auto ">
-              Elemen: {{ $data_unit_kompetensi_sub->judul_unit_kompetensi_sub }}
-              <div class="py-1">Kriteria Kerja:</div>
-              <div class="row col mx-3">
-              @forelse ($unit_kompetensi_isi as $isi)
-                @php
-                    $data_status_kompeten_asesi = \App\Models\StatusUnitKompetensiAsesi::where('unit_kompetensi_isi_id',$isi->id)
-                          ->where('user_asesi_id', $user_asesi_id)->first();
-                @endphp
-                <div class="col mb-3">
-                  <div class="row mt-3">
-                    <div class="col-2" style="width: 2%">{{ $loop->parent->iteration }}.{{ $loop->iteration }}
-                    </div>
-                    <div class="col-2">{{ $isi->judul_unit_kompetensi_isi }}
-                    </div>
-                    {{-- <input type="hidden" name="unit_kompetensi_sub[]" value="{{$isi->unit_kompetensi_sub_id}}" hidden>
-                    <input type="hidden" name="unit_kompetensi_isi[]" value="{{$isi->id}}" hidden> --}}
+                  <tbody style="font-size: 13px">
+                    @foreach ($unit_kompetensi_sub as $index => $data_unit_kompetensi_sub)
+                      @php
+                      $unit_kompetensi_isi = \App\Models\UnitKompetensiIsi::with('relasi_unit_kompetensi_sub')
+                          ->whereRelation('relasi_unit_kompetensi_sub', 'unit_kompetensi_sub_id', $data_unit_kompetensi_sub->id)
+                          ->get();
 
-                    <div class="col-2">
-                      @isset($data_status_kompeten_asesi->status)
-                      @if($data_status_kompeten_asesi->status === 'kompeten')
-                          <label class="form-check-label text-success" for="kompeten-{{ $isi->id }}">Kompeten</label>
-                      @else
-                          <label class="form-check-label text-danger" for="kompeten-{{ $isi->id }}">Belum Kompeten</label>
-                      @endif
-                      @endisset
-                    </div>
+                      $dd = \App\Models\UnitKompetensiIsi::with('relasi_unit_kompetensi_sub')
+                          ->whereRelation('relasi_unit_kompetensi_sub', 'unit_kompetensi_sub_id', $data_unit_kompetensi_sub->id)
+                          ->count();
+                      $i = 1;
+                      @endphp
+                        
+                        <tr>
+                          <td colspan="3" style="padding-top: 0.4%; padding-bottom: 0.2%;">
+                            <h6 style="margin: 0%; padding:0%; font-weight: lighter;">{{$index+1}}. Elemen: {{ $data_unit_kompetensi_sub->judul_unit_kompetensi_sub }}</h6>
+                            <h6 style="margin: 0%; padding:0%; padding-left:5%; font-weight: lighter;">Kriteria Unjuk Kerja:</h6>
+                          </td>
+                          <td rowspan="{{$dd+1}}">
+                            <h6 style="margin: 0; font-weight: lighter;">Bukti yang relevan</h6>
+                          </td>
+                          {{-- <td>
+                            <h6 style="margin: 0; font-weight: lighter;">Bukti yang relevan</h6>
+                          </td> --}}
+                        </tr>
+                        {{-- <tr>
+                          <td>
+                            <h6 style="margin: 0; font-weight: lighter;">Bukti yang relevan</h6>
+                          </td>
+                        </tr> --}}
+                          @forelse ($unit_kompetensi_isi as $index2 => $isi)
+                          @php
+                              $data_status_kompeten_asesi = \App\Models\StatusUnitKompetensiAsesi::where('unit_kompetensi_isi_id',$isi->id)
+                                    ->where('user_asesi_id', $user_asesi_id)->first();
+                          @endphp
+                          <tr>
+                              <td>
+                                <h6 style="margin: 0%; padding:0%; padding-left:5%;font-weight: lighter;">{{$index+1}}.{{$index2+1}} {{$isi->judul_unit_kompetensi_isi}}</h6>
+                              </td>
+                              @isset($data_status_kompeten_asesi->status)
+                                  @if ($data_status_kompeten_asesi->status == 'kompeten')
+                                    <td colspan="0">
+                                      <h6 style="text-align:center; margin: 0%; padding:0%; font-weight: lighter;font-family: DejaVu Sans, sans-serif;">✔</h6>
+                                    </td>
+                                    <td colspan="0">
+                                    </td>
+                                  @elseif($data_status_kompeten_asesi->status == 'belum kompeten')
+                                    <td colspan="0">
+                                    </td>
+                                    <td colspan="0">
+                                      <h6 style="text-align:center; margin: 0%; padding:0%; font-weight: lighter;font-family: DejaVu Sans, sans-serif;">✔</h6>
+                                    </td>
+                                  @endif
+                              @else
+                                <td colspan="0">
+                                  <h6 style="margin: 0; font-weight: lighter;">?</h6>
+                                </td>
+                                <td colspan="0">
+                                  <h6 style="margin: 0; font-weight: lighter;">?</h6>
+                                </td>
+                              @endisset
+                                {{-- <td>
+                                  <h6 style="margin: 0; font-weight: lighter;">Bukti yang relevan</h6>
+                              </td> --}}
+                            </tr>
+                            @empty
+                          @endforelse
+                    @endforeach
+                  </tbody>
+                </table>
 
-                  </div>
-                </div>
-                <hr>
-              @empty
-                Kosong
-              @endforelse
-              </div>
-              <div class="col mt-4">
-                <div class="mb-3 fw-semibold fs-6">
-                  <label for="bukti_relevan-{{ $data_unit_kompetensi_sub->id }}"
-                    class="form-label">Bukti yang relevan</label>
-                  <p class="form-label">{{ $data_unit_kompetensi_sub->bukti_relevan ?? '' }}</p>
-                </div>
-              </div>
-            </div>
-          </li>
-        @endforeach
-      </ol>
-    </div>
-  @endforeach
+                <table border="1px solid black" style="font-size: 13px; width: 100%; margin-bottom:2%; margin-top:2%" cellspacing=0 cellpadding=5>
+                  <tbody style="font-size: 13px">
+                    <tr>
+                      <td style="width:30%"><h6>Nama Asesi : {{$data_asesmen_mandiri->relasi_user_asesi->nama_lengkap}}</h6></td>
+                      <td style="width:30%"><h6>Tanggal : {{Carbon\Carbon::parse($data_asesmen_mandiri->tanggal_asesi)->format('d F Y')}}</h6></td>
+                      <td style="width:30%"><h6>Tanda Tangan Asesi: </h6><img src="{{$data_asesmen_mandiri->ttd_asesi}}" style="width: 40%"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="background-color: #ffc6a5;"><h6>Ditijau oleh Asesor:</h6></td>
+                    </tr>
+                    <tr>
+                      <td style="width:30%"><h6>Nama Asesor : {{$data_asesmen_mandiri->relasi_user_asesor->nama_lengkap}}</h6></td>
+                      <td style="width:30%"><h6>Rekomendasi : @if($data_asesmen_mandiri->rekomendasi == 1)Asesmen dapat dilanjutkan / <s>tidak dapat dilanjutkan</s> @elseif($data_asesmen_mandiri->rekomendasi == 0)<s>Asesmen dapat dilanjutkan</s> / tidak dapat dilanjutkan @endif</h6></td>
+                      <td style="width:30%"><h6>Tanda Tangan Asesi: </h6><img src="{{$data_asesmen_mandiri->ttd_asesor}}" style="width: 40%"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="page-break"></div>
+    @endforeach
     {{-- @foreach ($unit_kompetensi as $data_unit_kompetensi)
     @php
     $unit_kompetensi_sub = \App\Models\UnitKompetensiSub::with('relasi_unit_kompetensi.relasi_skema_sertifikasi')

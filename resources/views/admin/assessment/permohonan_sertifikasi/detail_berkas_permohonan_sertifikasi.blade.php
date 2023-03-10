@@ -354,46 +354,47 @@
                   <tbody style="font-size: 13px">
                           <tr>
                               <td>
-                                  <h6 style="font-weight: lighter;">1</h6>
+                                  <h6 style="font-weight: lighter; text-align:center;">1</h6>
                               </td>
                               <td>
                                   <h6 style="font-weight: lighter;">Fotocopy Nilai Mata Pelajaran Kompetensi Keahlian {{$data_permohonan_user_sertifikasi->relasi_jurusan->jurusan}}</h6>
                               </td>
                               <td>
-                                  <h6 style="font-weight: lighter;">Centang</h6>
+                                <h6 style="text-align:center; margin: 0%; padding:0%; font-weight: lighter; font-family: DejaVu Sans, sans-serif;">✔</h6>
+
                               </td>
                               <td>
-                                  <h6 style="font-weight: lighter;">Centang</h6>
+                                  {{-- <h6 style="font-weight: lighter; text-align:center;">Centang</h6> --}}
                               </td>
                               <td></td>
                           </tr>
                           <tr>
                               <td>
-                                  <h6 style="font-weight: lighter;">2</h6>
+                                  <h6 style="font-weight: lighter; text-align:center;">2</h6>
                               </td>
                               <td>
                                   <h6 style="font-weight: lighter;">Fotocopy Sertifikat Prakerin atau surat keterangan telah melaksanakan Praktek Kerja Industri</h6>
                               </td>
                               <td>
-                                  <h6 style="font-weight: lighter;">Centang</h6>
+                                <h6 style="text-align:center; margin: 0%; padding:0%; font-weight: lighter;font-family: DejaVu Sans, sans-serif;">✔</h6>
                               </td>
                               <td>
-                                  <h6 style="font-weight: lighter;">Centang</h6>
+                                  {{-- <h6 style="font-weight: lighter; text-align:center;">Centang</h6> --}}
                               </td>
                               <td></td>
                           </tr>
                           <tr>
                               <td>
-                                  <h6 style="font-weight: lighter;">3</h6>
+                                  <h6 style="font-weight: lighter; text-align:center;">3</h6>
                               </td>
                               <td>
                                   <h6 style="font-weight: lighter;">Fotocopy Nilai Raport</h6>
                               </td>
                               <td>
-                                  <h6 style="font-weight: lighter;">Centang</h6>
+                                <h6 style="text-align:center; margin: 0%; padding:0%; font-weight: lighter;font-family: DejaVu Sans, sans-serif;">✔</h6>
                               </td>
                               <td>
-                                  <h6 style="font-weight: lighter;">Centang</h6>
+                                  {{-- <h6 style="font-weight: lighter;">Centang</h6> --}}
                               </td>
                               <td></td>
                           </tr>

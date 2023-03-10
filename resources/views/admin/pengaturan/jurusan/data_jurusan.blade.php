@@ -16,16 +16,16 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <span class="badge bg-info rounded-pill">
-                        <a class="text-white" href="#" data-bs-toggle="modal" data-bs-target="#tambahJurusan">Tambah
-                            Jurusan
+                    <div class="buttons">
+                        <a class="btn btn-sm icon icon-left btn-primary rounded-pill fw-semibold"
+                        href="#" data-bs-toggle="modal" data-bs-target="#tambahJurusan">
+                            <i class="fa fa-plus fa-sm"></i> Tambah Jurusan
                         </a>
-                    </span>
-
+                    </div>
                     {{-- MODAL TAMBAH --}}
                     <div class="modal fade text-left" id="tambahJurusan" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
                         aria-labelledby="myModalLabel33" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title" id="myModalLabel33">Tambah Jurusan</h4>
@@ -46,9 +46,11 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal">Batal
+                                        <button type="button" class="btn btn-light-secondary batal rounded-pill" data-bs-dismiss="modal">Batal
                                         </button>
-                                        <button type="submit" class="btn btn-primary ml-1">Simpan
+                                        <button id="tambah-jurusan-btn" type="submit" class="btn btn-primary ml-1 rounded-pill">
+                                            <i id="icon-button-tambah-jurusan"></i>
+                                            <span id="text-simpan-tambah-jurusan" class="d-none d-sm-block">Simpan</span>
                                         </button>
                                     </div>
                                 </form>
@@ -74,7 +76,7 @@
             {{-- MODAL EDIT --}}
             <div class="modal fade text-left" id="editJurusan" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
                 aria-labelledby="myModalLabel33" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="myModalLabel33">Ubah Jurusan</h4>
@@ -96,9 +98,11 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal">Batal
+                                <button type="button" class="btn btn-light-secondary batal-edit rounded-pill" data-bs-dismiss="modal">Batal
                                 </button>
-                                <button type="submit" class="btn btn-primary ml-1">Simpan
+                                <button id="edit-jurusan-btn" type="submit" class="btn btn-primary ml-1 rounded-pill">
+                                    <i id="icon-button-edit-jurusan"></i>
+                                    <span id="text-simpan-edit-jurusan" class="d-none d-sm-block">Simpan</span>
                                 </button>
                             </div>
                         </form>
@@ -163,12 +167,18 @@
                     "class": "text-nowrap",
                     "render": function(data, type, row, meta) {
                         let tampilan;
-                        tampilan = `<span id-jurusan = "${row.id}" onclick="editJurusan(${row.id})" class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="#!">Edit</a>
-                                </span>
-                                <span id-jurusan = "${row.id}" class="badge bg-danger rounded-pill hapus_jurusan">
-                                    <a class="text-white" href="#!">Hapus</a>
-                                </span>`
+                        tampilan = `
+                                    <div class="buttons">
+                                        <a class="btn btn-sm icon icon-left btn-info rounded-pill fw-semibold"
+                                            href="#!"id-jurusan = "${row.id}" onclick="editJurusan(${row.id})">
+                                            <i class="fa fa-pen fa-sm"></i> Edit
+                                        </a>
+                                        <a class="btn btn-sm icon icon-left btn-danger rounded-pill fw-semibold hapus_jurusan"
+                                            href="#!" id-jurusan = "${row.id}">
+                                            <i class="fa fa-trash fa-sm"></i> Hapus
+                                        </a>
+                                    </div>
+                                    `
                         return tampilan;
                     }
                 },
@@ -181,6 +191,10 @@
         
         $('#formJurusan').on('submit', function(e) {
             e.preventDefault();
+            $("#tambah-jurusan-btn").attr('disabled','disabled');
+            $(".batal").attr('disabled','disabled')
+            var $search = $("#icon-button-tambah-jurusan")
+            
             $.ajax({
                 url: $(this).attr('action'),
                 method: $(this).attr('method'),
@@ -197,16 +211,30 @@
                             $('label.' + prefix + '_error').text(val[0]);
                             // $('span.'+prefix+'_error').text(val[0]);
                         });
-                    } else if (data.status == 1) {
-                        swal({
+                        $("#tambah-jurusan-btn").removeAttr('disabled')
+                        $(".batal").removeAttr('disabled')
+                    }
+                    else if (data.status == 1) {
+                        $("#icon-button-tambah-jurusan").addClass("fa fa-spinner fa-spin")
+                        $("#text-simpan-tambah-jurusan").html('')
+    
+                        setTimeout(function() {
+                            for (var i = 0; i < 100; i++) {
+                                $("#tambahJurusan").modal('hide')
+                            }
+                            swal({
                                 title: "Berhasil",
                                 text: `${data.msg}`,
                                 icon: "success",
-                                buttons: true,
                                 successMode: true,
                             }),
+                            $search.removeClass("fa fa-spinner fa-spin")
+                            $("#formJurusan")[0].reset()
+                            $("#text-simpan-tambah-jurusan").html('<span id="text-simpan-tambah-jurusan" class="d-none d-sm-block">Simpan</span>')
+                            $("#tambah-jurusan-btn").removeAttr('disabled')
+                            $(".batal").removeAttr('disabled')
                             table_jurusan.ajax.reload(null, false)
-                        $("#tambahJurusan").modal('hide')
+                        },2000);
                     }
                 }
             });
@@ -220,6 +248,10 @@
 
             $('#formEditJurusan').on('submit', function(e) {
                 e.preventDefault();
+                $("#edit-jurusan-btn").attr('disabled','disabled');
+                $(".batal-edit").attr('disabled','disabled')
+                var $search = $("#icon-button-edit-jurusan")
+
                 $.ajax({
                     url: $(this).attr('action'),
                     method: $(this).attr('method'),
@@ -236,16 +268,29 @@
                                 $('label.' + prefix + '_error').text(val[0]);
                                 // $('span.'+prefix+'_error').text(val[0]);
                             });
-                        } else if (data.status == 1) {
-                            swal({
+                            $("#edit-jurusan-btn").removeAttr('disabled')
+                            $(".batal").removeAttr('disabled')
+                        } 
+                        else if (data.status == 1) {
+                            $("#icon-button-edit-jurusan").addClass("fa fa-spinner fa-spin")
+                            $("#text-simpan-edit-jurusan").html('')
+                            setTimeout(function() {
+                            for (var i = 0; i < 100; i++) {
+                                $("#editJurusan").modal('hide')
+                            }
+                                swal({
                                     title: "Berhasil",
                                     text: `${data.msg}`,
                                     icon: "success",
-                                    buttons: true,
                                     successMode: true,
                                 }),
+                                $search.removeClass("fa fa-spinner fa-spin")
+                                $("#formJurusan")[0].reset()
+                                $("#text-simpan-edit-jurusan").html('<span id="text-simpan-edit-jurusan" class="d-none d-sm-block">Simpan</span>')
+                                $("#edit-jurusan-btn").removeAttr('disabled')
+                                $(".batal-edit").removeAttr('disabled')
                                 table_jurusan.ajax.reload(null, false)
-                            $("#editJurusan").modal('hide')
+                            },2000);
                         }
                     }
                 });
@@ -275,7 +320,6 @@
                                         title: "Berhasil",
                                         text: `${response.msg}`,
                                         icon: "success",
-                                        buttons: true,
                                         successMode: true,
                                     }),
                                     table_jurusan.ajax.reload(null, false)

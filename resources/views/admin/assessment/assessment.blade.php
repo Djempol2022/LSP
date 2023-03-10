@@ -129,14 +129,14 @@
             <div class="col-md-12">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-4 mb-4">
                             <fieldset class="form-group">
-                                <select class="form-select filter-role-pengguna" id="role-id">
-                                    <option value="" disabled selected>Filter berdasarkan Jurusan</option>
-                                    <option value="">Semua Pengguna</option>
-                                    <option value="2">Peninjau</option>
-                                    <option value="3">Asesor</option>
-                                    <option value="4">Asesi</option>
+                                <select class="form-control form-control-sm filter-jurusan" id="filter-jurusan">
+                                    <option value="" selected disabled>Filter berdasarkan jurusan</option>
+                                    <option value="">Semua Jurusan</option>
+                                    @foreach ($jurusan as $data_jurusan)
+                                    <option value="{{ $data_jurusan->id }}">{{ $data_jurusan->jurusan }}</option>
+                                    @endforeach
                                 </select>
                             </fieldset>
                         </div>
@@ -159,6 +159,7 @@
 @endsection
 @section('script')
 <script>
+    let data_jurusan = $('#filter-jurusan').val();
     let list_asesi_pemohon = [];
     const table_peserta_selesai_ujian = $('#rekap-berkas-asesi').DataTable({
         "destroy": true,
@@ -175,6 +176,10 @@
         ajax: {
             url: "{{route('admin.DataRekapanBerkas')}}",
             type: "POST",
+            data:function(d){
+                d.jurusan_pengguna = data_jurusan;
+                return d
+            },
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         },
         columnDefs: [{
@@ -204,13 +209,13 @@
                 "render": function (data, type, row, meta) {
                     list_asesi_pemohon[row.id] = row;
                     let cek_asesi_sertifikasi;
-                    if(row.relasi_sertifikasi != null){
-                        cek_asesi_sertifikasi = `<a href="/admin/detail-rekapan-permohonan-sertifikasi/${row.id}">
-                                                    <button class="btn btn-sm icon icon-left btn-success"><i class="fa fa-check-circle"></i>Lengkap</button>
-                                                </a>`
+                    if(row.relasi_sertifikasi == null || row.relasi_sertifikasi.relasi_tanda_tangan_admin == null || row.relasi_sertifikasi.relasi_tanda_tangan_admin.status == null){
+                        cek_asesi_sertifikasi = `<a href="#!" class="btn icon btn-sm icon-left btn-danger rounded-pill" style="padding:2%; font-size:80%;"><i class="fa fa-times fa-xs"></i>
+                                Belum Lengkap</a>`
                     }else{
-                        cek_asesi_sertifikasi = `<a href="#!" class="btn icon btn-sm icon-left btn-danger"><i class="fa fa-times-circle"></i>
-                                Tidak Lengkap</a>`
+                        cek_asesi_sertifikasi = `<a href="/admin/detail-rekapan-permohonan-sertifikasi/${row.id}">
+                                                    <button class="btn btn-sm icon icon-left btn-success rounded-pill" style="padding:2%; font-size:80%;"><i class="fa fa-check fa-xs"></i>Lengkap</button>
+                                                </a>`
                     }
                     return cek_asesi_sertifikasi;
                 }
@@ -221,13 +226,13 @@
                 "render": function (data, type, row, meta) {
                     list_asesi_pemohon[row.id] = row;
                     let cek_asesi_asesmen_mandiri;
-                    if(row.relasi_asesmen_mandiri !== null){
-                        cek_asesi_asesmen_mandiri = `<a href="/admin/detail-rekapan-asesmen-mandiri/${row.id}/${row.jurusan_id}">
-                                                        <button class="btn btn-sm icon icon-left btn-success"><i class="fa fa-check-circle"></i>Lengkap</button>
-                                                    </a>`
+                    if(row.relasi_asesmen_mandiri == null || row.relasi_asesmen_mandiri.rekomendasi == null){
+                        cek_asesi_asesmen_mandiri = `<a href="#!" class="btn icon btn-sm icon-left btn-danger rounded-pill" style="padding:2%; font-size:80%;"><i class="fa fa-times fa-xs"></i>
+                                Belum Lengkap</a>`
                     }else{
-                        cek_asesi_asesmen_mandiri = `<a href="#!" class="btn icon btn-sm icon-left btn-danger"><i class="fa fa-times-circle"></i>
-                                Tidak Lengkap</a>`
+                        cek_asesi_asesmen_mandiri = `<a href="/admin/detail-rekapan-asesmen-mandiri/${row.id}/${row.jurusan_id}">
+                                                        <button class="btn btn-sm icon icon-left btn-success rounded-pill" style="padding:2%; font-size:80%;"><i class="fa fa-check fa-xs"></i>Lengkap</button>
+                                                    </a>`
                     }
                     return cek_asesi_asesmen_mandiri;
                 }
@@ -237,11 +242,26 @@
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_asesi_pemohon[row.id] = row;
-                     let status_koreksi;
-                     return "Tes"
+                     let cek_asesi_umpan_balik;
+                     if(row.relasi_user_asesi_ukom == null){
+                        cek_asesi_umpan_balik = `<a href="#!" class="btn icon btn-sm icon-left btn-danger rounded-pill" style="padding:2%; font-size:80%;"><i class="fa fa-times fa-xs"></i>
+                                                    Belum Lengkap
+                                                </a>`
+                     }else{
+                        cek_asesi_umpan_balik = `<a href="/admin/detail-rekapan-umpan-balik/${row.id}">
+                                                        <button class="btn btn-sm icon icon-left btn-success rounded-pill" style="padding:2%; font-size:80%;"><i class="fa fa-check fa-xs"></i>Lengkap</button>
+                                                </a>`
+                                                
+                     }
+                     return cek_asesi_umpan_balik;
                 }
             },
         ]
     });
+    
+    $(".filter-jurusan").on('change', function(){
+            data_jurusan = $('#filter-jurusan').val();
+        table_peserta_selesai_ujian.ajax.reload();
+    })
 </script>
 @endsection

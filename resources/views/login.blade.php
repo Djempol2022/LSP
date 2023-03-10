@@ -36,8 +36,19 @@
                         </div>
                         <div class="mb-3">
                             <label for="password_user" class="login-label">Password</label>
+                                <div class="input-group has-validation">
+                                    <input name="password" type="password" id="password_user" class="form-control login-input-text" placeholder="Masukkan Password Anda Disini..."/>
+                                    <span class="input-group-text" onclick="password_login_show();">
+                                        <i class="fas fa-eye" id="show_eye"></i>
+                                        <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                                    </span>
+                                    <div class="input-group has-validation">
+                                        <label class="text-danger error-text password_error"></label>
+                                    </div>
+                                </div>
+                            {{-- <label for="password_user" class="login-label">Password</label>
                             <input class="form-control login-input-text" name="password" type="password" id="password_user"
-                                placeholder="Masukkan Password Anda Disini...">
+                                placeholder="Masukkan Password Anda Disini..."> --}}
                         </div>
                         <div class="my-4">
                             <button type="submit" class="tombol-primary-max">Login</button>
@@ -56,6 +67,22 @@
 @endsection
 @section('script')
     <script>
+
+        function password_login_show() {
+            var x = document.getElementById("password_user");
+            var show_eye = document.getElementById("show_eye");
+            var hide_eye = document.getElementById("hide_eye");
+            hide_eye.classList.remove("d-none");
+            if (x.type === "password") {
+                x.type = "text";
+                show_eye.style.display = "none";
+                hide_eye.style.display = "block";
+            } else {
+                x.type = "password";
+                show_eye.style.display = "block";
+                hide_eye.style.display = "none";
+            }
+        }
         $('#formLogin').on('submit', function(e) {
             e.preventDefault();
             $.ajax({

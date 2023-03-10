@@ -36,13 +36,14 @@ class Admin_JadwalUjiKompetensi extends Controller
         $data_jurusan = Jurusan::where('id', $id)->first();
         $muk = MateriUjiKompetensi::where('jurusan_id', $id)->get()->toArray();
         $user_asesi = User::where('jurusan_id', $id)->with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesi')->get()->toArray();
-        $user_asesor = User::where('jurusan_id', $id)->with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesor')->get()->toArray();
-        $user_peninjau = User::where('jurusan_id', $id)->with('relasi_role')->whereRelation('relasi_role', 'role', '=', 'asesor')->get()->toArray();
+        // $user_peninjau = User::where('jurusan_id', $id)->where('role_id', 2)->where('role_id', 3)->get()->toArray();
+        // $user_asesor = User::where('jurusan_id', $id)->where('role_id', 3)->get()->toArray();
+        $user_asesor_peninjau = User::where('jurusan_id', $id)->where([['role_id', '=', 2, 'OR'], ['role_id', '=', 3, 'OR']])->get()->toArray();
         $data_jadwal_uji_kompetensi = JadwalUjiKompetensi::with('relasi_muk', 'relasi_user_asesor.relasi_user_asesor_detail', 
                 'relasi_user_peninjau.relasi_user_peninjau_detail')->get();
 
         return view('admin.jadwal_uji_kompetensi.tambah_asesor_peninjau', 
-            compact('muk','data_jurusan','user_asesi', 'user_asesor', 'user_peninjau', 'data_jadwal_uji_kompetensi'));
+            compact('muk','data_jurusan','user_asesi', 'user_asesor_peninjau', 'data_jadwal_uji_kompetensi'));
     }
 
         // DETAIL JADWAL UJI KOMPETENSI ACC
@@ -225,6 +226,7 @@ class Admin_JadwalUjiKompetensi extends Controller
                 'recordsFiltered'=>$rekamFilter,
             ]);
     }
+
     // TAMBAH MUK ASESOR PENINJAU TERKAIT UJI KOMPETENSI
     public function tambah_muk_asesor_peninjau(Request $request){
         $validator = Validator::make($request->all(), [

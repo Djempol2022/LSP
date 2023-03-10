@@ -118,9 +118,14 @@
                 "class": "none",
                 "render": function (data, type, row, meta) {
                     let tampilan;
-                    tampilan = `<span onclick="detailJadwalUjiKompetensi(${row.id})" class="badge bg-info rounded-pill">
-                                    <a class="text-white" href="/admin/detail-data-pengajuan-asesmen-mandiri-acc/${row.user_asesi_id}/${row.relasi_user_asesi.jurusan_id}">Detail</a>
-                                </span>`
+                    tampilan = `
+                                <div class="buttons">
+                                    <a class="btn icon icon-left btn-sm btn-warning rounded-pill fw-semibold text-black"
+                                    href="/admin/detail-data-pengajuan-asesmen-mandiri-acc/${row.user_asesi_id}/${row.relasi_user_asesi.jurusan_id}">
+                                        <i class="fa fa-eye fa-xs"></i> Detail
+                                    </a>
+                                </div>
+                                `
             return tampilan;
           }
         },

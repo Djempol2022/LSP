@@ -115,6 +115,6 @@ class Z_BA_Pecah_RP_Controller extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->route('admin.Berkas');
     }
 }

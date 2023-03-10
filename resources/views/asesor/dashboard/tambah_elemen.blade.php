@@ -40,9 +40,13 @@
             <div class="col profil-section">
                 <div class="row">
                     <div class="col-6 pb-4">
-                <a class="text-white rounded-pill fw-semibold btn btn-sm bg-primary" href="#" data-bs-toggle="modal"
+                <div class="buttons">
+                    <a class="btn btn-sm btn-primary rounded-pill icon icon-left" href="#!" data-bs-toggle="modal"
+                    data-bs-target="#modalTambahElemen"><i class="fa fa-plus fa-xs"></i>Tambah Elemen</a>
+                </div>
+                {{-- <a class="text-white rounded-pill fw-semibold btn btn-sm bg-primary" href="#!" data-bs-toggle="modal"
                     data-bs-target="#modalTambahElemen">Tambah Elemen
-                </a>
+                </a> --}}
                     </div>
                     <div class="col-md-12">
                         <div class="col mb-5">
@@ -53,10 +57,10 @@
                                 {{-- <li class="d-flex justify-content-between align-items-start border-0 fw-semibold"> --}}
                                     <div class="card">
                                         <div class="card-body">
-                                    <div class="ms-2 me-auto">
+                                    <div class="col mb-3">
                                         <div class="row mt-3">
                                         <div class="col-auto "><h5>Elemen : {{ $index1+1 }}.</h5></div>
-                                        <div class="col-auto kriteria-isi" style="width: 51.93222%">
+                                        <div class="col-auto" style="width: 49.73222%">
                                             <a href="" class="ubah-judul-elemen" data-type="text"
                                                 data-pk="{{ $data_sub_elemen->id }}" style="color:black;"
                                                 data-title="Enter name">
@@ -64,16 +68,15 @@
                                             </a>
                                         </div>
                                         <div class="col-auto">
-                                        <span class="badge bg-info rounded-pill">
-                                            <a class="text-white fw-semibold tambah_isi_elemen"
-                                                id-elemen="{{ $data_sub_elemen->id }}" href="#" data-bs-toggle="modal"
-                                                data-bs-target="#modalTambahIsiElemenKonten">+ Sub Elemen
-                                            </a>
-                                        </span>
-                                        <span id-elemen="{{ $data_sub_elemen->id }}"
-                                            class="badge bg-danger rounded-pill click-hapus-elemen">
-                                            <a class="text-white" href="#!">Hapus</a>
-                                        </span>
+                                            <div class="buttons">
+                                                <a class="btn btn-sm btn-primary rounded-pill text-white fw-semibold tambah_isi_elemen"
+                                                    id-elemen="{{ $data_sub_elemen->id }}" href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#modalTambahIsiElemenKonten"><i class="fa fa-plus fa-xs"></i> Sub Elemen
+                                                </a>
+                                                <a class="btn btn-sm btn-danger rounded-pill text-white fw-semibold click-hapus-elemen"
+                                                    id-elemen="{{ $data_sub_elemen->id }}" href="#!"><i class="fa fa-trash fa-xs"></i> Hapus
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -101,8 +104,20 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <span class="badge bg-warning rounded-pill">
-                                                            <a class="text-white fw-semibold tambah_isi_elemen"
+                                                        <div class="buttons">
+                                                            <a class="btn btn-sm btn-warning text-black rounded-pill fw-semibold tambah_isi_elemen"
+                                                                href="{{route('asesor.Dashboard.IsiSubElemen', $data_isi_sub_elemen->id)}}">
+                                                                <i class="fa fa-eye fa-xs"></i> Detail
+                                                            </a>
+
+                                                            <a class="btn btn-sm btn-danger rounded-pill text-white fw-semibold click-hapus-isi-elemen"
+                                                                href="#!" id-isi-elemen="{{ $data_isi_sub_elemen->id }}">
+                                                                <i class="fa fa-trash fa-xs"></i> Hapus
+                                                            </a>
+                                                        </div>
+
+                                                        {{-- <span class="badge bg-warning rounded-pill">
+                                                            <a class="text-white fw-semibold"
                                                                 id-elemen="{{ $data_sub_elemen->id }}" href="{{route('asesor.Dashboard.IsiSubElemen', $data_isi_sub_elemen->id)}}">Detail
                                                             </a>
                                                         </span>
@@ -111,7 +126,7 @@
                                                             <a href="#!" class="click-hapus-isi-elemen" id-isi-elemen="{{ $data_isi_sub_elemen->id }}" style="color: rgb(255, 255, 255)">
                                                                 Hapus
                                                             </a>
-                                                        </span>
+                                                        </span> --}}
                                                         {{-- <a href="#!" class="click-hapus-isi-elemen" id-isi-elemen="{{ $data_isi_sub_elemen->id }}" style="color: rgba(255, 0, 0, 0.564)">
                                                             <i class="fas fa-plus"></i>
                                                         </a>
@@ -126,11 +141,9 @@
                                         @endif
                                         @endforeach
                                     </div>
-                                {{-- </li> --}}
                             </div>
                         </div>
-                                @endforeach
-                            {{-- </ol> --}}
+                    @endforeach
                 </div>
                         {{-- <table class="table table-striped" id="table-elemen-unit-kompetensi">
                             <thead>
@@ -151,7 +164,7 @@
 {{-- MODAL TAMBAH ELEMEN --}}
 <div class="modal fade text-left" id="modalTambahElemen" role="dialog" aria-labelledby="myModalLabel33"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel33">Tambah Materi Uji Kompetensi</h4>
@@ -164,10 +177,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Elemen : Judul Elemen Unit Kompetensi</label>
+                        
                         <div class="input-group col-xs-12">
                             <input type="hidden" class="unit_kompetensi_id" name="unit_kompetensi_id" hidden>
-                            <input type="text" class="form-control rounded-5" name="judul_unit_kompetensi_sub[]">
-                            <span class="input-group-append">
+                            <input type="text" class="form-control rounded-5" name="judul_unit_kompetensi_sub[]" class="form-control rounded-4" required>
+                            <span class="input-group-append d-flex align-items-center" style="padding: 8px;">
                                 <button class="file-upload-browse btn btn-primary btn-tambah-elemen"
                                     type="button">+</button>
                             </span>
@@ -175,20 +189,23 @@
                                 <label class="text-danger error-text judul_unit_kompetensi_sub_error"></label>
                             </div>
                         </div>
+
+
                     </div>
                     <div class="input-elemen"></div>
                 </div>
 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Batal</span>
                     </button>
-                    <button id="simpan-elemen-btn" type="submit" class="btn btn-primary ml-1">
-                        <i id="search-button"></i>
-                        <span id="text-simpan" class="d-none d-sm-block">Simpan</span>
+                    <button id="simpan-elemen-btn" type="submit" class="btn btn-primary ml-1 rounded-pill">
+                        <i id="search-button-elemen"></i>
+                        <span id="text-simpan-elemen" class="d-none d-sm-block">Simpan</span>
                     </button>
+
                 </div>
             </form>
         </div>
@@ -198,7 +215,7 @@
 {{-- MODAL EDIT ELEMEN --}}
 {{-- <div class="modal fade text-left" id="modalUbahElemen" role="dialog" aria-labelledby="myModalLabel33"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel33">Ubah Elemen Konten</h4>
@@ -219,11 +236,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Batal</span>
                     </button>
-                    <button type="submit" class="btn btn-primary ml-1">
+                    <button type="submit" class="btn btn-primary ml-1 rounded-pill">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Simpan</span>
                     </button>
@@ -236,7 +253,7 @@
 {{-- MODAL TAMBAH ELEMEN KONTEN --}}
 <div class="modal fade text-left" id="modalTambahIsiElemenKonten" role="dialog" aria-labelledby="myModalLabel33"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel33">Tambah Elemen Konten</h4>
@@ -252,8 +269,8 @@
                         <div class="input-group col-xs-12">
                             <input type="hidden" name="unit_kompetensi_sub_id" class="elemen_unit_kompetensi_sub_id"
                                 hidden>
-                            <input type="text" class="form-control rounded-5" name="judul_unit_kompetensi_isi[]">
-                            <span class="input-group-append">
+                            <input type="text" class="form-control rounded-5" name="judul_unit_kompetensi_isi[]" class="form-control rounded-4" required>
+                            <span class="input-group-append d-flex align-items-center" style="padding: 8px;">
                                 <button class="file-upload-browse btn btn-primary btn-tambah-isi-elemen"
                                     type="button">+</button>
                             </span>
@@ -265,11 +282,11 @@
                     <div class="input-isi-elemen"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Batal</span>
                     </button>
-                    <button id="simpan-isi-elemen-btn" type="submit" class="btn btn-primary ml-1">
+                    <button id="simpan-isi-elemen-btn" type="submit" class="btn btn-primary ml-1 rounded-pill">
                         <i id="search-button-isi-elemen"></i>
                         <span id="text-simpan-isi-elemen" class="d-none d-sm-block">Simpan</span>
                     </button>
@@ -298,7 +315,7 @@
 
     function tambahElemen() {
         var elemen =
-            '<div class="form-group"><div class="input-group col-xs-12"><input type="text" class="form-control rounded-5" name="judul_unit_kompetensi_sub[]"><span class="input-group-append"><button class="file-upload-browse btn btn-danger hapusElemen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text judul_unit_kompetensi_isi_error"></label></div></div></div>';
+            '<div class="form-group"><div class="input-group col-xs-12"><input type="text" class="form-control rounded-5" name="judul_unit_kompetensi_sub[]" class="form-control rounded-4" required><span class="input-group-append d-flex align-items-center" style="padding: 8px;"><button class="file-upload-browse btn btn-danger hapusElemen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text judul_unit_kompetensi_isi_error"></label></div></div></div>';
         $('.input-elemen').append(elemen);
     };
 
@@ -314,7 +331,7 @@
 
     function tambahIsiElemen() {
         var isi_elemen =
-            '<div class="form-group"><div class="input-group col-xs-12"><input type="text" class="form-control rounded-5" name="judul_unit_kompetensi_isi[]"><span class="input-group-append"><button class="file-upload-browse btn btn-danger hapusIsiElemen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text judul_unit_kompetensi_isi_error"></label></div></div></div>';
+            '<div class="form-group"><div class="input-group col-xs-12"><input type="text" class="form-control rounded-5" name="judul_unit_kompetensi_isi[]" class="form-control rounded-4" required><span class="input-group-append d-flex align-items-center" style="padding: 8px;"><button class="file-upload-browse btn btn-danger hapusIsiElemen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text judul_unit_kompetensi_isi_error"></label></div></div></div>';
         $('.input-isi-elemen').append(isi_elemen);
     };
 
@@ -324,7 +341,7 @@
     });
 
     // function tambahElemen() {
-    //     var elemen ='<div class="form-group"><label>Konten Elemen : Konten Elemen Unit Kompetensi</label><div class="input-group col-xs-12"><input type="text" class="form-control rounded-5" name="judul_unit_kompetensi_isi[]"><span class="input-group-append"><button class="file-upload-browse btn btn-danger hapusElemen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text judul_unit_kompetensi_isi_error"></label></div></div></div>';
+    //     var elemen ='<div class="form-group"><label>Konten Elemen : Konten Elemen Unit Kompetensi</label><div class="input-group col-xs-12"><input type="text" class="form-control rounded-5" name="judul_unit_kompetensi_isi[]"><span class="input-group-append d-flex align-items-center" style="padding: 8px;"><button class="file-upload-browse btn btn-danger hapusElemen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text judul_unit_kompetensi_isi_error"></label></div></div></div>';
     //     $('.input-elemen').append(elemen);
     // };
 
@@ -527,9 +544,9 @@
     // TAMBAH ELEMEN
     $('#formTambahElemen').on('submit', function (e) {
         e.preventDefault();
-
-        var $search = $("#search-button")
         // $("#simpan-elemen-btn").attr('disabled','disabled');
+        $("#simpan-elemen-btn").attr('disabled','disabled');
+        var $search = $("#search-button-elemen")
         
         $.ajax({
             url: $(this).attr('action'),
@@ -548,16 +565,26 @@
                         $('label.' + prefix + '_error').text(val[0]);
                         // $('span.'+prefix+'_error').text(val[0]);
                     });
-                } else if (data.status == 1) {
-                    swal({
-                        title: "Berhasil",
-                        text: `${data.msg}`,
-                        icon: "success",
-                        buttons: true,
-                        successMode: true,
-                    }),
-                    location.reload();
-                }
+                } 
+                else if (data.status == 1) {
+                        
+                    $("#search-button-elemen").addClass("fa fa-spinner fa-spin")
+                    $("#text-simpan-elemen").html('')
+
+                    setTimeout(function() {
+                        for (var i = 0; i < 10000; i++) {
+                            $("#modalTambahElemen").modal('hide')
+                            $search.addClass("fa-search").removeClass("fa fa-spinner fa-spin")
+                        }
+                        swal({
+                            title: "Berhasil",
+                            text: `${data.msg}`,
+                            icon: "success",
+                            successMode: true,
+                        }),
+                        location.reload();
+                    }, 2500);
+                } 
             }
         });
     });
@@ -566,7 +593,7 @@
     $('.tambah_isi_elemen').click(function () {
 
         var id_elemen = $(this).attr('id-elemen')
-        var $search = $("#search-button")
+        var $search = $("#search-button-isi-elemen")
         $('.elemen_unit_kompetensi_sub_id').val(id_elemen);
 
         $('#formTambahIsiElemenKonten').on('submit', function (e) {
@@ -603,7 +630,6 @@
                                 title: "Berhasil",
                                 text: `${data.msg}`,
                                 icon: "success",
-                                buttons: true,
                                 successMode: true,
                             }),
                             location.reload();
@@ -648,7 +674,6 @@
                                     title: "Berhasil",
                                     text: `${response.msg}`,
                                     icon: "success",
-                                    buttons: true,
                                     successMode: true,
                                 }),
                                 // table_elemen_unit_kompetensi.ajax.reload(null, false)

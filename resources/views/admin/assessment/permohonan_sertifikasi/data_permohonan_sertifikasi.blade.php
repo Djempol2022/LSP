@@ -12,7 +12,7 @@
     <section class="section">
         <div class="card">
             <div class="row">
-                <div class="col-md-6 stretch-card">
+                <div class="col-md-4 stretch-card">
                     <div class="card-body">
                         <select class="form-control form-control-sm filter" id="filter-jurusan">
                             <option value="">Semua Jurusan</option>
@@ -136,9 +136,14 @@
                 "class": "none",
                 "render": function (data, type, row, meta) {
                     let tampilan;
-                    tampilan = `<span class="badge bg-info rounded-pill">
-                                    <a class="text-white" href="/admin/detail-permohonan-sertifikasi-kompetensi/${row.user_id}">Detail</a>
-                                </span>`
+                    tampilan = `
+                                <div class="buttons">
+                                    <a class="btn icon icon-left btn-sm btn-warning rounded-pill fw-semibold text-black"
+                                        href="/admin/detail-permohonan-sertifikasi-kompetensi/${row.user_id}">
+                                        <i class="fa fa-eye fa-xs"></i> Detail
+                                    </a>
+                                </div>
+                                `
             return tampilan;
           }
         },
@@ -153,7 +158,14 @@
             $('#tambah_edit_sertifikasi').html("");
         }else{
             $('#tambah_edit_sertifikasi').html(
-                `<span class="badge bg-info rounded-pill"><a class="text-white" href="/admin/data-sertifikasi-jurusan/${data_jurusan}">Data Sertifikasi ${nama_jurusan}</a></span>`
+                `
+                <div class="buttons">
+                    <a class="btn icon icon-left btn-sm btn-primary rounded-pill fw-semibold"
+                        href="/admin/data-sertifikasi-jurusan/${data_jurusan}">
+                        <i class="fa fa-plus fa-xs"></i> Data Sertifikasi ${nama_jurusan}
+                    </a>
+                </div>
+                `
                 );
         }
     })

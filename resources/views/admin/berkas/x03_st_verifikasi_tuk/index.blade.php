@@ -15,7 +15,7 @@
       <form action="{{ route('admin.Berkas.X03STVerifikasiTUK.Add') }}" method="POST">
         @csrf
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div class="text-center d-flex flex-column">
             <h6 class="mb-0 text-decoration-underline font-extrabold">SURAT TUGAS</h6>

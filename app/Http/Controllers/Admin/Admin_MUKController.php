@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Jurusan;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\MateriUjiKompetensi;
 use App\Http\Controllers\Controller;
@@ -50,11 +51,14 @@ class Admin_MUKController extends Controller
 
     public function tambah_muk(Request $request){
         $validator = Validator::make($request->all(), [
-                'muk'=>'required',
+                'muk'=>'required|unique:muk,slug,except,id',
                 'jurusan_id' => 'required'
+
             ],[
                 'muk.required'=> 'Wajib diisi', // custom message
+                'muk.unique'=> 'Data telah ada',
                 'jurusan_id.required'=> 'Wajib diisi' // custom message
+
             ]);
 
             if(!$validator->passes()){
@@ -65,6 +69,7 @@ class Admin_MUKController extends Controller
             }else{
                 $tambah_muk = MateriUjiKompetensi::create([
                     'muk' => $request->muk,
+                    'slug' => Str::slug($request->muk),
                     'jurusan_id' => $request->jurusan_id
                 ]);
                 
@@ -97,6 +102,7 @@ class Admin_MUKController extends Controller
         }else{
             $ubah_muk = MateriUjiKompetensi::where('id', $request->id)->update([
                 'muk' => $request->muk,
+                'slug' => Str::slug($request->muk),
                 'jurusan_id' => $request->jurusan_id
             ]);
             

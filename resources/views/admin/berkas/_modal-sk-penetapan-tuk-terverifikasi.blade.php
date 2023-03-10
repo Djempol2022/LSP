@@ -1,13 +1,13 @@
 <div class="modal fade" id="modalDetailSKPenetapan" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
+  <div class="modal-dialog modal-dialog-scrollable" style="max-width: 90vw; overflow-y: auto">
+    <div class="modal-content" style="overflow-x: auto">
       <div class="modal-header">
         <h1 class="modal-title fs-5">SK Penetapan TUK Terverifikasi</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card px-5 overflow-x-auto mx-auto" style="width: 56rem">
           @include('layout.header-berkas')
           <div class="text-center d-flex flex-column">
             <h6 class="mb-0">SURAT KEPUTUSAN</h6>
@@ -134,7 +134,7 @@
         </div>
 
         {{-- lembar 2 --}}
-        <div class="card p-5">
+        <div class="card px-5 overflow-x-auto mx-auto" style="width: 56rem">
           @include('layout.header-berkas')
           <div class="text-left d-flex flex-column mb-3">
             <h6 class="mb-0 fw-light">Lampiran SK</h6>

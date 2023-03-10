@@ -19,7 +19,7 @@
                 <h5>Tambah Isi Sub Elemen</h5>
                 <form action="{{ route('asesor.TambahIsiSubElemen') }}" method="POST" id="formTambahIsiSubElemenKonten">
                     <div class="row my-4">
-                        <div class="col-md-10">
+                        <div class="col-md-9">
                             @csrf
                             <input name="unit_kompetensi_isi_id" value="{{$id}}" type="hidden" hidden>
                             <textarea type="text" class="form-control" rows="3" name="judul_unit_kompetensi_isi_2" placeholder="Isikan Sub Elemen"></textarea>
@@ -27,8 +27,13 @@
                                 <label class="text-danger error-text judul_unit_kompetensi_isi_2_error"></label>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="text-white fw-semibold btn btn-sm bg-primary">+ Tambah Elemen</button>
+                        <div class="col-md-3">
+                            <button id="simpan-isi-2-elemen-btn" type="submit" class="btn btn-primary ml-1 icon icon-left text-white fw-semibold rounded-pill btn btn-sm bg-primary">
+                                <i id="search-button-isi-2-elemen"></i>
+                                <span id="text-simpan-isi-2-elemen"><i class="fa fa-plus fa-xs"></i> Tambah Elemen</span>
+                            </button>
+
+                            {{-- <button type="submit" class="icon icon-left text-white fw-semibold rounded-pill btn btn-sm bg-primary"><i class="fa fa-plus fa-xs"></i> Tambah Elemen</button> --}}
                     </div>
                 </form>
                 </div>
@@ -49,8 +54,8 @@
                                                     <table class="table table-hover">
                                                         <thead>
                                                           <tr>
-                                                            <th scope="col">Isi Sub Elemen</th>
-                                                            <th scope="col">Aksi</th>
+                                                            <th width="80%">Isi Sub Elemen</th>
+                                                            <th>Aksi</th>
                                                           </tr>
                                                         </thead>
                                                         <tbody>
@@ -59,15 +64,14 @@
                                                             <td>
                                                                 <a href="" class="ubah-judul-elemen-isi2" data-type="text"
                                                                     data-pk="{{ $data_isi_sub_elemen->id}}" style="color:black;"
-                                                                    data-title="Enter name">{{ $data_isi_sub_elemen->judul_unit_kompetensi_isi_2 ?? ''}}
+                                                                    data-title="Masukkan Isi Elemen">{{ $data_isi_sub_elemen->judul_unit_kompetensi_isi_2 ?? ''}}
                                                                 </a>
                                                             </td>
                                                             <td>
-                                                                <span id-elemen="{{ $data_isi_sub_elemen->id }}"
-                                                                    class="badge bg-danger rounded-pill">
-                                                                <a href="#!" class="click-hapus-isi-2-sub-elemen" id-isi2-elemen="{{ $data_isi_sub_elemen->id }}" 
-                                                                    style="color: rgb(255, 255, 255)">Hapus
-                                                                </a>
+                                                                <span id-elemen="{{ $data_isi_sub_elemen->id }}">
+                                                                    <a class="btn btn-sm btn-danger rounded-pill text-white fw-semibold click-hapus-isi-2-sub-elemen" href="#!" id-isi2-elemen="{{ $data_isi_sub_elemen->id }}">
+                                                                        <i class="fa fa-trash fa-xs"></i> Hapus
+                                                                    </a>
                                                                 </span>
                                                             </td>
                                                           </tr>
@@ -94,7 +98,7 @@
 {{-- MODAL TAMBAH ELEMEN --}}
 <div class="modal fade text-left" id="modalTambahElemen" role="dialog" aria-labelledby="myModalLabel33"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel33">Tambah Materi Uji Kompetensi</h4>
@@ -124,11 +128,11 @@
 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Batal</span>
                     </button>
-                    <button type="submit" class="btn btn-primary ml-1 submit-tambah-muk">
+                    <button type="submit" class="btn btn-primary ml-1 submit-tambah-muk rounded-pill">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Simpan</span>
                     </button>
@@ -149,7 +153,9 @@
 
     // TAMBAH ISI ELEMEN KONTEN
     $('#formTambahIsiSubElemenKonten').on('submit', function (e) {
+        var $search = $("#search-button-isi-elemen")
             e.preventDefault();
+            $("#simpan-isi-2-elemen-btn").attr('disabled','disabled');
             $.ajax({
                 url: $(this).attr('action'),
                 method: $(this).attr('method'),
@@ -162,20 +168,28 @@
                 },
                 success: function (data) {
                     if (data.status == 0) {
+                        $("#simpan-isi-2-elemen-btn").removeAttr('disabled');
                         $.each(data.error, function (prefix, val) {
                             $('label.' + prefix + '_error').text(val[0]);
                             // $('span.'+prefix+'_error').text(val[0]);
                         });
                     } else if (data.status == 1) {
-                        swal({
+                        
+                        $("#search-button-isi-2-elemen").addClass("fa fa-spinner fa-spin")
+                        $("#text-simpan-isi-2-elemen").html('')
+
+                        setTimeout(function() {
+                            for (var i = 0; i < 10000; i++) {
+                                $search.addClass("fa-search").removeClass("fa fa-spinner fa-spin")
+                            }
+                            swal({
                                 title: "Berhasil",
                                 text: `${data.msg}`,
                                 icon: "success",
-                                buttons: true,
                                 successMode: true,
                             }),
-                            // table_elemen_unit_kompetensi.ajax.reload(null, false)
-                    location.reload();
+                            location.reload();
+                        }, 2500);
                     }
                 }
             });

@@ -16,7 +16,7 @@
       <form action="{{ route('admin.Berkas.DFHadirAsesorPleno.Add') }}" method="POST">
         @csrf
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">DAFTAR HADIR ASESOR</h6>

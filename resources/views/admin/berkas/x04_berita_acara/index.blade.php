@@ -15,7 +15,7 @@
       <form action="{{ route('admin.Berkas.X04BeritaAcara.Add') }}" method="POST">
         @csrf
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div class="text-center d-flex flex-column">
             <h6 class="mb-0 font-extrabold">SURAT TUGAS</h6>
@@ -33,49 +33,51 @@
           <div style="margin-top: 20px">
             <ol style="list-style: lower-alpha">
               <li>Telah dilaksanakan verifikasi calon Tempat Uji Kompetensi untuk pelaksanaan Uji Kompetensi. <br />
-                <table>
-                  <tr>
-                    <td style="width: 42%">Kompetensi/Paket Keahlian</td>
-                    <td style="width: 3%">:</td>
-                    <td style="width: 55%">
-                      <select name="jurusan" id="jurusan" class="form-control @error('jurusan') is-invalid @enderror"
-                        onchange="selectAuto(this, 'jurusan')" required>
-                      </select>
-                      @error('jurusan')
-                        <div class="text-danger">
-                          {{ $message }}
-                        </div>
-                      @enderror
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Paket Ujian</td>
-                    <td>:</td>
-                    <td>
-                      <select name="skema_sertifikasi" id="skema_sertifikasi"
-                        class="form-control @error('skema_sertifikasi') is-invalid @enderror"
-                        onchange="selectAuto(this, 'skema_sertifikasi')" required>
-                        @error('skema_sertifikasi')
+                <div class="table-responsive">
+                  <table style="width: 100%">
+                    <tr>
+                      <td style="width: 42%">Kompetensi/Paket Keahlian</td>
+                      <td style="width: 3%">:</td>
+                      <td style="width: 55%">
+                        <select name="jurusan" id="jurusan" class="form-control @error('jurusan') is-invalid @enderror"
+                          onchange="selectAuto(this, 'jurusan')" required>
+                        </select>
+                        @error('jurusan')
                           <div class="text-danger">
                             {{ $message }}
                           </div>
                         @enderror
-                      </select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Rencana Pelaksanaan</td>
-                    <td>:</td>
-                    <td>
-                      ..............................................................................................................
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Rekomendasi</td>
-                    <td>:</td>
-                    <td style="font-weight: bold">Sangat layak/layak/belum layak *</td>
-                  </tr>
-                </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Paket Ujian</td>
+                      <td>:</td>
+                      <td>
+                        <select name="skema_sertifikasi" id="skema_sertifikasi"
+                          class="form-control @error('skema_sertifikasi') is-invalid @enderror"
+                          onchange="selectAuto(this, 'skema_sertifikasi')" required>
+                          @error('skema_sertifikasi')
+                            <div class="text-danger">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Rencana Pelaksanaan</td>
+                      <td>:</td>
+                      <td>
+                        ..............................................................................................................
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Rekomendasi</td>
+                      <td>:</td>
+                      <td style="font-weight: bold">Sangat layak/layak/belum layak *</td>
+                    </tr>
+                  </table>
+                </div>
               </li>
               <li>
                 Catatan selama pelaksanaan verifikasi <br />
@@ -87,7 +89,7 @@
           </div>
 
           <div style="margin-top: 20px">
-            <table style="width: 100%; margin-left: 28px">
+            <table style="width: 90%; margin-left: 28px">
               <tr>
                 <td colspan="2">Yang melakukan verifikasi</td>
               </tr>

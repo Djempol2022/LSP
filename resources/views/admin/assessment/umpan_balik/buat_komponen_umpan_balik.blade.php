@@ -26,13 +26,15 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <span class="badge bg-info rounded-pill">
-                        <a class="text-white" href="#" data-bs-toggle="modal"
-                            data-bs-target="#tambahKomponenUmpanBalik" onclick="functionTambahUmpanBalik();">+ Komponen
+                    
+                    <div class="buttons">
+                        <a class="btn icon icon-left btn-sm btn-primary rounded-pill fw-semibold"
+                            href="#" data-bs-toggle="modal"
+                            data-bs-target="#tambahKomponenUmpanBalik" onclick="functionTambahUmpanBalik();">
+                            <i class="fa fa-plus fa-xs"></i> Komponen
                             Umpan Balik
                         </a>
-                    </span>
-
+                    </div>
                     {{-- MODAL TAMBAH KOMPONEN UMPAN BALIK --}}
                     <div class="modal fade text-left" id="tambahKomponenUmpanBalik" data-bs-backdrop="static"
                         data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
@@ -70,11 +72,11 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                        <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                                             <i class="bx bx-x d-block d-sm-none"></i>
                                             <span class="d-none d-sm-block">Batal</span>
                                         </button>
-                                        <button type="submit" class="btn btn-primary ml-1">
+                                        <button type="submit" class="btn btn-primary ml-1 rounded-pill">
                                             <i class="bx bx-check d-block d-sm-none"></i>
                                             <span class="d-none d-sm-block">Simpan</span>
                                         </button>
@@ -103,7 +105,7 @@
             {{-- MODAL EDIT KOMPONEN UMPAN BALIK --}}
             <div class="modal fade text-left" id="modal-EditKomponenUmpanBalik" data-bs-backdrop="static"
                 data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="myModalLabel33">Ubah Komponen Umpan Balik</h4>
@@ -125,11 +127,11 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light-secondary close" data-bs-dismiss="modal">
+                                <button type="button" class="btn btn-light-secondary close rounded-pill" data-bs-dismiss="modal">
                                     <i class="bx bx-x d-block d-sm-none"></i>
                                     <span class="d-none d-sm-block">Batal</span>
                                 </button>
-                                <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk">
+                                <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk rounded-pill">
                                     <i class="bx bx-check d-block d-sm-none"></i>
                                     <span class="d-none d-sm-block">Simpan</span>
                                 </button>
@@ -210,12 +212,20 @@
                     "class": "text-nowrap",
                     "render": function(data, type, row, meta) {
                         let tampilan;
-                        tampilan = `<span onclick="editKomponenUmpanBalik(${row.id})" class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="#!">Edit</a>
-                                </span>
-                                <span id-komponen-umpan-balik = "${row.id}" class="badge bg-danger rounded-pill hapus_komponen_umpan_balik">
-                                    <a class="text-white" href="#!">Hapus</a>
-                                </span>`
+                        tampilan = `
+                                <div class="buttons">
+                                    <a onclick="editKomponenUmpanBalik(${row.id})" class="btn icon icon-left btn-sm btn-info rounded-pill fw-semibold"
+                                        href="#!">
+                                        <i class="fa fa-eye fa-xs"></i> Edit
+                                    </a>
+
+                                    <a id-komponen-umpan-balik = "${row.id}" class="btn icon icon-left btn-sm btn-danger rounded-pill fw-semibold hapus_komponen_umpan_balik"
+                                        href="#!">
+                                        <i class="fa fa-trash fa-xs"></i> Hapus
+                                    </a>
+                                </div>
+                                
+                                `
                         return tampilan;
                     }
                 },

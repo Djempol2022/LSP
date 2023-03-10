@@ -60,7 +60,7 @@
                                 <label class="text-danger"><small class="error-text email_error"></small></label>
                             </div>
                         </div>
-                        <div class="mb-2">
+                        {{-- <div class="mb-2">
                             <label for="password_user" class="register-label">Password</label>
                             <input class="form-control login-input-text" type="password" name="password" id="password_user"
                                 placeholder="Masukkan Password Anda Disini..." value="{{ old('password') }}">
@@ -68,7 +68,24 @@
                                 <label class="text-danger"><small class="error-text password_error">*minimal 5
                                         huruf</small></label>
                             </div>
+                        </div> --}}
+                        <div class="mb-2">
+                            <label for="password_user" class="login-label">Password</label>
+                                <div class="input-group has-validation">
+                                    <input name="password" type="password" class="form-control login-input-text" id="password_user" value="{{ old('password') }}"/>
+                                    <span class="input-group-text" onclick="password_login_show();">
+                                        <i class="fas fa-eye" id="show_eye"></i>
+                                        <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+                                    </span>
+                                    <div class="input-group has-validation">
+                                        <label class="text-danger error-text password_error"></label>
+                                    </div>
+                                </div>
+                            {{-- <label for="password_user" class="login-label">Password</label>
+                            <input class="form-control login-input-text" name="password" type="password" id="password_user"
+                                placeholder="Masukkan Password Anda Disini..."> --}}
                         </div>
+
                         <div class="my-2">
                             <button type="submit" class="tombol-primary-max">Registrasi</button>
                         </div>
@@ -85,6 +102,21 @@
 @endsection
 @section('script')
     <script>
+        function password_login_show() {
+            var x = document.getElementById("password_user");
+            var show_eye = document.getElementById("show_eye");
+            var hide_eye = document.getElementById("hide_eye");
+            hide_eye.classList.remove("d-none");
+            if (x.type === "password") {
+                x.type = "text";
+                show_eye.style.display = "none";
+                hide_eye.style.display = "block";
+            } else {
+                x.type = "password";
+                show_eye.style.display = "block";
+                hide_eye.style.display = "none";
+            }
+        }
         $('#formRegister').on('submit', function(e) {
             e.preventDefault();
             $.ajax({

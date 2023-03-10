@@ -90,12 +90,14 @@
                     "class": "text-nowrap",
                     "render": function(data, type, row, meta) {
                         let tampilan;
-                        tampilan = `<span onclick="editKomponenUmpanBalik(${row.id})" class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="#!">Edit</a>
-                                </span>
-                                <span id-komponen-umpan-balik = "${row.id}" class="badge bg-danger rounded-pill hapus_komponen_umpan_balik">
-                                    <a class="text-white" href="#!">Hapus</a>
-                                </span>`
+                        tampilan = `
+                                    <div class="buttons">
+                                        <a class="btn icon icon-left btn-sm btn-info rounded-pill fw-semibold"
+                                        href="/admin/detail-rekapan-umpan-balik/${row.id}">
+                                            <i class="fa fa-eye fa-xs"></i> Detail
+                                        </a>
+                                    </div>
+                                    `
                         return tampilan;
                     }
                 },

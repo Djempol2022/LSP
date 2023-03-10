@@ -90,10 +90,10 @@
                             <p class="fw-bold">Kualifikasi Pendidikan</p>
                             <span>{{ $data_permohonan_user_sertifikasi->relasi_user_detail->relasi_kualifikasi_pendidikan->pendidikan ?? ''}}</span>
                         </div>
-                        <div class="col pb-4" id="nomor_urut">
-                            <p class="fw-bold">Nomor Urut Peserta</p>
-                                @isset ($data_permohonan_user_sertifikasi->relasi_sertifikasi->nomor_urut)
-                                    <p>{{ $data_permohonan_user_sertifikasi->relasi_sertifikasi->nomor_urut  ?? '' }}</p>
+                        <div class="col pb-4" id="no_reg">
+                            <p class="fw-bold">Nomor Urut Asesi</p>
+                                @isset ($data_permohonan_user_sertifikasi->relasi_user_detail->no_reg)
+                                    <p>{{ $data_permohonan_user_sertifikasi->relasi_user_detail->no_reg  ?? '' }}</p>
                                 @endif
                             <a href="#!" class="btn btn-sm btn-primary mt-0" data-bs-toggle="modal"
                                 data-bs-target="#modalNomorUrutAsesi" id="ubahOrTambahUbahOrTambahNomorUrut" style="font-size: 60%">
@@ -334,7 +334,7 @@
         <div class="modal-dialog modal-dialog-centered modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel33">Persetujuan Admin</h4>
+                    <h4 class="modal-title" id="myModalLabel33">Nomor Registrasi Asesi</h4>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <i data-feather="x"></i>
                     </button>
@@ -404,10 +404,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                             Batal
                         </button>
-                        <button type="submit" class="btn btn-primary ml-1" id="simpan">
+                        <button type="submit" class="btn btn-primary ml-1 rounded-pill" id="simpan">
                             Simpan
                         </button>
                     </div>
@@ -423,7 +423,7 @@
         <div class="modal-dialog modal-dialog-centered modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel33">Persetujuan Admin</h4>
+                    <h4 class="modal-title" id="myModalLabel33">Nomor Registrasi Asesi</h4>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <i data-feather="x"></i>
                     </button>
@@ -435,12 +435,15 @@
 
                         <input type="hidden" name="sertifikasi_id"
                             value="{{ $data_permohonan_user_sertifikasi->relasi_sertifikasi->id }}" hidden>
+
+                            <input type="hidden" name="user_asesi_id" value="{{ $data_permohonan_user_sertifikasi->id }}" hidden>
+
                         <div class="mb-3">
                             <label>Nomor Urut Asesi</label>
-                            <input type="text" name="nomor_urut" placeholder="Masukkan Nomor Urut Asesi"
+                            <input type="text" name="no_reg" placeholder="Masukkan Nomor Urut Asesi"
                                 class="form-control rounded-4">
                             <div class="input-group has-validation">
-                                <label class="text-danger error-text nomor_urut_error"></label>
+                                <label class="text-danger error-text no_reg_error"></label>
                             </div>
                         </div>
                     </div>
@@ -519,7 +522,7 @@
 
     // TAMBAH/UBAH NOMOR URUT ASESI
     $("#ubahOrTambahUbahOrTambahNomorUrut").on('click', function () {
-        $("#formNomorUrutAsesi [name='nomor_urut']").val(data_permohonan_sertifikasi.relasi_sertifikasi.nomor_urut)
+        $("#formNomorUrutAsesi [name='no_reg']").val(data_permohonan_sertifikasi.relasi_user_detail.no_reg)
         $('#formNomorUrutAsesi').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
@@ -547,7 +550,7 @@
                                 successMode: true,
                             }),
                             $("#modalNomorUrutAsesi").modal('hide')
-                            $("#nomor_urut").load(location.href + " #nomor_urut>*", "");
+                            $("#no_reg").load(location.href + " #no_reg>*", "");
                     }
                 }
             });

@@ -117,7 +117,7 @@
 
                                 <div class="col-auto kriteria-kompeten">
                                     <input class="form-check-input me-1" type="radio" name="status-{{ $isi->id }}"
-                                        value="kompeten" id="kompeten-{{ $isi->id }}"
+                                        value="kompeten" id="kompeten-{{ $isi->id }}"required
                                     @isset($data_status_kompeten_asesi->status)
                                     @disabled(true)
                                         {{ $data_status_kompeten_asesi->status === 'kompeten' ? 'checked' : '' }}>
@@ -128,7 +128,7 @@
                                 </div>
                                 <div class="col-auto kriteria-kompeten">
                                     <input class="form-check-input me-1" type="radio" name="status-{{ $isi->id }}"
-                                        value="belum kompeten" id="belum_kompeten-{{ $isi->id }}"
+                                        value="belum kompeten" id="belum_kompeten-{{ $isi->id }}"required
                                     @isset($data_status_kompeten_asesi->status)
                                     @disabled(true)
                                         {{ $data_status_kompeten_asesi->status === 'belum kompeten' ? 'checked' : '' }}>
@@ -193,6 +193,9 @@
                             <div class="col edit-profil mb-2 signature-pad" id="signature-pad">
                                 <canvas id="sig"></canvas>
                                 <input type="hidden" name="ttd_asesi" value="" id="ttd" hidden>
+                            </div>
+                            <div class="input-group has-validation">
+                                <label class="text-danger error-text ttd_asesi_error"></label>
                             </div>
                             <div class="col" id="signature-clear">
                                 <button type="button" class="btn-sm btn btn-danger mb-2" id="clear"><i

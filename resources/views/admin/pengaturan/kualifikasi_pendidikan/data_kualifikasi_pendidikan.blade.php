@@ -17,11 +17,12 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <span class="badge bg-info rounded-pill">
-                    <a class="text-white" href="#" data-bs-toggle="modal"
-                        data-bs-target="#modalTambahKualifikasiPendidikan">Tambah Kualifikasi Pendidikan
+                <div class="buttons">
+                    <a class="btn btn-sm icon icon-left btn-primary rounded-pill fw-semibold"
+                        href="#!" data-bs-toggle="modal" data-bs-target="#modalTambahKualifikasiPendidikan">
+                        <i class="fa fa-plus fa-sm"></i> Tambah Kualifikasi Pendidikan
                     </a>
-                </span>
+                </div>
             
                 {{-- MODAL TAMBAH --}}
             <div class="modal fade text-left" id="modalTambahKualifikasiPendidikan" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
@@ -48,10 +49,10 @@
                             </div>
                             
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light-secondary batal"
+                                <button type="button" class="btn btn-light-secondary batal rounded-pill"
                                     data-bs-dismiss="modal">Batal
                                 </button>
-                                <button type="submit" class="btn btn-primary ml-1 submit-tambah-muk">Simpan
+                                <button type="submit" class="btn btn-primary ml-1 submit-tambah-muk rounded-pill">Simpan
                                 </button>
                             </div>
                         </form>
@@ -75,7 +76,7 @@
 
         {{-- MODAL EDIT --}}
         <div class="modal fade text-left" id="editKualifikasiPendidikan" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+            <div class="modal-dialog modal-dialog-centered"
                 role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -99,10 +100,10 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-light-secondary batal"
+                            <button type="button" class="btn btn-light-secondary batal rounded-pill"
                                 data-bs-dismiss="modal">Batal
                             </button>
-                            <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk">Simpan
+                            <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk rounded-pill">Simpan
                             </button>
                         </div>
                     </form>
@@ -158,12 +159,18 @@
                 "render": function (data, type, row, meta) 
                 {
 					let tampilan;
-                    tampilan =  `<span onclick="editKualifikasiPendidikan(${row.id})" class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="#!">Edit</a>
-                                </span>
-                                <span id-kualifikasi-pendidikan="${row.id}" class="badge bg-danger rounded-pill hapus_kualifikasi_pendidikan">
-                                    <a class="text-white" href="#!">Hapus</a>
-                                </span>`
+                    tampilan =  `
+                                <div class="buttons">
+                                    <a class="btn btn-sm icon icon-left btn-primary rounded-pill fw-semibold"
+                                        href="#!" onclick="editKualifikasiPendidikan(${row.id})">
+                                        <i class="fa fa-pen fa-sm"></i> Edit
+                                    </a>
+                                    <a class="btn btn-sm icon icon-left btn-danger rounded-pill fw-semibold hapus_kualifikasi_pendidikan"
+                                        href="#!" id-kualifikasi-pendidikan="${row.id}">
+                                        <i class="fa fa-trash fa-sm"></i> Hapus
+                                    </a>
+                                </div>
+                                `
                     return tampilan;
                 }
             },
@@ -205,7 +212,6 @@
                             title: "Berhasil",
                             text: `${data.msg}`,
                             icon: "success",
-                            buttons: true,
                             successMode: true,
                         }),
                         table_kualifikasi_pendidikan.ajax.reload(null,false);
@@ -238,7 +244,6 @@
                             title: "Berhasil",
                             text: `${response.msg}`,
                             icon: "success",
-                            buttons: true,
                             successMode: true,
                         }),
                     table_kualifikasi_pendidikan.ajax.reload(null, false)
@@ -276,9 +281,9 @@
                         title: "Berhasil",
                         text: `${data.msg}`,
                         icon: "success",
-                        buttons: true,
                         successMode: true,
                     }),
+                    $("#form-TambahKualifikasiPendidikan")[0].reset()
                     table_kualifikasi_pendidikan.ajax.reload(null,false)
                     $("#modalTambahKualifikasiPendidikan").modal('hide')
                 }

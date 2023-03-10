@@ -17,11 +17,19 @@
         </nav>
         <div class="card">
             <div class="card-header">
-                <span class="badge bg-info rounded-pill" id="tombol-tambah-pengguna">
+
+                <div class="buttons">
+                    <a id="tombol-tambah-pengguna" class="btn btn-sm btn-primary rounded-pill text-white fw-semibold tambah_isi_elemen"
+                        href="#" data-bs-toggle="modal"
+                        data-bs-target="#modalTambahPengguna"><i class="fa fa-plus fa-xs"></i> Tambah Pengguna
+                    </a>
+                </div>
+                
+                {{-- <span class="badge bg-info rounded-pill" id="tombol-tambah-pengguna">
                     <a class="text-white" href="#" data-bs-toggle="modal"
                         data-bs-target="#modalTambahPengguna">Tambah Pengguna
                     </a>
-                </span>
+                </span> --}}
             
                 {{-- MODAL TAMBAH --}}
             <div class="modal fade text-left" id="modalTambahPengguna" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">>
@@ -107,10 +115,10 @@
                             </div>
                             
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal">
+                                <button type="button" class="btn btn-light-secondary batal rounded-pill" data-bs-dismiss="modal">
                                     Batal
                                 </button>
-                                <button type="submit" class="btn btn-primary ml-1">
+                                <button type="submit" class="btn btn-primary ml-1 rounded-pill">
                                     Simpan
                                 </button>
                             </div>
@@ -123,7 +131,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-4 mb-4">
                         <fieldset class="form-group">
                             <select class="form-select filter-role-pengguna" id="role-id">
                                 <option value="" disabled selected>Filter berdasarkan role</option>
@@ -134,7 +142,28 @@
                             </select>
                         </fieldset>
                     </div>
+                    <div class="col-md-4 mb-4">
+                        <fieldset class="form-group">
+                            <select class="form-select filter-jurusan" id="jurusan-id">
+                                <option value="" disabled selected>Filter berdasarkan jurusan</option>
+                                <option value="">Semua Pengguna</option>
+                                @foreach ($jurusan as $data_jurusan)
+                                    <option value="{{$data_jurusan['id']}}">{{$data_jurusan['jurusan']}}</option>
+                                @endforeach
+                            </select>
+                        </fieldset>
+                    </div>
                 </div>
+                {{-- <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <fieldset class="form-group">
+                            <select class="form-select filter-jurusan" id="jurusan-id">
+                                <option value="" disabled selected>Filter berdasarkan jurusan</option>
+                                <option value="">Semua Pengguna</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                </div> --}}
                 <table class="table table-striped" id="table-pengguna">
                     <thead>
                         <tr>
@@ -223,11 +252,11 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-light-secondary batal"
+                            <button type="button" class="btn btn-light-secondary batal rounded-pill"
                                 data-bs-dismiss="modal">
                                 Batal
                             </button>
-                            <button type="submit" class="btn btn-primary ml-1">
+                            <button type="submit" class="btn btn-primary ml-1 rounded-pill">
                                 Simpan
                             </button>
                         </div>
@@ -243,6 +272,7 @@
 <script>
     let list_pengguna = [];    
     let data_role_pengguna = $('#role-id').val();
+    let data_filter_jurusan = $('#jurusan-id').val();
     const table_pengguna = $('#table-pengguna').DataTable({
         "destroy":true,
         "pageLength": 10,
@@ -262,7 +292,8 @@
             url: "{{ route('admin.DataPengguna') }}",
             type: "POST",
             data:function(d){
-                d.role_pengguna = data_role_pengguna;
+                d.role_pengguna     = data_role_pengguna;
+                d.jurusan_pengguna  = data_filter_jurusan;
                 return d
             }
         },
@@ -342,12 +373,22 @@
                 "render": function (data, type, row, meta) 
                 {
 					let tampilan;
-                    tampilan =  `<span onclick="clickEditPengguna(${row.id})" class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="#!">Edit</a>
-                                </span>
-                                <span id-pengguna = "${row.id}" class="badge bg-danger rounded-pill hapus_pengguna">
-                                    <a class="text-white" href="#!">Hapus</a>
-                                </span>`
+                    if(row.role_id != 1){
+                        tampilan =  `
+                                <div class="buttons">
+                                    <a class="btn btn-sm icon icon-left btn-info rounded-pill fw-semibold"
+                                        href="#!" onclick="clickEditPengguna(${row.id})">
+                                        <i class="fa fa-pen fa-sm"></i> Edit
+                                    </a>
+                                    <a class="btn btn-sm icon icon-left btn-danger rounded-pill fw-semibold hapus_pengguna"
+                                        id-pengguna = "${row.id}"href="#!">
+                                        <i class="fa fa-trash fa-sm"></i> Hapus
+                                    </a>
+                                </div>
+                                `
+                    }else{
+                        tampilan = ''
+                    }
                     return tampilan;
                 }
             },
@@ -406,7 +447,6 @@
                             title: "Berhasil",
                             text: `${data.msg}`,
                             icon: "success",
-                            buttons: true,
                             successMode: true,
                         }),
                         table_pengguna.ajax.reload(null,false);
@@ -471,7 +511,6 @@
                                         title: "Berhasil",
                                         text: `${response.msg}`,
                                         icon: "success",
-                                        buttons: true,
                                         successMode: true,
                                     }),
                                     table_pengguna.ajax.reload()
@@ -539,6 +578,10 @@
 
     $(".filter-role-pengguna").on('change', function(){
         data_role_pengguna = $('#role-id').val();
+        table_pengguna.ajax.reload();
+    })
+    $(".filter-jurusan").on('change', function(){
+        data_filter_jurusan = $('#jurusan-id').val();
         table_pengguna.ajax.reload();
     })
 </script>

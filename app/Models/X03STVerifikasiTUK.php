@@ -11,7 +11,10 @@ class X03STVerifikasiTUK extends Model
 
     protected $table = 'x03_st_verifikasi_tuk';
     protected $guarded = ['id'];
-    protected $dates = ['tanggal_ditetapkan', 'tanggal_mulai', 'tanggal_selesai', 'waktu'];
+    protected $dates = ['tanggal_ditetapkan', 'tanggal_mulai', 'tanggal_selesai'];
+    protected $casts = [
+        'waktu' => 'datetime:H:i',
+    ];
 
     public function relasi_nama_tuk()
     {

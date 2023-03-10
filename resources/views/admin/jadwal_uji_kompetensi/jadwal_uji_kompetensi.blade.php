@@ -7,7 +7,7 @@
             <div class="card-header">
                 <div class="modal fade text-left w-100" id="modalDetailJadwalUjiKompetensi" tabindex="-1" role="dialog"
                     aria-labelledby="myModalLabel16" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title nama_jurusan" id="myModalLabel16"></h4>
@@ -47,7 +47,7 @@
 
                 <div class="modal fade text-left" id="modalJadwalUjiKompetensi" tabindex="-1" role="dialog"
                     aria-labelledby="myModalLabel33" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="myModalLabel33">Tambah Jadwal Uji Kompetensi</h4>
@@ -227,9 +227,14 @@
                 "class": "text-nowrap",
                 "render": function (data, type, row, meta) {
                     let tampilan;
-                    tampilan = `<span class="badge bg-info rounded-pill">
-                                    <a class="text-white" href="/admin/tambah-asesor-peninjau/${row.id}">Detail</a>
-                                </span>`
+                    tampilan = `
+                                <div class="buttons">
+                                    <a class="btn btn-sm icon icon-left btn-warning text-black rounded-pill fw-semibold"
+                                        href="/admin/tambah-asesor-peninjau/${row.id}">
+                                        <i class="fa fa-eye fa-xs"></i> Detail
+                                    </a>
+                                </div>
+                                `
                     return tampilan;
                 }
             },

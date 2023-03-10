@@ -47,6 +47,21 @@
                                         </select>
                                         <label class="text-danger error-text jenis_kelamin_error mt-1"></label>
                                     </div>
+                                    <div class="col edit-profil-left">
+                                        <label for="pas_foto" class="form-label fw-semibold">Pas Foto</label>
+                                        @if (!empty($pas_foto))
+                                            <p>{{ $pas_foto }}</p>
+                                        @endif
+                                        <input type="file" class="form-control form-control-lg input-file-col"
+                                            accept=".png, .jpg, .jpeg" name="pas_foto" id="pas_foto"
+                                            onchange=ValidateFileUploadFoto()>
+                                        <input type="hidden" name="pas_foto_old"
+                                            value="{{ $data->relasi_user_detail->foto }}">
+                                        {{-- <p class="text-danger mt-2">*Masukkan foto berlatar belakang merah</p> --}}
+                                        <label class="text-danger mt-1">
+                                            <small class="error-text pas_foto_error">*maksimal 2mb</small>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="col edit-profil-right">
@@ -66,9 +81,9 @@
 
                                     <div class="col edit-profil-right">
                                         <label for="email" class="form-label fw-semibold">No Reg</label>
-                                        <input type="text" id="email" class="form-control input-text"
-                                            placeholder="Masukkan No Reg. . ." name="email">
-                                        <label class="text-danger error-text email_error mt-1"></label>
+                                        <input type="text" id="no_reg" class="form-control input-text"
+                                            placeholder="Masukkan No Reg. . ." name="no_reg">
+                                        <label class="text-danger error-text no_reg_error mt-1"></label>
                                     </div>
                                    
                                 </div>
@@ -104,11 +119,11 @@
             }
         }
         $('.btn-close').on('click', function() {
-            $("#institusi").empty().append('');
-            $("#jenis_kelamin").empty().append('');
-            $("#kebangsaan").empty().append('');
-            $("#jurusan").empty().append('');
-            $("#kualifikasi_pendidikan").empty().append('');
+            $("#institusi").append('');
+            $("#jenis_kelamin").append('');
+            $("#kebangsaan").append('');
+            $("#jurusan").append('');
+            $("#kualifikasi_pendidikan").append('');
         })
         $("#edit-btn").on('click', function() {
             $("#editProfil").modal('show')
@@ -179,6 +194,9 @@
 
             $("#form-update [name='email']").val(data.email)
 
+
+            $("#form-update [name='no_reg']").val(data.relasi_user_detail.no_reg)
+
             $.each(kualifikasi_pendidikan, function(key, value) {
                 if(isset(data.relasi_user_detail.kualifikasi_pendidikan_id)){
                     $("#form-update [name='kualifikasi_pendidikan']")
@@ -201,6 +219,7 @@
             //     }
             // }))
 
+            
             if (isset(data.relasi_pekerjaan.nama_pekerjaan)) {
                 $("#form-update [name='nama_pekerjaan']").val('')
             } else {
@@ -271,11 +290,11 @@
                                 icon: "success",
                                 successMode: true,
                             }),
-                        $("#institusi").empty().append('');
-                        $("#jenis_kelamin").empty().append('');
-                        $("#kebangsaan").empty().append('');
-                        $("#jurusan").empty().append('');
-                        $("#kualifikasi_pendidikan").empty().append('');
+                        // $("#institusi").empty().append('');
+                        // $("#jenis_kelamin").empty().append('');
+                        // $("#kebangsaan").empty().append('');
+                        // $("#jurusan").empty().append('');
+                        // $("#kualifikasi_pendidikan").empty().append('');
                         $("#detail-profil").load(location.href + " #detail-profil>*", "");
                     }
                 }

@@ -98,6 +98,6 @@ class DF_Hadir_Asesor_Controller extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->route('admin.Berkas');
     }
 }

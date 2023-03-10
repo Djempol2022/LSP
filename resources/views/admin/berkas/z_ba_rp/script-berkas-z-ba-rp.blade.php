@@ -148,6 +148,7 @@
               rowJ.cells[4].style = '';
             }
             rowJ.cells[4].innerHTML = j;
+            rowJ.cells[5].childNodes[0].name = 'button' + (j + 1);
           }
         }
       }
@@ -185,7 +186,7 @@
     let cell4 = row.insertCell(3);
     let element3 = document.createElement("input");
     element3.className = 'form-control';
-    element3.name = "jml_asesi[]";
+    element3.name = "jml_asesi_asesor[]";
     cell4.appendChild(element3);
 
     let cell5 = row.insertCell(4);

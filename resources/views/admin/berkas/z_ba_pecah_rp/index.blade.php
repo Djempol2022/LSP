@@ -16,7 +16,7 @@
       <form action="{{ route('admin.Berkas.ZBAPecahRP.Add') }}" method="POST">
         @csrf
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">BERITA ACARA</h6>
@@ -142,7 +142,7 @@
         </div>
 
         {{-- lembar 2 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div style="text-align: center;">
             <h6 style="margin-bottom: 0; font-weight: bolder">NOTULEN RAPAT PLENO PELAKSANAAN UJI KOMPETENSI</h6>
@@ -274,7 +274,7 @@
         </div>
 
         {{-- lembar 3 --}}
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
           <div style="color: black;">
             <h6 style="font-weight: bold">Bahasan/Diskusi <button type="button"

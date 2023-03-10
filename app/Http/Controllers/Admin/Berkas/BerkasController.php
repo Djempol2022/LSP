@@ -2,24 +2,34 @@
 
 namespace App\Http\Controllers\Admin\Berkas;
 
+use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
+use App\Models\AsesiUjiKompetensi;
 use App\Models\DaftarTUKTerverifikasi;
+use App\Models\DFHadirAsesi;
 use App\Models\DFHadirAsesorPleno;
 use App\Models\HasilVerifikasiTUK;
 use App\Models\SKPenetapanTUK;
 use App\Models\STVerifikasiTUK;
+use App\Models\User;
+use App\Models\UserDetail;
 use App\Models\X03STVerifikasiTUK;
 use App\Models\X04BeritaAcara;
 use App\Models\ZBAPecahRP;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class BerkasController extends Controller
 {
     public function index()
     {
+        $year = AsesiUjiKompetensi::selectRaw('YEAR(updated_at) as year')
+            ->groupBy('year')
+            ->get();
         return view('admin.berkas.index', [
-            'where' => 'Berkas'
+            'where' => 'Berkas',
+            'years' => $year
         ]);
     }
 
@@ -87,6 +97,26 @@ class BerkasController extends Controller
     {
         $data = STVerifikasiTUK::select([
             'st_verifikasi_tuk.*'
+        ])->latest();
+
+        $rekamFilter = $data->get()->count();
+
+        if ($request->input('length') != -1) $data = $data->skip($request->input('start'))->take($request->input('length'));
+
+        $data = $data->get();
+        $rekamTotal = $data->count();
+
+        return response()->json([
+            'data' => $data,
+            'recordsTotal' => $rekamTotal,
+            'recordsFiltered' => $rekamFilter
+        ]);
+    }
+
+    public function table_surat_df_hadir_asesi(Request $request)
+    {
+        $data = DFHadirAsesi::select([
+            'df_hadir_asesi.*'
         ])->latest();
 
         $rekamFilter = $data->get()->count();
@@ -351,6 +381,41 @@ class BerkasController extends Controller
         return $pdf->download('ST Verifikasi TUK.pdf');
     }
 
+    public function show_df_hadir_asesi($id)
+    {
+        $df_hadir_asesi = DFHadirAsesi::with(['relasi_skema_sertifikasi', 'relasi_df_hadir_asesi_child.relasi_institusi'])->find($id);
+
+        return response()->json($df_hadir_asesi);
+    }
+
+    public function hapus_df_hadir_asesi($id)
+    {
+        $delete_berkas = DFHadirAsesi::find($id)->delete();
+
+        if (!$delete_berkas) {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'Terjadi kesalahan, Gagal Menghapus'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Berhasil Menghapus'
+            ]);
+        }
+    }
+
+    public function cetak_df_hadir_asesi_pdf($id)
+    {
+        $df_hadir_asesi = DFHadirAsesi::with(['relasi_skema_sertifikasi', 'relasi_df_hadir_asesi_child.relasi_institusi'])->find($id);
+        // dd($df_hadir_asesi);
+        // return view('admin.berkas.df_hadir_asesi.pdf', [
+        //     'df_hadir_asesi' => $df_hadir_asesi,
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.df_hadir_asesi.pdf', compact('df_hadir_asesi'));
+        return $pdf->download('Daftar Hadir Asesi.pdf');
+    }
+
     public function show_x03_st_verifikasi_tuk($id)
     {
         $x03_st_verifikasi_tuk = X03STVerifikasiTUK::with(['relasi_nama_tuk', 'relasi_nama_jabatan'])->find($id);
@@ -463,6 +528,17 @@ class BerkasController extends Controller
         return response()->json($z_ba_rp);
     }
 
+    public function cetak_z_ba_rp_pdf($id)
+    {
+        $z_ba_rp = ZBAPecahRP::with(['relasi_skema_sertifikasi', 'relasi_institusi', 'relasi_nama_tuk', 'relasi_nama_jabatan', 'relasi_bahasan_diskusi'])->find($id);
+        // dd($z_ba_rp);
+        // return view('admin.berkas.z_ba_rp.pdf', [
+        //     'z_ba_rp' => $z_ba_rp,
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.z_ba_rp.pdf', compact('z_ba_rp'));
+        return $pdf->download('Z Berita Acara Rapat Pleno.pdf');
+    }
+
     public function show_df_hadir_asesor_pleno($id)
     {
         $df_hadir_asesor_pleno = DFHadirAsesorPleno::with(['relasi_nama_jabatan'])->find($id);
@@ -514,5 +590,47 @@ class BerkasController extends Controller
         // ]);
         $pdf = PDF::loadview('admin.berkas.df_hadir_asesor.pdf', compact('df_hadir_asesor'));
         return $pdf->download('Daftar Hadir Asesor.pdf');
+    }
+
+    public function export_excel($year)
+    {
+        return Excel::download(new UserExport($year), 'users.xlsx');
+    }
+
+    public function table_sertifikat($year)
+    {
+        $user_asesi_id = AsesiUjiKompetensi::selectRaw('MAX(id) as id')
+            ->whereYear('updated_at', $year)
+            ->where('status_ujian_berlangsung', 2)
+            ->groupBy('user_asesi_id')
+            ->orderBy('user_asesi_id')
+            ->get()
+            ->map(function ($item) {
+                return AsesiUjiKompetensi::find($item->id);
+            });
+        $user = User::with(['relasi_user_detail', 'relasi_institusi'])->whereIn('id', $user_asesi_id->pluck('user_asesi_id')->all())->get();
+        return response()->json([
+            'user' => $user,
+        ]);
+    }
+
+    public function print_sertifikat($id)
+    {
+        $user = User::with(['relasi_user_detail', 'relasi_institusi'])->find($id);
+        return view('admin.berkas.sertifikat.pdf', [
+            'user' => $user,
+        ]);
+    }
+
+    public function update_sertifikat(Request $request)
+    {
+        if ($request->ajax()) {
+            UserDetail::where('user_id', $request->pk)->update([
+                'no_sertifikat' => $request->value,
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+        ]);
     }
 }

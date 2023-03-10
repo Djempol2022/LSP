@@ -191,6 +191,11 @@ h6 {
     font-size: 12px;
 }
 
+.input-group-text {
+    border: 0.5px solid var(--tiernary-color);
+    border-radius: 3px;   
+}
+
 /* REGISTER */
 .text-register {
     font-size: 12px;

@@ -48,6 +48,6 @@ class X04_Berita_Acara_Controller extends Controller
             'ttd' => $request->ttd,
         ]);
 
-        return redirect()->back();
+        return redirect()->route('admin.Berkas');
     }
 }

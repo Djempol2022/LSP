@@ -28,10 +28,14 @@ class Admin_PenggunaController extends Controller
             $data = $data->where('role_id', $request->role_pengguna);
         }
 
+        if($request->input('jurusan_pengguna')!=null){
+            $data = $data->where('jurusan_id', $request->jurusan_pengguna);
+        }
+
         $rekamFilter = $data->get()->count();
         if($request->input('length')!=-1) 
             $data = $data->skip($request->input('start'))->take($request->input('length'));
-            $data = $data->with('relasi_institusi')->with('relasi_jurusan')->with('relasi_role')->get();
+            $data = $data->with('relasi_institusi')->with('relasi_jurusan')->with('relasi_role')->orderBy('id', 'DESC')->get();
             $rekamTotal = $data->count();
 
             return response()->json([

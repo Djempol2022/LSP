@@ -2,7 +2,7 @@
 @section('main-section')
     <div id="detail-profil">
         <div class="col profil-section" style="margin-bottom:0% !important">
-            @if (is_null(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->ktp_nik_paspor))
+            @if (is_null(\App\Models\UserDetail::where('user_id', auth()->user()->id)->first()->tempat_lahir))
                 <div class="alert fs-6" role="alert" style="background-color: #F8D7DA">
                     Silahkan lengkapi profil anda !
                 </div>

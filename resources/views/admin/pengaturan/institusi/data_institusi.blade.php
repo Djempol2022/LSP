@@ -16,11 +16,12 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <span class="badge bg-info rounded-pill">
-                        <a class="text-white" href="#" data-bs-toggle="modal"
-                            data-bs-target="#modalTambahInstitusi">Tambah Institusi
+                    <div class="buttons">
+                        <a class="btn btn-sm icon icon-left btn-primary rounded-pill fw-semibold"
+                            href="#!" data-bs-toggle="modal" data-bs-target="#modalTambahInstitusi">
+                            <i class="fa fa-plus fa-sm"></i> Tambah Institusi
                         </a>
-                    </span>
+                    </div>
 
                     {{-- MODAL TAMBAH --}}
                     <div class="modal fade text-left" id="modalTambahInstitusi" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
@@ -54,7 +55,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Kode Pos</label>
-                                            <input type="text" name="kode_pos" placeholder="Kode Pos"
+                                            <input type="number" name="kode_pos" placeholder="Kode Pos"
                                                 class="form-control rounded-5">
                                             <div class="input-group has-validation">
                                                 <label class="text-danger error-text kode_pos_error"></label>
@@ -62,7 +63,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Nomor Hp Institusi</label>
-                                            <input type="text" name="nomor_hp_institusi" placeholder="Nomor Hp Institusi"
+                                            <input type="number" name="nomor_hp_institusi" placeholder="Nomor Hp Institusi"
                                                 class="form-control rounded-5">
                                             <div class="input-group has-validation">
                                                 <label class="text-danger error-text nomor_hp_institusi_error"></label>
@@ -70,7 +71,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Email Institusi</label>
-                                            <input type="text" name="email_institusi" placeholder="Email Institusi"
+                                            <input type="email" name="email_institusi" placeholder="Email Institusi"
                                                 class="form-control rounded-5">
                                             <div class="input-group has-validation">
                                                 <label class="text-danger error-text email_institusi_error"></label>
@@ -78,9 +79,9 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal"> Batal
+                                        <button type="button" class="btn btn-light-secondary batal rounded-pill" data-bs-dismiss="modal"> Batal
                                         </button>
-                                        <button type="submit" class="btn btn-primary ml-1">Simpan
+                                        <button type="submit" class="btn btn-primary ml-1 rounded-pill">Simpan
                                         </button>
                                     </div>
                                 </form>
@@ -110,7 +111,7 @@
             {{-- MODAL EDIT --}}
             <div class="modal fade text-left" id="modalEditInstitusi" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
                 aria-labelledby="myModalLabel33" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="myModalLabel33">Ubah Institusi</h4>
@@ -140,7 +141,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Kode Pos</label>
-                                    <input type="text" name="kode_pos" placeholder="Kode Pos"
+                                    <input type="number" name="kode_pos" placeholder="Kode Pos"
                                         class="form-control rounded-5">
                                     <div class="input-group has-validation">
                                         <label class="text-danger error-text kode_pos_error"></label>
@@ -148,7 +149,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nomor Hp Institusi</label>
-                                    <input type="text" name="nomor_hp_institusi" placeholder="Nomor Hp Institusi"
+                                    <input type="number" name="nomor_hp_institusi" placeholder="Nomor Hp Institusi"
                                         class="form-control rounded-5">
                                     <div class="input-group has-validation">
                                         <label class="text-danger error-text nomor_hp_institusi_error"></label>
@@ -156,7 +157,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Email Institusi</label>
-                                    <input type="text" name="email_institusi" placeholder="Email Institusi"
+                                    <input type="email" name="email_institusi" placeholder="Email Institusi"
                                         class="form-control rounded-5">
                                     <div class="input-group has-validation">
                                         <label class="text-danger error-text email_institusi_error"></label>
@@ -164,9 +165,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light-secondary batal" data-bs-dismiss="modal">Batal
+                                <button type="button" class="btn btn-light-secondary batal rounded-pill" data-bs-dismiss="modal">Batal
                                 </button>
-                                <button type="submit" class="btn btn-primary ml-1">Simpan
+                                <button type="submit" class="btn btn-primary ml-1 rounded-pill">Simpan
                                 </button>
                             </div>
                         </form>
@@ -263,12 +264,19 @@
                     "class": "text-nowrap",
                     "render": function(data, type, row, meta) {
                         let tampilan;
-                        tampilan = `<span id-jurusan = "${row.id}" onclick="clickEditInstitusi(${row.id})" class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="#">Edit</a>
-                                </span>
-                                <span id-institusi = "${row.id}" class="badge bg-danger rounded-pill hapus_institusi">
-                                    <a class="text-white" href="#">Hapus</a>
-                                </span>`
+                        tampilan = `
+                                    <div class="buttons">
+                                        <a class="btn btn-sm icon icon-left btn-info rounded-pill fw-semibold"
+                                            href="#!" id-jurusan = "${row.id}" onclick="clickEditInstitusi(${row.id})">
+                                            <i class="fa fa-pen fa-sm"></i> Edit
+                                        </a>
+
+                                        <a class="btn btn-sm icon icon-left btn-danger rounded-pill fw-semibold hapus_institusi"
+                                            href="#!" id-institusi = "${row.id}">
+                                            <i class="fa fa-trash fa-sm"></i> Hapus
+                                        </a>
+                                    </div>
+                                    `
                         return tampilan;
                     }
                 },
@@ -346,7 +354,6 @@
                                         title: "Berhasil",
                                         text: `${response.msg}`,
                                         icon: "success",
-                                        buttons: true,
                                         successMode: true,
                                     }),
                                     table_institusi.ajax.reload(null, false)
@@ -383,11 +390,11 @@
                                 title: "Berhasil",
                                 text: `${data.msg}`,
                                 icon: "success",
-                                buttons: true,
                                 successMode: true,
                             }),
+                            $("#formInstitusi")[0].reset()
+                            $("#modalTambahInstitusi").modal('hide')
                             table_institusi.ajax.reload(null, false)
-                        $("#modalTambahInstitusi").modal('hide')
                     }
                 }
             });

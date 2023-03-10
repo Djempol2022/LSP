@@ -14,32 +14,33 @@
     <section class="row">
       <form action="{{ route('admin.Berkas.DaftarTUKTerverifikasi.Add') }}" method="POST">
         @csrf
-        <div class="card p-5">
+        <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-berkas')
           <div>
             <h6 class="line-sp mb-0 text-center">DAFTAR TEMPAT UJI KOMPETENSI (TUK) TERVERIFIKASI</h6>
             <h6 class="text-center">LSP SMK NEGERI 1 SINTANG</h6>
-            {{--  --}}
-            <table class="table table-bordered" id="tableTUK">
-              <thead>
-                <tr>
-                  <th>NO</th>
-                  <th>NAMA TUK</th>
-                  <th>NAMA SKEMA SERTIFIKASI</th>
-                  <th>PENANGGUNG JAWAB TUK</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody id="bodyTable">
-                <tr>
-                  <td colspan="5" class="text-center font-extrabold h1 m-0 p-0"><button type="button"
-                      class="border-0 bg-transparent text-primary" id="addRow">+</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="d-flex justify-content-end text-black">
-              <div class="text-start" style="width: 35%">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="tableTUK">
+                <thead>
+                  <tr>
+                    <th>NO</th>
+                    <th>NAMA TUK</th>
+                    <th>NAMA SKEMA SERTIFIKASI</th>
+                    <th>PENANGGUNG JAWAB TUK</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="bodyTable">
+                  <tr>
+                    <td colspan="5" class="text-center font-extrabold h1 m-0 p-0"><button type="button"
+                        class="border-0 bg-transparent text-primary" id="addRow">+</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-center justify-content-sm-end text-black">
+              <div class="text-start w-sm-auto">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span style="width: 47%">Ditetapkan di</span>
                   <span style="width: 3%">:</span>
@@ -78,7 +79,7 @@
                 </div>
                 <div>
                   {{-- TANDA TANGAN / TTD --}}
-                  <div class="mb-2 signature-pad" id="signature-pad">
+                  <div class="mb-2 signature-pad" id="signature-pad" style="width: 75%">
                     <canvas id="sig"></canvas>
                     <input type="hidden" name="ttd" value="" id="ttd">
                   </div>
@@ -99,7 +100,6 @@
                 </div>
               </div>
             </div>
-            {{--  --}}
           </div>
         </div>
 

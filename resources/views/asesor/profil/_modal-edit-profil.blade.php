@@ -53,9 +53,14 @@
                                     </div>
                                     <div class="col edit-profil-left">
                                         <label for="pas_foto" class="form-label fw-semibold">Pas Foto</label>
-                                        @if (!empty($pas_foto))
-                                            <p>{{ $pas_foto }}</p>
-                                        @endif
+                                        <div class="thumb-profil thumb">
+                                            @isset($data->relasi_user_detail->foto)
+                                                <img src="{{ asset('storage/' . $data->relasi_user_detail->foto) }}" class="img-thumbnail rounded-circle mb-3"
+                                                    alt="image" style="width: 100px; height: 100px;object-fit: cover;">
+                                            @else
+                                                <img src="/images/logo/favicon.png" class="img-thumbnail rounded-circle" alt="image">
+                                            @endisset
+                                        </div>
                                         <input type="file" class="form-control form-control-lg input-file-col"
                                             accept=".png, .jpg, .jpeg" name="pas_foto" id="pas_foto"
                                             onchange=ValidateFileUploadFoto()>
@@ -84,9 +89,15 @@
                                     </div>
                                     <div class="col edit-profil-right">
                                         <label for="email" class="form-label fw-semibold">Email</label>
-                                        <input type="text" id="email" class="form-control input-text"
+                                        <input type="email" id="email" class="form-control input-text"
                                             placeholder="Masukkan Email. . ." name="email">
                                         <label class="text-danger error-text email_error mt-1"></label>
+                                    </div>
+                                    <div class="col edit-profil-right">
+                                        <label for="email" class="form-label fw-semibold">No Reg</label>
+                                        <input type="text" id="no_reg" class="form-control input-text"
+                                            placeholder="Masukkan No Reg. . ." name="no_reg">
+                                        <label class="text-danger error-text no_reg_error mt-1"></label>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +132,8 @@
             }
         }
         $('.btn-close').on('click', function() {
-            $("#jurusan").empty().append('');
+            $("#jurusan").append('');
+            $("#jenis_kelamin").append('');
         })
         $("#edit-btn").on('click', function() {
             $("#editProfil").modal('show')
@@ -136,6 +148,8 @@
             $("#form-update [name='tempat_lahir']").val(data.relasi_user_detail.tempat_lahir)
 
             $("#form-update [name='tanggal_lahir']").val(data.relasi_user_detail.tanggal_lahir)
+
+            $("#form-update [name='no_reg']").val(data.relasi_user_detail.no_reg)
 
             $("#form-update [name='jenis_kelamin']").append(
             $(
@@ -211,6 +225,7 @@
                                 icon: "success",
                                 successMode: true,
                             }),
+                            
                             $("#detail-profil").load(location.href + " #detail-profil>*", "");
                     }
                 }

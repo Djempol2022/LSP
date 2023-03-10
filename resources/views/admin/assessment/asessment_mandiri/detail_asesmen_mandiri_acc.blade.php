@@ -140,12 +140,16 @@
                             @isset($data_asesmen_mandiri->relasi_user_asesor->nama_lengkap)
                               <p>{{$data_asesmen_mandiri->relasi_user_asesor->nama_lengkap}}</p>
                             @else
-                              <p>Nama Asesor Belum Di Ketahui</p>
+                              <p style="color:red">Nama asesor belum diketahui</p>
                             @endisset
                         </div>
                         <div class="col edit-profil-left">
                         <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
-                          <p>{{ Carbon\Carbon::parse($data_asesmen_mandiri->tanggal_asesor)->format('d F Y') }}</p>
+                        @isset($data_asesmen_mandiri->tanggal_asesor)
+                        <p>{{ Carbon\Carbon::parse($data_asesmen_mandiri->tanggal_asesor)->format('d F Y') }}</p>
+                        @else
+                        <p style="color: red;">Tanggal belum di tetapkan</p>
+                        @endisset
                         </div>
                         <div class="col edit-profil-left">
                           <label for="rekomendasi" class="form-label fw-semibold">Rekomendasi</label>
@@ -162,6 +166,7 @@
                           <label class="form-check-label"><a href="#!" class="text-danger">tidak dapat dilanjutkan</a></label>
                           @endif
                           @else
+                          <p style="color: red;">Status belum diputuskan</p>
                           @endisset
                           </div>
                         </div>
@@ -170,6 +175,8 @@
                           <div class="col-auto kriteria-kompeten" style="width: auto;">
                             @isset($data_asesmen_mandiri->ttd_asesor)
                                 <img src="{{ $data_asesmen_mandiri->ttd_asesor }}" alt="ttd_asesi" width="180px">
+                            @else
+                            <p style="color: red;">Belum ditandatangani oleh asesor</p>
                             @endisset
                           </div>
                       </div>

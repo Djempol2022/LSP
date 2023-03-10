@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AsesorUjiKompetensi;
 use App\Models\BahasanDiskusi;
 use App\Models\Institusi;
+use App\Models\NamaJabatan;
 use App\Models\NamaTempatUjiKompetensi;
 use App\Models\SkemaSertifikasi;
 use App\Models\ZBAPecahRP;
@@ -19,8 +20,6 @@ class Z_BA_RP_Controller extends Controller
         $institusi = Institusi::get();
         $nama_tuk = NamaTempatUjiKompetensi::get();
         $skema_sertifikasi = SkemaSertifikasi::get();
-        $b = AsesorUjiKompetensi::get();
-        dd($b);
         return view('admin.berkas.z_ba_rp.index', [
             'institusis' => $institusi,
             'nama_tuk' => $nama_tuk,
@@ -30,13 +29,15 @@ class Z_BA_RP_Controller extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'institusi' => 'required',
             'skema_sertifikasi' => 'required',
             'tgl_tes_tertulis' => 'required',
             'tgl_tes_praktek' => 'required',
             'jml_asesi' => 'required',
+            'jml_asesi_asesor' => 'required',
+            'jml_asesi_asesor.*' => 'required',
             'wkt_mulai_uk' => 'required',
             'wkt_selesai_uk' => 'required',
             'nama_tuk' => 'required',
@@ -62,6 +63,8 @@ class Z_BA_RP_Controller extends Controller
             'tgl_tes_tertulis.required' => 'Wajib diisi',
             'tgl_tes_praktek.required' => 'Wajib diisi',
             'jml_asesi.required' => 'Wajib diisi',
+            'jml_asesi_asesor.required' => 'Wajib diisi',
+            'jml_asesi_asesor.*.required' => 'Wajib diisi',
             'wkt_mulai_uk.required' => 'Wajib diisi',
             'wkt_selesai_uk.required' => 'Wajib diisi',
             'nama_tuk.required' => 'Wajib diisi',
@@ -91,10 +94,10 @@ class Z_BA_RP_Controller extends Controller
             'skema_sertifikasi_id' => $request->skema_sertifikasi,
             'tgl_tes_tertulis' => $request->tgl_tes_tertulis,
             'tgl_tes_praktek' => $request->tgl_tes_praktek,
-            'jml_asesi' => $request->jml_asesi,
             'wkt_mulai_uk' => $request->wkt_mulai_uk,
             'wkt_selesai_uk' => $request->wkt_selesai_uk,
             'nama_tuk_id' => $request->nama_tuk,
+            'jml_asesi' => $request->jml_asesi,
             'jabatan_bttd' => $request->jabatan_bttd,
             'nama_bttd' => $request->nama_bttd,
             'no_met_bttd' => $request->no_met_bttd,
@@ -108,6 +111,15 @@ class Z_BA_RP_Controller extends Controller
             'wkt_rapat' => $request->wkt_rapat,
             'status' => 1,
         ])->id;
+        // dd($request->all());
+        for ($i = 0; $i < count($request->nama); $i++) {
+            NamaJabatan::create([
+                'z_ba_pecah_rp_id' => $z_ba_rp,
+                'nama' => $request->nama[$i],
+                'jabatan' => $request->jabatan[$i],
+                'jml_asesi' => $request->jml_asesi_asesor[$i],
+            ]);
+        }
 
         for ($i = 0; $i < count($request->bahasan_diskusi); $i++) {
             BahasanDiskusi::create([
@@ -116,6 +128,6 @@ class Z_BA_RP_Controller extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->route('admin.Berkas');
     }
 }

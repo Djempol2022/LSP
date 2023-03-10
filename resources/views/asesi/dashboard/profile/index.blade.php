@@ -24,7 +24,7 @@
                     <div class="thumb-profil thumb">
                         @isset($data->relasi_user_detail->foto)
                             <img src="{{ asset('storage/' . $data->relasi_user_detail->foto) }}"
-                                class="img-thumbnail rounded-circle mb-3" alt="image" style="width: 100px; height: 100px;object-fit: cover;">
+                                class="img-thumbnail mb-3 rounded-circle" alt="image" style="width: 100px; height: 100px; object-fit: cover;">
                         @else
                             <img src="/images/logo/favicon.png" class="img-thumbnail rounded-circle" alt="image">
                         @endisset
@@ -131,6 +131,12 @@
                                 @else
                                     <span class="text-danger fw-semibold">Data Belum Lengkap!</span>
                                 @endisset
+                            </div>
+                            <div class="col pb-4">
+                                <p class="fw-bold">Nomor Registrasi Asesi</p>
+                                <span class="{{ $data->relasi_user_detail->no_reg ? '' : 'text-danger fw-semibold' }}">
+                                    {{ $data->relasi_user_detail->no_reg ?? 'Data Belum Lengkap!' }}
+                                </span>
                             </div>
                         </div>
                     </div>
