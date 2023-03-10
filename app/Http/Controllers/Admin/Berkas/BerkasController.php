@@ -19,13 +19,15 @@ use App\Models\ZBAPecahRP;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+use Stichoza\GoogleTranslate\GoogleTranslate;
+use Storage;
 
 class BerkasController extends Controller
 {
     public function index()
     {
         $year = AsesiUjiKompetensi::selectRaw('YEAR(updated_at) as year')
-            ->groupBy('year')
+            ->groupBy('year')->orderBy('year', 'desc')
             ->get();
         return view('admin.berkas.index', [
             'where' => 'Berkas',
@@ -346,6 +348,17 @@ class BerkasController extends Controller
         }
     }
 
+    public function cetak_hasil_verifikasi_tuk_pdf($id)
+    {
+        $hasil_verifikasi_tuk = HasilVerifikasiTUK::with(['relasi_skema_sertifikasi.relasi_jurusan', 'relasi_sarana_prasarana.relasi_sarana_prasarana_sub.relasi_sarana_prasarana_sub2', 'relasi_penguji_hasil_verifikasi'])->find($id);
+        // dd($hasil_verifikasi_tuk);
+        return view('admin.berkas.hasil_verifikasi_tuk.pdf', [
+            'hasil_verifikasi_tuk' => $hasil_verifikasi_tuk,
+        ]);
+        $pdf = PDF::loadview('admin.berkas.hasil_verifikasi_tuk.pdf', compact('hasil_verifikasi_tuk'));
+        return $pdf->download('Hasil Verifikasi TUK.pdf');
+    }
+
     public function show_st_verifikasi_tuk($id)
     {
         $st_verifikasi_tuk = STVerifikasiTUK::with(['relasi_skema_sertifikasi', 'relasi_nama_jabatan'])->find($id);
@@ -592,6 +605,107 @@ class BerkasController extends Controller
         return $pdf->download('Daftar Hadir Asesor.pdf');
     }
 
+    public function table_df_hadir_asesi_bnsp($year)
+    {
+        $user_asesi_id = AsesiUjiKompetensi::selectRaw('MAX(id) as id')
+            ->whereYear('updated_at', $year)
+            ->where('status_ujian_berlangsung', 2)
+            ->groupBy('user_asesi_id')
+            ->orderBy('user_asesi_id')
+            ->get()
+            ->map(function ($item) {
+                return AsesiUjiKompetensi::find($item->id);
+            });
+        $user = User::with('relasi_user_detail', 'relasi_institusi')->whereIn('id', $user_asesi_id->pluck('user_asesi_id')->all())->get();
+        return response()->json([
+            'user' => $user,
+        ]);
+    }
+
+    public function update_df_hadir_asesi_bnsp(Request $request)
+    {
+        if ($request->ajax()) {
+            $fieldName = $request->input('field');
+            $userId = $request->pk;
+            $fieldValue = $request->value;
+
+            switch ($fieldName) {
+                case 'kode_kota':
+                    UserDetail::where('user_id', $userId)->update([
+                        'kode_kota' => $fieldValue,
+                    ]);
+                    break;
+                case 'kode_provinsi':
+                    UserDetail::where('user_id', $userId)->update([
+                        'kode_provinsi' => $fieldValue,
+                    ]);
+                    break;
+                case 'kode_pendidikan':
+                    UserDetail::where('user_id', $userId)->update([
+                        'kode_pendidikan' => $fieldValue,
+                    ]);
+                    break;
+                case 'kode_pekerjaan':
+                    UserDetail::where('user_id', $userId)->update([
+                        'kode_pekerjaan' => $fieldValue,
+                    ]);
+                    break;
+                case 'kode_jadwal':
+                    UserDetail::where('user_id', $userId)->update([
+                        'kode_jadwal' => $fieldValue,
+                    ]);
+                    break;
+                case 'kode_sumber_anggaran':
+                    UserDetail::where('user_id', $userId)->update([
+                        'kode_sumber_anggaran' => $fieldValue,
+                    ]);
+                    break;
+                case 'kode_kementerian':
+                    UserDetail::where('user_id', $userId)->update([
+                        'kode_kementerian' => $fieldValue,
+                    ]);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
+    public function update_input_df_hadir_asesi_bnsp(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $user_asesi_id = AsesiUjiKompetensi::selectRaw('MAX(id) as id')
+                ->whereYear('updated_at', $request->input('year'))
+                ->where('status_ujian_berlangsung', 2)
+                ->groupBy('user_asesi_id')
+                ->orderBy('user_asesi_id')
+                ->get()
+                ->map(function ($item) {
+                    return AsesiUjiKompetensi::find($item->id);
+                });
+
+            $user = User::with('relasi_user_detail', 'relasi_institusi')->whereIn('id', $user_asesi_id->pluck('user_asesi_id')->all())->get();
+
+            $fieldName = $request->input('field');
+            $userId = $request->pk;
+            $fieldValue = $request->value;
+
+            foreach ($user_asesi_id as $value) {
+                UserDetail::where('user_id', $value->user_asesi_id)->update([
+                    "$fieldName" => $fieldValue,
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+            ]);
+        }
+    }
+
     public function export_excel($year)
     {
         return Excel::download(new UserExport($year), 'users.xlsx');
@@ -616,10 +730,91 @@ class BerkasController extends Controller
 
     public function print_sertifikat($id)
     {
-        $user = User::with(['relasi_user_detail', 'relasi_institusi'])->find($id);
-        return view('admin.berkas.sertifikat.pdf', [
-            'user' => $user,
-        ]);
+        $user = User::with(['relasi_user_detail', 'relasi_institusi', 'relasi_jurusan', 'relasi_asesi_uji_kompetensi.relasi_jadwal_uji_kompetensi.relasi_muk', 'relasi_skema_sertifikasi.relasi_unit_kompetensi'])->find($id);
+        $lang = new GoogleTranslate();
+        $jurusan = $lang->setSource('id')->setTarget('en')->translate($user->relasi_jurusan->jurusan);
+        $muk = $lang->setSource('id')->setTarget('en')->translate($user->relasi_asesi_uji_kompetensi->relasi_jadwal_uji_kompetensi->relasi_muk->muk);
+
+        // gambar
+        // Get the file extension of the image
+        $extension = pathinfo($user->relasi_user_detail->foto, PATHINFO_EXTENSION);
+
+        // Determine the MIME type based on the file extension
+        switch ($extension) {
+            case 'jpg':
+            case 'jpeg':
+                $mime_type = 'image/jpeg';
+                break;
+            case 'png':
+                $mime_type = 'image/png';
+                break;
+            case 'gif':
+                $mime_type = 'image/gif';
+                break;
+            default:
+                $mime_type = 'application/octet-stream';
+                break;
+        }
+
+        // Get the base64 encoded data of the image with the appropriate MIME type prefix
+        $foto = 'data:' . $mime_type . ';base64,' . base64_encode(file_get_contents(public_path('storage/' . $user->relasi_user_detail->foto)));
+
+        // return view('admin.berkas.sertifikat.pdf', [
+        //     'user' => $user,
+        //     'jurusan' => $jurusan,
+        //     'muk' => $muk,
+        //     'foto' => $foto
+        // ]);
+        $pdf = PDF::loadview('admin.berkas.sertifikat.pdf', compact(['user', 'jurusan', 'muk', 'foto']));
+        return $pdf->download($user->nama_lengkap . '.pdf');
+    }
+
+    public function print_sertifikat_all($year)
+    {
+        $users = User::with(['relasi_user_detail', 'relasi_institusi', 'relasi_jurusan', 'relasi_asesi_uji_kompetensi.relasi_jadwal_uji_kompetensi.relasi_muk', 'relasi_skema_sertifikasi.relasi_unit_kompetensi'])
+            ->whereIn('id', function ($query) use ($year) {
+                $query->selectRaw('MAX(user_asesi_id) as id')
+                    ->from('asesi_uji_kompetensi')
+                    ->whereYear('updated_at', $year)
+                    ->where('status_ujian_berlangsung', 2)
+                    ->groupBy('user_asesi_id');
+            })
+            ->orderBy('nama_lengkap')
+            ->get();
+        $lang = new GoogleTranslate();
+        $data = [];
+        foreach ($users as $user) {
+            $jurusan = $lang->setSource('id')->setTarget('en')->translate($user->relasi_jurusan->jurusan);
+            $muk = $lang->setSource('id')->setTarget('en')->translate($user->relasi_asesi_uji_kompetensi->relasi_jadwal_uji_kompetensi->relasi_muk->muk);
+            // gambar
+            // Get the file extension of the image
+            $extension = pathinfo($user->relasi_user_detail->foto, PATHINFO_EXTENSION);
+
+            // Determine the MIME type based on the file extension
+            switch ($extension) {
+                case 'jpg':
+                case 'jpeg':
+                    $mime_type = 'image/jpeg';
+                    break;
+                case 'png':
+                    $mime_type = 'image/png';
+                    break;
+                case 'gif':
+                    $mime_type = 'image/gif';
+                    break;
+                default:
+                    $mime_type = 'application/octet-stream';
+                    break;
+            }
+
+            // Get the base64 encoded data of the image with the appropriate MIME type prefix
+            $foto = 'data:' . $mime_type . ';base64,' . base64_encode(file_get_contents(public_path('storage/' . $user->relasi_user_detail->foto)));
+
+            $data[] = compact(['user', 'jurusan', 'muk', 'foto']);
+        }
+        // dd($data);
+        $pdf = PDF::loadView('admin.berkas.sertifikat.all-pdf', compact('data'));
+        return $pdf->download('Semua sertifikat.pdf');
     }
 
     public function update_sertifikat(Request $request)

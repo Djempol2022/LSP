@@ -1,13 +1,13 @@
 <div class="modal fade" id="modalDetailHasilVerifikasiTUK" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
+  <div class="modal-dialog modal-dialog-scrollable" style="max-width: 90vw; overflow-y: auto">
+    <div class="modal-content" style="overflow-x: auto">
       <div class="modal-header">
         <h1 class="modal-title fs-5">Hasil Verifikasi TUK</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {{-- lembar 1 --}}
-        <div class="card p-5">
+        <div class="card px-5 overflow-x-auto mx-auto" style="width: 56rem">
           @include('layout.header-berkas')
           <div class="text-center">
             <h5 class="font-extrabold mb-0">HASIL VERIFIKASI TEMPAT UJI KOMPETENSI ( TUK )</h5>
@@ -116,7 +116,7 @@
                   <td style="text-align: center;">Verifikator</td>
                 </tr>
                 <tr>
-                  <td style="height: 30px; text-align: center;"><img src="" id="ttd" width="90px"></td>
+                  <td style="height: 30px; text-align: center;"><img src="" id="ttd" width="140px"></td>
                 </tr>
                 <tr>
                   <td style="text-align: center;" id="nama_bttd">Agus</td>
@@ -127,9 +127,9 @@
 
         </div>
       </div>
-      <div class="modal-footer" style="margin-top: 5rem">
+      <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Close</button>
-        <a id='pdfSKPenetapan' href="#" class="btn btn-primary">Save as PDF</a>
+        <a id='pdfHasilVerifikasiTUK' href="#" class="btn btn-primary">Save as PDF</a>
       </div>
     </div>
   </div>

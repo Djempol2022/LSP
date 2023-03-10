@@ -16,4 +16,9 @@ class SkemaSertifikasi extends Model
     {
         return $this->belongsTo(Jurusan::class, 'jurusan_id', 'id');
     }
+
+    public function relasi_unit_kompetensi()
+    {
+        return $this->hasMany(UnitKompetensi::class, 'skema_sertifikasi_id', 'id');
+    }
 }

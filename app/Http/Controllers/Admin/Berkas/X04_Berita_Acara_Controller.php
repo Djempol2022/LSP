@@ -48,6 +48,6 @@ class X04_Berita_Acara_Controller extends Controller
             'ttd' => $request->ttd,
         ]);
 
-        return redirect()->route('admin.Berkas');
+        return redirect('/admin/berkas?berkas=' . $request->input('dropdown_value'))->with('success', 'Data berhasil ditambahkan!');
     }
 }

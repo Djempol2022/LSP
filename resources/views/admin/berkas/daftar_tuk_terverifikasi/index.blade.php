@@ -14,6 +14,7 @@
     <section class="row">
       <form action="{{ route('admin.Berkas.DaftarTUKTerverifikasi.Add') }}" method="POST">
         @csrf
+        <input type="hidden" name="dropdown_value" value="daftar-tuk-terverifikasi">
         <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-berkas')
           <div>

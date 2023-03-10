@@ -20,4 +20,9 @@ class AsesiUjiKompetensi extends Model
     {
         return $this->belongsTo(User::class, 'user_asesi_id', 'id');
     }
+
+    public function relasi_pelaksanaan_ujian()
+    {
+        return $this->belongsTo(PelaksanaanUjian::class, 'jadwal_uji_kompetensi_id', 'jadwal_uji_kompetensi_id');
+    }
 }

@@ -29,7 +29,6 @@ class Hasil_Verifikasi_TUK_Controller extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         // dd(gettype($request->jurusan));
         // $b = [];
         // $c = [];
@@ -87,17 +86,18 @@ class Hasil_Verifikasi_TUK_Controller extends Controller
             'ttd' => $request->ttd ?? null
         ])->id;
 
-        for ($i = 0; $i < 4; $i++) {
-            PengujiHasilVerifikasiTUK::create([
-                'hasil_verifikasi_tuk_id' => $hasil_verifikasi_tuk ?? null,
-                'standar' => $request->standar[$i] ?? null,
-                'kondisi' => $request->kondisi_penguji[$i] ?? null
-            ]);
-        }
+        // for ($i = 0; $i < 4; $i++) {
+        //     PengujiHasilVerifikasiTUK::create([
+        //         'hasil_verifikasi_tuk_id' => $hasil_verifikasi_tuk ?? null,
+        //         'standar' => $request->standar[$i] ?? null,
+        //         'kondisi' => $request->kondisi_penguji[$i] ?? null
+        //     ]);
+        // }
 
+        dd($request->all());
         if ($request->sarana_prasarana) {
+            $sarana_prasarana_id = [];
             foreach ($request->sarana_prasarana as $key_sarana_prasarana => $value_sarana_prasarana) {
-
                 // insert sarana prasarana
                 $sarana_prasarana = SaranaPrasarana::create([
                     'hasil_verifikasi_tuk_id' => $hasil_verifikasi_tuk ?? null,
@@ -105,29 +105,80 @@ class Hasil_Verifikasi_TUK_Controller extends Controller
                     'status' => $request->status[$key_sarana_prasarana] ?? null,
                     'kondisi' => $request->kondisi[$key_sarana_prasarana] ?? null
                 ])->id;
+                $sarana_prasarana_id[] = $sarana_prasarana;
+            }
 
-                if ($request->sarana_prasarana_sub) {
-                    // insert sarana prasarana sub
-                    foreach ($request->sarana_prasarana_sub as $key_sarana_prasarana_sub => $value_sarana_prasarana_sub) {
+            $sarana_prasarana_sub_id = [];
+            for ($i = 0; $i <= count($request->sarana_prasarana_sub); $i++) {
+                $check_sarana_rasarana_sub = $request->sarana_prasarana_sub[$i] ?? null;
+                if ($check_sarana_rasarana_sub != null) {
+                    for ($j = 0; $j < count($request->sarana_prasarana_sub[$i]); $j++) {
                         $sarana_prasarana_sub = SaranaPrasaranaSub::create([
-                            'sarana_prasarana_id' => $sarana_prasarana,
-                            'sarana_prasarana_sub' => $value_sarana_prasarana_sub[$key_sarana_prasarana] ?? null,
-                            'status' => $request->status_sub[$key_sarana_prasarana_sub] ?? null,
-                            'kondisi' => $request->kondisi_sub[$key_sarana_prasarana_sub] ?? null,
+                            'sarana_prasarana_id' => $sarana_prasarana_id[$i] ?? null,
+                            'sarana_prasarana_sub' => $request->sarana_prasarana_sub[$i][$j] ?? null,
+                            'status' => $request->status_sub[$i][$j] ?? null,
+                            'kondisi' => $request->kondisi_sub[$i][$j] ?? null
                         ])->id;
+                        $sarana_prasarana_sub_id[] = $sarana_prasarana_sub;
+                    }
+                }
+            }
+            // dd($sarana_prasarana_sub_id);
+            for ($i = 0; $i <= count($request->sarana_prasarana_sub2); $i++) {
+                $check_sarana_prasarana_sub2 = $request->sarana_prasarana_sub2[$i] ?? null;
 
-                        if ($request->sarana_prasarana_sub2) {
-                            foreach ($request->sarana_prasarana_sub2 as $value_sarana_prasarana_sub2) {
+                if ($check_sarana_prasarana_sub2 != null) {
+                    for ($j = 0; $j <= count($request->sarana_prasarana_sub2[$i]); $j++) {
+                        $check_sarana_prasarana_sub2_bagian2 = $request->sarana_prasarana_sub2[$i][$j] ?? null;
+                        if ($check_sarana_prasarana_sub2_bagian2 != null) {
+
+                            for ($z = 0; $z < count($request->sarana_prasarana_sub2[$i][$j]); $z++) {
                                 SaranaPrasaranaSub2::create([
-                                    'sarana_prasarana_sub_id' => $sarana_prasarana_sub ?? null,
-                                    'sarana_prasarana_sub_2' => $value_sarana_prasarana_sub2[$key_sarana_prasarana][$key_sarana_prasarana_sub] ?? null,
+                                    'sarana_prasarana_sub_id' => $sarana_prasarana_sub_id[$j] ?? null,
+                                    'sarana_prasarana_sub_2' => $request->sarana_prasarana_sub2[$i][$j][$z] ?? null,
                                 ]);
                             }
                         }
                     }
                 }
             }
+
+            dd($request->all());
         }
+
+        // if ($request->sarana_prasarana) {
+        //     foreach ($request->sarana_prasarana as $key_sarana_prasarana => $value_sarana_prasarana) {
+
+        //         // insert sarana prasarana
+        //         $sarana_prasarana = SaranaPrasarana::create([
+        //             'hasil_verifikasi_tuk_id' => $hasil_verifikasi_tuk ?? null,
+        //             'sarana_prasarana' => $value_sarana_prasarana ?? null,
+        //             'status' => $request->status[$key_sarana_prasarana] ?? null,
+        //             'kondisi' => $request->kondisi[$key_sarana_prasarana] ?? null
+        //         ])->id;
+
+        //         if ($request->sarana_prasarana_sub) {
+        //             // insert sarana prasarana sub
+        //             foreach ($request->sarana_prasarana_sub as $key_sarana_prasarana_sub => $value_sarana_prasarana_sub) {
+        //                 $sarana_prasarana_sub = SaranaPrasaranaSub::create([
+        //                     'sarana_prasarana_id' => $sarana_prasarana,
+        //                     'sarana_prasarana_sub' => $value_sarana_prasarana_sub[$key_sarana_prasarana] ?? null,
+        //                     'status' => $request->status_sub[$key_sarana_prasarana_sub] ?? null,
+        //                     'kondisi' => $request->kondisi_sub[$key_sarana_prasarana_sub] ?? null,
+        //                 ])->id;
+
+        //                 if ($request->sarana_prasarana_sub2) {
+        //                     foreach ($request->sarana_prasarana_sub2 as $value_sarana_prasarana_sub2) {
+        //                         SaranaPrasaranaSub2::create([
+        //                             'sarana_prasarana_sub_id' => $sarana_prasarana_sub ?? null,
+        //                             'sarana_prasarana_sub_2' => $value_sarana_prasarana_sub2[$key_sarana_prasarana][$key_sarana_prasarana_sub] ?? null,
+        //                         ]);
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         return redirect()->back();
     }

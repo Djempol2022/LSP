@@ -79,6 +79,6 @@ class X03_ST_verifikasi_TUK_controller extends Controller
             ]);
         }
 
-        return redirect()->route('admin.Berkas');
+        return redirect('/admin/berkas?berkas=' . $request->input('dropdown_value'))->with('success', 'Data berhasil ditambahkan!');
     }
 }

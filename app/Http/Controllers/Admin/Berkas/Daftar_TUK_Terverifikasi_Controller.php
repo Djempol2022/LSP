@@ -66,6 +66,6 @@ class Daftar_TUK_Terverifikasi_Controller extends Controller
             ]);
         }
 
-        return redirect()->route('admin.Berkas');
+        return redirect('/admin/berkas?berkas=' . $request->input('dropdown_value'))->with('success', 'Data berhasil ditambahkan!');
     }
 }

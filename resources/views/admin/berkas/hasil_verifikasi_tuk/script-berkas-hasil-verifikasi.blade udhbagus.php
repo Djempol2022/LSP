@@ -107,6 +107,7 @@
 
 
             let rowCount = table.rows.length - 1;
+            console.log(table.rows.length);
             let row = table.insertRow(rowCount);
 
             let is_exists = arrayRowMain.includes('rowMain' + rowCount);
@@ -327,139 +328,37 @@
         }
 
         function removeRow(rowMain) {
-            //   console.log(document.querySelectorAll('.rowMain' + rowMain));
             document.querySelectorAll('.rowMain' + rowMain).forEach((e, i, arr) => {
+                console.log({
+                    e
+                });
                 arr[i].remove();
             });
 
-            // let table = document.getElementById('tableHasilVerifikasiTUK');
-            // let rowCount = table.rows.length - 1;
-
-            // let tableRows = table.rows;
-            // let rowsArray = [];
-
-            // // Clone setiap baris dan masukkan ke dalam array rowsArray
-            // for (let i = 0; i <= rowCount; i++) {
-            //   rowsArray.push(tableRows[i].cloneNode(true));
-            // }
-            // console.log(rowsArray);
-
-            // let rowsArrayCopy = Array.prototype.slice.call(rowsArray);
-
-            // // Buat copy dari rowsArray dengan JSON.parse dan JSON.stringify
-            // let rowsArrayCopy = JSON.parse(JSON.stringify(rowsArray));
-            // console.log(rowsArrayCopy);
-
-            // let i = 2;
-            // let k = 2;
-            // for (i; k < rowCount; i++) {
-            //   let row = rowsArray[k];
-            //   if (rowsArray[i + 1].className === 'rowSub' + (i + 1) + ' ' + 'rowMain' + (i + 1)) {
-            //     row.className = 'rowMain' + i;
-            //     row.cells[0].innerHTML = i - 1 + '.';
-            //     row.cells[1].childNodes[1].id = 'addRowSub_' + i;
-            //     $('#button' + i).prop('onclick', null);
-            //     row.cells[6].onclick = function() {
-            //       removeRow(i)
-            //     };
-            //     let j = i;
-            //     while (rowsArray[j + 1].className === 'rowSub' + (i + 1) + ' ' + 'rowMain' + (i + 1)) {
-            //       let rowSub = rowsArray[j + 1];
-            //       rowSub.className = 'rowSub' + i + ' ' + 'rowMain' + i;
-            //       rowSub.cells[0].innerHTML = i - 1 + '.' + (j - i + 1);
-            //       j++;
-            //     }
-            //     k = j;
-            //   } else {
-            //     row.className = 'rowMain' + i;
-            //     row.cells[0].innerHTML = i - 1 + '.';
-            //     row.cells[1].childNodes[1].id = 'addRowSub_' + i;
-            //     $('#button' + i).prop('onclick', null);
-            //     row.cells[6].onclick = function() {
-            //       removeRow(i)
-            //     };
-            //   }
-            //   k++;
-            // }
-
-            // console.log(rowsArrayCopy);
-
-            // berhasil dikit
+            arrayRowMain = [];
             let table = document.getElementById('tableHasilVerifikasiTUK');
             let rowCount = table.rows.length - 1;
-
-            let tableRows = table.rows;
-            let rowsArray = [];
-
-            for (let i = 0; i <= rowCount; i++) {
-                rowsArray.push(tableRows[i].cloneNode(true));
+            for (let i = 2; i < rowCount; i++) {
+                arrayRowMain.push('rowMain' + i);
+                let row = table.rows[i];
+                row.firstChild.innerHTML = (i - 1) + '.';
+                row.className = 'rowMain' + (i);
+                row.cells[1].childNodes[1].id = 'addRowSub_' + (i);
+                row.cells[1].childNodes[1].onclick = function() {
+                    renderRowSub(i)
+                };
+                row.cells[2].childNodes[0].name = 'status[]' + (i);
+                row.cells[3].childNodes[0].name = 'status[]' + (i);
+                row.cells[4].childNodes[0].name = 'kondisi[]' + (i);
+                row.cells[5].childNodes[0].name = 'kondisi[]' + (i);
+                row.cells[6].childNodes[0].id = 'button' + (i);
+                row.cells[6].childNodes[0].onclick = function() {
+                    removeRow(i)
+                };
             }
-
-            console.log(rowsArray);
-            //   reset main input after remove
-            // let table = document.getElementById('tableHasilVerifikasiTUK');
-
-            // arrayRowMain = [];
-            // let rowCount = table.rows.length - 1;
-
-            let i = 2;
-            let k = 2;
-            for (i; k < rowCount; i++) {
-                let row = rowsArray[k];
-                // arrayRowMain.push('rowMain' + i);
-                if (rowsArray[i + 1].className === 'rowSub' + (i + 1) + ' ' + 'rowMain' + (i + 1)) {
-                    row.className = 'rowMain' + i;
-                    row.cells[0].innerHTML = i - 1 + '.';
-                    row.cells[1].childNodes[1].id = 'addRowSub_' + i;
-                    // row.cells[6].childNodes[0].id = 'button' + i;
-                    $('#button' + i).prop('onclick', null);
-                    row.cells[6].onclick = function() {
-                        removeRow(i)
-                    };
-                    // buat rowSub
-                    let j = i;
-                    while (rowsArray[j + 1].className === 'rowSub' + (i + 1) + ' ' + 'rowMain' + (i + 1)) {
-                        let rowSub = rowsArray[j + 1];
-                        rowSub.className = 'rowSub' + i + ' ' + 'rowMain' + i;
-                        rowSub.cells[0].innerHTML = i - 1 + '.' + (j - i + 1);
-                        j++;
-                    }
-                    k = j;
-                } else {
-                    row.className = 'rowMain' + i;
-                    row.cells[0].innerHTML = i - 1 + '.';
-                    row.cells[1].childNodes[1].id = 'addRowSub_' + i;
-                    // row.cells[6].childNodes[0].id = 'button' + i;
-                    $('#button' + i).prop('onclick', null);
-                    row.cells[6].onclick = function() {
-                        removeRow(i)
-                    };
-                }
-                k++;
-            }
-            console.log(rowsArray);
-            // end berhasil dikit
 
             //   end reset main input after remove
         }
-
-        // coming soon
-        // function removeRowSub(btnName) {
-        //   try {
-        // let table = document.getElementById('tableHasilVerifikasiTUK');
-        // let rowCount = table.rows.length - 1;
-        //     for (let i = 2; i < rowCount; i++) {
-        //       let row = table.rows[i];
-        //       let rowObj = row.cells[6].childNodes[0];
-        //       if (rowObj.name == btnName) {
-        //         table.deleteRow(i);
-        //         rowCount--;
-        //       }
-        //     }
-        //   } catch (e) {
-        //     alert(e);
-        //   }
-        // }
 
     });
 </script>

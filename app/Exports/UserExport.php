@@ -34,7 +34,8 @@ class UserExport implements FromView, WithEvents, ShouldAutoSize
             ->map(function ($item) {
                 return AsesiUjiKompetensi::find($item->id);
             });
-        $user = User::with('relasi_user_detail')->whereIn('id', $user_asesi_id->pluck('user_asesi_id')->all())->get();
+        $user = User::with('relasi_user_detail', 'relasi_koreksi_jawaban', 'relasi_asesi_uji_kompetensi.relasi_pelaksanaan_ujian')->whereIn('id', $user_asesi_id->pluck('user_asesi_id')->all())->get();
+        // dd($user);
         return view('admin.berkas.df_hadir_asesi_bnsp.index', [
             'users' => $user
         ]);

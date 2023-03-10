@@ -242,12 +242,14 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('table-sertifikat/{year}', 'table_sertifikat')->name('TableSertifikat');
             Route::get('print-sertifikat/{id}', 'print_sertifikat')->name('PrintSertifikat');
+            Route::get('print-sertifikat-all/{year}', 'print_sertifikat_all')->name('PrintSertifikatAll');
             Route::post('update-sertifikat', 'update_sertifikat')->name('UpdateSertifikat');
 
 
             // PDF
             Route::get('cetak-sk-penetapan-tuk/{id}', 'cetak_sk_penetapan_pdf')->name('CetakSKPentapanTUKPDF');
             Route::get('cetak-daftar-tuk-terverifikasi/{id}', 'cetak_daftar_tuk_terverifikasi_pdf')->name('CetakDaftarTUKTerverifikasiPDF');
+            Route::get('cetak-hasil-verifikasi-tuk/{id}', 'cetak_hasil_verifikasi_tuk_pdf')->name('CetakHasilVerifikasiTUKPDF');
             Route::get('cetak-st-verifikasi-tuk/{id}', 'cetak_st_verifikasi_tuk_pdf')->name('CetakSTVerifikasiTUKPDF');
             Route::get('cetak-df-hadir-asesi/{id}', 'cetak_df_hadir_asesi_pdf')->name('CetakDFHadirAsesiPDF');
             Route::get('cetak-x03-st-verifikasi-tuk/{id}', 'cetak_x03_st_verifikasi_tuk_pdf')->name('CetakX03STVerifikasiTUKPDF');
@@ -259,6 +261,9 @@ Route::middleware(['auth'])->group(function () {
 
             // EXCEL
             Route::get('berkas/df-hadir-asesi-bnsp/{years}', 'export_excel')->name('Berkas.DFHadirAsesiBNSP.ExportExcel');
+            Route::get('table-df-hadir-asesi-bnsp/{years}', 'table_df_hadir_asesi_bnsp')->name('TableDFHadirAsesiBNSP');
+            Route::post('update-df-hadir-asesi-bnsp', 'update_df_hadir_asesi_bnsp')->name('UpdateDFHadirAsesiBNSP');
+            Route::post('update-input-df-hadir-asesi-bnsp', 'update_input_df_hadir_asesi_bnsp')->name('UpdateInputDFHadirAsesiBNSP');
         });
     });
     // Contoh Pemanggilan Route di Blade -> asesor.Dashboard

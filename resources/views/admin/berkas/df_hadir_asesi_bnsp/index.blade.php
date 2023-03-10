@@ -56,19 +56,19 @@
             }
           @endphp
           <td>{{ $jenis_kelamin }}</td>
-          <td>{{ $user->relasi_user_detail->alamat_rumah }}</td>
-          <td>Kode Kota</td>
-          <td>Kode Provinsi</td>
-          <td>{{ $user->relasi_user_detail->nomor_hp }}</td>
-          <td>{{ $user->email }}</td>
-          <td>Kode Pendidikan</td>
-          <td>Kode Pekerjaan</td>
-          <td>Kode Jadwal</td>
-          <td>Tanggal Uji</td>
-          <td>Nomor Registrasi Asesor</td>
-          <td>Kode Sumber Anggaran</td>
-          <td>Kode Kementerian</td>
-          <td>K/BK</td>
+          <td>{{ $user->relasi_user_detail->alamat_rumah ?? '-' }}</td>
+          <td>{{ $user->relasi_user_detail->kode_kota ?? '-' }}</td>
+          <td>{{ $user->relasi_user_detail->kode_provinsi ?? '-' }}</td>
+          <td>{{ $user->relasi_user_detail->nomor_hp ?? '-' }}</td>
+          <td>{{ $user->email ?? '-' }}</td>
+          <td>{{ $user->relasi_user_detail->kode_pendidikan ?? '-' }}</td>
+          <td>{{ $user->relasi_user_detail->kode_pekerjaan ?? '-' }}</td>
+          <td>{{ $user->relasi_user_detail->kode_jadwal ?? '-' }}</td>
+          <td>{{ $user->relasi_asesi_uji_kompetensi->relasi_pelaksanaan_ujian->tanggal->isoFormat('DD/MM/Y') }}</td>
+          <td>{{ $user->relasi_user_detail->no_reg ?? '-' }}</td>
+          <td>{{ $user->relasi_user_detail->kode_sumber_anggaran ?? '-' }}</td>
+          <td>{{ $user->relasi_user_detail->kode_kementerian ?? '-' }}</td>
+          <td>{{ $user->relasi_koreksi_jawaban->status_kompeten == 1 ? 'K' : 'BK' }}</td>
         </tr>
       @endforeach
     </tbody>

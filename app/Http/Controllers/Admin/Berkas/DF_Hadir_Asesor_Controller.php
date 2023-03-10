@@ -17,7 +17,6 @@ class DF_Hadir_Asesor_Controller extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'thn_ajaran' => 'required',
             'nama_bttd' => 'required',
@@ -39,6 +38,7 @@ class DF_Hadir_Asesor_Controller extends Controller
             'jabatan.*' => 'required',
             'no_reg_met' => 'required',
             'no_reg_met.*' => 'required',
+            'jml_row_df_hadir_asesi' => 'required',
         ], [
             'thn_ajaran.required' => 'Wajib diisi',
             'nama_bttd.required' => 'Wajib diisi',
@@ -60,7 +60,10 @@ class DF_Hadir_Asesor_Controller extends Controller
             'jabatan_nip.*.required' => 'Wajib diisi',
             'no_reg_met.required' => 'Wajib diisi',
             'no_reg_met.*.required' => 'Wajib diisi',
+            'jml_row_df_hadir_asesi.required' => 'Wajib diisi',
         ]);
+
+        // dd($request->all());
 
         if (!$validator->passes()) return redirect()->back()->withErrors($validator)
             ->withInput();
@@ -73,9 +76,10 @@ class DF_Hadir_Asesor_Controller extends Controller
             'wkt_mulai' => $request->wkt_mulai,
             'wkt_selesai' => $request->wkt_selesai,
             'tempat' => $request->tempat,
-            'thn_ajaran' => $request->thn_ajaran,
+            'thn_ajaran' => $request->thn_ajaran . '-01-01',
             'ttd' => $request->ttd,
-            'is_pleno' => 0
+            'is_pleno' => 0,
+            'jml_row_df_hadir_asesi' => $request->jml_row_df_hadir_asesi,
         ])->id;
 
         foreach ($request->nama_nip as $key => $nama) {
@@ -98,6 +102,6 @@ class DF_Hadir_Asesor_Controller extends Controller
             ]);
         }
 
-        return redirect()->route('admin.Berkas');
+        return redirect('/admin/berkas?berkas=' . $request->input('dropdown_value'))->with('success', 'Data berhasil ditambahkan!');
     }
 }

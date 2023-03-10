@@ -209,6 +209,72 @@
     cell6.appendChild(element5);
   }
 
+  $('#addRowDFHadirAsesi').click(function() {
+    renderAddRowDFHadirAsesi();
+  });
+
+  let renderAddRowDFHadirAsesi = () => {
+    let table = document.getElementById('tableAddRowDFHadirAsesi');
+
+
+    let rowCount = table.rows.length - 1;
+    $('#jml_row_df_hadir_asesi').val(rowCount);
+    let row = table.insertRow(rowCount);
+
+    let cell1 = row.insertCell(0);
+    cell1.className = 'text-center';
+    cell1.innerHTML = rowCount + '.';
+
+
+    let cell2 = row.insertCell(1);
+
+    let cell3 = row.insertCell(2);
+
+    let cell4 = row.insertCell(3);
+    if (rowCount % 2 === 0) {
+      cell4.style = 'padding-left: 80px';
+    }
+    cell4.innerHTML = rowCount;
+
+    let cell5 = row.insertCell(4);
+    let element = document.createElement("button");
+    element.className = 'border-0 bg-transparent text-danger text-center w-100';
+    element.innerHTML = 'X'
+    element.type = "button";
+    element.name = "button" + (rowCount + 1);
+    element.onclick = function() {
+      removeAddRowDFHadirAsesi("button" + (rowCount + 1))
+    };
+    cell5.appendChild(element);
+  }
+
+  function removeAddRowDFHadirAsesi(btnName) {
+    try {
+      let table = document.getElementById('tableAddRowDFHadirAsesi');
+      let rowCount = table.rows.length - 1;
+      for (let i = 1; i < rowCount; i++) {
+        let row = table.rows[i];
+        let rowObj = row.cells[4].childNodes[0];
+        if (rowObj.name == btnName) {
+          table.deleteRow(i);
+          rowCount--;
+          for (let j = 1; j < rowCount; j++) {
+            let rowJ = table.rows[j];
+            rowJ.cells[0].innerHTML = j + '.';
+            if (j % 2 === 0) {
+              rowJ.cells[3].style = 'padding-left: 80px';
+            } else {
+              rowJ.cells[3].style = '';
+            }
+            rowJ.cells[3].innerHTML = j;
+          }
+        }
+      }
+    } catch (e) {
+      alert(e);
+    }
+  }
+
   //   yearpicker
 
   $('.yearpicker').yearpicker({

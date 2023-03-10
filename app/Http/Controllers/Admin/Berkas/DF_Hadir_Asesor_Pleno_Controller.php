@@ -68,6 +68,6 @@ class DF_Hadir_Asesor_Pleno_Controller extends Controller
             ]);
         }
 
-        return redirect()->route('admin.Berkas');
+        return redirect('/admin/berkas?berkas=' . $request->input('dropdown_value'))->with('success', 'Data berhasil ditambahkan!');
     }
 }

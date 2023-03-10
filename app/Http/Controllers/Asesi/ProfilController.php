@@ -34,8 +34,9 @@ class ProfilController extends Controller
 
         // pas_foto
         if (!empty($user->relasi_user_detail->foto)) {
-            $pas_foto = explode('-', $user->relasi_user_detail->foto, 2);
-            $pas_foto = $pas_foto[1];
+            // $pas_foto = explode('-', $user->relasi_user_detail->foto, 2);
+            // $pas_foto = $pas_foto[1];
+            $pas_foto = $user->relasi_user_detail->foto;
         } else {
             $pas_foto = null;
         }
@@ -130,7 +131,7 @@ class ProfilController extends Controller
             'error' => $validator->errors()->toArray()
         ]);
 
-        // file_foto
+        // // file_foto
         if ($request->pas_foto) {
             $custom_file_name = auth()->user()->id . '-' . $request->file('pas_foto')->getClientOriginalName();
             $image = $request->file('pas_foto')->storeAs('pas_foto', $custom_file_name);
@@ -140,6 +141,19 @@ class ProfilController extends Controller
         } else {
             $image = $request->pas_foto_old;
         }
+
+        // file foto with base64
+        // if ($request->pas_foto) {
+        //     $custom_file_name = auth()->user()->id . '-' . $request->file('pas_foto')->getClientOriginalName();
+        //     $image = $request->file('pas_foto')->getRealPath();
+        //     $imageData = file_get_contents($image);
+        //     $imageMimeType = mime_content_type($image);
+        //     $imageBase64Prefix = 'data:' . $imageMimeType . ';base64,';
+        //     $imageBase64 = $imageBase64Prefix . base64_encode($imageData);
+        // } else {
+        //     $imageBase64 = $request->pas_foto_old;
+        // }
+        // end file foto base64, berhasil
 
         // tambah/edit user detail
         UserDetail::where('user_id', auth()->user()->id)->update([

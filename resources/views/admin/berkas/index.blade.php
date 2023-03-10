@@ -31,15 +31,16 @@
               <option value="sertifikat">Sertifikat</option>
             </select>
           </div>
-          <div class="d-flex justify-content-between align-items-center" style="width: 130px">
+          <div class="d-flex justify-content-center align-items-center gap-2" style="width: 250px">
             <div>
               @include('admin.berkas.modal_image.index')
               <a href="#" class="btn btn-primary" id="export_excel" disabled>Export to Excel</a>
+              <a href="#" class="btn btn-primary" id="print_sertifikat_all">Print Semua</a>
             </div>
             <div>
               <a href="#" class="btn btn-primary" id="tambah" disabled>Tambah</a>
               <select name="years" id="years" class="form-control">
-                <option value="#">Pilih Tahun</option>
+                {{-- <option value="#">Pilih Tahun</option> --}}
                 @foreach ($years as $year)
                   <option value="{{ $year->year }}">{{ $year->year }}</option>
                 @endforeach
@@ -49,6 +50,12 @@
         </div>
 
         <div class="card-body table-responsive">
+          <div id="input-df-hadir-asesi-bnsp">
+
+          </div>
+          <div id="table-df-hadir-asesi-bnsp">
+
+          </div>
           <div id="table-sertifikat">
 
           </div>
@@ -66,6 +73,8 @@
       </div>
     </section>
   </div>
+
+  <div id="loader"></div>
 
   {{-- modal sk ketetapan tuk terverifikasi --}}
   @include('admin.berkas._modal-sk-penetapan-tuk-terverifikasi')

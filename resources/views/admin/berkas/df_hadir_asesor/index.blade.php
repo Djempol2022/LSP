@@ -15,6 +15,7 @@
     <section class="row">
       <form action="{{ route('admin.Berkas.DFHadirAsesor.Add') }}" method="POST">
         @csrf
+        <input type="hidden" name="dropdown_value" value="df-hadir-asesor">
         {{-- lembar 1 --}}
         <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')
@@ -52,87 +53,21 @@
           </div>
 
           <div style="margin-top: 20px; margin-left: 30px;">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="tableAddRowDFHadirAsesi">
               <thead>
                 <tr style="text-align: center">
                   <th style="width: 5%;">No</th>
-                  <th style="width: 40%;">Nama Asesi</th>
+                  <th style="width: 37%;">Nama Asesi</th>
                   <th style="width: 25%;">Kompetensi Keahlian</th>
-                  <th style="width: 30%;">Tanda Tangan</th>
+                  <th style="width: 28%;">Tanda Tangan</th>
+                  <th style="width: 5%;">Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="text-align: center;">1</td>
-                  <td></td>
-                  <td></td>
-                  <td>1</td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">2</td>
-                  <td></td>
-                  <td></td>
-                  <td style="padding-left: 80px">2</td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">3</td>
-                  <td></td>
-                  <td></td>
-                  <td>3</td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">4</td>
-                  <td></td>
-                  <td></td>
-                  <td style="padding-left: 80px">4</td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">5</td>
-                  <td></td>
-                  <td></td>
-                  <td>5</td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">6</td>
-                  <td></td>
-                  <td></td>
-                  <td style="padding-left: 80px">6</td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">7</td>
-                  <td></td>
-                  <td></td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">8</td>
-                  <td></td>
-                  <td></td>
-                  <td style="padding-left: 80px">8</td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">9</td>
-                  <td></td>
-                  <td></td>
-                  <td>9</td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">10</td>
-                  <td></td>
-                  <td></td>
-                  <td style="padding-left: 80px">10</td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">11</td>
-                  <td></td>
-                  <td></td>
-                  <td>11</td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">12</td>
-                  <td></td>
-                  <td></td>
-                  <td style="padding-left: 80px">12</td>
+                  <td colspan="5" class="text-center font-extrabold h1 m-0 p-0"><button type="button"
+                      class="border-0 bg-transparent text-primary w-100" id="addRowDFHadirAsesi">+</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -194,9 +129,11 @@
                 </tr>
               </thead>
               <tbody>
-                <td colspan="5" class="text-center font-extrabold h1 m-0 p-0"><button type="button"
-                    class="border-0 bg-transparent text-primary w-100" id="addRowPanitia">+</button>
-                </td>
+                <tr>
+                  <td colspan="5" class="text-center font-extrabold h1 m-0 p-0"><button type="button"
+                      class="border-0 bg-transparent text-primary w-100" id="addRowPanitia">+</button>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -270,6 +207,7 @@
           </div>
 
           <div style="margin-top: 20px;">
+            <input type="hidden" name="jml_row_df_hadir_asesi" id="jml_row_df_hadir_asesi" value="">
             <table class="table table-bordered" id="tableDFHadirAsesorPleno">
               <thead>
                 <tr style="text-align: center">

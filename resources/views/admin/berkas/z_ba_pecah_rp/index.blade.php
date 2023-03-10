@@ -15,6 +15,7 @@
     <section class="row">
       <form action="{{ route('admin.Berkas.ZBAPecahRP.Add') }}" method="POST">
         @csrf
+        <input type="hidden" name="dropdown_value" value="z-ba-pecah-rp">
         {{-- lembar 1 --}}
         <div class="card p-5 overflow-x-auto" style="width: 56rem">
           @include('layout.header-bnsp-berkas')

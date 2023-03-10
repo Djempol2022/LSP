@@ -1,17 +1,97 @@
 <script>
+  // Dapatkan elemen loader
+  const loader = document.getElementById("loader");
+
+  // Sembunyikan loader secara default
+  loader.style.display = "block";
+
+  // Sembunyikan loader ketika konten telah selesai dimuat
+  window.addEventListener("load", () => {
+    loader.style.display = "none";
+  });
+
   $(document).ready(function() {
+    @if (session('success'))
+      swal({
+          title: "Berhasil",
+          text: '{{ session('success') }}',
+          icon: "success",
+          buttons: true,
+          successMode: true,
+        }),
+    @endif
+
+    const now = new Date();
+    const year = now.getFullYear();
+
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+
+    // lightbulb
+    // Get the modal
+    var modal = document.getElementById("myModalLightbulb");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById("myImgLightbulb");
+    var modalImg = document.getElementById("img01-lightbulb");
+    var captionText = document.getElementById("caption-lightbulb");
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const selectedBerkas = queryParams.get('berkas');
+    if (selectedBerkas) {
+      $('#years').show();
+      $('#export_excel').show();
+      $('#print_sertifikat_all').show();
+      $('#table-sertifikat').show();
+      $('#table-df-hadir-asesi-bnsp').show();
+      $('#input-df-hadir-asesi-bnsp').show();
+
+      dropdown_selected(selectedBerkas);
+      df_hadir_asesi_bnsp(year);
+      sertifikat(year);
+    } else {
+      $('#years').hide();
+      $('#export_excel').hide();
+      $('#print_sertifikat_all').hide();
+      $('#table-sertifikat').hide();
+      $('#table-df-hadir-asesi-bnsp').hide();
+      $('#input-df-hadir-asesi-bnsp').hide();
+
+      $('#berkas').val($('#berkas option:first').val());
+      skPenetapanTUKTerverifikasi();
+      $('#tambah').attr('href', '/admin/berkas/sk-penetapan-tuk-terverifikasi');
+
+      img.onclick = function() {
+        modal.style.display = "block";
+        modalImg.src = '/images/berkas/sk-penetapan-tuk-terverifikasi.png';
+        captionText.innerHTML = 'Contoh Berkas SK Penetapan TUK Terverifikasi';
+      }
+    }
+
 
     $('#berkas').select2();
 
-    skPenetapanTUKTerverifikasi();
-    $('#tambah').attr('href', '/admin/berkas/sk-penetapan-tuk-terverifikasi');
-    $('#years').hide();
-    $('#export_excel').hide();
+    // df hadir asesi bnsp
+    df_hadir_asesi_bnsp(year);
+    // end of df hadir asesi bnsp
+
+    // sertifikat
+    sertifikat(year);
+    // end of sertifikat
 
 
     // value berkas dropdown
     $('#berkas').change(function() {
       let berkasValue = $(this).val();
+
+      queryParams.set('berkas', berkasValue);
+
+      // update the URL with the new search parameters
+      const newUrl = window.location.pathname + '?' + queryParams.toString();
+      window.history.replaceState(null, null, newUrl);
 
       if (berkasValue === '#') {
         $('#tambah').attr('href', berkasValue);
@@ -19,119 +99,7 @@
         $('#tambah').attr('href', '/admin/berkas/' + berkasValue);
       }
 
-      if (berkasValue === 'sk-penetapan-tuk-terverifikasi') {
-        skPenetapanTUKTerverifikasi();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'daftar-tuk-terverifikasi') {
-        daftarHasilVerifikasi();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'hasil-verifikasi-tuk') {
-        hasilVerifikasiTUK();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'st-verifikasi-tuk') {
-        stVerifikasiTUK();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'df-hadir-asesi') {
-        dfHadirAsesi();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'x03-st-verifikasi-tuk') {
-        x03STVerifikasiTUK();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'x04-berita-acara') {
-        x04BeritaAcara();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'z-ba-pecah-rp') {
-        zBAPecahRP();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'z-ba-rp') {
-        zBARP();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'df-hadir-asesor-pleno') {
-        dfHadirAsesorPleno();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'df-hadir-asesor') {
-        dfHadirAsesor();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'df-hadir-asesi-bnsp') {
-        $('#table-surat').DataTable().destroy();
-        $('#tambah').hide();
-        $('#table-surat').hide();
-        $('#years').show();
-        $('#export_excel').show();
-        $('#myImgLightbulb').hide();
-        $('#table-sertifikat').hide();
-      } else if (berkasValue === 'sertifikat') {
-        $('#table-surat').DataTable().destroy();
-        $('#tambah').hide();
-        $('#table-surat').hide();
-        $('#years').show();
-        $('#myImgLightbulb').hide();
-        $('#export_excel').hide();
-        $('#table-sertifikat').show();
-      } else {
-        $('#table-surat').DataTable();
-        $('#tambah').show();
-        $('#myImgLightbulb').show();
-        $('#years').hide();
-        $('#export_excel').hide();
-        $('#table-surat').show();
-        $('#table-sertifikat').hide();
-      }
+      dropdown_selected(berkasValue);
     });
 
     // export to excel year dropdown
@@ -143,25 +111,283 @@
 
         $('#table-sertifikat').empty();
       } else {
-        $('#export_excel').attr('href', '/admin/berkas/df-hadir-asesi-bnsp/' + yearValue);
 
-        $.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-        });
+        df_hadir_asesi_bnsp(year);
 
-        $.ajax({
-          type: "GET",
-          url: "/admin/table-sertifikat/" + yearValue,
-          dataType: "json",
-          success: function(response) {
-            console.log(response);
-            $('#table-sertifikat').empty();
-            $('#table-sertifikat').html(`
+        sertifikat(year);
+      }
+
+    });
+
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close-lightbulb")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // show hide
+    function show_hide() {
+      $('#table-surat').DataTable();
+      $('#tambah').show();
+      $('#myImgLightbulb').show();
+      $('#years').hide();
+      $('#export_excel').hide();
+      $('#print_sertifikat_all').hide();
+      $('#table-surat').show();
+      $('#table-sertifikat').hide();
+      $('#table-df-hadir-asesi-bnsp').hide();
+      $('#input-df-hadir-asesi-bnsp').hide();
+    }
+
+    function show_hide_bnsp() {
+      $('#table-surat').DataTable().destroy();
+      $('#tambah').hide();
+      $('#table-surat').hide();
+      $('#years').show();
+      $('#export_excel').show();
+      $('#print_sertifikat_all').hide();
+      $('#myImgLightbulb').hide();
+      $('#table-sertifikat').hide();
+      $('#table-df-hadir-asesi-bnsp').show();
+      $('#input-df-hadir-asesi-bnsp').show();
+    }
+
+    function show_hide_sertifikat() {
+      $('#table-surat').DataTable().destroy();
+      $('#tambah').hide();
+      $('#table-surat').hide();
+      $('#years').show();
+      $('#myImgLightbulb').hide();
+      $('#print_sertifikat_all').show();
+      $('#export_excel').hide();
+      $('#table-sertifikat').show();
+      $('#table-df-hadir-asesi-bnsp').hide();
+      $('#input-df-hadir-asesi-bnsp').hide();
+    }
+
+    // berkas dropdown selected
+    function dropdown_selected(selectedBerkas) {
+      $('#berkas').val(selectedBerkas);
+      $('#tambah').attr('href', '/admin/berkas/' + selectedBerkas);
+      if (selectedBerkas === 'sk-penetapan-tuk-terverifikasi') {
+        skPenetapanTUKTerverifikasi();
+        show_hide();
+      } else if (selectedBerkas === 'daftar-tuk-terverifikasi') {
+        daftarHasilVerifikasi();
+        show_hide();
+      } else if (selectedBerkas === 'hasil-verifikasi-tuk') {
+        hasilVerifikasiTUK();
+        show_hide();
+      } else if (selectedBerkas === 'st-verifikasi-tuk') {
+        stVerifikasiTUK();
+        show_hide();
+      } else if (selectedBerkas === 'df-hadir-asesi') {
+        dfHadirAsesi();
+        show_hide();
+      } else if (selectedBerkas === 'x03-st-verifikasi-tuk') {
+        x03STVerifikasiTUK();
+        show_hide();
+      } else if (selectedBerkas === 'x04-berita-acara') {
+        x04BeritaAcara();
+        show_hide();
+      } else if (selectedBerkas === 'z-ba-pecah-rp') {
+        zBAPecahRP();
+        show_hide();
+      } else if (selectedBerkas === 'z-ba-rp') {
+        zBARP();
+        show_hide();
+      } else if (selectedBerkas === 'df-hadir-asesor-pleno') {
+        dfHadirAsesorPleno();
+        show_hide();
+      } else if (selectedBerkas === 'df-hadir-asesor') {
+        dfHadirAsesor();
+        show_hide();
+      } else if (selectedBerkas === 'df-hadir-asesi-bnsp') {
+        show_hide_bnsp();
+      } else if (selectedBerkas === 'sertifikat') {
+        show_hide_sertifikat();
+      } else {
+        show_hide();
+      }
+
+      img.onclick = function() {
+        modal.style.display = "block";
+        modalImg.src = '/images/berkas/' + selectedBerkas + '.png';
+        captionText.innerHTML = 'Contoh Berkas ' + selectedBerkas.replace(/-/g, ' ');
+      }
+    }
+
+    // function df hadir asesi bnsp
+    function df_hadir_asesi_bnsp(year) {
+      $('#export_excel').attr('href', '/admin/berkas/df-hadir-asesi-bnsp/' + year);
+      $.ajax({
+        type: "GET",
+        url: "/admin/table-df-hadir-asesi-bnsp/" + year,
+        dataType: "json",
+        success: function(response) {
+          $('#input-df-hadir-asesi-bnsp').empty();
+          $('#input-df-hadir-asesi-bnsp').html(`
+            <div>
+                <h5>Ubah Kode Keseluruhan Asesi</h5>
+            </div>
+            <div class="d-flex gap-2 flex-wrap" id="editable-input-df-hadir-asesi-bnsp">
+                <div class="form-group" style="width: 20%">
+                <label for="kode_kota">Kode Kota</label>
+                <p class="text-primary border" data-field="kode_kota" data-year="${year}" data-pk="1" id="kode_kota">-</p>
+                </div>
+                <div class="form-group" style="width: 20%">
+                <label for="kode_provinsi">Kode Provinsi</label>
+                <p class="text-primary border" data-field="kode_provinsi" data-year="${year}" data-pk="1" id="kode_provinsi">-</p>
+                </div>
+                <div class="form-group" style="width: 20%">
+                <label for="kode_pendidikan">Kode Pendidikan</label>
+                <p class="text-primary border" data-field="kode_pendidikan" data-year="${year}" data-pk="1" id="kode_pendidikan">-</p>
+                </div>
+                <div class="form-group" style="width: 20%">
+                <label for="kode_pekerjaan">Kode Pekerjaan</label>
+                <p class="text-primary border" data-field="kode_pekerjaan" data-year="${year}" data-pk="1" id="kode_pekerjaan">-</p>
+                </div>
+                <div class="form-group" style="width: 20%">
+                <label for="kode_jadwal">Kode Jadwal</label>
+                <p class="text-primary border" data-field="kode_jadwal" data-year="${year}" data-pk="1" id="kode_jadwal">-</p>
+                </div>
+                <div class="form-group" style="width: 20%">
+                <label for="kode_sumber_anggaran">Kode Sumber Anggaran</label>
+                <p class="text-primary border" data-field="kode_sumber_anggaran" data-year="${year}" data-pk="1" id="kode_sumber_anggaran">-</p>
+                </div>
+                <div class="form-group" style="width: 20%">
+                <label for="kode_kementerian">Kode Kementerian</label>
+                <p class="text-primary border" data-field="kode_kementerian" data-year="${year}" data-pk="1" id="kode_kementerian">-</p>
+                </div>
+            </div>
+        `);
+          $('#table-df-hadir-asesi-bnsp').empty();
+          $('#table-df-hadir-asesi-bnsp').html(`
+                <table class="table table-striped" id="editable-table-df-hadir-asesi-bnsp">
+                <thead>
+                    <tr class="text-center">
+                    <th>No</th>
+                    <th>Nama Asesi</th>
+                    <th>Nama Asal Sekolah</th>
+                    <th>Kode Kota</th>
+                    <th>Kode Provinsi</th>
+                    <th>Kode Pendidikan</th>
+                    <th>Kode Pekerjaan</th>
+                    <th>Kode Jadwal</th>
+                    <th>Kode Sumber Anggaran</th>
+                    <th>Kode Kementerian</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${
+                    (() => {
+                        let i = 1;
+                        return response.user.map(data => `
+                        <tr>
+                            <td class="text-center">${i++}</td>
+                            <td>${data.nama_lengkap}</td>
+                            <td>${data.relasi_institusi.nama_institusi}</td>
+                            <td class="text-center text-primary" data-field="kode_kota" data-pk="${data.id}">${data.relasi_user_detail.kode_kota ?? '-'}</td>
+                            <td class="text-center text-primary" data-field="kode_provinsi" data-pk="${data.id}">${data.relasi_user_detail.kode_provinsi ?? '-'}</td>
+                            <td class="text-center text-primary" data-field="kode_pendidikan" data-pk="${data.id}">${data.relasi_user_detail.kode_pendidikan ?? '-'}</td>
+                            <td class="text-center text-primary" data-field="kode_pekerjaan" data-pk="${data.id}">${data.relasi_user_detail.kode_pekerjaan ?? '-'}</td>
+                            <td class="text-center text-primary" data-field="kode_jadwal" data-pk="${data.id}">${data.relasi_user_detail.kode_jadwal ?? '-'}</td>
+                            <td class="text-center text-primary" data-field="kode_sumber_anggaran" data-pk="${data.id}">${data.relasi_user_detail.kode_sumber_anggaran ?? '-'}</td>
+                            <td class="text-center text-primary" data-field="kode_kementerian" data-pk="${data.id}">${data.relasi_user_detail.kode_kementerian ?? '-'}</td>
+                        </tr>
+                        `).join('');
+                    })()
+                    }
+                </tbody>
+                </table>
+            `);
+
+          $('#editable-table-df-hadir-asesi-bnsp').DataTable();
+
+          // Initialize the Editable plugin
+          $('#editable-table-df-hadir-asesi-bnsp td[data-field]').editable({
+            type: 'number',
+            url: '/admin/update-df-hadir-asesi-bnsp',
+            params: function(params) {
+              params.field = $(this).attr('data-field');
+              return params;
+            },
+          });
+          $('#editable-input-df-hadir-asesi-bnsp p[data-field]').editable({
+            type: 'number',
+            url: '/admin/update-input-df-hadir-asesi-bnsp',
+            params: function(params) {
+              params.field = $(this).attr('data-field');
+              params.year = $(this).attr('data-year');
+              return params;
+            },
+            success: function(response, newValue) {
+
+              let table = document.getElementById('editable-table-df-hadir-asesi-bnsp');
+              let rowCount = table.rows.length - 1;
+              for (let i = 1; i <= rowCount; i++) {
+                let row = table.rows[i];
+                let rowKodeKota = row.cells[3];
+                let rowKodeProvinsi = row.cells[4];
+                let rowKodePendidikan = row.cells[5];
+                let rowKodePekerjaan = row.cells[6];
+                let rowKodeJadwal = row.cells[7];
+                let rowKodeSumberAnggaran = row.cells[8];
+                let rowKodeKementerian = row.cells[9];
+
+                switch ($(this).attr('data-field')) {
+                  case 'kode_kota':
+                    rowKodeKota.innerHTML = newValue;
+                    break;
+                  case 'kode_provinsi':
+                    rowKodeProvinsi.innerHTML = newValue;
+                    break;
+                  case 'kode_pendidikan':
+                    rowKodePendidikan.innerHTML = newValue;
+                    break;
+                  case 'kode_pekerjaan':
+                    rowKodePekerjaan.innerHTML = newValue;
+                    break;
+                  case 'kode_jadwal':
+                    rowKodeJadwal.innerHTML = newValue;
+                    break;
+                  case 'kode_sumber_anggaran':
+                    rowKodeSumberAnggaran.innerHTML = newValue;
+                    break;
+                  case 'kode_kementerian':
+                    rowKodeKementerian.innerHTML = newValue;
+                    break;
+                  default:
+                    break;
+                }
+              }
+            }
+          });
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    }
+    // end of function df hadir asesi bnsp
+
+    // function sertifikat
+    function sertifikat(year) {
+      $('#print_sertifikat_all').attr('href', 'print-sertifikat-all/' + year);
+
+      $.ajax({
+        type: "GET",
+        url: "/admin/table-sertifikat/" + year,
+        dataType: "json",
+        success: function(response) {
+          $('#table-sertifikat').empty();
+          $('#table-sertifikat').html(`
                 <table class="table table-striped" id="editable-table">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                     <th>No</th>
                     <th>Nama Asesi</th>
                     <th>Asal Sekolah</th>
@@ -175,12 +401,12 @@
                         let i = 1;
                         return response.user.map(data => `
                         <tr>
-                            <td>${i++}</td>
+                            <td class="text-center">${i++}</td>
                             <td>${data.nama_lengkap}</td>
-                            <td>${data.relasi_institusi.nama_institusi}</td>
-                            <td class="text-primary" data-field="no_sertifikat" data-pk="${data.id}">${data.relasi_user_detail.no_sertifikat ?? 'Belum ada nomor sertifikat'}</td>
-                            <td>
-                            <a href="/admin/print-sertifikat/${data.id}" class="btn btn-primary btn-sm">Print Sertifikat</a>
+                            <td class="text-center">${data.relasi_institusi.nama_institusi}</td>
+                            <td class="text-primary text-center" data-field="no_sertifikat" data-pk="${data.id}">${data.relasi_user_detail.no_sertifikat ?? '-'}</td>
+                            <td class="text-center">
+                            <a href="/admin/print-sertifikat/${data.id}" class="btn btn-primary btn-sm">Print</a>
                             </td>
                         </tr>
                         `).join('');
@@ -190,109 +416,20 @@
                 </table>
                 `);
 
-            // Initialize the Editable plugin
-            $('#editable-table td[data-field]').editable({
-              type: 'text',
-              url: '/admin/update-sertifikat',
-              //   data: {
-              //     id: $(this).parent('tr').attr('data-id'),
-              //     field: $(this).attr('data-field'),
-              //   },
-              //   success: function(response, newValue) {
-              //     // Handle success
-              //     console.log('Update successful');
-              //     console.log(response);
-              //     console.log(newValue);
-              //   },
-              //   error: function(response) {
-              //     // Handle error
-              //     console.log('Update failed');
-              //   }
-            });
-          },
-          error: function(xhr, status, error) {
-            console.error(error);
-          }
-        });
-      }
+          $('#editable-table').DataTable();
 
-    });
-
-    // editable in sertifikat
-    // $('.editable').on('click', 'td[data-field="no_sertifikat"]', function() {
-    //   var cell = $(this);
-    //   cell.edit(function(value) {
-    //     // handle value changes
-    //     console.log('Value changed to: ' + value);
-    //   }, function() {
-    //     // handle cancel
-    //     console.log('Edit cancelled');
-    //   }, function(value) {
-    //     // handle save
-    //     var row = cell.parent('tr');
-    // var data = {
-    //   id: row.attr('data-id'),
-    //   field: cell.attr('data-field'),
-    //   value: value
-    // };
-    //     $.ajax({
-    //       method: 'POST',
-    //       url: '/admin/update-sertifikat',
-    //       data: data
-    //     }).done(function(response) {
-    //       // handle success
-    //       console.log('Update successful');
-    //       console.log(response);
-    //     }).fail(function(error) {
-    //       // handle error
-    //       console.log('Update failed: ' + error);
-    //     });
-    //   });
-    // });
-    // end of editable in sertifikat
-
-    // lightbulb
-    // Get the modal
-    var modal = document.getElementById("myModalLightbulb");
-
-    // Get the image and insert it inside the modal - use its "alt" text as a caption
-    var img = document.getElementById("myImgLightbulb");
-    var modalImg = document.getElementById("img01-lightbulb");
-    var captionText = document.getElementById("caption-lightbulb");
-
-    img.onclick = function() {
-      modal.style.display = "block";
-      modalImg.src = '/images/berkas/sk-penetapan-tuk-terverifikasi.png';
-      captionText.innerHTML = 'Contoh Berkas SK Penetapan TUK Terverifikasi';
-    }
-
-    // value berkas dropdown
-    $('#berkas').change(function() {
-      let berkasValue = $(this).val();
-
-      if (berkasValue === '#') {
-        img.onclick = function() {
-          modal.style.display = "block";
-          modalImg.src = '/images/berkas/sk-penetapan-tuk-terverifikasi.png';
-          captionText.innerHTML = 'Contoh Berkas SK Penetapan TUK Terverifikasi';
+          // Initialize the Editable plugin
+          $('#editable-table td[data-field]').editable({
+            type: 'text',
+            url: '/admin/update-sertifikat',
+          });
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
         }
-      } else {
-        img.onclick = function() {
-          modal.style.display = "block";
-          modalImg.src = '/images/berkas/' + berkasValue + '.png';
-          captionText.innerHTML = 'Contoh Berkas ' + berkasValue.replace(/-/g, ' ');
-        }
-
-      }
-    });
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close-lightbulb")[0];
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-      modal.style.display = "none";
+      });
     }
+    // end of function sertifikat
 
     // surat table
     function skPenetapanTUKTerverifikasi() {
@@ -1108,21 +1245,21 @@
         return text;
 
       }));
-      let index_standar = 0;
-      $('.standar').each(function() {
-        $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].standar);
-        index_standar++;
-      });
-      index_standar = 0;
-      $('.kondisi_sesuai').each(function() {
-        $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].kondisi === 1 ? check_mark : '');
-        index_standar++;
-      })
-      index_standar = 0;
-      $('.kondisi_tidak_sesuai').each(function() {
-        $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].kondisi === 0 ? check_mark : '');
-        index_standar++;
-      })
+      //   let index_standar = 0;
+      //   $('.standar').each(function() {
+      //     $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].standar);
+      //     index_standar++;
+      //   });
+      //   index_standar = 0;
+      //   $('.kondisi_sesuai').each(function() {
+      //     $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].kondisi === 1 ? check_mark : '');
+      //     index_standar++;
+      //   })
+      //   index_standar = 0;
+      //   $('.kondisi_tidak_sesuai').each(function() {
+      //     $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].kondisi === 0 ? check_mark : '');
+      //     index_standar++;
+      //   })
       $('#catatan').text(data.catatan);
       $('#tempat_ditetapkan').text(data.tempat_ditetapkan);
       const date_hasil_verifikasi_tuk = new Date(data.tanggal_ditetapkan);
@@ -1134,6 +1271,7 @@
       $('#tanggal_ditetapkan').text(tanggal_hasil_verifikasi_tuk);
       $('#ttd').attr('src', data.ttd);
       $('#nama_bttd').text(data.nama_bttd);
+      $("#pdfHasilVerifikasiTUK").attr('href', 'cetak-hasil-verifikasi-tuk/' + data.id);
     })
   }
 
@@ -1444,6 +1582,22 @@
       let nama_nip = data.relasi_nama_jabatan.filter(function(d) {
         return d.is_nip === 1;
       });
+
+      $('#jml_df_hadir_asesi_df_hadir_asesor').empty();
+      for (let i = 0; i < data.jml_row_df_hadir_asesi; i++) {
+        $('#jml_df_hadir_asesi_df_hadir_asesor').append(
+          `
+                <tr>
+                    <td class="text-center">
+                        ${i + 1}.
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 9%;"' : ''}>${i + 1}</td>
+                </tr>
+            `
+        );
+      }
       $('#tbody_table_panitia_df_hadir_asesor').html(nama_nip.map(function(d, i) {
         return $(
           `<tr>
