@@ -69,6 +69,16 @@ class User extends Authenticatable
         return $this->belongsTo(Sertifikasi::class, 'id', 'user_id');
     }
 
+    public function relasi_asesmen_mandiri()
+    {
+        return $this->belongsTo(AsesmenMandiri::class, 'id', 'user_asesi_id');
+    }
+
+    public function relasi_unit_kompetensi()
+    {
+        return $this->belongsTo(UnitKompetensi::class, 'id', 'user_id');
+    }
+
     public function relasi_kelengkapan_pemohon()
     {
         return $this->belongsTo(KelengkapanPemohon::class, 'id', 'user_id');
@@ -92,5 +102,9 @@ class User extends Authenticatable
     public function relasi_koreksi_jawaban()
     {
         return $this->belongsTo(KoreksiJawaban::class, 'id', 'user_asesi_id');
+    }
+    public function relasi_user_asesi_ukom()
+    {
+        return $this->belongsTo(AsesiUjiKompetensi::class, 'id', 'user_asesi_id');
     }
 }

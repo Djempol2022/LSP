@@ -22,7 +22,7 @@
                         {{-- MODAL TAMBAH --}}
                         <div class="modal fade text-left" id="modalTambahAsesor" tabindex="-1" role="dialog"
                             aria-labelledby="myModalLabel33" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h4 class="modal-title" id="myModalLabel33">Tambah Asesor</h4>
@@ -60,8 +60,6 @@
                                                 <span class="d-none d-sm-block">Simpan</span>
                                             </button>
                                         </div>
-                                        <input type="number" name="id_jadwal"
-                                            value="{{ $jadwal_uji_kompetensi['id'] }}">
                                     </form>
                                 </div>
                             </div>
@@ -73,9 +71,8 @@
                         <table class="table table-striped display" id="table-asesor">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
+                                    <th>Nama Asesor</th>
                                     <th>Aksi</th>
-                                    <p class="jadwal_id" hidden>{{ $jadwal_uji_kompetensi['id'] }}</p>
                                 </tr>
                             </thead>
                         </table>
@@ -85,7 +82,7 @@
                 {{-- MODAL EDIT --}}
                 <div class="modal fade text-left" id="modalEditAsesor" tabindex="-1" role="dialog"
                     aria-labelledby="myModalLabel33" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="myModalLabel33">Ubah Asesor</h4>
@@ -125,15 +122,7 @@
                         </div>
                     </div>
                 </div>
-
             </section>
         </div>
-
-
-
-
-
-
-
     </div>
 </div>

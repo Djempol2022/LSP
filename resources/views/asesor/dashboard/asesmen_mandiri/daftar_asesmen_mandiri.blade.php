@@ -73,9 +73,14 @@
           "class": "text-nowrap",
           "render": function(data, type, row, meta) {
             let tampilan;
-            tampilan = `<span class="badge bg-warning rounded-pill">
-                            <a class="text-white" href="detail-pengesahan-asesmen-mandiri/${row.user_asesi_id}">Detail</a>
-                        </span>`
+            tampilan = `
+                      <div class="buttons">
+                        <a class="btn btn-sm icon icon-left btn-warning rounded-pill fw-semibold text-black"
+                        href="detail-pengesahan-asesmen-mandiri/${row.user_asesi_id}">
+                            <i class="fa fa-eye fa-sm"></i> Detail
+                        </a>
+                      </div>
+                      `
             return tampilan;
           }
         },

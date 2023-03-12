@@ -1,7 +1,6 @@
 @extends('layout.main-layout', ['title' => 'Soal Wawancara'])
 @section('soal-section')
-    <div class="container-fluid" style="margin-top: 20px;">
-        <div id="demo"> </div>
+    <div class="container-fluid" style="margin-top: 20px;" id="halaman-sesi-wawancara">
         {{-- JALUR FILE --}}
         {{-- <nav class="jalur-file mb-5" aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -14,6 +13,7 @@
             </ol>
         </nav> --}}
         <h5>Materi Uji Kompetensi {{$pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_muk->muk}}</h5>
+        <div id="demo"> </div>
         {{-- <h3 class="mt-5" id="timer"></h3> --}}
         <div class="row col gap-5 ms-0 mt-2">
             
@@ -43,10 +43,10 @@
                         </div>
                     </div>
                     <div class="col-md-12 row gap-4 d-flex soal-next-btn mt-5 mx-0">
-                        <a href="{{route('asesor.ProsesWawancaraAsesi',['jadwal_id'=>$pelaksanaan_ujian->jadwal_uji_kompetensi_id, 'soal_id'=>$sebelumnya ?? $soal_id, 'asesi_id'=>$asesi_id])}}" 
+                        <a href="{{route('asesor.DaftarDataUjian.ProsesWawancaraAsesi',['jadwal_id'=>$pelaksanaan_ujian->jadwal_uji_kompetensi_id, 'soal_id'=>$sebelumnya ?? $soal_id, 'asesi_id'=>$asesi_id])}}" 
                             class="btn btn-secondary tombol-primary-small col-6">< Sebelumnya</a>
                         <button type="submit" class="btn btn-secondary tombol-primary-small col-6">Selanjutnya >
-                            <a href="{{route('asesor.ProsesWawancaraAsesi',
+                            <a href="{{route('asesor.DaftarDataUjian.ProsesWawancaraAsesi',
                                     ['jadwal_id'=>$pelaksanaan_ujian->jadwal_uji_kompetensi_id, 'soal_id'=>$selanjutnya ?? $soal_id, 'asesi_id'=>$asesi_id])}}">
                             </a>
                         </button>
@@ -71,7 +71,7 @@
                                 bg-secondary 
                                 @endif 
                                 text-white p-2 btn-number">
-                                <a class="text-white" href="{{route('asesor.ProsesWawancaraAsesi',
+                                <a class="text-white" href="{{route('asesor.DaftarDataUjian.ProsesWawancaraAsesi',
                                         ['jadwal_id'=>$pelaksanaan_ujian->jadwal_uji_kompetensi_id, 'soal_id'=>$data_semua_soal->id, 'asesi_id'=>$asesi_id])}}">{{$i}}
                                     </a>
                                 </div>
@@ -121,13 +121,20 @@
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
     // Display the result in the element with id="demo"
-    document.getElementById("demo").innerHTML = hours + " Jam " + minutes + " Menit " + seconds + " Detik ";
-    
+    document.getElementById("demo").innerHTML = "<h6><b>" + hours + " Jam " + minutes + " Menit " + seconds + " Detik </b></h4>";    
     // If the count down is finished, write some text
+    let jadwal_id = @json($pelaksanaan_ujian);
+    let asesi_id = @json($asesi_id);
         if (distance < 0) {
-            // location.reload();
+            swal({
+                title: "Waktu Wawancara telah habis",
+                icon: "info",
+            }),
             clearInterval(x);
-            document.getElementById("demo").innerHTML = "EXPIRED";
+            document.getElementById("demo").innerHTML = "Waktu Ujian Selesai";
+            document.getElementById("halaman-sesi-wawancara").innerHTML = "";
+            setTimeout(function() {window.location.href = "/asesor/waktu-wawancara-habis/"+ jadwal_id.jadwal_uji_kompetensi_id + "/" + asesi_id}, 2000);
+            return false;
         }
     });
     

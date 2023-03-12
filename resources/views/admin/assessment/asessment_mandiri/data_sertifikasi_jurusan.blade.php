@@ -66,6 +66,7 @@
                                 style="table-layout: fixed;">
                                 <thead>
                                     <tr class="text-center">
+                                        <th>No</th>
                                         <th>Kode unit</th>
                                         <th>Judul Unit</th>
                                         <th style="word-wrap: break-word;">Jenis Standar(Standar khusus/Standar
@@ -84,7 +85,7 @@
 {{-- MODAL TAMBAH UNIT KOMPETENSI --}}
 <div class="modal fade text-left" id="modalTambahUnitKompetensi" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel33">Tambah Unit Kompetensi</h4>
@@ -124,11 +125,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Batal</span>
                     </button>
-                    <button type="submit" class="btn btn-primary ml-1">
+                    <button type="submit" class="btn btn-primary ml-1 rounded-pill">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Simpan</span>
                     </button>
@@ -141,7 +142,7 @@
 {{-- MODAL UBAH UNIT KOMPETENSI --}}
 <div class="modal fade text-left" id="modalUbahUnitKompetensi" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel33">Edit Unit Kompetensi</h4>
@@ -178,11 +179,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Batal</span>
                     </button>
-                    <button type="submit" class="btn btn-primary ml-1">
+                    <button type="submit" class="btn btn-primary ml-1 rounded-pill">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Simpan</span>
                     </button>
@@ -209,7 +210,9 @@
         "bInfo": true,
         "processing": true,
         "bServerSide": true,
-        "responsive": true,
+        "responsive": false,
+        "sScrollX": '100%',
+        "sScrollXInner": "100%",
         ajax: {
             url: "/admin/data-unit-kompetensi/" + id_sertifikasi,
             type: "POST",
@@ -227,8 +230,9 @@
                 "targets": 0,
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
+                    let i = 1;
                     list_unit_kompetensi[row.id] = row;
-                    return row.kode_unit;
+                    return meta.row + 1;
                 }
             },
             {
@@ -236,11 +240,19 @@
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
-                    return row.judul_unit;
+                    return row.kode_unit;
                 }
             },
             {
                 "targets": 2,
+                "class": "text-nowrap text-center",
+                "render": function (data, type, row, meta) {
+                    list_unit_kompetensi[row.id] = row;
+                    return row.judul_unit;
+                }
+            },
+            {
+                "targets": 3,
                 "class": "text-wrap text-center",
                 "render": function (data, type, row, meta) {
                     list_unit_kompetensi[row.id] = row;
@@ -248,7 +260,7 @@
                 }
             },
             {
-                "targets": 3,
+                "targets": 4,
                 "class": "text-nowrap text-center",
                 "render": function (data, type, row, meta) {
                     let tampilan;
@@ -311,7 +323,6 @@
                             title: "Berhasil",
                             text: `${data.msg}`,
                             icon: "success",
-                            buttons: true,
                             successMode: true,
                         }),
                         table_data_unit_kompetensi.ajax.reload(null, false)

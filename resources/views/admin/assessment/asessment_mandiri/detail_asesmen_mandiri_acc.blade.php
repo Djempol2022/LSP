@@ -19,15 +19,15 @@
               <div class="col">
                 <div class="assesment-mandiri-header">
                   <p class="assesment-mandiri-title">Judul Skema Sertifikasi</p>
-                  <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->judul_skema_sertifikasi }}</p>
+                  <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->judul_skema_sertifikasi ?? ''}}</p>
                 </div>
                 <div class="assesment-mandiri-header">
                   <p class="assesment-mandiri-title">Nomor Skema Sertifikasi</p>
-                  <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->nomor_skema_sertifikasi }}</p>
+                  <p>{{ $sertifikasi->relasi_unit_kompetensi->relasi_skema_sertifikasi->nomor_skema_sertifikasi ?? '' }}</p>
                 </div>
                 <div class="assesment-mandiri-header">
                   <p class="assesment-mandiri-title">Skema Sertifikasi</p>
-                  <p>{{ $sertifikasi->relasi_unit_kompetensi->jenis_standar }}</p>
+                  <p>{{ $sertifikasi->relasi_unit_kompetensi->jenis_standar ?? ''}}</p>
                 </div>
               </div>
               {{-- TITLE --}}
@@ -59,7 +59,7 @@
                     @endphp
     
                     <li class="list-group-item d-flex justify-content-between align-items-start border-0 fw-semibold">
-                      <div class="col-md-12 ms-2 me-auto">
+                      <div class="ms-2 me-auto ">
                         Elemen: {{ $data_unit_kompetensi_sub->judul_unit_kompetensi_sub }}
                         <div class="py-1">Kriteria Kerja:</div>
                         <div class="row col mx-3">
@@ -84,8 +84,6 @@
                                 @else
                                     <label class="form-check-label text-danger" for="kompeten-{{ $isi->id }}">Belum Kompeten</label>
                                 @endif
-                                @else
-                                <label class="form-check-label text-warning" for="kompeten-{{ $isi->id }}">?</label>
                                 @endisset
                               </div>
 
@@ -142,16 +140,21 @@
                             @isset($data_asesmen_mandiri->relasi_user_asesor->nama_lengkap)
                               <p>{{$data_asesmen_mandiri->relasi_user_asesor->nama_lengkap}}</p>
                             @else
-                              <p>Nama Asesor Belum Di Ketahui</p>
+                              <p style="color:red">Nama asesor belum diketahui</p>
                             @endisset
                         </div>
                         <div class="col edit-profil-left">
                         <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
-                          <p>{{ Carbon\Carbon::parse($data_asesmen_mandiri->tanggal_asesor)->format('d F Y') }}</p>
+                        @isset($data_asesmen_mandiri->tanggal_asesor)
+                        <p>{{ Carbon\Carbon::parse($data_asesmen_mandiri->tanggal_asesor)->format('d F Y') }}</p>
+                        @else
+                        <p style="color: red;">Tanggal belum di tetapkan</p>
+                        @endisset
                         </div>
                         <div class="col edit-profil-left">
                           <label for="rekomendasi" class="form-label fw-semibold">Rekomendasi</label>
                           <div class="col-auto kriteria-kompeten" style="width: auto;">
+                          @isset($data_asesmen_mandiri->rekomendasi)
                           @if ($data_asesmen_mandiri->rekomendasi === null)
                           <label class="form-check-label"><a href="{{route('asesor.SetujuiAsesmen', $data_asesmen_mandiri->id)}}" class="text-success">Asesmen dapat dilanjutkan</a>&nbsp;/&nbsp;</label>
                           <label class="form-check-label"><a href="{{route('asesor.BatalkanAsesmen', $data_asesmen_mandiri->id)}}" class="text-danger">tidak dapat dilanjutkan</a></label>
@@ -162,6 +165,9 @@
                           <label class="form-check-label"><a href="#!" class="text-success"><s>Asesmen dapat dilanjutkan/</s></a></label>
                           <label class="form-check-label"><a href="#!" class="text-danger">tidak dapat dilanjutkan</a></label>
                           @endif
+                          @else
+                          <p style="color: red;">Status belum diputuskan</p>
+                          @endisset
                           </div>
                         </div>
                         <div class="col edit-profil-left">
@@ -169,6 +175,8 @@
                           <div class="col-auto kriteria-kompeten" style="width: auto;">
                             @isset($data_asesmen_mandiri->ttd_asesor)
                                 <img src="{{ $data_asesmen_mandiri->ttd_asesor }}" alt="ttd_asesi" width="180px">
+                            @else
+                            <p style="color: red;">Belum ditandatangani oleh asesor</p>
                             @endisset
                           </div>
                       </div>

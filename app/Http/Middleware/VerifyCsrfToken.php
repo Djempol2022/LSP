@@ -14,7 +14,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         '/admin/data-jurusan',
         '/admin/data-muk',
-        '/admin/data-jadwal-uji-kompetensi/*',
+        '/admin/data-jadwal-uji-kompetensi',
         '/admin/data-pengguna',
         '/admin/data-institusi',
         '/admin/data-kualifikasi-pendidikan',
@@ -22,7 +22,26 @@ class VerifyCsrfToken extends Middleware
         '/admin/data-asesor/*',
         '/admin/data-peninjau/*',
         '/admin/data-permohonan-sertifikasi-kompetensi/',
-        '/asesi/materi-uji-kompetensi',
+        '/admin/data-unit-kompetensi/*',
+        '/admin/data-muk-asesor-peninjau/*',
+        '/admin/data-asesi-uji-kompetensi/*',
+        '/admin/table-surat-sk-penetapan',
+        '/admin/table-surat-daftar-tuk',
+        '/admin/data-asesi-asessment-mandiri',
+        '/admin/data-pengajuan-asesmen-mandiri-acc',
+        
+        '/asesor/data-unit-kompetensi-jurusan-asesor',
+        '/asesor/data-elemen-unit-kompetensi-jurusan-asesor/*',
+        '/asesor/data-isi-elemen-unit-kompetensi-jurusan-asesor',
+        '/asesor/data-kelola-soal',
+        '/asesor/data-peserta-pelaksanaan-uji-kompetensi',
+        '/asesor/data-asesmen-mandiri',
+        '/asesor/data-list-asesi-peserta-uji-kompetensi/*',
+        '/asesor/data-asesi-telah-selesai-ujian/',
+        '/asesor/data-asesi-ujian-wawancara/',
+        
+        '/asesi/asesi-materi-uji-kompetensi',
+
         '/admin/table-surat-sk-penetapan',
         '/admin/table-surat-daftar-tuk',
         '/admin/table-surat-hasil-verifikasi-tuk',
@@ -34,5 +53,6 @@ class VerifyCsrfToken extends Middleware
         '/admin/table-surat-z-ba-rp',
         '/admin/table-surat-df-hadir-asesor-pleno',
         '/admin/table-surat-df-hadir-asesor',
+
     ];
 }

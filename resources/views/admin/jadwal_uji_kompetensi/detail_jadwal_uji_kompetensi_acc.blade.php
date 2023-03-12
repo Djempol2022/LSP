@@ -29,31 +29,49 @@
                   </li>
               </ol>
             </nav>
+        </div>
             {{-- EDIT PROFIL --}}
             <div class="mt-5">
 
-                {{-- JADWAL --}}
-                <div class="col profil-section-title">
+              <div class="card">
+                <div class="card-header">
+                  <div class="col profil-section-title">
                     Uji Kompetensi
+                  </div>
                 </div>
+                <div class="card-body">
+                {{-- JADWAL --}}
+                
                 <div class="col profil-section" style="margin-bottom: 0% !important">
                     <div class="row my-4">
                         <div class="col-md-6">
                             <div class="col pb-4">
                               <p class="fw-bold">Jurusan</p>
                               <span>{{ $data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_muk->relasi_jurusan->jurusan }}</span>
+
                             </div>
                             <div class="col pb-4">
                                 <p class="fw-bold">Materi Uji Kompetensi</p>
                                 <span>{{ $data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_muk->muk }}</span>
+
                             </div>
                             <div class="col pb-4">
                                 <p class="fw-bold">Asesor</p>
-                                <span>{{ $data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_user_asesor->relasi_user_asesor_detail->nama_lengkap }}</span>
+                                @isset($data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_user_asesor)
+                                  <span>{{ $data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_user_asesor->relasi_user_asesor_detail->nama_lengkap }}</span>
+                                @else
+                                  <span style="color: red">Data asesor tidak ditemukan</span>
+                                @endisset
+
                             </div>
                             <div class="col pb-4">
                                 <p class="fw-bold">Peninjau</p>
-                                <span>{{ $data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_user_peninjau->relasi_user_peninjau_detail->nama_lengkap }}</span>
+                                @isset($data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_user_peninjau)
+                                  <span>{{ $data_pelaksanaan_ujian->relasi_jadwal_uji_kompetensi->relasi_user_peninjau->relasi_user_peninjau_detail->nama_lengkap }}</span>
+                                @else
+                                  <span style="color: red">Data peninjau tidak ditemukan</span>
+                                @endisset
+
                             </div>
                             <div class="col pb-4">
                                 <p class="fw-bold">Jenis Soal</p>
@@ -68,12 +86,17 @@
                         </div>
                     </div>
                 </div>
+              </div>
+            </div>
             </div>
 
-            <div class="col profil-section-title">
-                Detail Jadwal Uji Kompetensi
-            </div>
-
+            <div class="card">
+              <div class="card-header">
+                <div class="col profil-section-title">
+                  Detail Jadwal Uji Kompetensi
+                </div>
+              </div>
+              <div class="card-body">
             <div class="col profil-section" style="margin-bottom: 0% !important">
               <form action="{{route('admin.UbahJadwalPelaksanaanUjian', $data_pelaksanaan_ujian->id)}}" method="POST" id="form-ubahJadwalPelaksanaanUjian">
                 <div class="row my-4">
@@ -152,11 +175,13 @@
                       </div>
                     </div>
                     <div class="col pb-12" id="tambahAsesiKeUjiKompetensi">
-                      <p class="fw-bold">Asesi</p>
-                      <span class="btn btn-primary btn-sm btn-rounded text-white"
-                        href="#" data-bs-toggle="modal" data-bs-target="#modalTambahAsesiKeJadwalUkom">Tambah Asesi
-                      </span>
-                      <br>
+                      <p class="fw-bold" style="margin-top: 1rem;">Asesi</p>
+                        <div class="buttons">
+                          <a class="btn btn-sm icon icon-left btn-primary rounded-pill fw-semibold"
+                              href="#!" data-bs-toggle="modal" data-bs-target="#modalTambahAsesiKeJadwalUkom">
+                              <i class="fa fa-plus fa-xs"></i> Tambah Asesi
+                          </a>
+                        </div>
                       {{-- @isset($relasi_jadwal_uji_kompetensi->relasi_user_asesi) --}}
                       @php
                         $count_data_asesi = \App\Models\AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $data_pelaksanaan_ujian->jadwal_uji_kompetensi_id)->count();
@@ -174,8 +199,14 @@
                           @foreach ($user_asesi_kompetensi as $data_user_asesi_kompetensi)
                           <tr>
                             <td>{{$data_user_asesi_kompetensi->relasi_user_asesi->nama_lengkap}}</td>
-                            <th><span class="btn bg-danger text-white btn-sm" 
-                              onclick="hapusAsesiUjiKompetensi({{$data_user_asesi_kompetensi->user_asesi_id}}, {{$data_user_asesi_kompetensi->jadwal_uji_kompetensi_id}})">Hapus</span></th>
+                            <th>
+                              <div class="buttons">
+                                <a class="btn btn-sm icon icon-left btn-danger rounded-pill fw-semibold"
+                                    href="#!" onclick="hapusAsesiUjiKompetensi({{$data_user_asesi_kompetensi->user_asesi_id}}, {{$data_user_asesi_kompetensi->jadwal_uji_kompetensi_id}})">
+                                    <i class="fa fa-trash fa-xs"></i> Hapus
+                                </a>
+                              </div>
+                            </th>
                           </tr>
                           @endforeach
                         </tbody>
@@ -184,7 +215,7 @@
                         <span class="text-danger fw-semibold">Asesi Belum di tentukan</span>
                       @endif
                     </div>
-                    <button type="submit" class="bg-primary btn-sm btn rounded-3 text-white">Simpan</button>
+                    <button type="submit" class="bg-primary btn rounded-5 text-white">Simpan</button>
                 </div>
                 </form>
                 <div class="modal fade" id="modalTambahAsesiKeJadwalUkom" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -209,8 +240,7 @@
                           <tbody>
                               <input type="hidden" name="jadwal_uji_kompetensi_id" value="{{$data_pelaksanaan_ujian->jadwal_uji_kompetensi_id}}" hidden>
                               <input type="hidden" name="pelaksanaan_ujian_id" value="{{$data_pelaksanaan_ujian->id}}" hidden>
-                              <input type="hidden" name="jenis_tes" value="{{$data_pelaksanaan_ujian->jenis_tes}}" hidden>  
-                            
+                              <input type="hidden" name="jenis_tes" value="{{$data_pelaksanaan_ujian->jenis_tes}}" hidden>              
                             @foreach ($user_asesi as $data_user_asesi)
                             <tr>
                               <th><input type="checkbox" name="user_asesi_id[]" class="cek" value="{{$data_user_asesi->id}}"></th>
@@ -221,16 +251,16 @@
                         </table>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary button-asesi" disabled>Tambah Asesi</button>
+                        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary button-asesi rounded-pill" disabled>Tambah Asesi</button>
                       </div>
                     </form>
                     </div>
                   </div>
                 </div>
               </div>
-        </div>
-    </section>
+            </div>
+            </section>
 </div>
 @endsection
 @section('script')

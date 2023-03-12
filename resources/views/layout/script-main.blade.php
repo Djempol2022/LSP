@@ -1,15 +1,21 @@
 {{-- JAVASCRIPT BOOTSTRAP --}}
+<script src="/js/jquery.min.js"></script>
+
+{{-- AJAX JQUERY --}}
+{{-- <script src="/extensions/jquery/jquery.min.js"></script> --}}
+<script src="/extensions/fontawesome/js/all.min.js"></script>
 <script src="/js/bootstrap.js"></script>
 <script src="/js/app.js"></script>
 <script src="/js/sweetalert.min.js"></script>
-{{-- AJAX JQUERY --}}
-<script src="/extensions/jquery/jquery.min.js"></script>
-<script src="/extensions/fontawesome/js/all.min.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/popper.js"></script>
 <script src="/js/jquery.form.min.js"></script>
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/dataTables.bootstrap4.min.js"></script>
 <script src="/js/select2.full.min.js"></script>
 <script src="/js/moment.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 {{-- <script src="/js/dataTables.responsive.min.js"></script> --}}
 
 <script src="/js/bootstrap-editable.js"></script>
@@ -20,6 +26,16 @@
 @yield('script')
 @stack('script')
 <script>
+  $('#waktu_mulai, #waktu_selesai').datetimepicker({
+    format: 'HH:mm:ss',
+    icons: {
+      up: 'fas fa-chevron-up',
+      down: 'fas fa-chevron-down',
+      previous: 'fas fa-chevron-left',
+      next: 'fas fa-chevron-right'
+    }
+  })
+
   $(document).ready(function() {
     $('#table1').DataTable({
       drawCallback: function() {

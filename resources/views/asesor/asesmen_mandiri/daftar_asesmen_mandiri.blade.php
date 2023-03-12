@@ -3,11 +3,11 @@
   <div class="page-content">
     <section class="section">
       <div class="card">
-
         <div class="card-body">
-          <table class="table table-striped" id="table-asesmen-mandiri">
+          <table class="table table-striped text-center table-hover" id="table-asesmen-mandiri">
             <thead>
               <tr>
+                <th>No</th>
                 <th>Nama Asesi</th>
                 <th>Status</th>
                 <th>Aksi</th>
@@ -33,6 +33,8 @@
       "bInfo": true,
       "processing": true,
       "bServerSide": true,
+      "sScrollX": '100%',
+      "sScrollXInner": "100%",
       ajax: {
         url: "{{ route('asesor.DataAsesmenMandiri') }}",
         type: "POST",
@@ -47,16 +49,25 @@
           visible: true
         },
         {
-          "targets": 0,
-          "class": "text-nowrap",
+            "targets": 0,
+            "class": "text-nowrap text-center",
+            "render": function (data, type, row, meta) {
+                let i = 1;
+                list_asesmen_mandiri[row.id] = row;
+                return meta.row + 1;
+            }
+        },
+        {
+          "targets": 1,
+          "class": "text-nowrap text-center",
           "render": function(data, type, row, meta) {
             list_asesmen_mandiri[row.id] = row;
             return row.relasi_user_asesi.nama_lengkap;
           }
         },
         {
-          "targets": 1,
-          "class": "text-nowrap",
+          "targets": 2,
+          "class": "text-nowrap text-center",
           "render": function(data, type, row, meta) {
             list_asesmen_mandiri[row.id] = row;
             let status;
@@ -69,13 +80,18 @@
           }
         },
         {
-          "targets": 2,
-          "class": "text-nowrap",
+          "targets": 3,
+          "class": "text-nowrap text-center",
           "render": function(data, type, row, meta) {
             let tampilan;
-            tampilan = `<span class="badge bg-warning rounded-pill">
-                            <a class="text-white" href="detail-pengesahan-asesmen-mandiri/${row.user_asesi_id}">Detail</a>
-                        </span>`
+            tampilan = `
+                      <div class="buttons">
+                          <a class="btn btn-sm btn-warning text-black rounded-pill fw-semibold"
+                              href="detail-pengesahan-asesmen-mandiri/${row.user_asesi_id}">
+                              <i class="fa fa-eye fa-xs"></i> Detail
+                          </a>
+                      </div>
+                      `
             return tampilan;
           }
         },

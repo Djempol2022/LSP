@@ -6,6 +6,7 @@ use App\Models\Soal;
 use App\Models\User;
 use App\Models\JawabanAsesi;
 use Illuminate\Http\Request;
+use App\Models\KoreksiJawaban;
 use App\Models\PelaksanaanUjian;
 use App\Models\AsesiUjiKompetensi;
 use App\Http\Controllers\Controller;
@@ -90,7 +91,7 @@ class AsesorSesiWawancara extends Controller
             ]);
         }
         $selanjutnya = Soal::where('jadwal_uji_kompetensi_id', $jadwal_id)->where('id', '>', $soal_id)->orderBy('id','asc')->first();
-        return \Redirect::route('asesor.ProsesWawancaraAsesi', ['jadwal_id'=>$jadwal_id, 'soal_id'=>$selanjutnya ?? $soal_id, 'asesi_id'=>$user_asesi_id] )->with('message', 'State saved correctly!!!');
+        return \Redirect::route('asesor.DaftarDataUjian.ProsesWawancaraAsesi', ['jadwal_id'=>$jadwal_id, 'soal_id'=>$selanjutnya ?? $soal_id, 'asesi_id'=>$user_asesi_id] )->with('message', 'State saved correctly!!!');
     }
 
     public function selesai_wawancara_ujian($jadwal_id, $asesi_id){
@@ -101,10 +102,35 @@ class AsesorSesiWawancara extends Controller
         AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_id)->where('user_asesi_id', $asesi_id)->update([
             'status_ujian_berlangsung' => 2
         ]);
+
+        KoreksiJawaban::create([
+            'jadwal_uji_kompetensi_id' => $jadwal_id,
+            'user_asesi_id'            => $asesi_id,
+            'status_koreksi'           => 0
+        ]);
     
         return response()->json([
             'status'=>1,
             'msg'=>"Terima Kasih Telah Menyelesaikan Tes Kompetensi"
         ]);
     }
+
+    public function waktu_wawancara_habis($jadwal_id, $asesi_id){
+        User::where('id',$asesi_id)->update([
+            'status_terlibat_uji_kompetensi' => 0
+        ]);
+
+        AsesiUjiKompetensi::where('jadwal_uji_kompetensi_id', $jadwal_id)->where('user_asesi_id', $asesi_id)->update([
+            'status_ujian_berlangsung' => 2
+        ]);
+
+        KoreksiJawaban::create([
+            'jadwal_uji_kompetensi_id' => $jadwal_id,
+            'user_asesi_id'            => $asesi_id,
+            'status_koreksi'           => 0
+        ]);
+    
+        return \Redirect::route('asesor.DaftarDataUjian');
+    }
+
 }

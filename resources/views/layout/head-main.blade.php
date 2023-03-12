@@ -21,6 +21,8 @@
   <link rel="stylesheet" href="{{ asset('css/modal-image.css') }}">
 
   {{-- year picker --}}
-  <link rel="stylesheet" href="{{ asset('css/yearpicker.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/yearpicker.css') }}">  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
 
 </head>

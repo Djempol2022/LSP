@@ -19,11 +19,12 @@
     <section class="section">
       <div class="card">
         <div class="card-header">
-          <span class="badge bg-info rounded-pill">
-            <a class="text-white" href="#" data-bs-toggle="modal" data-bs-target="#modal-TambahNamaTUK" onclick="functionTambahTUK();">+ Tempat Uji Kompetensi
+          <div class="buttons">
+            <a class="btn btn-sm icon icon-left btn-primary rounded-pill fw-semibold"
+                href="#!" data-bs-toggle="modal" data-bs-target="#modal-TambahNamaTUK" onclick="functionTambahTUK();">
+                <i class="fa fa-plus fa-sm"></i> Tempat Uji Kompetensi
             </a>
-          </span>
-
+        </div>
           {{-- MODAL TAMBAH Tempat Uji Kompetensi--}}
           <div class="modal fade text-left" id="modal-TambahNamaTUK" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33"
             aria-hidden="true">
@@ -43,7 +44,7 @@
                         <label>Tempat Uji Kompetensi</label>
                         <div class="form-group">
                             <div class="input-group col-xs-12">
-                                <input name="nama_tuk[]" class="form-control rounded-4">
+                                <input name="nama_tuk[]" class="form-control rounded-4" required>
                                 <span class="input-group-append d-flex align-items-center" style="padding: 8px;">
                                     <button class="file-upload-browse btn btn-primary btn-tambah-tuk" type="button">
                                         +
@@ -58,11 +59,11 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-light-secondary rounded-pill" data-bs-dismiss="modal">
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Batal</span>
                         </button>
-                        <button type="submit" class="btn btn-primary ml-1">
+                        <button type="submit" class="btn btn-primary ml-1 rounded-pill">
                             <i class="bx bx-check d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Simpan</span>
                         </button>
@@ -79,6 +80,7 @@
           <table class="table table-striped" id="table-nama-tuk">
             <thead>
               <tr>
+                <th>No</th>
                 <th>Komponen</th>
                 <th>Aksi</th>
               </tr>
@@ -89,7 +91,7 @@
 
       {{-- MODAL EDIT KOMPONEN UMPAN BALIK--}}
       <div class="modal fade text-left" id="modal-EditNamaTUK" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="myModalLabel33" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title" id="myModalLabel33">Ubah Tempat Uji Kompetensi</h4>
@@ -103,18 +105,18 @@
               <div class="modal-body">
                 <label>Nama Tempat Uji Kompetensi</label>
                 <div class="form-group field_wrapper">
-                    <input name="nama_tuk" class="form-control rounded-4">
+                    <input name="nama_tuk" class="form-control rounded-4" required>
                   <div class="input-group has-validation">
                     <label class="text-danger error-text nama_tuk_error"></label>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-light-secondary close" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-light-secondary close rounded-pill" data-bs-dismiss="modal">
                   <i class="bx bx-x d-block d-sm-none"></i>
                   <span class="d-none d-sm-block">Batal</span>
                 </button>
-                <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk">
+                <button type="submit" class="btn btn-primary ml-1 submit-ubah-muk rounded-pill">
                   <i class="bx bx-check d-block d-sm-none"></i>
                   <span class="d-none d-sm-block">Simpan</span>
                 </button>
@@ -139,7 +141,7 @@
     function tambahNamaTUK() {
         $(".input-tuk").addClass('input-tuk')
         var komponen =
-            `<div class="form-group"><div class="input-group col-xs-12"><input name="nama_tuk[]" class="form-control rounded-4"><span class="input-group-append d-flex align-items-center" style="padding: 8px;"><button class="file-upload-browse btn btn-danger hapusKomponen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text komponen_${total++}_error"></label></div></div></div>`;
+            `<div class="form-group"><div class="input-group col-xs-12"><input name="nama_tuk[]" class="form-control rounded-4" required><span class="input-group-append d-flex align-items-center" style="padding: 8px;"><button class="file-upload-browse btn btn-danger hapusKomponen" type="button">-</button></span><div class="input-group has-validation"><label class="text-danger error-text komponen_${total++}_error"></label></div></div></div>`;
         $('.input-tuk').append(komponen);
     };
 
@@ -162,6 +164,8 @@
       "processing": true,
       "bServerSide": true,
       "searching": false,
+      "sScrollX": '100%',
+      "sScrollXInner": "100%",
       ajax: {
         url: "{{ route('admin.DaftarDataNamaTUK') }}",
         type: "POST",
@@ -172,7 +176,16 @@
           visible: true
         },
         {
-          "targets": 0,
+            "targets": 0,
+            "class": "text-nowrap text-center",
+            "render": function (data, type, row, meta) {
+                let i = 1;
+                list_nama_tuk[row.id] = row;
+                return meta.row + 1;
+            }
+        },
+        {
+          "targets": 1,
           "class": "text-wrap",
           "render": function(data, type, row, meta) {
             list_nama_tuk[row.id] = row;
@@ -180,16 +193,22 @@
           }
         },
         {
-          "targets": 1,
+          "targets": 2,
           "class": "text-nowrap",
           "render": function(data, type, row, meta) {
             let tampilan;
-            tampilan = `<span onclick="editNamaTUK(${row.id})" class="badge bg-warning rounded-pill">
-                                    <a class="text-white" href="#!">Edit</a>
-                                </span>
-                                <span id-nama-tuk = "${row.id}" class="badge bg-danger rounded-pill hapus_nama_tuk">
-                                    <a class="text-white" href="#!">Hapus</a>
-                                </span>`
+            tampilan = `
+                        <div class="buttons">
+                            <a class="btn btn-sm icon icon-left btn-info rounded-pill fw-semibold"
+                                href="#!" onclick="editNamaTUK(${row.id})">
+                                <i class="fa fa-pen fa-sm"></i> Edit
+                            </a>
+                            <a class="btn btn-sm icon icon-left btn-danger rounded-pill fw-semibold hapus_nama_tuk"
+                                href="#!" id-nama-tuk = "${row.id}">
+                                <i class="fa fa-trash fa-sm"></i> Hapus
+                            </a>
+                        </div>
+                        `
             return tampilan;
           }
         },
@@ -226,7 +245,6 @@
                   title: "Berhasil",
                   text: `${data.msg}`,
                   icon: "success",
-                  buttons: true,
                   successMode: true,
                 }),
                 table_nama_tuk.ajax.reload();
@@ -259,7 +277,6 @@
                             title: "Berhasil",
                             text: `${response.msg}`,
                             icon: "success",
-                            buttons: true,
                             successMode: true,
                         }),
                     table_nama_tuk.ajax.reload()
@@ -302,7 +319,6 @@
                 title: "Berhasil",
                 text: `${data.msg}`,
                 icon: "success",
-                buttons: true,
                 successMode: true,
               }),
               table_nama_tuk.ajax.reload()

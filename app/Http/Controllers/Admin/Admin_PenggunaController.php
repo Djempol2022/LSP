@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
+use App\Models\Jurusan;
+use App\Models\Institusi;
+use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Institusi;
-use App\Models\Jurusan;
-use App\Models\User;
+use App\Models\Pekerjaan;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class Admin_PenggunaController extends Controller
@@ -21,15 +24,25 @@ class Admin_PenggunaController extends Controller
             'users.*'
         ]);
 
+        if($request->input('role_pengguna')!=null){
+            $data = $data->where('role_id', $request->role_pengguna);
+        }
+
+        if($request->input('jurusan_pengguna')!=null){
+            $data = $data->where('jurusan_id', $request->jurusan_pengguna);
+        }
+
+        $rekamFilter = $data->get()->count();
         if($request->input('length')!=-1) 
             $data = $data->skip($request->input('start'))->take($request->input('length'));
+            $data = $data->with('relasi_institusi')->with('relasi_jurusan')->with('relasi_role')->orderBy('id', 'DESC')->get();
             $rekamTotal = $data->count();
-            // $data = $data->with('relasi_muk')->where('jurusan_id', $id)->get();
-            $data = $data->with('relasi_institusi')->with('relasi_jurusan')->with('relasi_role')->get();
-            // return $data;
+
             return response()->json([
+            'draw'=>$request->input('draw'),
             'data'=>$data,
-            'recordsTotal'=>$rekamTotal
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter,
         ]);
     }
 
@@ -37,7 +50,7 @@ class Admin_PenggunaController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nama_lengkap'=>'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'institusi_id' => 'required',
             'jurusan_id' => 'required',
             'password' => 'required',
@@ -46,6 +59,7 @@ class Admin_PenggunaController extends Controller
             'nama_lengkap.required'=> 'Wajib diisi',
             'email.required'=> 'Wajib diisi',
             'email.email'=> 'Wajib diisi dengan type email @',
+            'email.unique'=> 'Email telah terdaftar',
             'institusi_id.required'=> 'Wajib diisi',
             'jurusan_id.required'=> 'Wajib diisi',
             'password.required'=> 'Wajib diisi',
@@ -63,8 +77,16 @@ class Admin_PenggunaController extends Controller
                 'email' => $request->email,
                 'institusi_id' => $request->institusi_id,
                 'jurusan_id' => $request->jurusan_id,
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
                 'role_id' => $request->role_id,
+                'status_terlibat_uji_kompetensi' => 0
+            ]);
+            UserDetail::create([
+                'user_id' => $tambah_pengguna->id
+            ]);
+
+            Pekerjaan::create([
+                'user_id' => $tambah_pengguna->id
             ]);
             
             if(!$tambah_pengguna){
@@ -87,14 +109,13 @@ class Admin_PenggunaController extends Controller
             'email' => 'required|email',
             'institusi_id' => 'required',
             'jurusan_id' => 'required',
-            'password' => 'required',
+            'password' => 'sometimes',
             'role_id' => 'required',
         ],[
             'nama_lengkap.required'=> 'Wajib diisi',
             'email.required'=> 'Wajib diisi',
             'email.email'=> 'Wajib diisi dengan type email @',
             'institusi_id.required'=> 'Wajib diisi',
-            'password.required'=> 'Wajib diisi',
             'jurusan_id.required'=> 'Wajib diisi',
             'role_id.required'=> 'Wajib diisi',
         ]);
@@ -105,12 +126,18 @@ class Admin_PenggunaController extends Controller
                 'error'=>$validator->errors()->toArray()
             ]);
         }else{
+            $ubah_pengguna = User::where('id', $request->id)->first();
+            if (!$request->password) {
+                $password = $ubah_pengguna->password;
+            }else{
+                $password = Hash::make($request->password);
+            }
             $ubah_pengguna = User::where('id', $request->id)->update([
                 'nama_lengkap' => $request->nama_lengkap,
                 'email' => $request->email,
                 'institusi_id' => $request->institusi_id,
                 'jurusan_id' => $request->jurusan_id,
-                'password' => $request->password,
+                'password' => $password,
                 'role_id' => $request->role_id
             ]);
             

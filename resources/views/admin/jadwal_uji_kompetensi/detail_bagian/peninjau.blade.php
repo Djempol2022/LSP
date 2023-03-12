@@ -22,7 +22,7 @@
                         {{-- MODAL TAMBAH --}}
                         <div class="modal fade text-left" id="modalTambahPeninjau" tabindex="-1" role="dialog"
                             aria-labelledby="myModalLabel33" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h4 class="modal-title" id="myModalLabel33">Tambah Peninjau</h4>
@@ -51,18 +51,16 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-light-secondary"
+                                            <button type="button" class="btn btn-light-secondary rounded-pill"
                                                 data-bs-dismiss="modal">
                                                 <i class="bx bx-x d-block d-sm-none"></i>
                                                 <span class="d-none d-sm-block">Batal</span>
                                             </button>
-                                            <button type="submit" class="btn btn-primary ml-1">
+                                            <button type="submit" class="btn btn-primary ml-1 rounded-pill">
                                                 <i class="bx bx-check d-block d-sm-none"></i>
                                                 <span class="d-none d-sm-block">Simpan</span>
                                             </button>
                                         </div>
-                                        <input type="number" name="id_jadwal"
-                                            value="{{ $jadwal_uji_kompetensi['id'] }}">
                                     </form>
                                 </div>
                             </div>
@@ -74,9 +72,8 @@
                         <table class="table table-striped display" id="table-peninjau">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
+                                    <th>Nama Peninjau</th>
                                     <th>Aksi</th>
-                                    <p class="jadwal_id" hidden>{{ $jadwal_uji_kompetensi['id'] }}</p>
                                 </tr>
                             </thead>
                         </table>
@@ -86,7 +83,7 @@
                 {{-- MODAL EDIT --}}
                 <div class="modal fade text-left" id="modalEditPeninjau" tabindex="-1" role="dialog"
                     aria-labelledby="myModalLabel33" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="myModalLabel33">Ubah Peninjau</h4>

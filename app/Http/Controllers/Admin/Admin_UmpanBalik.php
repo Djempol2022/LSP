@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\AsesiUjiKompetensi;
 use App\Models\UmpanBalikKomponen;
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class Admin_UmpanBalik extends Controller
@@ -115,6 +117,44 @@ class Admin_UmpanBalik extends Controller
                 'msg'=>'Berhasil Menghapus Komponen Umpan Balik'
             ]);
         }
+    }
+
+    public function daftar_data_umpan_balik_asesi(){
+        return view('admin.assessment.umpan_balik.daftar_asesi_umpan_balik');
+    }
+
+    public function data_umpan_balik_asesi(Request $request){
+
+        $data = User::select([
+            'users.*'
+        ]);
+
+        if($request->input('length')!=-1) 
+            $data = $data->skip($request->input('start'))->take($request->input('length'));
+            $data = $data->with('relasi_user_asesi_ukom')->whereRelation('relasi_user_asesi_ukom', 'status_umpan_balik', 1)->get();
+            $rekamTotal = $data->count();
+            $rekamFilter = $data->count();
+            
+        return response()->json([
+            'data'=>$data,
+            'recordsTotal'=>$rekamTotal,
+            'recordsFiltered'=>$rekamFilter,
+        ]);
+
+        // $data = AsesiUjiKompetensi::select([
+        //     'asesi_uji_kompetensi.*'
+        // ]);
+
+        // if($request->input('length')!=-1) 
+        //     $data = $data->skip($request->input('start'))->take($request->input('length'));
+        //     $data = $data->where('status_umpan_balik', 1)->with('relasi_user_asesi', 'relasi_jadwal_uji_kompetensi')->get();
+        //     $rekamTotal = $data->count();
+        //     $rekamFilter = $data->count();
+        // return response()->json([
+        //     'data'=>$data,
+        //     'recordsTotal'=>$rekamTotal,
+        //     'recordsFiltered'=>$rekamFilter,
+        // ]);
     }
 
 }

@@ -229,80 +229,80 @@
         success: function(response) {
           $('#input-df-hadir-asesi-bnsp').empty();
           $('#input-df-hadir-asesi-bnsp').html(`
-            <div>
-                <h5>Ubah Kode Keseluruhan Asesi</h5>
-            </div>
-            <div class="d-flex gap-2 flex-wrap" id="editable-input-df-hadir-asesi-bnsp">
-                <div class="form-group" style="width: 20%">
-                <label for="kode_kota">Kode Kota</label>
-                <p class="text-primary border" data-field="kode_kota" data-year="${year}" data-pk="1" id="kode_kota">-</p>
-                </div>
-                <div class="form-group" style="width: 20%">
-                <label for="kode_provinsi">Kode Provinsi</label>
-                <p class="text-primary border" data-field="kode_provinsi" data-year="${year}" data-pk="1" id="kode_provinsi">-</p>
-                </div>
-                <div class="form-group" style="width: 20%">
-                <label for="kode_pendidikan">Kode Pendidikan</label>
-                <p class="text-primary border" data-field="kode_pendidikan" data-year="${year}" data-pk="1" id="kode_pendidikan">-</p>
-                </div>
-                <div class="form-group" style="width: 20%">
-                <label for="kode_pekerjaan">Kode Pekerjaan</label>
-                <p class="text-primary border" data-field="kode_pekerjaan" data-year="${year}" data-pk="1" id="kode_pekerjaan">-</p>
-                </div>
-                <div class="form-group" style="width: 20%">
-                <label for="kode_jadwal">Kode Jadwal</label>
-                <p class="text-primary border" data-field="kode_jadwal" data-year="${year}" data-pk="1" id="kode_jadwal">-</p>
-                </div>
-                <div class="form-group" style="width: 20%">
-                <label for="kode_sumber_anggaran">Kode Sumber Anggaran</label>
-                <p class="text-primary border" data-field="kode_sumber_anggaran" data-year="${year}" data-pk="1" id="kode_sumber_anggaran">-</p>
-                </div>
-                <div class="form-group" style="width: 20%">
-                <label for="kode_kementerian">Kode Kementerian</label>
-                <p class="text-primary border" data-field="kode_kementerian" data-year="${year}" data-pk="1" id="kode_kementerian">-</p>
-                </div>
-            </div>
-        `);
+              <div>
+                  <h5>Ubah Kode Keseluruhan Asesi</h5>
+              </div>
+              <div class="d-flex gap-2 flex-wrap" id="editable-input-df-hadir-asesi-bnsp">
+                  <div class="form-group" style="width: 20%">
+                  <label for="kode_kota">Kode Kota</label>
+                  <p class="text-primary border" data-field="kode_kota" data-year="${year}" data-pk="1" id="kode_kota">-</p>
+                  </div>
+                  <div class="form-group" style="width: 20%">
+                  <label for="kode_provinsi">Kode Provinsi</label>
+                  <p class="text-primary border" data-field="kode_provinsi" data-year="${year}" data-pk="1" id="kode_provinsi">-</p>
+                  </div>
+                  <div class="form-group" style="width: 20%">
+                  <label for="kode_pendidikan">Kode Pendidikan</label>
+                  <p class="text-primary border" data-field="kode_pendidikan" data-year="${year}" data-pk="1" id="kode_pendidikan">-</p>
+                  </div>
+                  <div class="form-group" style="width: 20%">
+                  <label for="kode_pekerjaan">Kode Pekerjaan</label>
+                  <p class="text-primary border" data-field="kode_pekerjaan" data-year="${year}" data-pk="1" id="kode_pekerjaan">-</p>
+                  </div>
+                  <div class="form-group" style="width: 20%">
+                  <label for="kode_jadwal">Kode Jadwal</label>
+                  <p class="text-primary border" data-field="kode_jadwal" data-year="${year}" data-pk="1" id="kode_jadwal">-</p>
+                  </div>
+                  <div class="form-group" style="width: 20%">
+                  <label for="kode_sumber_anggaran">Kode Sumber Anggaran</label>
+                  <p class="text-primary border" data-field="kode_sumber_anggaran" data-year="${year}" data-pk="1" id="kode_sumber_anggaran">-</p>
+                  </div>
+                  <div class="form-group" style="width: 20%">
+                  <label for="kode_kementerian">Kode Kementerian</label>
+                  <p class="text-primary border" data-field="kode_kementerian" data-year="${year}" data-pk="1" id="kode_kementerian">-</p>
+                  </div>
+              </div>
+          `);
           $('#table-df-hadir-asesi-bnsp').empty();
           $('#table-df-hadir-asesi-bnsp').html(`
-                <table class="table table-striped" id="editable-table-df-hadir-asesi-bnsp">
-                <thead>
-                    <tr class="text-center">
-                    <th>No</th>
-                    <th>Nama Asesi</th>
-                    <th>Nama Asal Sekolah</th>
-                    <th>Kode Kota</th>
-                    <th>Kode Provinsi</th>
-                    <th>Kode Pendidikan</th>
-                    <th>Kode Pekerjaan</th>
-                    <th>Kode Jadwal</th>
-                    <th>Kode Sumber Anggaran</th>
-                    <th>Kode Kementerian</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${
-                    (() => {
-                        let i = 1;
-                        return response.user.map(data => `
-                        <tr>
-                            <td class="text-center">${i++}</td>
-                            <td>${data.nama_lengkap}</td>
-                            <td>${data.relasi_institusi.nama_institusi}</td>
-                            <td class="text-center text-primary" data-field="kode_kota" data-pk="${data.id}">${data.relasi_user_detail.kode_kota ?? '-'}</td>
-                            <td class="text-center text-primary" data-field="kode_provinsi" data-pk="${data.id}">${data.relasi_user_detail.kode_provinsi ?? '-'}</td>
-                            <td class="text-center text-primary" data-field="kode_pendidikan" data-pk="${data.id}">${data.relasi_user_detail.kode_pendidikan ?? '-'}</td>
-                            <td class="text-center text-primary" data-field="kode_pekerjaan" data-pk="${data.id}">${data.relasi_user_detail.kode_pekerjaan ?? '-'}</td>
-                            <td class="text-center text-primary" data-field="kode_jadwal" data-pk="${data.id}">${data.relasi_user_detail.kode_jadwal ?? '-'}</td>
-                            <td class="text-center text-primary" data-field="kode_sumber_anggaran" data-pk="${data.id}">${data.relasi_user_detail.kode_sumber_anggaran ?? '-'}</td>
-                            <td class="text-center text-primary" data-field="kode_kementerian" data-pk="${data.id}">${data.relasi_user_detail.kode_kementerian ?? '-'}</td>
-                        </tr>
-                        `).join('');
-                    })()
-                    }
-                </tbody>
-                </table>
-            `);
+                  <table class="table table-striped" id="editable-table-df-hadir-asesi-bnsp">
+                  <thead>
+                      <tr class="text-center">
+                      <th>No</th>
+                      <th>Nama Asesi</th>
+                      <th>Nama Asal Sekolah</th>
+                      <th>Kode Kota</th>
+                      <th>Kode Provinsi</th>
+                      <th>Kode Pendidikan</th>
+                      <th>Kode Pekerjaan</th>
+                      <th>Kode Jadwal</th>
+                      <th>Kode Sumber Anggaran</th>
+                      <th>Kode Kementerian</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      ${
+                      (() => {
+                          let i = 1;
+                          return response.user.map(data => `
+                          <tr>
+                              <td class="text-center">${i++}</td>
+                              <td>${data.nama_lengkap}</td>
+                              <td>${data.relasi_institusi.nama_institusi}</td>
+                              <td class="text-center text-primary" data-field="kode_kota" data-pk="${data.id}">${data.relasi_user_detail.kode_kota ?? '-'}</td>
+                              <td class="text-center text-primary" data-field="kode_provinsi" data-pk="${data.id}">${data.relasi_user_detail.kode_provinsi ?? '-'}</td>
+                              <td class="text-center text-primary" data-field="kode_pendidikan" data-pk="${data.id}">${data.relasi_user_detail.kode_pendidikan ?? '-'}</td>
+                              <td class="text-center text-primary" data-field="kode_pekerjaan" data-pk="${data.id}">${data.relasi_user_detail.kode_pekerjaan ?? '-'}</td>
+                              <td class="text-center text-primary" data-field="kode_jadwal" data-pk="${data.id}">${data.relasi_user_detail.kode_jadwal ?? '-'}</td>
+                              <td class="text-center text-primary" data-field="kode_sumber_anggaran" data-pk="${data.id}">${data.relasi_user_detail.kode_sumber_anggaran ?? '-'}</td>
+                              <td class="text-center text-primary" data-field="kode_kementerian" data-pk="${data.id}">${data.relasi_user_detail.kode_kementerian ?? '-'}</td>
+                          </tr>
+                          `).join('');
+                      })()
+                      }
+                  </tbody>
+                  </table>
+              `);
 
           $('#editable-table-df-hadir-asesi-bnsp').DataTable();
 
@@ -384,36 +384,36 @@
         success: function(response) {
           $('#table-sertifikat').empty();
           $('#table-sertifikat').html(`
-                <table class="table table-striped" id="editable-table">
-                <thead>
-                    <tr class="text-center">
-                    <th>No</th>
-                    <th>Nama Asesi</th>
-                    <th>Asal Sekolah</th>
-                    <th>Nomor Sertifikat</th>
-                    <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${
-                    (() => {
-                        let i = 1;
-                        return response.user.map(data => `
-                        <tr>
-                            <td class="text-center">${i++}</td>
-                            <td>${data.nama_lengkap}</td>
-                            <td class="text-center">${data.relasi_institusi.nama_institusi}</td>
-                            <td class="text-primary text-center" data-field="no_sertifikat" data-pk="${data.id}">${data.relasi_user_detail.no_sertifikat ?? '-'}</td>
-                            <td class="text-center">
-                            <a href="/admin/print-sertifikat/${data.id}" class="btn btn-primary btn-sm">Print</a>
-                            </td>
-                        </tr>
-                        `).join('');
-                    })()
-                    }
-                </tbody>
-                </table>
-                `);
+                  <table class="table table-striped" id="editable-table">
+                  <thead>
+                      <tr class="text-center">
+                      <th>No</th>
+                      <th>Nama Asesi</th>
+                      <th>Asal Sekolah</th>
+                      <th>Nomor Sertifikat</th>
+                      <th>Aksi</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      ${
+                      (() => {
+                          let i = 1;
+                          return response.user.map(data => `
+                          <tr>
+                              <td class="text-center">${i++}</td>
+                              <td>${data.nama_lengkap}</td>
+                              <td class="text-center">${data.relasi_institusi.nama_institusi}</td>
+                              <td class="text-primary text-center" data-field="no_sertifikat" data-pk="${data.id}">${data.relasi_user_detail.no_sertifikat ?? '-'}</td>
+                              <td class="text-center">
+                              <a href="/admin/print-sertifikat/${data.id}" class="btn btn-primary btn-sm">Print</a>
+                              </td>
+                          </tr>
+                          `).join('');
+                      })()
+                      }
+                  </tbody>
+                  </table>
+                  `);
 
           $('#editable-table').DataTable();
 
@@ -485,8 +485,8 @@
               let tampilan;
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailSKPenetapan(${row.id})" id="detailSKPenetapan">Detail</button>
-                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'sk-penetapan-tuk-terverifikasi')">Hapus</button>
-                `
+                  <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'sk-penetapan-tuk-terverifikasi')">Hapus</button>
+                  `
               return tampilan;
             }
           },
@@ -547,8 +547,8 @@
               let tampilan;
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailDaftarTUK(${row.id})">Detail</button>
-                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'daftar-tuk-terverifikasi')">Hapus</button>
-                `
+                  <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'daftar-tuk-terverifikasi')">Hapus</button>
+                  `
               return tampilan;
             }
           },
@@ -609,8 +609,8 @@
               let tampilan;
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailHasilVerifikasiTUK(${row.id})">Detail</button>
-                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'hasil-verifikasi-tuk')">Hapus</button>
-                `
+                  <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'hasil-verifikasi-tuk')">Hapus</button>
+                  `
               return tampilan;
             }
           },
@@ -671,8 +671,8 @@
               let tampilan;
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailSTVerifikasiTUK(${row.id})">Detail</button>
-                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'st-verifikasi-tuk')">Hapus</button>
-                `
+                  <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'st-verifikasi-tuk')">Hapus</button>
+                  `
               return tampilan;
             }
           },
@@ -733,8 +733,8 @@
               let tampilan;
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailDFHadirAsesi(${row.id})">Detail</button>
-                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesi')">Hapus</button>
-                `
+                  <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesi')">Hapus</button>
+                  `
               return tampilan;
             }
           },
@@ -795,8 +795,8 @@
               let tampilan;
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailX03STVerifikasiTUK(${row.id})">Detail</button>
-                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'x03-st-verifikasi-tuk')">Hapus</button>
-                `
+                  <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'x03-st-verifikasi-tuk')">Hapus</button>
+                  `
               return tampilan;
             }
           },
@@ -857,8 +857,8 @@
               let tampilan;
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailX04BeritaAcara(${row.id})">Detail</button>
-                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'x04-berita-acara')">Hapus</button>
-                `
+                  <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'x04-berita-acara')">Hapus</button>
+                  `
               return tampilan;
             }
           },
@@ -919,8 +919,8 @@
               let tampilan;
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailZBAPecahRP(${row.id})">Detail</button>
-                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'z-ba-pecah-rp')">Hapus</button>
-                `
+                  <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'z-ba-pecah-rp')">Hapus</button>
+                  `
               return tampilan;
             }
           },
@@ -981,8 +981,8 @@
               let tampilan;
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailZBARP(${row.id})">Detail</button>
-                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'z-ba-pecah-rp')">Hapus</button>
-                `
+                  <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'z-ba-pecah-rp')">Hapus</button>
+                  `
               return tampilan;
             }
           },
@@ -1043,8 +1043,8 @@
               let tampilan;
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailDFHadirAsesorPleno(${row.id})">Detail</button>
-                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesor-pleno')">Hapus</button>
-                `
+                  <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesor-pleno')">Hapus</button>
+                  `
               return tampilan;
             }
           },
@@ -1105,8 +1105,8 @@
               let tampilan;
               tampilan =
                 `<button class="btn btn-warning my-1 text-white" data-bs-toggle="modal" onclick="detailDFHadirAsesor(${row.id})">Detail</button>
-                <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesor-pleno')">Hapus</button>
-                `
+                  <button class="btn btn-danger my-1 text-white" onclick="hapusBerkas(${row.id}, 'df-hadir-asesor-pleno')">Hapus</button>
+                  `
               return tampilan;
             }
           },
@@ -1139,11 +1139,11 @@
       $("#tbody-table").html(data.relasi_sk_penetapan_tuk_child.map(function(d, i) {
         return $(
           `<tr>
-                    <td>${i + 1}.</td>
-                    <td>${d.relasi_nama_tuk.nama_tuk}</td>
-                    <td>${d.relasi_skema_sertifikasi.judul_skema_sertifikasi}</td>
-                    <td>${d.tempat}</td>
-                </tr>`
+                      <td>${i + 1}.</td>
+                      <td>${d.relasi_nama_tuk.nama_tuk}</td>
+                      <td>${d.relasi_skema_sertifikasi.judul_skema_sertifikasi}</td>
+                      <td>${d.tempat}</td>
+                  </tr>`
         )
       }))
       $("#pdfSKPenetapan").attr('href', 'cetak-sk-penetapan-tuk/' + data.id);
@@ -1158,11 +1158,11 @@
         i) {
         return $(
           `<tr>
-                    <td style="text-align: center;">${i + 1}.</td>
-                    <td>${d.relasi_nama_tuk.nama_tuk}</td>
-                    <td>${d.relasi_skema_sertifikasi.judul_skema_sertifikasi}</td>
-                    <td>${d.penanggung_jawab}</td>
-                </tr>`
+                      <td style="text-align: center;">${i + 1}.</td>
+                      <td>${d.relasi_nama_tuk.nama_tuk}</td>
+                      <td>${d.relasi_skema_sertifikasi.judul_skema_sertifikasi}</td>
+                      <td>${d.penanggung_jawab}</td>
+                  </tr>`
         )
       }));
       $('#ditetapkan_di_df_tuk_terverifikasi').text(data.tempat_ditetapkan);
@@ -1199,10 +1199,10 @@
               element.relasi_sarana_prasarana_sub2.forEach(element => {
                 if (element.sarana_prasarana_sub_2 != null) {
                   html += `
-                            <ol style="list-style: disc; margin: 0;">
-                                <li>${element.sarana_prasarana_sub_2}</li>
-                            </ol>
-                        `;
+                              <ol style="list-style: disc; margin: 0;">
+                                  <li>${element.sarana_prasarana_sub_2}</li>
+                              </ol>
+                          `;
                 }
               })
 
@@ -1211,18 +1211,18 @@
 
             if (element.sarana_prasarana_sub != null) {
               html += `
-                <tr>
-                    <td></td>
-                    <td>
-                        ${String.fromCharCode(alphabet)}. ${element.sarana_prasarana_sub}
-                        ${element.relasi_sarana_prasarana_sub2.length != 0 ? saranaPrasaranaSub2() : ''}
-                    </td>
-                    <td class="text-center">${element.status == 1 ? check_mark : ''}</td>
-                    <td class="text-center">${element.status == 0 ? check_mark : ''}</td>
-                    <td class="text-center">${element.kondisi == 1 ? check_mark : ''}</td>
-                    <td class="text-center">${element.kondisi == 0 ? check_mark : ''}</td>
-                    </tr>
-            `;
+                  <tr>
+                      <td></td>
+                      <td>
+                          ${String.fromCharCode(alphabet)}. ${element.sarana_prasarana_sub}
+                          ${element.relasi_sarana_prasarana_sub2.length != 0 ? saranaPrasaranaSub2() : ''}
+                      </td>
+                      <td class="text-center">${element.status == 1 ? check_mark : ''}</td>
+                      <td class="text-center">${element.status == 0 ? check_mark : ''}</td>
+                      <td class="text-center">${element.kondisi == 1 ? check_mark : ''}</td>
+                      <td class="text-center">${element.kondisi == 0 ? check_mark : ''}</td>
+                      </tr>
+              `;
             }
             alphabet++;
           });
@@ -1230,16 +1230,16 @@
         }
 
         let text = `
-            <tr>
-                <td class="text-center">${i + 1}</td>
-                <td>${d.sarana_prasarana}</td>
-                <td class="text-center">${d.status == 1 ? check_mark : ''}</td>
-                <td class="text-center">${d.status == 0 ? check_mark : ''}</td>
-                <td class="text-center">${d.kondisi == 1 ? check_mark : ''}</td>
-                <td class="text-center">${d.kondisi == 0 ? check_mark : ''}</td>
-            </tr>
-            ${d.relasi_sarana_prasarana_sub.length != 0 ? saranaPrasaranaSub() : ''}
-        `;
+              <tr>
+                  <td class="text-center">${i + 1}</td>
+                  <td>${d.sarana_prasarana}</td>
+                  <td class="text-center">${d.status == 1 ? check_mark : ''}</td>
+                  <td class="text-center">${d.status == 0 ? check_mark : ''}</td>
+                  <td class="text-center">${d.kondisi == 1 ? check_mark : ''}</td>
+                  <td class="text-center">${d.kondisi == 0 ? check_mark : ''}</td>
+              </tr>
+              ${d.relasi_sarana_prasarana_sub.length != 0 ? saranaPrasaranaSub() : ''}
+          `;
 
         return text;
 
@@ -1298,10 +1298,10 @@
       $("#bodyTable").html(data.relasi_nama_jabatan.map(function(d, i) {
         return $(
           `<tr>
-                    <td class="text-center" style="width: 10px;">${i + 1}.</td>
-                    <td>${d.nama}</td>
-                    <td>${d.jabatan}</td>
-                </tr>`
+                      <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                      <td>${d.nama}</td>
+                      <td>${d.jabatan}</td>
+                  </tr>`
         )
       }));
       $('#tanggal_dilaksanakan_st_verifikasi_tuk').text(tanggal_dilaksanakan);
@@ -1348,12 +1348,12 @@
       $('#bodyTableDFHadirAsesi').html(data.relasi_df_hadir_asesi_child.map(function(d, i) {
         return $(
           `<tr>
-                    <td class="text-center" style="width: 10px;">${i + 1}.</td>
-                    <td>${d.no_peserta}</td>
-                    <td>${d.nama_asesi}</td>
-                    <td>${d.relasi_institusi.nama_institusi}</td>
-                    <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
-                </tr>`
+                      <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                      <td>${d.no_peserta}</td>
+                      <td>${d.nama_asesi}</td>
+                      <td>${d.relasi_institusi.nama_institusi}</td>
+                      <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+                  </tr>`
         )
       }));
 
@@ -1378,10 +1378,10 @@
       $("#bodyTable_x03_st_verifikasi_tuk").html(data.relasi_nama_jabatan.map(function(d, i) {
         return $(
           `<tr>
-                      <td class="text-center" style="width: 10px;">${i + 1}.</td>
-                      <td>${d.nama}</td>
-                      <td>${d.jabatan}</td>
-                  </tr>`
+                        <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                        <td>${d.nama}</td>
+                        <td>${d.jabatan}</td>
+                    </tr>`
         )
       }));
       const date_hari_x03_st_verifikasi_tuk = new Date(data.tanggal_mulai);
@@ -1460,11 +1460,11 @@
       $("#tbody_z_ba_pecah_rp").html(data.relasi_nama_jabatan.map(function(d, i) {
         return $(
           `<tr>
-            <td class="text-center" style="width: 10px;">${i + 1}.</td>
-                      <td>${d.nama}</td>
-                      <td>${d.jabatan}</td>
-                      <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
-                  </tr>`
+              <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                        <td>${d.nama}</td>
+                        <td>${d.jabatan}</td>
+                        <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+                    </tr>`
         )
       }));
       $('#tgl_tes_tertulis_2_z_ba_pecah_rp').text(date_format(data.tgl_tes_tertulis, false));
@@ -1511,12 +1511,12 @@
       $("#tbody_z_ba_rp").html(data.relasi_nama_jabatan.map(function(d, i) {
         return $(
           `<tr>
-              <td class="text-center" style="width: 10px;">${i + 1}.</td>
-                        <td>${d.nama}</td>
-                        <td>${d.jabatan}</td>
-                        <td>${d.jml_asesi}</td>
-                        <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
-                    </tr>`
+                <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                          <td>${d.nama}</td>
+                          <td>${d.jabatan}</td>
+                          <td>${d.jml_asesi}</td>
+                          <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+                      </tr>`
         )
       }));
       $('#tgl_tes_tertulis_2_z_ba_rp').text(date_format(data.tgl_tes_tertulis, false));
@@ -1551,12 +1551,12 @@
       $('#tbody_df_hadir_asesor_pleno').html(data.relasi_nama_jabatan.map(function(d, i) {
         return $(
           `<tr>
-                    <td class="text-center" style="width: 10px;">${i + 1}.</td>
-                    <td>${d.nama}</td>
-                    <td>${d.no_reg_met}</td>
-                    <td>${d.jabatan}</td>
-                    <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
-                </tr>`
+                      <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                      <td>${d.nama}</td>
+                      <td>${d.no_reg_met}</td>
+                      <td>${d.jabatan}</td>
+                      <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+                  </tr>`
         )
       }));
       $('#nama_bttd_df_hadir_asesor_pleno').text(data.nama_bttd);
@@ -1586,28 +1586,28 @@
       for (let i = 0; i < data.jml_row_df_hadir_asesi; i++) {
         $('#jml_df_hadir_asesi_df_hadir_asesor').append(
           `
-                <tr>
-                    <td class="text-center">
-                        ${i + 1}.
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 9%;"' : ''}>${i + 1}</td>
-                </tr>
-            `
+                  <tr>
+                      <td class="text-center">
+                          ${i + 1}.
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 9%;"' : ''}>${i + 1}</td>
+                  </tr>
+              `
         );
       }
       $('#tbody_table_panitia_df_hadir_asesor').html(nama_nip.map(function(d, i) {
         return $(
           `<tr>
-                      <td class="text-center">${i + 1}.</td>
-                      <td>
-                        <span>${d.nama}</span> <br/>
-                        <span>${d.nip}</span>
-                        </td>
-                      <td>${d.jabatan}</td>
-                      <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 7%;"' : ''}>${i + 1}</td>
-                  </tr>`
+                        <td class="text-center">${i + 1}.</td>
+                        <td>
+                          <span>${d.nama}</span> <br/>
+                          <span>${d.nip}</span>
+                          </td>
+                        <td>${d.jabatan}</td>
+                        <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 7%;"' : ''}>${i + 1}</td>
+                    </tr>`
         )
       }));
       $('#thn_ajaran_df_hadir_asesor_3').text(thn_df_hadir_asesor_1);
@@ -1626,12 +1626,12 @@
       $('#tbody_table_df_hadir_asesor').html(nama.map(function(d, i) {
         return $(
           `<tr>
-                    <td class="text-center" style="width: 10px;">${i + 1}.</td>
-                    <td>${d.nama}</td>
-                    <td>${d.no_reg_met}</td>
-                    <td>${d.jabatan}</td>
-                    <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
-                </tr>`
+                      <td class="text-center" style="width: 10px;">${i + 1}.</td>
+                      <td>${d.nama}</td>
+                      <td>${d.no_reg_met}</td>
+                      <td>${d.jabatan}</td>
+                      <td ${(i + 1) % 2 === 0 ? 'style="padding-left: 8%;"' : ''}>${i + 1}</td>
+                  </tr>`
         )
       }));
       $('#nama_bttd_df_hadir_asesor').text(data.nama_bttd);

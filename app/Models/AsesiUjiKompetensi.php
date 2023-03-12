@@ -25,4 +25,9 @@ class AsesiUjiKompetensi extends Model
     {
         return $this->belongsTo(PelaksanaanUjian::class, 'jadwal_uji_kompetensi_id', 'jadwal_uji_kompetensi_id');
     }
+
+    public function relasi_status_koreksi()
+    {
+        return $this->belongsTo(KoreksiJawaban::class, 'user_asesi_id', 'user_asesi_id');
+    }
 }

@@ -21,7 +21,7 @@
                     
                         {{-- MODAL TAMBAH --}}
                     <div class="modal fade text-left" id="modalTambahAsesi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                        <div class="modal-dialog modal-dialog-centered"
                             role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -58,7 +58,6 @@
                                             <span class="d-none d-sm-block">Simpan</span>
                                         </button>
                                     </div>
-                                    <input type="number" name="id_jadwal" value="{{ $jadwal_uji_kompetensi['id'] }}">
                                 </form>
                             </div>
                         </div>
@@ -70,9 +69,8 @@
                         <table class="table table-striped display" id="table-asesi">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
+                                    <th>Nama Asesi</th>
                                     <th>Aksi</th>
-                                    <p class="jadwal_id" hidden>{{ $jadwal_uji_kompetensi['id'] }}</p>
                                 </tr>
                             </thead>
                         </table>
@@ -81,7 +79,7 @@
         
                 {{-- MODAL EDIT --}}
                 <div class="modal fade text-left" id="modalEditAsesi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                    <div class="modal-dialog modal-dialog-centered"
                         role="document">
                         <div class="modal-content">
                             <div class="modal-header">

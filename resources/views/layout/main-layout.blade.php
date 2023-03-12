@@ -10,7 +10,7 @@
 
     <body>
         @include('sweetalert::alert')
-        @if (!request()->routeIs('asesi.Assesment.Soal'))
+        @if (!request()->routeIs('asesi.PengerjaanSoal') && !request()->routeIs('asesor.DaftarDataUjian.ProsesWawancaraAsesi'))
             <div id="app">
                 <div id="main">
                     @include('layout.sidebar-main')
