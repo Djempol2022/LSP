@@ -29,29 +29,6 @@ class Hasil_Verifikasi_TUK_Controller extends Controller
 
     public function store(Request $request)
     {
-        // dd(gettype($request->jurusan));
-        // $b = [];
-        // $c = [];
-        // $d = [];
-        // $e = false;
-        // $key_sub2 = collect($request->sarana_prasarana_sub2)->keys();
-        // foreach ($request->sarana_prasarana as $key => $value) {
-        //     // dd($value[$key]);
-        //     $g = false;
-        //     foreach ($request->sarana_prasarana_sub as $key_sub => $value_sub) {
-        //         // dd($value_sub);
-        //         $c[] = $value_sub[$key] ?? null;
-        //         $f[] = $key_sub2[$key_sub] ?? null;
-
-        //         foreach ($request->sarana_prasarana_sub2 as $value_sub2) {
-        //             dd($value_sub2);
-        //         }
-        //     }
-        //     $e = true;
-        //     // dd($f);
-        //     $b[] = $value ?? null;
-        // }
-        // dd([$b, $c, $d]);
         $validator = Validator::make($request->all(), [
             'jurusan' => 'required',
             'tempat_ditetapkan' => 'required',
@@ -86,100 +63,43 @@ class Hasil_Verifikasi_TUK_Controller extends Controller
             'ttd' => $request->ttd ?? null
         ])->id;
 
-        // for ($i = 0; $i < 4; $i++) {
-        //     PengujiHasilVerifikasiTUK::create([
-        //         'hasil_verifikasi_tuk_id' => $hasil_verifikasi_tuk ?? null,
-        //         'standar' => $request->standar[$i] ?? null,
-        //         'kondisi' => $request->kondisi_penguji[$i] ?? null
-        //     ]);
-        // }
+        for ($i = 0; $i < 4; $i++) {
+            PengujiHasilVerifikasiTUK::create([
+                'hasil_verifikasi_tuk_id' => $hasil_verifikasi_tuk ?? null,
+                'standar' => $request->standar[$i] ?? null,
+                'kondisi' => $request->kondisi_penguji[$i] ?? null
+            ]);
+        }
 
-        dd($request->all());
-        if ($request->sarana_prasarana) {
-            $sarana_prasarana_id = [];
-            foreach ($request->sarana_prasarana as $key_sarana_prasarana => $value_sarana_prasarana) {
-                // insert sarana prasarana
-                $sarana_prasarana = SaranaPrasarana::create([
-                    'hasil_verifikasi_tuk_id' => $hasil_verifikasi_tuk ?? null,
-                    'sarana_prasarana' => $value_sarana_prasarana ?? null,
-                    'status' => $request->status[$key_sarana_prasarana] ?? null,
-                    'kondisi' => $request->kondisi[$key_sarana_prasarana] ?? null
-                ])->id;
-                $sarana_prasarana_id[] = $sarana_prasarana;
-            }
+        foreach ($request->sarana_prasarana as $key_s_p => $value_s_p) {
+            $sarana_prasarana = SaranaPrasarana::create([
+                'hasil_verifikasi_tuk_id' => $hasil_verifikasi_tuk ?? null,
+                'sarana_prasarana' => $value_s_p ?? null,
+                'status' => $request->status[$key_s_p] ?? null,
+                'kondisi' => $request->kondisi[$key_s_p] ?? null
+            ])->id;
 
-            $sarana_prasarana_sub_id = [];
-            for ($i = 0; $i <= count($request->sarana_prasarana_sub); $i++) {
-                $check_sarana_rasarana_sub = $request->sarana_prasarana_sub[$i] ?? null;
-                if ($check_sarana_rasarana_sub != null) {
-                    for ($j = 0; $j < count($request->sarana_prasarana_sub[$i]); $j++) {
-                        $sarana_prasarana_sub = SaranaPrasaranaSub::create([
-                            'sarana_prasarana_id' => $sarana_prasarana_id[$i] ?? null,
-                            'sarana_prasarana_sub' => $request->sarana_prasarana_sub[$i][$j] ?? null,
-                            'status' => $request->status_sub[$i][$j] ?? null,
-                            'kondisi' => $request->kondisi_sub[$i][$j] ?? null
-                        ])->id;
-                        $sarana_prasarana_sub_id[] = $sarana_prasarana_sub;
-                    }
-                }
-            }
-            // dd($sarana_prasarana_sub_id);
-            for ($i = 0; $i <= count($request->sarana_prasarana_sub2); $i++) {
-                $check_sarana_prasarana_sub2 = $request->sarana_prasarana_sub2[$i] ?? null;
+            if (isset($request->sarana_prasarana_sub[$key_s_p])) {
+                foreach ($request->sarana_prasarana_sub[$key_s_p] as $key_s_p_s => $value_s_p_s) {
+                    $sarana_prasarana_sub = SaranaPrasaranaSub::create([
+                        'sarana_prasarana_id' => $sarana_prasarana ?? null,
+                        'sarana_prasarana_sub' => $value_s_p_s ?? null,
+                        'status' => $request->status_sub[$key_s_p][$key_s_p_s] ?? null,
+                        'kondisi' => $request->kondisi_sub[$key_s_p][$key_s_p_s] ?? null
+                    ])->id;
 
-                if ($check_sarana_prasarana_sub2 != null) {
-                    for ($j = 0; $j <= count($request->sarana_prasarana_sub2[$i]); $j++) {
-                        $check_sarana_prasarana_sub2_bagian2 = $request->sarana_prasarana_sub2[$i][$j] ?? null;
-                        if ($check_sarana_prasarana_sub2_bagian2 != null) {
-
-                            for ($z = 0; $z < count($request->sarana_prasarana_sub2[$i][$j]); $z++) {
-                                SaranaPrasaranaSub2::create([
-                                    'sarana_prasarana_sub_id' => $sarana_prasarana_sub_id[$j] ?? null,
-                                    'sarana_prasarana_sub_2' => $request->sarana_prasarana_sub2[$i][$j][$z] ?? null,
-                                ]);
-                            }
+                    if (isset($request->sarana_prasarana_sub2[$key_s_p][$key_s_p_s])) {
+                        foreach ($request->sarana_prasarana_sub2[$key_s_p][$key_s_p_s] as $key_s_p_s_2 => $value_s_p_s_2) {
+                            SaranaPrasaranaSub2::create([
+                                'sarana_prasarana_sub_id' => $sarana_prasarana_sub ?? null,
+                                'sarana_prasarana_sub_2' => $value_s_p_s_2 ?? null,
+                            ]);
                         }
                     }
                 }
             }
-
-            dd($request->all());
         }
 
-        // if ($request->sarana_prasarana) {
-        //     foreach ($request->sarana_prasarana as $key_sarana_prasarana => $value_sarana_prasarana) {
-
-        //         // insert sarana prasarana
-        //         $sarana_prasarana = SaranaPrasarana::create([
-        //             'hasil_verifikasi_tuk_id' => $hasil_verifikasi_tuk ?? null,
-        //             'sarana_prasarana' => $value_sarana_prasarana ?? null,
-        //             'status' => $request->status[$key_sarana_prasarana] ?? null,
-        //             'kondisi' => $request->kondisi[$key_sarana_prasarana] ?? null
-        //         ])->id;
-
-        //         if ($request->sarana_prasarana_sub) {
-        //             // insert sarana prasarana sub
-        //             foreach ($request->sarana_prasarana_sub as $key_sarana_prasarana_sub => $value_sarana_prasarana_sub) {
-        //                 $sarana_prasarana_sub = SaranaPrasaranaSub::create([
-        //                     'sarana_prasarana_id' => $sarana_prasarana,
-        //                     'sarana_prasarana_sub' => $value_sarana_prasarana_sub[$key_sarana_prasarana] ?? null,
-        //                     'status' => $request->status_sub[$key_sarana_prasarana_sub] ?? null,
-        //                     'kondisi' => $request->kondisi_sub[$key_sarana_prasarana_sub] ?? null,
-        //                 ])->id;
-
-        //                 if ($request->sarana_prasarana_sub2) {
-        //                     foreach ($request->sarana_prasarana_sub2 as $value_sarana_prasarana_sub2) {
-        //                         SaranaPrasaranaSub2::create([
-        //                             'sarana_prasarana_sub_id' => $sarana_prasarana_sub ?? null,
-        //                             'sarana_prasarana_sub_2' => $value_sarana_prasarana_sub2[$key_sarana_prasarana][$key_sarana_prasarana_sub] ?? null,
-        //                         ]);
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-
-        return redirect()->back();
+        return redirect('/admin/berkas?berkas=' . $request->input('dropdown_value'))->with('success', 'Data berhasil ditambahkan!');
     }
 }

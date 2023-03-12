@@ -180,17 +180,17 @@
       };
       cell6.appendChild(element5);
 
-      //   let cell7 = row.insertCell(6);
-      //   let element6 = document.createElement("button");
-      //   element6.className = 'border-0 bg-transparent text-danger';
-      //   element6.innerHTML = 'X';
-      //   element6.dataToggle = 'modal';
-      //   element6.type = "button";
-      //   element6.id = 'button' + rowCount;
-      //   element6.onclick = function() {
-      //     removeRow(rowCount);
-      //   };
-      //   cell7.appendChild(element6);
+      let cell7 = row.insertCell(6);
+      let element6 = document.createElement("button");
+      element6.className = 'border-0 bg-transparent text-danger';
+      element6.innerHTML = 'X';
+      element6.dataToggle = 'modal';
+      element6.type = "button";
+      element6.id = 'button' + rowCount;
+      element6.onclick = function() {
+        removeRow(rowCount);
+      };
+      cell7.appendChild(element6);
 
     }
 
@@ -308,8 +308,8 @@
         };
       cell6.appendChild(element5);
 
-      //   let cell7 = row.insertCell(6);
-      //   cell7.innerHTML = '';
+      let cell7 = row.insertCell(6);
+      cell7.innerHTML = '';
       //   let element6 = document.createElement("button");
       //   element6.className = 'border-0 bg-transparent text-danger';
       //   element6.innerHTML = 'X';

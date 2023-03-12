@@ -9,17 +9,16 @@
   window.addEventListener("load", () => {
     loader.style.display = "none";
   });
-
+  @if (session('success'))
+    swal({
+        title: "Berhasil",
+        text: '{{ session('success') }}',
+        icon: "success",
+        buttons: true,
+        successMode: true,
+      }),
+  @endif
   $(document).ready(function() {
-    @if (session('success'))
-      swal({
-          title: "Berhasil",
-          text: '{{ session('success') }}',
-          icon: "success",
-          buttons: true,
-          successMode: true,
-        }),
-    @endif
 
     const now = new Date();
     const year = now.getFullYear();
@@ -1245,21 +1244,21 @@
         return text;
 
       }));
-      //   let index_standar = 0;
-      //   $('.standar').each(function() {
-      //     $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].standar);
-      //     index_standar++;
-      //   });
-      //   index_standar = 0;
-      //   $('.kondisi_sesuai').each(function() {
-      //     $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].kondisi === 1 ? check_mark : '');
-      //     index_standar++;
-      //   })
-      //   index_standar = 0;
-      //   $('.kondisi_tidak_sesuai').each(function() {
-      //     $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].kondisi === 0 ? check_mark : '');
-      //     index_standar++;
-      //   })
+      let index_standar = 0;
+      $('.standar').each(function() {
+        $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].standar);
+        index_standar++;
+      });
+      index_standar = 0;
+      $('.kondisi_sesuai').each(function() {
+        $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].kondisi === 1 ? check_mark : '');
+        index_standar++;
+      })
+      index_standar = 0;
+      $('.kondisi_tidak_sesuai').each(function() {
+        $(this).html(data.relasi_penguji_hasil_verifikasi[index_standar].kondisi === 0 ? check_mark : '');
+        index_standar++;
+      })
       $('#catatan').text(data.catatan);
       $('#tempat_ditetapkan').text(data.tempat_ditetapkan);
       const date_hasil_verifikasi_tuk = new Date(data.tanggal_ditetapkan);

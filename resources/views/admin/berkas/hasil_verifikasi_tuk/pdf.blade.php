@@ -8,31 +8,15 @@
   <style>
     /** Define the margins of your page **/
     @page {
-      margin: 150px 60px;
+      margin: 180px 60px;
     }
 
     header {
       position: fixed;
-      top: -150px;
+      top: -170px;
       left: 0px;
       right: 0px;
       height: 50px;
-    }
-
-    table {
-      border-left: 0.01em solid #000000;
-      border-right: 0;
-      border-top: 0.01em solid #000000;
-      border-bottom: 0;
-      border-collapse: collapse;
-    }
-
-    table td,
-    table th {
-      border-left: 0;
-      border-right: 0.01em solid #000000;
-      border-top: 0;
-      border-bottom: 0.01em solid #000000;
     }
   </style>
 
@@ -50,13 +34,19 @@
   <main>
     <div style="page-break-after: never;">
       <div class="text-center d-flex flex-column" style="text-align: center; font-size: 15px;">
-        <h3 style="margin-bottom: -20px; margin-top: 0px;">HASIL VERIFIKASI TEMPAT UJI KOMPETENSI ( TUK )</h3>
-        <h4 style="margin-bottom: -20px">{{ $hasil_verifikasi_tuk->relasi_skema_sertifikasi->judul_skema_sertifikasi }}
-        </h4>
+        <h2 style="font-weight: bolder; margin-bottom: -20px; margin-top: 0px;">HASIL VERIFIKASI TEMPAT UJI KOMPETENSI (
+          TUK )</h2>
+        <h2 style="font-weight: bolder; margin-bottom: -20px;">
+          "{{ $hasil_verifikasi_tuk->relasi_skema_sertifikasi->relasi_jurusan->jurusan }}"
+        </h2>
+        <h2 style="font-weight: lighter; margin-bottom: -20px">
+          {{ $hasil_verifikasi_tuk->relasi_skema_sertifikasi->judul_skema_sertifikasi }}
+        </h2>
       </div>
-      <div>
-        <h6 style="font-weight: bolder; margin-left: 10px">A. SARANA DAN PRASARANA</h6>
-        <table style="margin: 0 auto; font-size: 15px; width: 100%" cellpadding='5' cellspacing='0'>
+      <div style="margin-top: 20px">
+        <h4 style="font-weight: bolder; margin-left: 40px; margin-bottom: 0px">A. SARANA DAN PRASARANA</h4>
+        <table style="margin: 0 auto; font-size: 15px; width: 100%; table-layout:fixed;" cellpadding='5' cellspacing='0'
+          border="1px solid black">
           <thead>
             <tr style="text-align: center">
               <th rowspan="2">No.</th>
@@ -73,20 +63,47 @@
           <tbody>
             @foreach ($hasil_verifikasi_tuk->relasi_sarana_prasarana as $item_sarana_prasarana)
               <tr>
-                <td
-                  rowspan="{{ $item_sarana_prasarana->relasi_sarana_prasarana_sub ? count($item_sarana_prasarana->relasi_sarana_prasarana_sub) : '' }}">
+                <td style="text-align: center; width: 7%;">
                   {{ $loop->iteration }}</td>
-                <td>{{ $item_sarana_prasarana->sarana_prasarana }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td style="width: 53%">{{ $item_sarana_prasarana->sarana_prasarana }}
+                </td>
+                @if (isset($item_sarana_prasarana->status))
+                  <td style="text-align: center">
+                    @if ($item_sarana_prasarana->status == 1)
+                      @include('layout.image-base64.img-check-mark')
+                    @endif
+                  </td>
+                  <td style="text-align: center">
+                    @if ($item_sarana_prasarana->status == 0)
+                      @include('layout.image-base64.img-check-mark')
+                    @endif
+                  </td>
+                @else
+                  <td style="text-align: center; width: 10%;"></td>
+                  <td style="text-align: center; width: 10%;"></td>
+                @endif
+                @if (isset($item_sarana_prasarana->kondisi))
+                  <td style="text-align: center">
+                    @if ($item_sarana_prasarana->kondisi == 1)
+                      @include('layout.image-base64.img-check-mark')
+                    @endif
+                  </td>
+                  <td style="text-align: center">
+                    @if ($item_sarana_prasarana->kondisi == 0)
+                      @include('layout.image-base64.img-check-mark')
+                    @endif
+                  </td>
+                @else
+                  <td style="text-align: center; width: 10%;"></td>
+                  <td style="text-align: center; width: 10%;"></td>
+                @endif
               </tr>
               @if ($item_sarana_prasarana->relasi_sarana_prasarana_sub)
                 @foreach ($item_sarana_prasarana->relasi_sarana_prasarana_sub as $item_sarana_prasarana_sub)
                   <tr>
+                    <td></td>
                     <td>
-                      {{ $loop->iteration }}. {{ $item_sarana_prasarana_sub->sarana_prasarana_sub }} <br />
+                      {{ chr(96 + $loop->iteration) }}. {{ $item_sarana_prasarana_sub->sarana_prasarana_sub }} <br />
                       @if ($item_sarana_prasarana_sub->relasi_sarana_prasarana_sub2)
                         <ol style="list-style: disc; margin: 0">
                           @foreach ($item_sarana_prasarana_sub->relasi_sarana_prasarana_sub2 as $item_sarana_prasarana_sub2)
@@ -95,15 +112,186 @@
                         </ol>
                       @endif
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    @if (isset($item_sarana_prasarana_sub->status))
+                      <td style="text-align: center">
+                        @if ($item_sarana_prasarana_sub->status == 1)
+                          @include('layout.image-base64.img-check-mark')
+                        @endif
+                      </td>
+                      <td style="text-align: center">
+                        @if ($item_sarana_prasarana_sub->status == 0)
+                          @include('layout.image-base64.img-check-mark')
+                        @endif
+                      </td>
+                    @else
+                      <td style="text-align: center; width: 10%;"></td>
+                      <td style="text-align: center; width: 10%;"></td>
+                    @endif
+                    @if (isset($item_sarana_prasarana_sub->kondisi))
+                      <td style="text-align: center">
+                        @if ($item_sarana_prasarana_sub->kondisi == 1)
+                          @include('layout.image-base64.img-check-mark')
+                        @endif
+                      </td>
+                      <td style="text-align: center">
+                        @if ($item_sarana_prasarana_sub->kondisi == 0)
+                          @include('layout.image-base64.img-check-mark')
+                        @endif
+                      </td>
+                    @else
+                      <td style="text-align: center; width: 10%;"></td>
+                      <td style="text-align: center; width: 10%;"></td>
+                    @endif
                   </tr>
                 @endforeach
               @endif
             @endforeach
           </tbody>
+        </table>
+      </div>
+      <div style="margin-top: 20px">
+        <h4 style="font-weight: bolder; margin-left: 20px; margin-bottom: 0px">B. PENGUJI</h4>
+        <table style="margin: 0 auto; font-size: 15px; width: 100%; table-layout:fixed;" cellpadding='5' cellspacing='0'
+          border="1px solid black">
+          <thead>
+            <tr style="text-align: center">
+              <th style="width: 5%">No</th>
+              <th style="width: 25%">Aspek Kompetensi</th>
+              <th style="width: 55%">Standar</th>
+              <th colspan="2" style="width: 15%">Kondisi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center">1.</td>
+              <td>Pendidikan</td>
+              <td>{{ $hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[0]->standar }}</td>
+              @if (isset($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[0]->kondisi))
+                <td style="text-align: center">
+                  @if ($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[0]->kondisi == 1)
+                    @include('layout.image-base64.img-check-mark')
+                  @endif
+                </td>
+                <td style="text-align: center">
+                  @if ($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[0]->kondisi == 0)
+                    @include('layout.image-base64.img-check-mark')
+                  @endif
+                </td>
+              @else
+                <td style="text-align: center"></td>
+                <td style="text-align: center"></td>
+              @endif
+            </tr>
+            <tr>
+              <td style="text-align: center">2.</td>
+              <td>Pelatihan</td>
+              <td>{{ $hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[1]->standar }}</td>
+              @if (isset($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[1]->kondisi))
+                <td style="text-align: center">
+                  @if ($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[1]->kondisi == 1)
+                    @include('layout.image-base64.img-check-mark')
+                  @endif
+                </td>
+                <td style="text-align: center">
+                  @if ($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[1]->kondisi == 0)
+                    @include('layout.image-base64.img-check-mark')
+                  @endif
+                </td>
+              @else
+                <td style="text-align: center"></td>
+                <td style="text-align: center"></td>
+              @endif
+            </tr>
+            <tr>
+              <td style="text-align: center">3.</td>
+              <td>Pengalaman</td>
+              <td>{{ $hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[2]->standar }}</td>
+              @if (isset($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[2]->kondisi))
+                <td style="text-align: center">
+                  @if ($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[2]->kondisi == 1)
+                    @include('layout.image-base64.img-check-mark')
+                  @endif
+                </td>
+                <td style="text-align: center">
+                  @if ($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[2]->kondisi == 0)
+                    @include('layout.image-base64.img-check-mark')
+                  @endif
+                </td>
+              @else
+                <td style="text-align: center"></td>
+                <td style="text-align: center"></td>
+              @endif
+            </tr>
+            <tr>
+              <td style="text-align: center">4.</td>
+              <td>Ketrampilan</td>
+              <td>{{ $hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[3]->standar }}</td>
+              @if (isset($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[3]->kondisi))
+                <td style="text-align: center">
+                  @if ($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[3]->kondisi == 1)
+                    @include('layout.image-base64.img-check-mark')
+                  @endif
+                </td>
+                <td style="text-align: center">
+                  @if ($hasil_verifikasi_tuk->relasi_penguji_hasil_verifikasi[3]->kondisi == 0)
+                    @include('layout.image-base64.img-check-mark')
+                  @endif
+                </td>
+              @else
+                <td style="text-align: center"></td>
+                <td style="text-align: center"></td>
+              @endif
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top: 30px;">
+        <table style="width: 80%; table-layout:fixed; margin-left: -18px">
+          <tr>
+            <th style="vertical-align: top; width: 20%;">Catatan :</th>
+            <td style="width: 90%;">
+              {{ $hasil_verifikasi_tuk->catatan }}
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <h4 style="font-weight: bolder; margin-bottom: -10px">Kesimpulan Verifikasi: <span
+            style="font-weight: lighter">(* pilih salah
+            satu)</span></h4>
+        <p>* Sesuai / Belum sesuai dengan persyaratan tempat uji kompetensi</p>
+      </div>
+      <div style="margin-top: 20px;">
+        <table style="font-size: 13px; margin-top: 10px; width: 100%">
+          <tr>
+            <td style="width: 65px"></td>
+            <td style="width: 65px"></td>
+            <td>
+              <div style="text-align: right; margin-right: 50px">
+                <table style="width: 100%">
+                  <tr>
+                    <td colspan="3" style="text-align: left;">
+                      <div style="margin-left: 231px">
+                        <div>
+                          <span>{{ $hasil_verifikasi_tuk->tempat_ditetapkan }},
+                            {{ $hasil_verifikasi_tuk->tanggal_ditetapkan->isoFormat('DD MMMM Y') }}</span>
+                        </div>
+                        <div style="margin-left: 40px">
+                          Verifikator
+                        </div>
+                        <div style="height: 105px"><img src="{{ $hasil_verifikasi_tuk->ttd }}" alt="ttd"
+                            style="width: 120px; margin-left: 10px; margin-top: -2px">
+                          <div>
+                            <span>{{ $hasil_verifikasi_tuk->nama_bttd }}</span>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
         </table>
       </div>
     </div>

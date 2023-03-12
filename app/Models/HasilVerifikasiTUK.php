@@ -11,6 +11,7 @@ class HasilVerifikasiTUK extends Model
 
     protected $table = "hasil_verifikasi_tuk";
     protected $guarded = ['id'];
+    protected $dates = ['tanggal_ditetapkan'];
 
     public function relasi_skema_sertifikasi()
     {

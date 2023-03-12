@@ -352,9 +352,9 @@ class BerkasController extends Controller
     {
         $hasil_verifikasi_tuk = HasilVerifikasiTUK::with(['relasi_skema_sertifikasi.relasi_jurusan', 'relasi_sarana_prasarana.relasi_sarana_prasarana_sub.relasi_sarana_prasarana_sub2', 'relasi_penguji_hasil_verifikasi'])->find($id);
         // dd($hasil_verifikasi_tuk);
-        return view('admin.berkas.hasil_verifikasi_tuk.pdf', [
-            'hasil_verifikasi_tuk' => $hasil_verifikasi_tuk,
-        ]);
+        // return view('admin.berkas.hasil_verifikasi_tuk.pdf', [
+        //     'hasil_verifikasi_tuk' => $hasil_verifikasi_tuk,
+        // ]);
         $pdf = PDF::loadview('admin.berkas.hasil_verifikasi_tuk.pdf', compact('hasil_verifikasi_tuk'));
         return $pdf->download('Hasil Verifikasi TUK.pdf');
     }

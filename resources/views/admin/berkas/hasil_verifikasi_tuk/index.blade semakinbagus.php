@@ -52,7 +52,7 @@
                   <th rowspan="2">Ada</th>
                   <th rowspan="2">Tidak</th>
                   <th colspan="2">Kondisi</th>
-                  {{-- <th rowspan="2">Aksi</th> --}}
+                  <th rowspan="2">Aksi</th>
                 </tr>
                 <tr class="table-success">
                   <th>Sesuai</th>
@@ -61,15 +61,10 @@
               </thead>
               <tbody>
                 <tr>
-                  <td colspan="6" class="text-center font-extrabold h1 m-0 p-0"><button type="button"
-                      class="border-0 bg-transparent text-primary" id="addRow">+</button>
-                  </td>
-                </tr>
-                {{-- <tr>
                   <td colspan="7" class="text-center font-extrabold h1 m-0 p-0"><button type="button"
                       class="border-0 bg-transparent text-primary" id="addRow">+</button>
                   </td>
-                </tr> --}}
+                </tr>
               </tbody>
             </table>
           </div>
